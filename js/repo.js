@@ -107,6 +107,48 @@ const Repo = (() => {
   return { hasToken: () => !!getToken(), setToken, readRemote, readPublic, saveNow, merge, remember, untranslated, RepoError };
 })();
 
+/* ---------- Local server (server.py) ----------
+   When the site is opened through `python server.py` on someone's own computer, that server can translate funds
+   straight away (it holds the Claude key) and can save data/funds.json on disk. The published site has no such
+   server, so there `Local.on` stays false and everything goes through GitHub as described above. */
+const Local = {
+  on: false, canTranslate: false, reason: "nokey",
+  async detect() {
+    try {
+      const res = await fetch("api/health", { cache: "no-store" });
+      const info = res.ok ? await res.json() : null;
+      if (info && info.fundPitchLocal) { Local.on = true; Local.canTranslate = !!info.translate; Local.reason = info.reason || "nokey"; }
+    } catch (e) {}
+  },
+  /** Writes the shared data to data/funds.json on this computer. */
+  async save(state) {
+    const res = await fetch("api/funds", { method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify(state) });
+    if (!res.ok) throw new Error("local save failed");
+  },
+  /** Translates every fund that is not translated yet. Resolves to { done, failed, code }. */
+  async translatePending() {
+    const pending = Object.values(FundStore.getState().funds).flat().filter(f => !f.translated);
+    if (!pending.length) return { done: 0, failed: 0, code: "" };
+    if (!Local.canTranslate) return { done: 0, failed: pending.length, code: Local.reason };
+    let done = 0, failed = 0, code = "";
+    await Promise.all(pending.map(async fund => {
+      const before = JSON.stringify(fund);
+      try {
+        const res = await fetch("api/translate", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ fund }) });
+        const reply = await res.json();
+        if (!res.ok) { failed++; code = reply.error || "api"; return; }
+        const state = FundStore.getState();                   // put it back only if the admin has not changed the fund meanwhile
+        for (const list of Object.values(state.funds)) {
+          const i = list.findIndex(f => f.id === fund.id);
+          if (i > -1 && JSON.stringify(list[i]) === before) { list[i] = reply.fund; FundStore.setState(state); done++; return; }
+        }
+      } catch (e) { failed++; code = "network"; }
+    }));
+    return { done, failed, code };
+  }
+};
+const localReady = Local.detect();
+
 /* ---------- small status banner ---------- */
 const toastEl = document.getElementById("toast");
 let toastTimer = 0;
@@ -121,7 +163,7 @@ toastEl.addEventListener("click", () => { toastEl.hidden = true; });
 
 /** Admin actions call this first. Without a GitHub token nothing can be saved for everyone, so the action is stopped. */
 function needToken() {
-  if (Repo.hasToken()) return false;
+  if (Repo.hasToken() || Local.on) return false;           // the local server can save to this computer without a token
   toast(t("ghNeedToken"), "warn", true);
   return true;
 }
@@ -134,6 +176,24 @@ function queueSave() {
 }
 async function runSave() {
   clearTimeout(pollTimer);
+  let note = "";
+  if (Local.on) {                                             // on this computer: translate first, so what is saved is already translated
+    const waiting = Repo.untranslated(FundStore.getState());
+    if (waiting) {
+      toast(t("locTranslating")(waiting), "", true);
+      const result = await Local.translatePending();
+      applyLang();
+      if (result.failed) note = " " + t("locErr_" + result.code);
+    }
+  }
+  if (!Repo.hasToken()) {
+    if (!Local.on) return toast(t("ghNotSaved") + " " + t("ghNeedToken"), "err", true);
+    try {
+      await Local.save(FundStore.getState());
+      toast(t("locSaved") + note, note ? "warn" : "ok", !!note);
+    } catch (e) { toast(t("ghNotSaved") + " " + t("locErr_save"), "err", true); }
+    return;
+  }
   toast(t("ghSaving"), "", true);
   try {
     const saved = await Repo.saveNow();
@@ -182,7 +242,7 @@ function translateNow(id) {
 /* ---------- GitHub token box in the Add Fund window ---------- */
 const ghInput = document.getElementById("ghInput"), ghStatus = document.getElementById("ghStatus");
 function refreshTokenBox() {
-  ghStatus.textContent = t(Repo.hasToken() ? "ghTokenSaved" : "ghTokenNone");
+  ghStatus.textContent = t(Repo.hasToken() ? "ghTokenSaved" : Local.on ? "locStatus" : "ghTokenNone");
   ghStatus.classList.toggle("ok", Repo.hasToken());
   document.getElementById("ghRemove").hidden = !Repo.hasToken();
   document.getElementById("ghBox").open = !Repo.hasToken();          // show the instructions until a token is saved
@@ -201,6 +261,7 @@ ghInput.addEventListener("keydown", e => { if (e.key === "Enter") { e.preventDef
 
 /* ---------- first load: show the shared funds ---------- */
 (async () => {
+  await localReady;
   let state = null;
   if (Repo.hasToken()) { try { state = (await Repo.readRemote()).state; } catch (e) {} }   // an admin gets the very latest
   if (!state) state = await Repo.readPublic();

@@ -336,3 +336,12 @@ html:not([lang="en"]) .wordmark{font-size:19px;letter-spacing:5px}
 .toast.ok{border-left-color:#4fbf93}
 .toast.warn{border-left-color:var(--gold)}
 .toast.err{border-left-color:#e2776b}
+
+/* ---------- Drag a card to reorder (admin) ---------- */
+.tool.grip{cursor:grab;touch-action:none}
+.has-tools .tag{max-width:calc(100% - 100px)}            /* three buttons now: grip, edit, delete */
+.track-outer.reordering{scroll-snap-type:none;cursor:grabbing;user-select:none}
+.track-outer.reordering .card{transition:transform .18s ease;box-shadow:none}
+.track-outer.reordering .card:hover{transform:none}
+.track-outer.reordering .card.moving{transition:none;z-index:5;opacity:.96;box-shadow:0 30px 60px -20px rgba(18,28,58,.55);outline:2px solid var(--gold)}
+.track-outer.reordering .card.moving .grip{cursor:grabbing;background:var(--gold);border-color:var(--gold);color:var(--navy)}

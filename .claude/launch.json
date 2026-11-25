@@ -4,7 +4,9 @@
     {
       "name": "fund-pitch",
       "runtimeExecutable": "python",
-      "runtimeArgs": ["-m", "http.server", "5173"],
+      "runtimeArgs": [
+        "server.py"
+      ],
       "port": 5173
     }
   ]

@@ -4,16 +4,26 @@ A static website: plain HTML, CSS and JavaScript. There is no build step and not
 
 ## Run it locally
 
-Open this folder in your IDE, then start a local web server from the folder. Either of these works:
+Open this folder in your IDE, then start the local server from the folder and open http://localhost:5173
 
-- **VS Code:** install the "Live Server" extension, right-click `index.html`, choose "Open with Live Server".
-- **Python:** run the command below, then open http://localhost:5173
+**With translation** (funds are translated the moment you upload them). Set your Claude key in the terminal first:
 
 ```
-python -m http.server 5173
+$env:ANTHROPIC_API_KEY = "your-key"; python server.py
 ```
 
-Double-clicking `index.html` also works, but a local server behaves more like a real site (saved logins and funds are kept per address).
+**Without translation** (the site works; funds stay in the deck's language):
+
+```
+python server.py
+```
+
+`server.py` serves the files and adds three things for the site on this computer only: it translates each new fund with Claude as you upload it, it saves your changes to `data/funds.json` in this folder, and it always serves the newest files. It needs the Anthropic SDK for translation (`pip install anthropic`, once).
+
+- The key lives only in that terminal. It is not written to any file and never reaches the browser. Closing the terminal forgets it.
+- Changes you make locally are on this computer only. To publish them, commit and push `data/funds.json`.
+- If you save a GitHub token in the site while running locally, changes are translated locally and then saved to GitHub for everyone, the same as on the live site.
+- A plain file server (`python -m http.server 5173`, or VS Code Live Server) still shows the site, but cannot translate or save without a GitHub token.
 
 ## Files
 
@@ -31,7 +41,9 @@ Double-clicking `index.html` also works, but a local server behaves more like a 
 | `js/pptx-reader.js` | Reads a `.pptx` deck in the browser and pulls out one draft fund per table column |
 | `js/add-fund.js` | The Add Fund screen (deck upload and review) and Delete Fund |
 | `js/edit-fund.js` | The Edit Fund form, the card Edit / Delete buttons and Restore original funds |
+| `js/reorder.js` | Drag a card by its grip to change the order of funds in a tab |
 | `js/repo.js` | Saves admin changes to `data/funds.json` on GitHub, the GitHub token box, and the status banner |
+| `server.py` | Local server: serves the site, translates uploads with Claude and saves `data/funds.json` on this computer |
 | `data/funds.json` | The shared data: added strategies and funds, edits and deletions |
 | `scripts/translate_funds.py` | Translates new funds with Claude; run by the workflow |
 | `.github/workflows/translate-funds.yml` | The GitHub Actions workflow that runs the translation |
@@ -66,6 +78,7 @@ Signed in as admin, every fund card has two small buttons in its top right corne
 - **Edit** opens a form with everything on the card and in View Fund: name, strategy tab, manager, label, size, inception, description, returns, track record notes, drawdown text, liquidity terms, source note and the words hidden from investors. Changing the strategy moves the fund to that tab.
 - **Returns** are one period per line: `2024: 12.5` for a full year, `2022 from 6: 15.62` for a part year starting in June, `2026 YTD 10: 4.78` for year to date through October.
 - **Delete** removes the fund after a confirmation.
+- **Reorder:** each card also has a grip button (six dots) next to the pencil. Press it and drag the card left or right; the other cards slide aside and the row scrolls near its edges. Letting go saves the new order for that strategy tab, for everyone. Press Esc while dragging to cancel. A tab with one fund shows no grip.
 - The 7 original funds can be edited and deleted too. Their original versions are kept, and **Restore original funds** (shown under the cards once any original has been changed) brings them all back. Funds and strategies you added are not affected by a restore.
 - For an original fund, an edit changes the text in the language you are viewing; the other two languages keep their text. Numbers apply to all languages.
 
@@ -114,7 +127,7 @@ The admin's own page shows the change at once, then updates by itself when the t
 - A fund whose translation failed stays in the deck's language. Open the repository's Actions tab to see why. **Translate** at the bottom of View Fund asks the workflow to try again; **Translate Again** re-translates from the language on screen.
 - Fund names, manager names, numbers and strategy tab names are not translated.
 - This repository is public, so everything in `data/funds.json` is public too.
-- Running the site locally uses the same repository file: a change made on `localhost` with a token is saved for everyone.
+- Running the site locally with a token saved also writes to the repository: that change is live for everyone. Without a token, local changes stay in the local `data/funds.json`.
 
 ## Limits of this version
 

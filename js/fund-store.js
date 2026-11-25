@@ -5,6 +5,7 @@
      funds       { strategyId: [fund, ...] } funds admins added
      hidden      [ fundId, ... ]             built-in funds admins deleted (can be restored)
      overrides   { fundId: { fund, strat } } edited built-in funds (js/funds-data.js itself is never changed)
+     order       { strategyId: [fundId, ...] } card order admins set by dragging; funds not listed come after
    This file only holds that state in memory and rebuilds the live FUNDS list from it.
    Loading and saving the file is done by js/repo.js, which is told about every change through onChange(). */
 const FundStore = (() => {
@@ -15,12 +16,13 @@ const FundStore = (() => {
   BUILT_IN.forEach(s => FUNDS[s].forEach((f, i) => { f.id = `b-${s}-${i}`; f.builtIn = true; }));   // stable ids for built-ins
   const ORIGINAL = clone({ liquid: FUNDS.liquid, illiquid: FUNDS.illiquid });                        // pristine copy to rebuild from
 
-  const empty = () => ({ strategies: [], funds: {}, hidden: [], overrides: {} });
+  const empty = () => ({ strategies: [], funds: {}, hidden: [], overrides: {}, order: {} });
   const normalise = s => ({
     strategies: Array.isArray(s && s.strategies) ? s.strategies : [],
     funds: s && s.funds && typeof s.funds === "object" ? s.funds : {},
     hidden: Array.isArray(s && s.hidden) ? s.hidden : [],
-    overrides: s && s.overrides && typeof s.overrides === "object" ? s.overrides : {}
+    overrides: s && s.overrides && typeof s.overrides === "object" ? s.overrides : {},
+    order: s && s.order && typeof s.order === "object" ? s.order : {}
   });
   let state = empty();
   let listener = () => {};
@@ -46,6 +48,11 @@ const FundStore = (() => {
     });
     Object.keys(state.funds).forEach(id => {
       if (FUNDS[id] && Array.isArray(state.funds[id])) FUNDS[id].push(...clone(state.funds[id]));    // funds of a deleted strategy are ignored
+    });
+    Object.entries(state.order).forEach(([strat, ids]) => {                                          // apply the dragged order
+      if (!FUNDS[strat] || !Array.isArray(ids)) return;
+      const rank = f => { const i = ids.indexOf(f.id); return i < 0 ? Infinity : i; };              // unlisted funds keep their place at the end
+      FUNDS[strat] = FUNDS[strat].map((f, i) => ({ f, i })).sort((a, b) => rank(a.f) - rank(b.f) || a.i - b.i).map(x => x.f);
     });
   }
   const changed = () => { rebuild(); listener(); };
@@ -77,6 +84,7 @@ const FundStore = (() => {
       });
       state.strategies = state.strategies.filter(s => s.id !== id);
       delete state.funds[id];
+      delete state.order[id];
       changed();
     },
 
@@ -119,6 +127,16 @@ const FundStore = (() => {
         Object.keys(state.funds).forEach(s => { state.funds[s] = state.funds[s].filter(f => f.id !== id); });
       }
       changed();
+    },
+
+    /** Moves the card at position `from` to position `to` within one strategy tab. */
+    reorder(strategyId, from, to) {
+      const ids = (FUNDS[strategyId] || []).map(f => f.id);
+      if (from < 0 || from >= ids.length || to < 0 || to >= ids.length || from === to) return false;
+      ids.splice(to, 0, ids.splice(from, 1)[0]);
+      state.order[strategyId] = ids;
+      changed();
+      return true;
     },
 
     /** True when an admin has edited or deleted any built-in fund. */

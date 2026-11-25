@@ -42,6 +42,7 @@ function cardHTML(f,i){
   const a=has?ann(f.perf):null, last=f.perf.at(-1);
   return `<article class="card">
     <div class="card-top${Auth.isAdmin()?" has-tools":""}">${Auth.isAdmin()?`<div class="card-tools">
+        ${FUNDS[tab].length>1?`<button class="tool grip" data-grip title="${t("reorder")}" aria-label="${t("reorder")}"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><circle cx="8" cy="5" r="1.9"/><circle cx="16" cy="5" r="1.9"/><circle cx="8" cy="12" r="1.9"/><circle cx="16" cy="12" r="1.9"/><circle cx="8" cy="19" r="1.9"/><circle cx="16" cy="19" r="1.9"/></svg></button>`:""}
         <button class="tool" data-edit="${f.id}" title="${t("edit")}" aria-label="${t("edit")}"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 20h4L19 9l-4-4L4 16v4zM13.5 6.5l4 4"/></svg></button>
         <button class="tool del" data-delfund="${f.id}" title="${t("del")}" aria-label="${t("del")}"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13M10 11v6M14 11v6"/></svg></button>
       </div>`:""}${anon()?"":`<span class="tag">${L(f.tag)}</span>`}<h3>${title(f)}</h3>${anon()?"":`<div class="mgr">${L(f.mgr)} · ${veh(f)}</div>`}</div>

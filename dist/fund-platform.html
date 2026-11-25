@@ -345,6 +345,15 @@ html:not([lang="en"]) .wordmark{font-size:19px;letter-spacing:5px}
 .toast.ok{border-left-color:#4fbf93}
 .toast.warn{border-left-color:var(--gold)}
 .toast.err{border-left-color:#e2776b}
+
+/* ---------- Drag a card to reorder (admin) ---------- */
+.tool.grip{cursor:grab;touch-action:none}
+.has-tools .tag{max-width:calc(100% - 100px)}            /* three buttons now: grip, edit, delete */
+.track-outer.reordering{scroll-snap-type:none;cursor:grabbing;user-select:none}
+.track-outer.reordering .card{transition:transform .18s ease;box-shadow:none}
+.track-outer.reordering .card:hover{transform:none}
+.track-outer.reordering .card.moving{transition:none;z-index:5;opacity:.96;box-shadow:0 30px 60px -20px rgba(18,28,58,.55);outline:2px solid var(--gold)}
+.track-outer.reordering .card.moving .grip{cursor:grabbing;background:var(--gold);border-color:var(--gold);color:var(--navy)}
 </style>
 </head>
 <body>
@@ -858,6 +867,47 @@ Object.assign(UI.tc,{
   ghErr_conflict:"有人同時儲存了修改，請重新操作一次。",
   ghErr_api:"GitHub 傳回錯誤，請稍後再試。"
 });
+
+/* ---------- Local server (server.py) ---------- */
+Object.assign(UI.en,{
+  locStatus:"Running on this computer: changes are saved to data/funds.json here, and nobody else sees them until that file is pushed. Save a token to publish changes for everyone instead.",
+  locTranslating:n=>`Translating ${n} fund${n===1?"":"s"} with Claude…`,
+  locSaved:"Saved on this computer (data/funds.json). Commit and push that file to publish it for everyone.",
+  locErr_nokey:"Not translated: ANTHROPIC_API_KEY is not set in the terminal that started server.py.",
+  locErr_nosdk:"Not translated: the Anthropic SDK is missing. Run  pip install anthropic  and start server.py again.",
+  locErr_key:"Not translated: the API key was rejected.",
+  locErr_rate:"Not translated: the API rate limit was reached. Use Translate in View Fund in a minute.",
+  locErr_network:"Not translated: the local server did not answer.",
+  locErr_api:"Not translated: the API returned an error. The terminal running server.py shows the details.",
+  locErr_save:"The local server could not write data/funds.json."
+});
+Object.assign(UI.sc,{
+  locStatus:"正在本机运行：修改保存到本机的 data/funds.json，推送该文件之前其他人看不到。如需直接为所有人发布，请保存令牌。",
+  locTranslating:n=>`正在使用 Claude 翻译 ${n} 只基金…`,
+  locSaved:"已保存到本机 (data/funds.json)。提交并推送该文件后即可为所有人发布。",
+  locErr_nokey:"未翻译：启动 server.py 的终端中未设置 ANTHROPIC_API_KEY。",
+  locErr_nosdk:"未翻译：缺少 Anthropic SDK。请运行  pip install anthropic  后重新启动 server.py。",
+  locErr_key:"未翻译：API 密钥被拒绝。",
+  locErr_rate:"未翻译：已达到 API 速率上限。请稍后在“查看详情”中点击“翻译”。",
+  locErr_network:"未翻译：本机服务器没有响应。",
+  locErr_api:"未翻译：API 返回错误。运行 server.py 的终端会显示详情。",
+  locErr_save:"本机服务器无法写入 data/funds.json。"
+});
+Object.assign(UI.tc,{
+  locStatus:"正在本機執行：修改儲存到本機的 data/funds.json，推送該檔案之前其他人看不到。如需直接為所有人發布，請儲存權杖。",
+  locTranslating:n=>`正在使用 Claude 翻譯 ${n} 隻基金…`,
+  locSaved:"已儲存到本機 (data/funds.json)。提交並推送該檔案後即可為所有人發布。",
+  locErr_nokey:"未翻譯：啟動 server.py 的終端機中未設定 ANTHROPIC_API_KEY。",
+  locErr_nosdk:"未翻譯：缺少 Anthropic SDK。請執行  pip install anthropic  後重新啟動 server.py。",
+  locErr_key:"未翻譯：API 金鑰被拒絕。",
+  locErr_rate:"未翻譯：已達到 API 速率上限。請稍後在「查看詳情」中點擊「翻譯」。",
+  locErr_network:"未翻譯：本機伺服器沒有回應。",
+  locErr_api:"未翻譯：API 傳回錯誤。執行 server.py 的終端機會顯示詳情。",
+  locErr_save:"本機伺服器無法寫入 data/funds.json。"
+});
+
+/* ---------- Drag to reorder ---------- */
+UI.en.reorder="Drag to reorder"; UI.sc.reorder="拖动调整顺序"; UI.tc.reorder="拖動調整順序";
 </script>
 <script>
 /* ===== js/funds-data.js ===== */
@@ -960,6 +1010,7 @@ const FUNDS = {
      funds       { strategyId: [fund, ...] } funds admins added
      hidden      [ fundId, ... ]             built-in funds admins deleted (can be restored)
      overrides   { fundId: { fund, strat } } edited built-in funds (js/funds-data.js itself is never changed)
+     order       { strategyId: [fundId, ...] } card order admins set by dragging; funds not listed come after
    This file only holds that state in memory and rebuilds the live FUNDS list from it.
    Loading and saving the file is done by js/repo.js, which is told about every change through onChange(). */
 const FundStore = (() => {
@@ -970,12 +1021,13 @@ const FundStore = (() => {
   BUILT_IN.forEach(s => FUNDS[s].forEach((f, i) => { f.id = `b-${s}-${i}`; f.builtIn = true; }));   // stable ids for built-ins
   const ORIGINAL = clone({ liquid: FUNDS.liquid, illiquid: FUNDS.illiquid });                        // pristine copy to rebuild from
 
-  const empty = () => ({ strategies: [], funds: {}, hidden: [], overrides: {} });
+  const empty = () => ({ strategies: [], funds: {}, hidden: [], overrides: {}, order: {} });
   const normalise = s => ({
     strategies: Array.isArray(s && s.strategies) ? s.strategies : [],
     funds: s && s.funds && typeof s.funds === "object" ? s.funds : {},
     hidden: Array.isArray(s && s.hidden) ? s.hidden : [],
-    overrides: s && s.overrides && typeof s.overrides === "object" ? s.overrides : {}
+    overrides: s && s.overrides && typeof s.overrides === "object" ? s.overrides : {},
+    order: s && s.order && typeof s.order === "object" ? s.order : {}
   });
   let state = empty();
   let listener = () => {};
@@ -1001,6 +1053,11 @@ const FundStore = (() => {
     });
     Object.keys(state.funds).forEach(id => {
       if (FUNDS[id] && Array.isArray(state.funds[id])) FUNDS[id].push(...clone(state.funds[id]));    // funds of a deleted strategy are ignored
+    });
+    Object.entries(state.order).forEach(([strat, ids]) => {                                          // apply the dragged order
+      if (!FUNDS[strat] || !Array.isArray(ids)) return;
+      const rank = f => { const i = ids.indexOf(f.id); return i < 0 ? Infinity : i; };              // unlisted funds keep their place at the end
+      FUNDS[strat] = FUNDS[strat].map((f, i) => ({ f, i })).sort((a, b) => rank(a.f) - rank(b.f) || a.i - b.i).map(x => x.f);
     });
   }
   const changed = () => { rebuild(); listener(); };
@@ -1032,6 +1089,7 @@ const FundStore = (() => {
       });
       state.strategies = state.strategies.filter(s => s.id !== id);
       delete state.funds[id];
+      delete state.order[id];
       changed();
     },
 
@@ -1074,6 +1132,16 @@ const FundStore = (() => {
         Object.keys(state.funds).forEach(s => { state.funds[s] = state.funds[s].filter(f => f.id !== id); });
       }
       changed();
+    },
+
+    /** Moves the card at position `from` to position `to` within one strategy tab. */
+    reorder(strategyId, from, to) {
+      const ids = (FUNDS[strategyId] || []).map(f => f.id);
+      if (from < 0 || from >= ids.length || to < 0 || to >= ids.length || from === to) return false;
+      ids.splice(to, 0, ids.splice(from, 1)[0]);
+      state.order[strategyId] = ids;
+      changed();
+      return true;
     },
 
     /** True when an admin has edited or deleted any built-in fund. */
@@ -1166,6 +1234,7 @@ function cardHTML(f,i){
   const a=has?ann(f.perf):null, last=f.perf.at(-1);
   return `<article class="card">
     <div class="card-top${Auth.isAdmin()?" has-tools":""}">${Auth.isAdmin()?`<div class="card-tools">
+        ${FUNDS[tab].length>1?`<button class="tool grip" data-grip title="${t("reorder")}" aria-label="${t("reorder")}"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><circle cx="8" cy="5" r="1.9"/><circle cx="16" cy="5" r="1.9"/><circle cx="8" cy="12" r="1.9"/><circle cx="16" cy="12" r="1.9"/><circle cx="8" cy="19" r="1.9"/><circle cx="16" cy="19" r="1.9"/></svg></button>`:""}
         <button class="tool" data-edit="${f.id}" title="${t("edit")}" aria-label="${t("edit")}"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 20h4L19 9l-4-4L4 16v4zM13.5 6.5l4 4"/></svg></button>
         <button class="tool del" data-delfund="${f.id}" title="${t("del")}" aria-label="${t("del")}"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13M10 11v6M14 11v6"/></svg></button>
       </div>`:""}${anon()?"":`<span class="tag">${L(f.tag)}</span>`}<h3>${title(f)}</h3>${anon()?"":`<div class="mgr">${L(f.mgr)} · ${veh(f)}</div>`}</div>
@@ -1759,7 +1828,7 @@ function fundFromDraft(d, i, name, mgr, hide) {
 fundForm.addEventListener("submit", e => {
   e.preventDefault();
   if (!Auth.isAdmin()) return fail(t("errAdmin"));
-  if (!Repo.hasToken()) return fail(t("ghNeedTokenHere"));   // nothing can be saved for everyone without it
+  if (!Repo.hasToken() && !Local.on) return fail(t("ghNeedTokenHere"));   // nothing can be saved for everyone without it
   const picked = [...imList.querySelectorAll(".im-item")].filter(el => el.querySelector(".im-on").checked);
   if (!picked.length || picked.some(el => !el.querySelector(".im-name").value.trim())) return fail(t("imNoneSel"));
 
@@ -2051,6 +2120,48 @@ const Repo = (() => {
   return { hasToken: () => !!getToken(), setToken, readRemote, readPublic, saveNow, merge, remember, untranslated, RepoError };
 })();
 
+/* ---------- Local server (server.py) ----------
+   When the site is opened through `python server.py` on someone's own computer, that server can translate funds
+   straight away (it holds the Claude key) and can save data/funds.json on disk. The published site has no such
+   server, so there `Local.on` stays false and everything goes through GitHub as described above. */
+const Local = {
+  on: false, canTranslate: false, reason: "nokey",
+  async detect() {
+    try {
+      const res = await fetch("api/health", { cache: "no-store" });
+      const info = res.ok ? await res.json() : null;
+      if (info && info.fundPitchLocal) { Local.on = true; Local.canTranslate = !!info.translate; Local.reason = info.reason || "nokey"; }
+    } catch (e) {}
+  },
+  /** Writes the shared data to data/funds.json on this computer. */
+  async save(state) {
+    const res = await fetch("api/funds", { method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify(state) });
+    if (!res.ok) throw new Error("local save failed");
+  },
+  /** Translates every fund that is not translated yet. Resolves to { done, failed, code }. */
+  async translatePending() {
+    const pending = Object.values(FundStore.getState().funds).flat().filter(f => !f.translated);
+    if (!pending.length) return { done: 0, failed: 0, code: "" };
+    if (!Local.canTranslate) return { done: 0, failed: pending.length, code: Local.reason };
+    let done = 0, failed = 0, code = "";
+    await Promise.all(pending.map(async fund => {
+      const before = JSON.stringify(fund);
+      try {
+        const res = await fetch("api/translate", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ fund }) });
+        const reply = await res.json();
+        if (!res.ok) { failed++; code = reply.error || "api"; return; }
+        const state = FundStore.getState();                   // put it back only if the admin has not changed the fund meanwhile
+        for (const list of Object.values(state.funds)) {
+          const i = list.findIndex(f => f.id === fund.id);
+          if (i > -1 && JSON.stringify(list[i]) === before) { list[i] = reply.fund; FundStore.setState(state); done++; return; }
+        }
+      } catch (e) { failed++; code = "network"; }
+    }));
+    return { done, failed, code };
+  }
+};
+const localReady = Local.detect();
+
 /* ---------- small status banner ---------- */
 const toastEl = document.getElementById("toast");
 let toastTimer = 0;
@@ -2065,7 +2176,7 @@ toastEl.addEventListener("click", () => { toastEl.hidden = true; });
 
 /** Admin actions call this first. Without a GitHub token nothing can be saved for everyone, so the action is stopped. */
 function needToken() {
-  if (Repo.hasToken()) return false;
+  if (Repo.hasToken() || Local.on) return false;           // the local server can save to this computer without a token
   toast(t("ghNeedToken"), "warn", true);
   return true;
 }
@@ -2078,6 +2189,24 @@ function queueSave() {
 }
 async function runSave() {
   clearTimeout(pollTimer);
+  let note = "";
+  if (Local.on) {                                             // on this computer: translate first, so what is saved is already translated
+    const waiting = Repo.untranslated(FundStore.getState());
+    if (waiting) {
+      toast(t("locTranslating")(waiting), "", true);
+      const result = await Local.translatePending();
+      applyLang();
+      if (result.failed) note = " " + t("locErr_" + result.code);
+    }
+  }
+  if (!Repo.hasToken()) {
+    if (!Local.on) return toast(t("ghNotSaved") + " " + t("ghNeedToken"), "err", true);
+    try {
+      await Local.save(FundStore.getState());
+      toast(t("locSaved") + note, note ? "warn" : "ok", !!note);
+    } catch (e) { toast(t("ghNotSaved") + " " + t("locErr_save"), "err", true); }
+    return;
+  }
   toast(t("ghSaving"), "", true);
   try {
     const saved = await Repo.saveNow();
@@ -2126,7 +2255,7 @@ function translateNow(id) {
 /* ---------- GitHub token box in the Add Fund window ---------- */
 const ghInput = document.getElementById("ghInput"), ghStatus = document.getElementById("ghStatus");
 function refreshTokenBox() {
-  ghStatus.textContent = t(Repo.hasToken() ? "ghTokenSaved" : "ghTokenNone");
+  ghStatus.textContent = t(Repo.hasToken() ? "ghTokenSaved" : Local.on ? "locStatus" : "ghTokenNone");
   ghStatus.classList.toggle("ok", Repo.hasToken());
   document.getElementById("ghRemove").hidden = !Repo.hasToken();
   document.getElementById("ghBox").open = !Repo.hasToken();          // show the instructions until a token is saved
@@ -2145,6 +2274,7 @@ ghInput.addEventListener("keydown", e => { if (e.key === "Enter") { e.preventDef
 
 /* ---------- first load: show the shared funds ---------- */
 (async () => {
+  await localReady;
   let state = null;
   if (Repo.hasToken()) { try { state = (await Repo.readRemote()).state; } catch (e) {} }   // an admin gets the very latest
   if (!state) state = await Repo.readPublic();
@@ -2153,6 +2283,88 @@ ghInput.addEventListener("keydown", e => { if (e.key === "Enter") { e.preventDef
   Repo.remember(FundStore.getState());
   applyLang();
   if (Auth.isAdmin() && Repo.hasToken() && Repo.untranslated(FundStore.getState())) watchTranslation(0);
+})();
+</script>
+<script>
+/* ===== js/reorder.js ===== */
+/* ---------- Drag a card to change the order of funds (admin only) ----------
+   Each card has a grip button (six dots) in its top right corner. Press it and drag left or right; the other cards
+   slide out of the way, and the row scrolls by itself near its edges. Releasing saves the new order for the open
+   strategy tab through FundStore.reorder(), which is shared with everyone like any other change.
+   Depends on: Auth, FundStore, needToken (repo.js), and tab / applyLang from app.js. */
+(() => {
+  const row = document.getElementById("track"), box = document.getElementById("scroller");
+  let drag = null, scrollLoop = 0;
+
+  // card centres are measured in the row's own coordinates, so they stay valid while the row scrolls
+  const contentX = clientX => clientX + box.scrollLeft;
+
+  row.addEventListener("pointerdown", e => {
+    const grip = e.target.closest("[data-grip]");
+    if (!grip || e.button > 0 || !Auth.isAdmin()) return;
+    e.preventDefault();
+    if (needToken()) return;
+    const cards = [...row.querySelectorAll(".card")], card = grip.closest(".card"), from = cards.indexOf(card);
+    if (cards.length < 2 || from < 0) return;
+    const rects = cards.map(c => c.getBoundingClientRect());
+    drag = {
+      grip, card, cards, from, to: from, pointerId: e.pointerId,
+      startX: contentX(e.clientX), lastClientX: e.clientX,
+      centres: rects.map(r => r.left + r.width / 2 + box.scrollLeft),
+      step: cards.length > 1 ? rects[1].left - rects[0].left : rects[0].width      // card width plus the gap
+    };
+    grip.setPointerCapture(e.pointerId);
+    box.classList.add("reordering");
+    card.classList.add("moving");
+    autoScroll();
+  });
+
+  function place() {
+    const dx = contentX(drag.lastClientX) - drag.startX;
+    const centre = drag.centres[drag.from] + dx;
+    // the new position is the number of other cards whose centre lies to the left of the dragged card's centre
+    drag.to = drag.centres.filter((c, i) => i !== drag.from && c < centre).length;
+    drag.cards.forEach((c, i) => {
+      if (i === drag.from) c.style.transform = `translateX(${dx}px)`;
+      else if (i > drag.from && i <= drag.to) c.style.transform = `translateX(${-drag.step}px)`;
+      else if (i < drag.from && i >= drag.to) c.style.transform = `translateX(${drag.step}px)`;
+      else c.style.transform = "";
+    });
+  }
+
+  function autoScroll() {                                   // scroll the row while the pointer is held near either edge
+    cancelAnimationFrame(scrollLoop);
+    if (!drag) return;
+    const r = box.getBoundingClientRect(), edge = 70, x = drag.lastClientX;
+    const speed = x < r.left + edge ? -Math.min(18, (r.left + edge - x) / 4) : x > r.right - edge ? Math.min(18, (x - (r.right - edge)) / 4) : 0;
+    if (speed) { box.scrollLeft += speed; place(); }
+    scrollLoop = requestAnimationFrame(autoScroll);
+  }
+
+  row.addEventListener("pointermove", e => {
+    if (!drag || e.pointerId !== drag.pointerId) return;
+    drag.lastClientX = e.clientX;
+    place();
+  });
+
+  function finish(commit) {
+    if (!drag) return;
+    const { from, to, cards, card } = drag;
+    cancelAnimationFrame(scrollLoop);
+    cards.forEach(c => { c.style.transform = ""; });
+    card.classList.remove("moving");
+    box.classList.remove("reordering");
+    drag = null;
+    if (commit && to !== from) {
+      const keep = box.scrollLeft;
+      FundStore.reorder(tab, from, to);
+      applyLang();
+      box.scrollLeft = keep;
+    }
+  }
+  row.addEventListener("pointerup", e => { if (drag && e.pointerId === drag.pointerId) finish(true); });
+  row.addEventListener("pointercancel", () => finish(false));
+  addEventListener("keydown", e => { if (e.key === "Escape") finish(false); });
 })();
 </script>
 </body>

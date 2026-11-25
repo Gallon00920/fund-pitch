@@ -139,7 +139,7 @@ function fundFromDraft(d, i, name, mgr, hide) {
 fundForm.addEventListener("submit", e => {
   e.preventDefault();
   if (!Auth.isAdmin()) return fail(t("errAdmin"));
-  if (!Repo.hasToken()) return fail(t("ghNeedTokenHere"));   // nothing can be saved for everyone without it
+  if (!Repo.hasToken() && !Local.on) return fail(t("ghNeedTokenHere"));   // nothing can be saved for everyone without it
   const picked = [...imList.querySelectorAll(".im-item")].filter(el => el.querySelector(".im-on").checked);
   if (!picked.length || picked.some(el => !el.querySelector(".im-name").value.trim())) return fail(t("imNoneSel"));
 

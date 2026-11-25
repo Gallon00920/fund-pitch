@@ -330,3 +330,44 @@ Object.assign(UI.tc,{
   ghErr_conflict:"有人同時儲存了修改，請重新操作一次。",
   ghErr_api:"GitHub 傳回錯誤，請稍後再試。"
 });
+
+/* ---------- Local server (server.py) ---------- */
+Object.assign(UI.en,{
+  locStatus:"Running on this computer: changes are saved to data/funds.json here, and nobody else sees them until that file is pushed. Save a token to publish changes for everyone instead.",
+  locTranslating:n=>`Translating ${n} fund${n===1?"":"s"} with Claude…`,
+  locSaved:"Saved on this computer (data/funds.json). Commit and push that file to publish it for everyone.",
+  locErr_nokey:"Not translated: ANTHROPIC_API_KEY is not set in the terminal that started server.py.",
+  locErr_nosdk:"Not translated: the Anthropic SDK is missing. Run  pip install anthropic  and start server.py again.",
+  locErr_key:"Not translated: the API key was rejected.",
+  locErr_rate:"Not translated: the API rate limit was reached. Use Translate in View Fund in a minute.",
+  locErr_network:"Not translated: the local server did not answer.",
+  locErr_api:"Not translated: the API returned an error. The terminal running server.py shows the details.",
+  locErr_save:"The local server could not write data/funds.json."
+});
+Object.assign(UI.sc,{
+  locStatus:"正在本机运行：修改保存到本机的 data/funds.json，推送该文件之前其他人看不到。如需直接为所有人发布，请保存令牌。",
+  locTranslating:n=>`正在使用 Claude 翻译 ${n} 只基金…`,
+  locSaved:"已保存到本机 (data/funds.json)。提交并推送该文件后即可为所有人发布。",
+  locErr_nokey:"未翻译：启动 server.py 的终端中未设置 ANTHROPIC_API_KEY。",
+  locErr_nosdk:"未翻译：缺少 Anthropic SDK。请运行  pip install anthropic  后重新启动 server.py。",
+  locErr_key:"未翻译：API 密钥被拒绝。",
+  locErr_rate:"未翻译：已达到 API 速率上限。请稍后在“查看详情”中点击“翻译”。",
+  locErr_network:"未翻译：本机服务器没有响应。",
+  locErr_api:"未翻译：API 返回错误。运行 server.py 的终端会显示详情。",
+  locErr_save:"本机服务器无法写入 data/funds.json。"
+});
+Object.assign(UI.tc,{
+  locStatus:"正在本機執行：修改儲存到本機的 data/funds.json，推送該檔案之前其他人看不到。如需直接為所有人發布，請儲存權杖。",
+  locTranslating:n=>`正在使用 Claude 翻譯 ${n} 隻基金…`,
+  locSaved:"已儲存到本機 (data/funds.json)。提交並推送該檔案後即可為所有人發布。",
+  locErr_nokey:"未翻譯：啟動 server.py 的終端機中未設定 ANTHROPIC_API_KEY。",
+  locErr_nosdk:"未翻譯：缺少 Anthropic SDK。請執行  pip install anthropic  後重新啟動 server.py。",
+  locErr_key:"未翻譯：API 金鑰被拒絕。",
+  locErr_rate:"未翻譯：已達到 API 速率上限。請稍後在「查看詳情」中點擊「翻譯」。",
+  locErr_network:"未翻譯：本機伺服器沒有回應。",
+  locErr_api:"未翻譯：API 傳回錯誤。執行 server.py 的終端機會顯示詳情。",
+  locErr_save:"本機伺服器無法寫入 data/funds.json。"
+});
+
+/* ---------- Drag to reorder ---------- */
+UI.en.reorder="Drag to reorder"; UI.sc.reorder="拖动调整顺序"; UI.tc.reorder="拖動調整順序";
