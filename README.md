@@ -126,6 +126,7 @@ The admin's own page shows the change at once, then updates by itself when the t
 - Other visitors see a change after GitHub Pages republishes, usually within a couple of minutes.
 - A fund whose translation failed stays in the deck's language. Open the repository's Actions tab to see why. **Translate** at the bottom of View Fund asks the workflow to try again; **Translate Again** re-translates from the language on screen.
 - Fund names, manager names, numbers and strategy tab names are not translated.
+- **Claude also decides what to hide from investors.** In the same request that translates a fund, Claude lists the words that would identify the fund or its manager (their names and abbreviations, sister funds, platforms, people). That list becomes the fund's "Words hidden from investors". The list shown in the upload window is only a first guess by simple rules; if you edit it there, your words are kept and Claude's are added. You can change the final list at any time in Edit Fund.
 - This repository is public, so everything in `data/funds.json` is public too.
 - Running the site locally with a token saved also writes to the repository: that change is live for everyone. Without a token, local changes stay in the local `data/funds.json`.
 

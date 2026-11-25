@@ -103,7 +103,7 @@ function renderDrafts() {
           <label><span>${t("imName")}</span><input class="im-name" maxlength="80" value="${esc(d.name)}"></label>
           <label><span>${t("afMgr")}</span><input class="im-mgr" maxlength="60" value="${esc(d.mgr)}"></label>
           <label><span>${t("afCategory")}</span><select class="im-tab">${stratOptions(d.liquid ? "liquid" : "illiquid")}</select></label>
-          <label class="wide"><span>${t("imHide")}</span><input class="im-hide" maxlength="300" value="${esc(suggestHidden(d).join(", "))}"></label>
+          <label class="wide"><span>${t("imHide")}</span><input class="im-hide" maxlength="300" data-auto="${esc(suggestHidden(d).join(", "))}" value="${esc(suggestHidden(d).join(", "))}"></label>
         </div>
         <ul class="im-sum">
           <li><b>${t("aum")}:</b> ${size} &nbsp;·&nbsp; <b>${t("inception")}:</b> ${inc}</li>
@@ -115,7 +115,7 @@ function renderDrafts() {
 }
 
 /** Turns an accepted draft into a fund object, in the shape used by js/funds-data.js plus a few free-text fields. */
-function fundFromDraft(d, i, name, mgr, hide) {
+function fundFromDraft(d, i, name, mgr, hide, hideUntouched) {
   const one = s => ({ en: s });                               // deck text is shown as written, in every language
   const fund = {
     id: `custom-${Date.now()}-${i}`, custom: true,
@@ -135,6 +135,9 @@ function fundFromDraft(d, i, name, mgr, hide) {
   fund.redact = [...new Set(String(hide).split(/[,，、;；]/).map(w => esc(w)).filter(w => w.length > 1))]
     .sort((x, y) => y.length - x.length)
     .map(w => w.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"));
+  // true = the list above is only the site's rule-based guess, so Claude's choice replaces it when the fund is translated;
+  // false = the admin edited the list, so their words are kept and Claude's are added
+  fund.redactAuto = !!hideUntouched;
   return fund;
 }
 
@@ -150,7 +153,8 @@ fundForm.addEventListener("submit", e => {
   picked.forEach(el => {
     const i = +el.dataset.n;
     lastTab = el.querySelector(".im-tab").value;
-    const fund = fundFromDraft(drafts[i], i, el.querySelector(".im-name").value, el.querySelector(".im-mgr").value, el.querySelector(".im-hide").value);
+    const fund = fundFromDraft(drafts[i], i, el.querySelector(".im-name").value, el.querySelector(".im-mgr").value, el.querySelector(".im-hide").value,
+      el.querySelector(".im-hide").value.trim() === el.querySelector(".im-hide").dataset.auto.trim());
     saved = FundStore.add(lastTab, fund) && saved;
     added.push(fund.id);
   });

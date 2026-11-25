@@ -921,6 +921,11 @@ UI.tc.locNeedServer="本站不是透過 server.py 啟動的，因此無法在本
 UI.en.efInception="Inception month (sets the year on the card)";  UI.en.efInceptionText="Inception note (extra detail in View Fund, optional)";
 UI.sc.efInception="成立月份 (决定卡片上的年份)";                      UI.sc.efInceptionText="成立说明 (显示在详情中的补充文字，选填)";
 UI.tc.efInception="成立月份 (決定卡片上的年份)";                      UI.tc.efInceptionText="成立說明 (顯示在詳情中的補充文字，選填)";
+
+/* the hide list is now chosen by Claude when a fund is translated */
+UI.en.imHide="Words hidden from investors (a first guess; Claude decides the final list when the fund is translated)";
+UI.sc.imHide="对投资者隐藏的词 (初步建议；翻译基金时由 Claude 决定最终列表)";
+UI.tc.imHide="對投資者隱藏的詞 (初步建議；翻譯基金時由 Claude 決定最終列表)";
 </script>
 <script>
 /* ===== js/funds-data.js ===== */
@@ -1823,7 +1828,7 @@ function renderDrafts() {
           <label><span>${t("imName")}</span><input class="im-name" maxlength="80" value="${esc(d.name)}"></label>
           <label><span>${t("afMgr")}</span><input class="im-mgr" maxlength="60" value="${esc(d.mgr)}"></label>
           <label><span>${t("afCategory")}</span><select class="im-tab">${stratOptions(d.liquid ? "liquid" : "illiquid")}</select></label>
-          <label class="wide"><span>${t("imHide")}</span><input class="im-hide" maxlength="300" value="${esc(suggestHidden(d).join(", "))}"></label>
+          <label class="wide"><span>${t("imHide")}</span><input class="im-hide" maxlength="300" data-auto="${esc(suggestHidden(d).join(", "))}" value="${esc(suggestHidden(d).join(", "))}"></label>
         </div>
         <ul class="im-sum">
           <li><b>${t("aum")}:</b> ${size} &nbsp;·&nbsp; <b>${t("inception")}:</b> ${inc}</li>
@@ -1835,7 +1840,7 @@ function renderDrafts() {
 }
 
 /** Turns an accepted draft into a fund object, in the shape used by js/funds-data.js plus a few free-text fields. */
-function fundFromDraft(d, i, name, mgr, hide) {
+function fundFromDraft(d, i, name, mgr, hide, hideUntouched) {
   const one = s => ({ en: s });                               // deck text is shown as written, in every language
   const fund = {
     id: `custom-${Date.now()}-${i}`, custom: true,
@@ -1855,6 +1860,9 @@ function fundFromDraft(d, i, name, mgr, hide) {
   fund.redact = [...new Set(String(hide).split(/[,，、;；]/).map(w => esc(w)).filter(w => w.length > 1))]
     .sort((x, y) => y.length - x.length)
     .map(w => w.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"));
+  // true = the list above is only the site's rule-based guess, so Claude's choice replaces it when the fund is translated;
+  // false = the admin edited the list, so their words are kept and Claude's are added
+  fund.redactAuto = !!hideUntouched;
   return fund;
 }
 
@@ -1870,7 +1878,8 @@ fundForm.addEventListener("submit", e => {
   picked.forEach(el => {
     const i = +el.dataset.n;
     lastTab = el.querySelector(".im-tab").value;
-    const fund = fundFromDraft(drafts[i], i, el.querySelector(".im-name").value, el.querySelector(".im-mgr").value, el.querySelector(".im-hide").value);
+    const fund = fundFromDraft(drafts[i], i, el.querySelector(".im-name").value, el.querySelector(".im-mgr").value, el.querySelector(".im-hide").value,
+      el.querySelector(".im-hide").value.trim() === el.querySelector(".im-hide").dataset.auto.trim());
     saved = FundStore.add(lastTab, fund) && saved;
     added.push(fund.id);
   });
@@ -1953,7 +1962,7 @@ function openEdit(id) {
   ef("efNotes").value = notesOf(f).map(plain).join("\n");
   ef("efDd").value = ddShown;
   ef("efNote").value = f.note ? plain(L(f.note)) : "";
-  ef("efHide").value = (f.redact || []).map(w => plain(w.replace(/\\(.)/g, "$1"))).join(", ");
+  ef("efHide").defaultValue = ef("efHide").value = (f.redact || []).map(w => plain(w.replace(/\\(.)/g, "$1"))).join(", ");
   showEditModal(true);
   editModal.scrollTop = 0;
 }
@@ -2019,6 +2028,7 @@ editForm.addEventListener("submit", e => {
     else { delete f.ddRaw; delete f.dd; }
   }
   optional("note", escLines(lines(ef("efNote").value)), true);
+  if (val("efHide") !== ef("efHide").defaultValue.trim()) f.redactAuto = false;   // the admin changed the list: keep it on later re-translations
   f.redact = [...new Set(val("efHide").split(/[,，、;；]/).map(w => esc(w)).filter(w => w.length > 1))]
     .sort((x, y) => y.length - x.length)
     .map(w => w.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"));

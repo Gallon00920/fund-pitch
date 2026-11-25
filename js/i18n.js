@@ -381,3 +381,8 @@ UI.tc.locNeedServer="本站不是透過 server.py 啟動的，因此無法在本
 UI.en.efInception="Inception month (sets the year on the card)";  UI.en.efInceptionText="Inception note (extra detail in View Fund, optional)";
 UI.sc.efInception="成立月份 (决定卡片上的年份)";                      UI.sc.efInceptionText="成立说明 (显示在详情中的补充文字，选填)";
 UI.tc.efInception="成立月份 (決定卡片上的年份)";                      UI.tc.efInceptionText="成立說明 (顯示在詳情中的補充文字，選填)";
+
+/* the hide list is now chosen by Claude when a fund is translated */
+UI.en.imHide="Words hidden from investors (a first guess; Claude decides the final list when the fund is translated)";
+UI.sc.imHide="对投资者隐藏的词 (初步建议；翻译基金时由 Claude 决定最终列表)";
+UI.tc.imHide="對投資者隱藏的詞 (初步建議；翻譯基金時由 Claude 決定最終列表)";

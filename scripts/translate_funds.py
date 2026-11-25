@@ -39,14 +39,14 @@ LANG_SCHEMA = {
 }
 SCHEMA = {
     "type": "object",
-    "properties": {lang: LANG_SCHEMA for lang in LANGS},
-    "required": list(LANGS),
+    "properties": {**{lang: LANG_SCHEMA for lang in LANGS}, "hide": {"type": "array", "items": {"type": "string"}}},
+    "required": list(LANGS) + ["hide"],
     "additionalProperties": False,
 }
 
 SYSTEM = """You translate the text on investment fund cards for a website read by professional investors.
 
-The user message is a JSON object holding the text fields of one fund, written in one language (usually Simplified Chinese or English, sometimes mixed). Return the same fields in three languages: "en" (English), "sc" (Simplified Chinese) and "tc" (Traditional Chinese).
+The user message is a JSON object whose "fields" entry holds the text fields of one fund, written in one language (usually Simplified Chinese or English, sometimes mixed). Return the same fields in three languages: "en" (English), "sc" (Simplified Chinese) and "tc" (Traditional Chinese).
 
 Readers compare these cards against the fund manager's own documents, so the translation has to carry exactly the same facts:
 - Keep every number, percentage, date, year, currency amount, multiple (1.5x) and range exactly as written.
@@ -54,6 +54,14 @@ Readers compare these cards against the fund manager's own documents, so the tra
 - Keep the structure: a field with several lines (separated by newline characters) has the same number of lines in every language, in the same order. Each perfNotes entry stays one entry, in the same order.
 - An empty field stays an empty string. Do not add explanations or drop details.
 - For the language the source is already written in, return the source text as is, apart from fixing obvious punctuation.
+
+The message also gives "fund_name" and "manager". These are context, not text to translate.
+
+Second task: the "hide" list. Investors who log in see these cards with the fund and manager names removed, so that they cannot tell which fund or manager a card describes. Return in "hide" every word or short phrase in the fields that would give that away, written exactly as it appears in the text:
+- the fund's name and its abbreviations, and the manager's name and its abbreviations;
+- names of the manager's other funds, vehicles, share classes, platforms, programmes, subsidiaries and people, including series names such as "ABL Fund II" where the name itself points to the manager;
+- any other proper name that would let a reader identify the manager with a quick search.
+Do not list anything else. Generic finance terms and abbreviations (ITD, IRR, ROE, NAV, NPL, Evergreen, Drawdown, Composite), asset classes and strategy descriptions, ordinary words, bare roman numerals, numbers, dates, currencies and index names are not identifying and must stay visible, because hiding them makes the card unreadable. List each term once, in its shortest identifying form (for example "Bayview", not "Bayview Asset Management"), and include a term in each script it appears in.
 
 Write the way a private-markets professional would. For Traditional Chinese, use the financial terms used in Hong Kong and Taiwan (for example 基金規模, 贖回, 鎖定期), not a character-by-character conversion of the Simplified text."""
 
@@ -77,13 +85,26 @@ def source_text(value, source_lang):
 
 
 def fields_of(fund):
+    """The request for one fund: its text fields, plus the fund and manager names as context for the hide list."""
     source_lang = fund.get("translateFrom") or "en"       # a fresh upload keeps the deck text under "en", whatever its language
     out = {name: to_plain(source_text(fund.get(key), source_lang)) for name, key, _ in FIELDS}
     notes = fund.get("perfNotes") or []
     if isinstance(notes, dict):
         notes = notes.get(source_lang) or notes.get("en") or []
     out["perfNotes"] = [to_plain(n) for n in notes]
-    return out
+    return {"fund_name": to_plain(fund.get("name")), "manager": to_plain(source_text(fund.get("mgr"), source_lang)), "fields": out}
+
+
+def hide_patterns(words):
+    """Claude's hide list -> the form the site stores: HTML-escaped, regex-escaped, longest first."""
+    seen, out = set(), []
+    for word in words or []:
+        word = (word or "").strip()
+        if len(word) < 2 or len(word) > 60 or word.lower() in seen:
+            continue
+        seen.add(word.lower())
+        out.append(re.sub(r"([.*+?^${}()|\[\]\\])", r"\\\1", html.escape(word, quote=True)))
+    return sorted(out, key=len, reverse=True)[:60]
 
 
 def apply_translation(fund, result):
@@ -92,6 +113,14 @@ def apply_translation(fund, result):
         if any(per_lang.values()):
             fund[key] = per_lang
     fund["perfNotes"] = {lang: [to_html(n, False) for n in result[lang]["perfNotes"]] for lang in LANGS}
+    # Words to hide from investors, decided by Claude. They replace the site's automatic guess; words the admin
+    # typed themselves (redactAuto is False) are kept and Claude's are added to them.
+    chosen = hide_patterns(result.get("hide"))
+    if fund.get("redactAuto", False):       # funds added before this flag existed keep their list and gain Claude's words
+        fund["redact"] = chosen
+    else:
+        fund["redact"] = sorted(set(fund.get("redact") or []) | set(chosen), key=len, reverse=True)
+    fund["redactBy"] = "claude"
     fund["translated"] = True
     fund.pop("translateFrom", None)
 

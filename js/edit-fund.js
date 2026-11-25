@@ -56,7 +56,7 @@ function openEdit(id) {
   ef("efNotes").value = notesOf(f).map(plain).join("\n");
   ef("efDd").value = ddShown;
   ef("efNote").value = f.note ? plain(L(f.note)) : "";
-  ef("efHide").value = (f.redact || []).map(w => plain(w.replace(/\\(.)/g, "$1"))).join(", ");
+  ef("efHide").defaultValue = ef("efHide").value = (f.redact || []).map(w => plain(w.replace(/\\(.)/g, "$1"))).join(", ");
   showEditModal(true);
   editModal.scrollTop = 0;
 }
@@ -122,6 +122,7 @@ editForm.addEventListener("submit", e => {
     else { delete f.ddRaw; delete f.dd; }
   }
   optional("note", escLines(lines(ef("efNote").value)), true);
+  if (val("efHide") !== ef("efHide").defaultValue.trim()) f.redactAuto = false;   // the admin changed the list: keep it on later re-translations
   f.redact = [...new Set(val("efHide").split(/[,，、;；]/).map(w => esc(w)).filter(w => w.length > 1))]
     .sort((x, y) => y.length - x.length)
     .map(w => w.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"));
