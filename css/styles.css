@@ -1,0 +1,255 @@
+/* Junson Capital brand: navy #1A2445, deep navy #121C3A, blue #081951, gold #DAB56E (from junsoncapital.com).
+   The firm's site typeface is Masiva (commercial); Outfit is the closest free geometric substitute. */
+:root{
+  --navy:#1A2445; --navy-2:#121C3A; --deep:#081951; --ink:#141b33; --muted:#5d6580; --line:#e4e6ee;
+  --bg:#f6f6f9; --card:#ffffff; --gold:#DAB56E; --pos:#1f7a5a; --neg:#b4443a; --neg-bg:#fbf1ef;
+  --serif:'Outfit','PingFang SC','Microsoft YaHei','Noto Sans SC',system-ui,sans-serif;
+  --sans:'Outfit','PingFang SC','Microsoft YaHei','Noto Sans SC',system-ui,sans-serif;
+}
+html[lang="zh-Hant"]{--serif:'Outfit','PingFang TC','Microsoft JhengHei','Noto Sans TC',system-ui,sans-serif;--sans:var(--serif)}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+html,body{overscroll-behavior-x:none}   /* stop the browser swipe-back / swipe-forward gesture (Chrome, Edge, Firefox) */
+body{font-family:var(--sans);color:var(--ink);background:var(--bg);-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1240px;margin:0 auto;padding:0 32px}
+
+/* NAV */
+nav{position:fixed;inset:0 0 auto 0;z-index:50;transition:.3s;background:transparent}
+nav.solid{background:rgba(26,36,69,.97);box-shadow:0 1px 0 rgba(255,255,255,.06)}
+nav .wrap{display:flex;align-items:center;justify-content:space-between;height:76px;gap:24px}
+.logo{display:flex;align-items:center;gap:16px;color:#fff}
+.logo img{height:38px;width:auto;display:block}
+.logo small{font-size:10px;letter-spacing:3px;color:#b9bfd1;text-transform:uppercase;border-left:1px solid rgba(255,255,255,.25);padding-left:16px;line-height:1.4}
+.links{display:flex;gap:34px;font-size:12.5px;font-weight:600;letter-spacing:1.4px;text-transform:uppercase;color:#fff}
+.links a{position:relative;padding:6px 0;transition:color .2s}
+.links a::after{content:"";position:absolute;left:0;right:0;bottom:-2px;height:2px;background:var(--gold);transform:scaleX(0);transition:transform .25s}
+.links a:hover,.links a.on{color:var(--gold)}
+.links a:hover::after,.links a.on::after{transform:none}
+.nav-right{display:flex;align-items:center;gap:20px}
+.lang{position:relative}
+.lang-btn{display:flex;align-items:center;gap:8px;background:none;border:none;color:#fff;font-family:var(--sans);font-size:12.5px;font-weight:600;letter-spacing:1.4px;text-transform:uppercase;padding:8px 2px;cursor:pointer;transition:color .2s}
+.lang-btn:hover,.lang.open .lang-btn{color:var(--gold)}
+.lang-btn svg{flex:none}
+.lang-btn .chev{transition:transform .25s;opacity:.8}
+.lang.open .chev{transform:rotate(180deg)}
+.lang-menu{position:absolute;right:0;top:calc(100% + 14px);min-width:190px;background:#fff;box-shadow:0 18px 40px -12px rgba(18,28,58,.45);padding:8px 0;list-style:none;
+  opacity:0;transform:translateY(-6px);pointer-events:none;transition:opacity .2s,transform .2s;border-top:2px solid var(--gold)}
+.lang.open .lang-menu{opacity:1;transform:none;pointer-events:auto}
+.lang-menu button{width:100%;display:flex;justify-content:space-between;align-items:center;gap:16px;background:none;border:none;padding:11px 20px;font-family:var(--sans);font-size:14px;color:var(--ink);cursor:pointer;text-align:left}
+.lang-menu button small{font-size:11px;letter-spacing:1.2px;color:var(--muted);text-transform:uppercase}
+.lang-menu button:hover{background:#f4f2ec}
+.lang-menu button.on{color:var(--navy);font-weight:600}
+.lang-menu button.on::after{content:"";width:6px;height:6px;border-radius:50%;background:var(--gold);margin-left:auto}
+.lang-menu button.on small{display:none}
+.btn{display:inline-block;white-space:nowrap;padding:12px 26px;font-size:12px;font-weight:600;letter-spacing:1.6px;text-transform:uppercase;border:1px solid var(--gold);color:#fff;transition:.25s;cursor:pointer;background:none;font-family:var(--sans)}
+.btn:hover{background:var(--gold);color:var(--navy)}
+
+/* HERO */
+.hero{position:relative;min-height:86vh;display:flex;align-items:flex-end;color:#fff;padding:150px 0 90px;overflow:hidden;
+  background:radial-gradient(1200px 600px at 80% 20%,#2c3a6a 0%,transparent 60%),linear-gradient(160deg,#1A2445 0%,#0f1733 100%)}
+.hero::before{content:"";position:absolute;inset:0;opacity:.18;
+  background-image:linear-gradient(rgba(255,255,255,.08) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.08) 1px,transparent 1px);background-size:80px 80px;
+  mask-image:linear-gradient(180deg,transparent,#000 40%,transparent)}
+.hero svg.lines{position:absolute;right:-60px;top:90px;width:60%;opacity:.5}
+.hero .wrap{position:relative;width:100%}
+.eyebrow{font-size:12px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:22px;display:flex;align-items:center;gap:14px}
+.eyebrow::before{content:"";width:40px;height:1px;background:var(--gold)}
+.hero h1{font-family:var(--serif);font-weight:300;font-size:clamp(40px,5.6vw,76px);line-height:1.08;max-width:920px;letter-spacing:-.5px}
+.hero h1 b{font-weight:700}
+.hero p{margin-top:26px;max-width:620px;font-size:17px;line-height:1.75;color:#c3c8d8;font-weight:300}
+.hero-stats{display:grid;grid-template-columns:repeat(3,1fr);margin-top:70px;border-top:1px solid rgba(255,255,255,.14)}
+.hero-stats div{padding:26px 24px 0 0}
+.hero-stats b{display:block;font-family:var(--serif);font-size:clamp(30px,4.4vw,52px);font-weight:600;line-height:1.1}
+.hero-stats span{font-size:12px;letter-spacing:1.4px;text-transform:uppercase;color:#9aa2ba}
+
+/* SECTION */
+section.funds{padding:110px 0 120px}
+.sec-head{display:flex;justify-content:space-between;align-items:flex-end;gap:40px;margin-bottom:44px}
+.sec-head>div{flex:none}
+.sec-head h2{white-space:nowrap;font-family:var(--serif);font-weight:600;font-size:44px;color:var(--navy);line-height:1.1}
+.sec-head p{color:var(--muted);max-width:460px;line-height:1.75;font-size:15px}
+
+/* TABS */
+.tabbar{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line);margin-bottom:38px}
+.tabs{display:flex;gap:44px}
+.tab{position:relative;padding:18px 0;font-size:14px;letter-spacing:1.4px;text-transform:uppercase;color:var(--muted);cursor:pointer;background:none;border:none;font-family:var(--sans);font-weight:500}
+.tab .count{display:inline-grid;place-items:center;min-width:22px;height:22px;margin-left:8px;border-radius:11px;background:var(--line);font-size:11px;color:var(--navy)}
+.tab.active{color:var(--navy)}
+.tab.active::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:2px;background:var(--navy)}
+.tab.active .count{background:var(--navy);color:#fff}
+.tab-desc{font-size:13px;color:var(--muted);margin-top:18px}
+
+/* CAROUSEL: free horizontal scroll, mouse drag, keyboard */
+.track-outer{overflow-x:auto;overflow-y:hidden;margin:0 -32px;padding:6px 32px 30px;scroll-padding-inline:32px;
+  scroll-snap-type:x proximity;scrollbar-width:none;cursor:grab;outline:none;overscroll-behavior-x:none}
+.track-outer::-webkit-scrollbar{display:none}
+.track-outer.dragging{cursor:grabbing;scroll-snap-type:none}
+.track-outer.dragging .card{pointer-events:none}
+.track-outer:focus-visible{box-shadow:inset 0 0 0 2px rgba(218,181,110,.5)}
+/* Shared row grid: every card spans the same 10 rows (tag, name, manager, KPIs, strategy, returns label,
+   chart, drawdown label, drawdown, footer) via subgrid, so matching content lines up across cards. */
+.track{display:grid;grid-auto-flow:column;grid-auto-columns:calc((100% - 48px)/3);grid-template-rows:repeat(10,auto);column-gap:24px;row-gap:0;user-select:none}
+.card{scroll-snap-align:start}
+.card{grid-row:span 10;display:grid;grid-template-rows:subgrid;row-gap:0;background:var(--card);border:1px solid var(--line);transition:transform .35s,box-shadow .35s}
+.card:hover{transform:translateY(-6px);box-shadow:0 24px 50px -24px rgba(26,36,69,.35)}
+.card-top{grid-row:span 3;display:grid;grid-template-rows:subgrid;row-gap:0;align-items:start;padding:30px 30px 24px;background:linear-gradient(150deg,var(--navy) 0%,var(--navy-2) 100%);color:#fff;position:relative;overflow:hidden}
+.card-top::after{content:"";position:absolute;right:-40px;top:-40px;width:160px;height:160px;border:1px solid rgba(218,181,110,.35);border-radius:50%}
+.tag{display:inline-block;justify-self:start;align-self:start;font-size:10px;letter-spacing:1.8px;text-transform:uppercase;padding:5px 10px;border:1px solid rgba(218,181,110,.6);color:var(--gold);margin-bottom:18px}
+.card h3{font-family:var(--serif);font-weight:600;font-size:25px;line-height:1.2;align-self:start}
+.card .mgr{font-size:12px;color:#aab1c6;letter-spacing:1px;margin-top:8px;text-transform:uppercase;align-self:end}
+.kpis{display:grid;grid-template-columns:1fr 1fr 1fr;border-bottom:1px solid var(--line)}
+.kpis div{padding:18px 16px 16px 30px}
+.kpis div+div{border-left:1px solid var(--line);padding-left:16px}
+.kpis b{display:block;font-family:var(--serif);font-size:20px;font-weight:600;color:var(--navy);white-space:nowrap}
+.kpis span{font-size:10.5px;letter-spacing:1.2px;text-transform:uppercase;color:var(--muted)}
+.card-body{grid-row:span 6;display:grid;grid-template-rows:subgrid;row-gap:0;padding:22px 30px 26px}
+.strategy{font-size:14px;line-height:1.7;color:#334155;align-self:start}
+.mini-label{align-self:end;display:flex;justify-content:space-between;gap:10px;font-size:10.5px;letter-spacing:1.2px;text-transform:uppercase;color:var(--muted);margin:22px 0 10px}
+.mini-label span{white-space:nowrap}
+.mini-label span+span{letter-spacing:.2px;text-transform:none;color:var(--navy);font-weight:500;overflow:hidden;text-overflow:ellipsis}
+.bars{display:flex;align-items:center;gap:6px;height:90px;position:relative;margin-bottom:18px}
+.bars::before{content:"";position:absolute;left:0;right:0;top:50%;border-top:1px dashed #cfd7e2}
+.bar{flex:1;height:100%;position:relative}
+.bar i{position:absolute;left:0;right:0;transition:height .8s cubic-bezier(.22,.8,.2,1)}
+.bar i.p{bottom:50%;background:var(--navy)}
+.bar i.n{top:50%;background:var(--neg)}
+.bar.ytd i.p{background:var(--gold)}
+.bar em{position:absolute;bottom:-18px;left:50%;transform:translateX(-50%);font-style:normal;font-size:9.5px;color:var(--muted)}
+.bar:hover::after{content:attr(data-v);position:absolute;top:-24px;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;font-size:10px;padding:3px 6px;white-space:nowrap;z-index:2}
+
+/* drawdown */
+.dd{display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--line);background:#fafbfd}
+.dd div{padding:12px 14px}
+.dd div+div{border-left:1px solid var(--line)}
+.dd span{display:block;font-size:10px;letter-spacing:1.1px;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+.dd b{font-family:var(--serif);font-size:19px;font-weight:500;color:var(--neg)}
+.dd b.none{color:var(--pos);font-size:15px;font-family:var(--sans)}
+.dd small{display:block;font-size:11px;color:var(--muted);margin-top:2px}
+.dd-xl div{padding:20px 22px}
+.dd-xl b{font-size:30px}
+.dd-xl b.none{font-size:18px}
+.dd-xl small{font-size:12.5px}
+
+.card-foot{display:flex;justify-content:space-between;align-items:center;gap:12px;align-self:end;padding-top:18px;border-top:1px solid var(--line)}
+.recent{width:100%;border-collapse:collapse;font-size:13px;margin-bottom:22px;align-self:start}
+.recent th{text-align:left;font-weight:500;font-size:10px;letter-spacing:1.2px;text-transform:uppercase;color:var(--muted);padding:0 0 7px;border-bottom:1px solid var(--navy)}
+.recent td{padding:7px 0;border-bottom:1px solid var(--line);color:var(--ink)}
+.recent th:last-child,.recent td:last-child{text-align:right;font-variant-numeric:tabular-nums}
+.liq{font-size:12px;color:var(--muted);display:flex;align-items:center;gap:8px}
+.liq::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--pos);flex:none}
+.liq.semi::before{background:var(--gold)}
+.more{position:relative;display:inline-flex;gap:8px;align-items:center;font-size:12px;letter-spacing:1.4px;text-transform:uppercase;
+  color:var(--navy);font-weight:600;font-family:var(--sans);white-space:nowrap;background:none;border:none;cursor:pointer;
+  padding:16px 20px;margin:-16px -20px;transition:color .2s}   /* padding enlarges the click area; negative margin keeps the text where it was */
+.more::before{content:"";position:absolute;inset:-4px -4px -10px -24px}   /* reach a bit further left and down, invisible */
+.more svg{transition:transform .2s}
+.more:hover,.more:focus-visible{color:var(--gold-ink,#a8823d)}
+.more:hover svg{transform:translateX(3px)}
+.progress{height:2px;background:var(--line);margin-top:10px;position:relative}
+.progress i{position:absolute;left:0;top:0;bottom:0;background:var(--navy);transition:.6s cubic-bezier(.22,.8,.2,1)}
+
+/* DRAWER */
+.scrim{position:fixed;inset:0;background:rgba(18,28,58,.55);backdrop-filter:blur(3px);opacity:0;pointer-events:none;transition:.35s;z-index:80}
+.scrim.on{opacity:1;pointer-events:auto}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:min(620px,100%);background:#fff;z-index:90;transform:translateX(100%);transition:transform .45s cubic-bezier(.22,.8,.2,1);overflow-y:auto}
+.drawer.on{transform:none}
+.d-head{background:var(--navy);color:#fff;padding:44px 48px 36px;position:relative}
+.d-head h3{font-family:var(--serif);font-weight:600;font-size:34px;line-height:1.15;margin-top:4px}
+.d-head p{color:#aab1c6;font-size:13px;margin-top:10px;letter-spacing:1px;text-transform:uppercase}
+.close{position:absolute;right:28px;top:26px;background:none;border:1px solid rgba(255,255,255,.3);color:#fff;width:40px;height:40px;cursor:pointer;font-size:18px}
+.close:hover{background:var(--gold);border-color:var(--gold)}
+.d-body{padding:36px 48px 60px}
+.d-body h4{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin:32px 0 14px}
+.d-body h4:first-child{margin-top:0}
+.d-body p{font-size:15px;line-height:1.8;color:#334155}
+.d-body .dd-note{font-size:13px;color:var(--muted);margin-top:10px}
+.facts{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--line)}
+.facts div{padding:16px 0;border-bottom:1px solid var(--line)}
+.facts div:nth-child(odd){padding-right:20px}
+.facts span{display:block;font-size:10.5px;letter-spacing:1.3px;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.facts b{font-weight:500;font-size:15px;color:var(--navy);line-height:1.5}
+table.perf{width:100%;border-collapse:collapse;font-size:14px}
+table.perf th{text-align:left;font-weight:500;font-size:10.5px;letter-spacing:1.3px;text-transform:uppercase;color:var(--muted);padding:10px 0;border-bottom:1px solid var(--navy)}
+table.perf th:last-child,table.perf td:last-child{text-align:right}
+table.perf td{padding:11px 0;border-bottom:1px solid var(--line)}
+td.pos{color:var(--pos);font-weight:500} td.neg{color:var(--neg);font-weight:500}
+.note{font-size:12px!important;color:var(--muted)!important;line-height:1.6!important;margin-top:28px;padding-top:18px;border-top:1px solid var(--line)}
+
+/* FOOTER */
+footer{background:#121C3A;color:#71839e;font-size:12px;line-height:1.8;padding:44px 0}
+footer .wrap{display:grid;grid-template-columns:1fr 2fr;gap:60px}
+
+.reveal{opacity:0;transform:translateY(24px);transition:1s cubic-bezier(.22,.8,.2,1)}
+.reveal.in{opacity:1;transform:none}
+
+html:not([lang="en"]) .tab,html:not([lang="en"]) .links,html:not([lang="en"]) .eyebrow{letter-spacing:2px}
+html:not([lang="en"]) .hero h1{line-height:1.25}
+
+@media (max-width:1000px){.track{grid-auto-columns:calc((100% - 24px)/2)}.links{display:none}}
+@media (max-width:680px){
+  .wrap{padding:0 16px}.track-outer{margin:0 -16px;padding:6px 16px 30px}
+  .track{grid-auto-columns:88%}.sec-head{flex-direction:column;align-items:flex-start}.sec-head h2{font-size:34px}
+  .tabbar{flex-direction:column;align-items:flex-start;gap:12px;padding-bottom:12px}.tabs{gap:24px}
+  .d-head,.d-body{padding-left:24px;padding-right:24px}footer .wrap{display:block}
+  .logo small{display:none}
+}
+
+/* ---------- Account button, login screen, Add Fund form ---------- */
+[hidden]{display:none!important}
+body.modal-open{overflow:hidden}
+.acct{background:none;border:none;color:#fff;font-family:var(--sans);font-size:12.5px;font-weight:600;letter-spacing:1.4px;text-transform:uppercase;cursor:pointer;padding:8px 2px;white-space:nowrap;transition:color .2s}
+.acct:hover{color:var(--gold)}
+.btn.sm{padding:9px 16px;font-size:11.5px}
+.btn.solid{background:var(--gold);color:var(--navy)}
+.btn.solid:hover{background:#e6c88d}
+.btn.ghost{border-color:var(--line);color:var(--navy)}
+.btn.ghost:hover{background:var(--line);color:var(--navy)}
+
+.login{position:fixed;inset:0;z-index:200;display:grid;place-items:center;padding:24px;overflow-y:auto;
+  background:radial-gradient(1000px 500px at 80% 10%,#2c3a6a 0%,transparent 60%),linear-gradient(160deg,#1A2445 0%,#0f1733 100%)}
+.login-card{width:min(420px,100%);color:#fff}
+.login-card img{height:46px;display:block;margin-bottom:44px}
+.login-card h2{font-weight:600;font-size:30px;margin-bottom:10px}
+.login-card>p{color:#c3c8d8;font-weight:300;line-height:1.6;margin-bottom:30px;font-size:15px}
+.login-card label{display:block;margin-bottom:18px}
+.login-card label span{display:block;font-size:11px;letter-spacing:1.6px;text-transform:uppercase;color:#aab1c6;margin-bottom:8px}
+.login-card input{width:100%;padding:13px 14px;font:inherit;font-size:15px;color:#fff;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.22);outline:none;transition:border-color .2s}
+.login-card input:focus{border-color:var(--gold)}
+.login-card .btn{width:100%;margin-top:10px;padding:14px}
+.login-card .link-btn{display:block;margin:16px auto 0;background:none;border:none;color:#aab1c6;font:inherit;font-size:13px;cursor:pointer}
+.login-card .link-btn:hover{color:#fff}
+.form-err{color:#f0a49b!important;font-size:13.5px!important;margin:0 0 12px!important}
+.login-lang{margin-top:34px;padding-top:20px;border-top:1px solid rgba(255,255,255,.14);display:flex;gap:22px}
+.login-lang button{background:none;border:none;color:#aab1c6;font:inherit;font-size:13px;cursor:pointer;padding:0}
+.login-lang button:hover{color:#fff}
+.login-lang button.on{color:var(--gold);font-weight:600}
+
+.modal{position:fixed;inset:0;z-index:150;background:rgba(18,28,58,.6);backdrop-filter:blur(3px);overflow-y:auto;padding:40px 16px}
+.modal-card{width:min(760px,100%);margin:0 auto;background:#fff}
+.modal-head{background:var(--navy);color:#fff;padding:26px 36px;display:flex;justify-content:space-between;align-items:center}
+.modal-head h3{font-weight:600;font-size:24px}
+.modal-head .close{position:static}
+.modal-body{padding:30px 36px 8px;display:grid;grid-template-columns:1fr 1fr;gap:18px 22px}
+.modal-body label{display:block;min-width:0}
+.modal-body label.wide{grid-column:1/-1}
+.modal-body label>span{display:block;font-size:10.5px;letter-spacing:1.3px;text-transform:uppercase;color:var(--muted);margin-bottom:7px}
+.modal-body small{display:block;font-size:12px;color:var(--muted);margin-top:6px}
+.modal-body input,.modal-body select,.modal-body textarea{width:100%;padding:11px 12px;font:inherit;font-size:14.5px;color:var(--ink);background:#fff;border:1px solid #cfd3df;outline:none;transition:border-color .2s}
+.modal-body textarea{resize:vertical;min-height:84px;line-height:1.6}
+.modal-body input:focus,.modal-body select:focus,.modal-body textarea:focus{border-color:var(--navy)}
+.modal-foot{padding:14px 36px 32px;display:flex;justify-content:flex-end;align-items:center;gap:12px;flex-wrap:wrap}
+.modal-foot .form-err{color:var(--neg)!important;margin:0!important;flex:1 1 100%}
+.btn.danger{border-color:var(--neg);color:var(--neg);margin-top:26px}
+.btn.danger:hover{background:var(--neg);color:#fff}
+@media (max-width:680px){.modal-body{grid-template-columns:1fr;padding:24px 20px 4px}.modal-head,.modal-foot{padding-left:20px;padding-right:20px}.acct{font-size:11px;letter-spacing:.8px}}
+
+/* Investor view: the card header holds only the title, so let it sit a little lower */
+.d-head h3:first-of-type{margin-top:4px}
+
+/* Text wordmark used in place of a logo image: top bar, login screen and footer */
+.wordmark{color:#fff;font-family:var(--sans);font-weight:700;font-size:15px;letter-spacing:2.6px;text-transform:uppercase;line-height:1.35;white-space:nowrap}
+.login-card .wordmark{font-size:17px;margin-bottom:44px}
+footer .wordmark{font-size:14px}
+html:not([lang="en"]) .wordmark{font-size:19px;letter-spacing:5px}
+@media (max-width:680px){.wordmark{font-size:12px;letter-spacing:1.6px;white-space:normal}}

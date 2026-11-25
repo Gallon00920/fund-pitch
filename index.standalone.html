@@ -1,0 +1,628 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Junson Capital | Fund Platform</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* Junson Capital brand: navy #1A2445, deep navy #121C3A, blue #081951, gold #DAB56E (from junsoncapital.com).
+   The firm's site typeface is Masiva (commercial); Outfit is the closest free geometric substitute. */
+:root{
+  --navy:#1A2445; --navy-2:#121C3A; --deep:#081951; --ink:#141b33; --muted:#5d6580; --line:#e4e6ee;
+  --bg:#f6f6f9; --card:#ffffff; --gold:#DAB56E; --pos:#1f7a5a; --neg:#b4443a; --neg-bg:#fbf1ef;
+  --serif:'Outfit','PingFang SC','Microsoft YaHei','Noto Sans SC',system-ui,sans-serif;
+  --sans:'Outfit','PingFang SC','Microsoft YaHei','Noto Sans SC',system-ui,sans-serif;
+}
+html[lang="zh-Hant"]{--serif:'Outfit','PingFang TC','Microsoft JhengHei','Noto Sans TC',system-ui,sans-serif;--sans:var(--serif)}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+html,body{overscroll-behavior-x:none}   /* stop the browser swipe-back / swipe-forward gesture (Chrome, Edge, Firefox) */
+body{font-family:var(--sans);color:var(--ink);background:var(--bg);-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1240px;margin:0 auto;padding:0 32px}
+
+/* NAV */
+nav{position:fixed;inset:0 0 auto 0;z-index:50;transition:.3s;background:transparent}
+nav.solid{background:rgba(26,36,69,.97);box-shadow:0 1px 0 rgba(255,255,255,.06)}
+nav .wrap{display:flex;align-items:center;justify-content:space-between;height:76px;gap:24px}
+.logo{display:flex;align-items:center;gap:16px;color:#fff}
+.logo img{height:38px;width:auto;display:block}
+.logo small{font-size:10px;letter-spacing:3px;color:#b9bfd1;text-transform:uppercase;border-left:1px solid rgba(255,255,255,.25);padding-left:16px;line-height:1.4}
+.links{display:flex;gap:34px;font-size:12.5px;font-weight:600;letter-spacing:1.4px;text-transform:uppercase;color:#fff}
+.links a{position:relative;padding:6px 0;transition:color .2s}
+.links a::after{content:"";position:absolute;left:0;right:0;bottom:-2px;height:2px;background:var(--gold);transform:scaleX(0);transition:transform .25s}
+.links a:hover,.links a.on{color:var(--gold)}
+.links a:hover::after,.links a.on::after{transform:none}
+.nav-right{display:flex;align-items:center;gap:20px}
+.lang{position:relative}
+.lang-btn{display:flex;align-items:center;gap:8px;background:none;border:none;color:#fff;font-family:var(--sans);font-size:12.5px;font-weight:600;letter-spacing:1.4px;text-transform:uppercase;padding:8px 2px;cursor:pointer;transition:color .2s}
+.lang-btn:hover,.lang.open .lang-btn{color:var(--gold)}
+.lang-btn svg{flex:none}
+.lang-btn .chev{transition:transform .25s;opacity:.8}
+.lang.open .chev{transform:rotate(180deg)}
+.lang-menu{position:absolute;right:0;top:calc(100% + 14px);min-width:190px;background:#fff;box-shadow:0 18px 40px -12px rgba(18,28,58,.45);padding:8px 0;list-style:none;
+  opacity:0;transform:translateY(-6px);pointer-events:none;transition:opacity .2s,transform .2s;border-top:2px solid var(--gold)}
+.lang.open .lang-menu{opacity:1;transform:none;pointer-events:auto}
+.lang-menu button{width:100%;display:flex;justify-content:space-between;align-items:center;gap:16px;background:none;border:none;padding:11px 20px;font-family:var(--sans);font-size:14px;color:var(--ink);cursor:pointer;text-align:left}
+.lang-menu button small{font-size:11px;letter-spacing:1.2px;color:var(--muted);text-transform:uppercase}
+.lang-menu button:hover{background:#f4f2ec}
+.lang-menu button.on{color:var(--navy);font-weight:600}
+.lang-menu button.on::after{content:"";width:6px;height:6px;border-radius:50%;background:var(--gold);margin-left:auto}
+.lang-menu button.on small{display:none}
+.btn{display:inline-block;white-space:nowrap;padding:12px 26px;font-size:12px;font-weight:600;letter-spacing:1.6px;text-transform:uppercase;border:1px solid var(--gold);color:#fff;transition:.25s;cursor:pointer;background:none;font-family:var(--sans)}
+.btn:hover{background:var(--gold);color:var(--navy)}
+
+/* HERO */
+.hero{position:relative;min-height:86vh;display:flex;align-items:flex-end;color:#fff;padding:150px 0 90px;overflow:hidden;
+  background:radial-gradient(1200px 600px at 80% 20%,#2c3a6a 0%,transparent 60%),linear-gradient(160deg,#1A2445 0%,#0f1733 100%)}
+.hero::before{content:"";position:absolute;inset:0;opacity:.18;
+  background-image:linear-gradient(rgba(255,255,255,.08) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.08) 1px,transparent 1px);background-size:80px 80px;
+  mask-image:linear-gradient(180deg,transparent,#000 40%,transparent)}
+.hero svg.lines{position:absolute;right:-60px;top:90px;width:60%;opacity:.5}
+.hero .wrap{position:relative;width:100%}
+.eyebrow{font-size:12px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:22px;display:flex;align-items:center;gap:14px}
+.eyebrow::before{content:"";width:40px;height:1px;background:var(--gold)}
+.hero h1{font-family:var(--serif);font-weight:300;font-size:clamp(40px,5.6vw,76px);line-height:1.08;max-width:920px;letter-spacing:-.5px}
+.hero h1 b{font-weight:700}
+.hero p{margin-top:26px;max-width:620px;font-size:17px;line-height:1.75;color:#c3c8d8;font-weight:300}
+.hero-stats{display:grid;grid-template-columns:repeat(3,1fr);margin-top:70px;border-top:1px solid rgba(255,255,255,.14)}
+.hero-stats div{padding:26px 24px 0 0}
+.hero-stats b{display:block;font-family:var(--serif);font-size:clamp(30px,4.4vw,52px);font-weight:600;line-height:1.1}
+.hero-stats span{font-size:12px;letter-spacing:1.4px;text-transform:uppercase;color:#9aa2ba}
+
+/* SECTION */
+section.funds{padding:110px 0 120px}
+.sec-head{display:flex;justify-content:space-between;align-items:flex-end;gap:40px;margin-bottom:44px}
+.sec-head>div{flex:none}
+.sec-head h2{white-space:nowrap;font-family:var(--serif);font-weight:600;font-size:44px;color:var(--navy);line-height:1.1}
+.sec-head p{color:var(--muted);max-width:460px;line-height:1.75;font-size:15px}
+
+/* TABS */
+.tabbar{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line);margin-bottom:38px}
+.tabs{display:flex;gap:44px}
+.tab{position:relative;padding:18px 0;font-size:14px;letter-spacing:1.4px;text-transform:uppercase;color:var(--muted);cursor:pointer;background:none;border:none;font-family:var(--sans);font-weight:500}
+.tab .count{display:inline-grid;place-items:center;min-width:22px;height:22px;margin-left:8px;border-radius:11px;background:var(--line);font-size:11px;color:var(--navy)}
+.tab.active{color:var(--navy)}
+.tab.active::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:2px;background:var(--navy)}
+.tab.active .count{background:var(--navy);color:#fff}
+.tab-desc{font-size:13px;color:var(--muted);margin-top:18px}
+
+/* CAROUSEL: free horizontal scroll, mouse drag, keyboard */
+.track-outer{overflow-x:auto;overflow-y:hidden;margin:0 -32px;padding:6px 32px 30px;scroll-padding-inline:32px;
+  scroll-snap-type:x proximity;scrollbar-width:none;cursor:grab;outline:none;overscroll-behavior-x:none}
+.track-outer::-webkit-scrollbar{display:none}
+.track-outer.dragging{cursor:grabbing;scroll-snap-type:none}
+.track-outer.dragging .card{pointer-events:none}
+.track-outer:focus-visible{box-shadow:inset 0 0 0 2px rgba(218,181,110,.5)}
+/* Shared row grid: every card spans the same 10 rows (tag, name, manager, KPIs, strategy, returns label,
+   chart, drawdown label, drawdown, footer) via subgrid, so matching content lines up across cards. */
+.track{display:grid;grid-auto-flow:column;grid-auto-columns:calc((100% - 48px)/3);grid-template-rows:repeat(10,auto);column-gap:24px;row-gap:0;user-select:none}
+.card{scroll-snap-align:start}
+.card{grid-row:span 10;display:grid;grid-template-rows:subgrid;row-gap:0;background:var(--card);border:1px solid var(--line);transition:transform .35s,box-shadow .35s}
+.card:hover{transform:translateY(-6px);box-shadow:0 24px 50px -24px rgba(26,36,69,.35)}
+.card-top{grid-row:span 3;display:grid;grid-template-rows:subgrid;row-gap:0;align-items:start;padding:30px 30px 24px;background:linear-gradient(150deg,var(--navy) 0%,var(--navy-2) 100%);color:#fff;position:relative;overflow:hidden}
+.card-top::after{content:"";position:absolute;right:-40px;top:-40px;width:160px;height:160px;border:1px solid rgba(218,181,110,.35);border-radius:50%}
+.tag{display:inline-block;justify-self:start;align-self:start;font-size:10px;letter-spacing:1.8px;text-transform:uppercase;padding:5px 10px;border:1px solid rgba(218,181,110,.6);color:var(--gold);margin-bottom:18px}
+.card h3{font-family:var(--serif);font-weight:600;font-size:25px;line-height:1.2;align-self:start}
+.card .mgr{font-size:12px;color:#aab1c6;letter-spacing:1px;margin-top:8px;text-transform:uppercase;align-self:end}
+.kpis{display:grid;grid-template-columns:1fr 1fr 1fr;border-bottom:1px solid var(--line)}
+.kpis div{padding:18px 16px 16px 30px}
+.kpis div+div{border-left:1px solid var(--line);padding-left:16px}
+.kpis b{display:block;font-family:var(--serif);font-size:20px;font-weight:600;color:var(--navy);white-space:nowrap}
+.kpis span{font-size:10.5px;letter-spacing:1.2px;text-transform:uppercase;color:var(--muted)}
+.card-body{grid-row:span 6;display:grid;grid-template-rows:subgrid;row-gap:0;padding:22px 30px 26px}
+.strategy{font-size:14px;line-height:1.7;color:#334155;align-self:start}
+.mini-label{align-self:end;display:flex;justify-content:space-between;gap:10px;font-size:10.5px;letter-spacing:1.2px;text-transform:uppercase;color:var(--muted);margin:22px 0 10px}
+.mini-label span{white-space:nowrap}
+.mini-label span+span{letter-spacing:.2px;text-transform:none;color:var(--navy);font-weight:500;overflow:hidden;text-overflow:ellipsis}
+.bars{display:flex;align-items:center;gap:6px;height:90px;position:relative;margin-bottom:18px}
+.bars::before{content:"";position:absolute;left:0;right:0;top:50%;border-top:1px dashed #cfd7e2}
+.bar{flex:1;height:100%;position:relative}
+.bar i{position:absolute;left:0;right:0;transition:height .8s cubic-bezier(.22,.8,.2,1)}
+.bar i.p{bottom:50%;background:var(--navy)}
+.bar i.n{top:50%;background:var(--neg)}
+.bar.ytd i.p{background:var(--gold)}
+.bar em{position:absolute;bottom:-18px;left:50%;transform:translateX(-50%);font-style:normal;font-size:9.5px;color:var(--muted)}
+.bar:hover::after{content:attr(data-v);position:absolute;top:-24px;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;font-size:10px;padding:3px 6px;white-space:nowrap;z-index:2}
+
+/* drawdown */
+.dd{display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--line);background:#fafbfd}
+.dd div{padding:12px 14px}
+.dd div+div{border-left:1px solid var(--line)}
+.dd span{display:block;font-size:10px;letter-spacing:1.1px;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+.dd b{font-family:var(--serif);font-size:19px;font-weight:500;color:var(--neg)}
+.dd b.none{color:var(--pos);font-size:15px;font-family:var(--sans)}
+.dd small{display:block;font-size:11px;color:var(--muted);margin-top:2px}
+.dd-xl div{padding:20px 22px}
+.dd-xl b{font-size:30px}
+.dd-xl b.none{font-size:18px}
+.dd-xl small{font-size:12.5px}
+
+.card-foot{display:flex;justify-content:space-between;align-items:center;gap:12px;align-self:end;padding-top:18px;border-top:1px solid var(--line)}
+.recent{width:100%;border-collapse:collapse;font-size:13px;margin-bottom:22px;align-self:start}
+.recent th{text-align:left;font-weight:500;font-size:10px;letter-spacing:1.2px;text-transform:uppercase;color:var(--muted);padding:0 0 7px;border-bottom:1px solid var(--navy)}
+.recent td{padding:7px 0;border-bottom:1px solid var(--line);color:var(--ink)}
+.recent th:last-child,.recent td:last-child{text-align:right;font-variant-numeric:tabular-nums}
+.liq{font-size:12px;color:var(--muted);display:flex;align-items:center;gap:8px}
+.liq::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--pos);flex:none}
+.liq.semi::before{background:var(--gold)}
+.more{position:relative;display:inline-flex;gap:8px;align-items:center;font-size:12px;letter-spacing:1.4px;text-transform:uppercase;
+  color:var(--navy);font-weight:600;font-family:var(--sans);white-space:nowrap;background:none;border:none;cursor:pointer;
+  padding:16px 20px;margin:-16px -20px;transition:color .2s}   /* padding enlarges the click area; negative margin keeps the text where it was */
+.more::before{content:"";position:absolute;inset:-4px -4px -10px -24px}   /* reach a bit further left and down, invisible */
+.more svg{transition:transform .2s}
+.more:hover,.more:focus-visible{color:var(--gold-ink,#a8823d)}
+.more:hover svg{transform:translateX(3px)}
+.progress{height:2px;background:var(--line);margin-top:10px;position:relative}
+.progress i{position:absolute;left:0;top:0;bottom:0;background:var(--navy);transition:.6s cubic-bezier(.22,.8,.2,1)}
+
+/* DRAWER */
+.scrim{position:fixed;inset:0;background:rgba(18,28,58,.55);backdrop-filter:blur(3px);opacity:0;pointer-events:none;transition:.35s;z-index:80}
+.scrim.on{opacity:1;pointer-events:auto}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:min(620px,100%);background:#fff;z-index:90;transform:translateX(100%);transition:transform .45s cubic-bezier(.22,.8,.2,1);overflow-y:auto}
+.drawer.on{transform:none}
+.d-head{background:var(--navy);color:#fff;padding:44px 48px 36px;position:relative}
+.d-head h3{font-family:var(--serif);font-weight:600;font-size:34px;line-height:1.15;margin-top:4px}
+.d-head p{color:#aab1c6;font-size:13px;margin-top:10px;letter-spacing:1px;text-transform:uppercase}
+.close{position:absolute;right:28px;top:26px;background:none;border:1px solid rgba(255,255,255,.3);color:#fff;width:40px;height:40px;cursor:pointer;font-size:18px}
+.close:hover{background:var(--gold);border-color:var(--gold)}
+.d-body{padding:36px 48px 60px}
+.d-body h4{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin:32px 0 14px}
+.d-body h4:first-child{margin-top:0}
+.d-body p{font-size:15px;line-height:1.8;color:#334155}
+.d-body .dd-note{font-size:13px;color:var(--muted);margin-top:10px}
+.facts{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--line)}
+.facts div{padding:16px 0;border-bottom:1px solid var(--line)}
+.facts div:nth-child(odd){padding-right:20px}
+.facts span{display:block;font-size:10.5px;letter-spacing:1.3px;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.facts b{font-weight:500;font-size:15px;color:var(--navy);line-height:1.5}
+table.perf{width:100%;border-collapse:collapse;font-size:14px}
+table.perf th{text-align:left;font-weight:500;font-size:10.5px;letter-spacing:1.3px;text-transform:uppercase;color:var(--muted);padding:10px 0;border-bottom:1px solid var(--navy)}
+table.perf th:last-child,table.perf td:last-child{text-align:right}
+table.perf td{padding:11px 0;border-bottom:1px solid var(--line)}
+td.pos{color:var(--pos);font-weight:500} td.neg{color:var(--neg);font-weight:500}
+.note{font-size:12px!important;color:var(--muted)!important;line-height:1.6!important;margin-top:28px;padding-top:18px;border-top:1px solid var(--line)}
+
+/* FOOTER */
+footer{background:#121C3A;color:#71839e;font-size:12px;line-height:1.8;padding:44px 0}
+footer .wrap{display:grid;grid-template-columns:1fr 2fr;gap:60px}
+
+.reveal{opacity:0;transform:translateY(24px);transition:1s cubic-bezier(.22,.8,.2,1)}
+.reveal.in{opacity:1;transform:none}
+
+html:not([lang="en"]) .tab,html:not([lang="en"]) .links,html:not([lang="en"]) .eyebrow{letter-spacing:2px}
+html:not([lang="en"]) .hero h1{line-height:1.25}
+
+@media (max-width:1000px){.track{grid-auto-columns:calc((100% - 24px)/2)}.links{display:none}}
+@media (max-width:680px){
+  .wrap{padding:0 16px}.track-outer{margin:0 -16px;padding:6px 16px 30px}
+  .track{grid-auto-columns:88%}.sec-head{flex-direction:column;align-items:flex-start}.sec-head h2{font-size:34px}
+  .tabbar{flex-direction:column;align-items:flex-start;gap:12px;padding-bottom:12px}.tabs{gap:24px}
+  .d-head,.d-body{padding-left:24px;padding-right:24px}footer .wrap{display:block}
+  .logo small{display:none}
+}
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <div class="wrap">
+    <a href="#" class="logo"><img src="data:image/png;base64,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" alt="Junson Capital 佳辰资本"><small data-i="brandSub"></small></a>
+    <div class="links"><a href="#about" class="on" data-sec="about" data-i="navAbout"></a><a href="#funds" data-sec="funds" data-i="navFunds"></a><a href="#contact" data-sec="contact" data-i="navContact"></a></div>
+    <div class="nav-right">
+      <div class="lang" id="lang">
+        <button class="lang-btn" id="langBtn" aria-haspopup="true" aria-expanded="false" aria-label="Language">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9.5"/><path d="M2.5 12h19M12 2.5c2.6 2.6 4 6 4 9.5s-1.4 6.9-4 9.5c-2.6-2.6-4-6-4-9.5s1.4-6.9 4-9.5z"/></svg>
+          <span id="langCur">EN</span>
+          <svg class="chev" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 3.5 5 6.5 8 3.5"/></svg>
+        </button>
+        <ul class="lang-menu" role="menu">
+          <li><button role="menuitemradio" data-lang="en">English <small>EN</small></button></li>
+          <li><button role="menuitemradio" data-lang="sc">简体中文 <small>简</small></button></li>
+          <li><button role="menuitemradio" data-lang="tc">繁體中文 <small>繁</small></button></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<header class="hero" id="about">
+  <svg class="lines" viewBox="0 0 600 300" fill="none">
+    <path d="M0 250 C120 230 160 180 240 170 S380 120 440 90 S560 40 600 30" stroke="#DAB56E" stroke-width="1"/>
+    <path d="M0 270 C140 260 180 220 260 210 S400 170 460 140 S560 100 600 90" stroke="#3a4a7d" stroke-width="1"/>
+    <path d="M0 290 C150 285 200 260 280 250 S420 220 480 200 S560 170 600 160" stroke="#2b3866" stroke-width="1"/>
+  </svg>
+  <div class="wrap">
+    <div class="eyebrow" data-i="heroEyebrow"></div>
+    <h1 data-i="heroTitle"></h1>
+    <p data-i="heroBody"></p>
+    <div class="hero-stats">
+      <div><b>130+</b><span data-i="stPipeline"></span></div>
+      <div><b>40+</b><span data-i="stGPs"></span></div>
+      <div><b>9</b><span data-i="stCategories"></span></div>
+    </div>
+  </div>
+</header>
+
+<section class="funds" id="funds">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div><div class="eyebrow" data-i="secEyebrow"></div><h2 data-i="secTitle"></h2></div>
+      <p data-i="secBody"></p>
+    </div>
+    <div class="tabbar reveal">
+      <div class="tabs" role="tablist">
+        <button class="tab active" data-tab="liquid" role="tab"><span data-i="tabLiquid"></span><span class="count" id="cLiquid"></span></button>
+        <button class="tab" data-tab="illiquid" role="tab"><span data-i="tabIlliquid"></span><span class="count" id="cIlliquid"></span></button>
+      </div>
+    </div>
+    <div class="track-outer" id="scroller" tabindex="0" aria-label="Funds"><div class="track" id="track"></div></div>
+    <div class="progress"><i id="prog"></i></div>
+    <p class="tab-desc" id="tabDesc"></p>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="wrap">
+    <div><img src="data:image/png;base64,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" alt="Junson Capital" style="height:40px;display:block;margin-bottom:14px"><span data-i="brandName" style="color:#c9cfdd"></span><br><span data-i="division"></span></div>
+    <div data-i="disclaimer"></div>
+  </div>
+</footer>
+
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" id="drawer" aria-hidden="true"></aside>
+
+<script>
+/* ---------- UI strings ---------- */
+const UI = {
+  en:{brandSub:"Alternative Investments",navAbout:"About",navFunds:"Funds",navContact:"Contact",
+    heroEyebrow:"Curated Credit Platform · November 2026",
+    heroTitle:"<b>Institutional credit,</b><br>selected with discipline.",brandName:"Junson Capital",
+    heroBody:"A focused shelf of liquid and semi-liquid strategies, chosen through Junson Capital's manager research process for durable income, drawdown control and transparent liquidity terms.",
+    stPipeline:"Funds in Pipeline",stGPs:"GPs Covered",stCategories:"Strategy Categories",stStrategies:"Featured Strategies",stAum:"Combined Fund AUM",stLiq:"Liquidity Profiles",stTrack:"Longest Track Record",
+    secEyebrow:"Our Fund Shelf",secTitle:"Featured Strategies",
+    secBody:"Browse strategies by liquidity profile. Select any fund for its full profile, calendar-year performance, drawdowns and redemption terms.",
+    tabLiquid:"Liquid",tabIlliquid:"Semi-Liquid / Private",
+    descLiquid:"UCITS vehicles with daily dealing. Source: Man Group monthly factsheets as of 30 Oct 2026.",
+    descIlliquid:"Private hedge funds with periodic liquidity, notice periods, gates and soft locks. Sources: manager decks and monthly reports.",
+    aum:"Fund AUM",inception:"Inception",ann:"Ann. (full yrs)",annual:"Annual Returns",maxdd:"Max Drawdown",recent5:"Last 5 Calendar Years",
+    wm:"Worst Month",wm20:"Worst Month (since 2020)",wy:"Worst Year",noNeg:"No negative year",view:"View Fund",
+    overview:"Strategy Overview",facts:"Key Facts",vehicle:"Vehicle",dealing:"Dealing",liqTerms:"Liquidity Terms",
+    perfTitle:"Calendar-Year Performance",period:"Period",ret:"Return",daily:"Daily",dailyFull:"Daily subscriptions and redemptions.",
+    private:"Private fund",past:"Past performance is not indicative of future results. Source: manager factsheets and marketing materials.",
+    
+    division:"Alternative Investments Division",yrs:n=>n+" yrs",
+    disclaimer:"For professional investors only. This material is for discussion purposes and does not constitute an offer to sell or a solicitation of an offer to buy any security. Past performance is not indicative of future results. Performance figures are sourced from manager factsheets and marketing materials and may be net or gross of fees as noted per fund. Investments in private funds are subject to lock-ups, gates and redemption restrictions."},
+  sc:{brandSub:"另类投资",navAbout:"关于我们",navFunds:"基金",navContact:"联系我们",
+    heroEyebrow:"精选信贷平台 · 2026年11月",
+    heroTitle:"<b>机构级信贷，</b><br>以严谨标准甄选。",brandName:"佳辰资本",
+    heroBody:"一组精选的流动性与半流动性策略，经 Junson Capital 管理人研究流程筛选，注重稳健收益、回撤控制与透明的流动性条款。",
+    stPipeline:"只基金项目储备",stGPs:"覆盖GP数量",stCategories:"大类投资策略",stStrategies:"精选策略",stAum:"基金规模合计",stLiq:"流动性类别",stTrack:"最长业绩记录",
+    secEyebrow:"基金精选",secTitle:"精选策略",
+    secBody:"按流动性类别浏览策略。点击任一基金，查看完整介绍、历年业绩、最大回撤及赎回条款。",
+    tabLiquid:"流动性基金",tabIlliquid:"半流动性 / 私募",
+    descLiquid:"UCITS 结构，每日申赎。数据来源：Man Group 官方月度 Factsheet，截至2026年10月30日。",
+    descIlliquid:"私募对冲基金，定期开放，设有赎回通知期、赎回闸门及软锁定期。数据来源：各基金推介材料及月报。",
+    aum:"基金规模",inception:"成立年份",ann:"年化回报(完整年度)",annual:"年度表现",maxdd:"最大回撤",recent5:"近五年年度业绩",
+    wm:"最差单月",wm20:"最差单月 (2020年以来)",wy:"最差年度",noNeg:"无负年度",view:"查看详情",
+    overview:"策略概述",facts:"基本信息",vehicle:"产品结构",dealing:"申赎频率",liqTerms:"流动性条款",
+    perfTitle:"历年业绩",period:"期间",ret:"回报",daily:"每日",dailyFull:"每日申购及赎回。",
+    private:"私募基金",past:"过往业绩不代表未来表现。数据来源：基金管理人月报及推介材料。",
+    
+    division:"另类投资部",yrs:n=>n+"年",
+    disclaimer:"仅供专业投资者参考。本材料仅作讨论用途，不构成任何证券的出售要约或购买要约邀请。过往业绩不代表未来表现。业绩数据来源于基金管理人月报及推介材料，是否扣费以各基金注明为准。私募基金投资受锁定期、赎回闸门及其他赎回限制约束。"},
+  tc:{brandSub:"另類投資",navAbout:"關於我們",navFunds:"基金",navContact:"聯絡我們",
+    heroEyebrow:"精選信貸平台 · 2026年11月",
+    heroTitle:"<b>機構級信貸，</b><br>以嚴謹標準甄選。",brandName:"佳辰資本",
+    heroBody:"一組精選的流動性與半流動性策略，經 Junson Capital 管理人研究流程篩選，注重穩健收益、回撤控制與透明的流動性條款。",
+    stPipeline:"隻基金項目儲備",stGPs:"覆蓋GP數量",stCategories:"大類投資策略",stStrategies:"精選策略",stAum:"基金規模合計",stLiq:"流動性類別",stTrack:"最長業績記錄",
+    secEyebrow:"基金精選",secTitle:"精選策略",
+    secBody:"按流動性類別瀏覽策略。點擊任一基金，查看完整介紹、歷年業績、最大回撤及贖回條款。",
+    tabLiquid:"流動性基金",tabIlliquid:"半流動性 / 私募",
+    descLiquid:"UCITS 結構，每日申贖。資料來源：Man Group 官方月度 Factsheet，截至2026年10月30日。",
+    descIlliquid:"私募對沖基金，定期開放，設有贖回通知期、贖回閘門及軟鎖定期。資料來源：各基金推介材料及月報。",
+    aum:"基金規模",inception:"成立年份",ann:"年化回報(完整年度)",annual:"年度表現",maxdd:"最大回撤",recent5:"近五年年度業績",
+    wm:"最差單月",wm20:"最差單月 (2020年以來)",wy:"最差年度",noNeg:"無負年度",view:"查看詳情",
+    overview:"策略概述",facts:"基本資料",vehicle:"產品結構",dealing:"申贖頻率",liqTerms:"流動性條款",
+    perfTitle:"歷年業績",period:"期間",ret:"回報",daily:"每日",dailyFull:"每日申購及贖回。",
+    private:"私募基金",past:"過往業績不代表未來表現。資料來源：基金管理人月報及推介材料。",
+    
+    division:"另類投資部",yrs:n=>n+"年",
+    disclaimer:"僅供專業投資者參考。本材料僅作討論用途，不構成任何證券的出售要約或購買要約邀請。過往業績不代表未來表現。業績數據來源於基金管理人月報及推介材料，是否扣費以各基金註明為準。私募基金投資受鎖定期、贖回閘門及其他贖回限制約束。"}
+};
+
+/* ---------- Fund data ----------
+   perf: [year, return%, kind, month]  kind: "p" = partial year starting in month; "ytd" = year-to-date through month
+   dd:   wm = [return%, "YYYY-MM"], wy = [return%, "YYYY"] or null (no negative year), since2020 = worst month measured since 2020 */
+const FUNDS = {
+  liquid:[
+    {name:"Man Dynamic Income", mgr:{en:"Man Group",sc:"Man Group",tc:"Man Group"}, vehicle:"UCITS", inception:"2022-07", aum:9.608,
+     tag:{en:"Global Flexible Bond · Total Return",sc:"全球灵活债券 · 总回报",tc:"全球靈活債券 · 總回報"},
+     strategy:{en:"Multi-sector bond strategy: high yield 66%, investment grade 14.5%, ABS ~8%, AT1 4%, emerging markets 3%.",
+               sc:"债券混合策略：高收益 66%、投资级 14.5%、ABS 约8%、AT1 4%、新兴市场 3%。",
+               tc:"債券混合策略：高收益 66%、投資級 14.5%、ABS 約8%、AT1 4%、新興市場 3%。"},
+     perf:[["2022",15.62,"p",6],["2023",25.04],["2024",18.82],["2025",10.93],["2026",4.78,"ytd",10]],
+     dd:{wm:[-3.22,"2022-09"],wy:null}},
+    {name:"Man Global Investment Grade Opportunities", mgr:{en:"Man Group",sc:"Man Group",tc:"Man Group"}, vehicle:"UCITS", inception:"2021-11", aum:7.842,
+     tag:{en:"Global IG Corporate · Benchmark-Relative",sc:"全球IG公司债 · 基准相对",tc:"全球IG公司債 · 基準相對"},
+     strategy:{en:"Primarily investment-grade corporate credit, with an emphasis on financials, banks and ABS.",
+               sc:"以投资级公司债为主，侧重金融、银行及 ABS。",
+               tc:"以投資級公司債為主，側重金融、銀行及 ABS。"},
+     perf:[["2021",1.44,"p",11],["2022",-9.61],["2023",22.51],["2024",13.40],["2025",10.38],["2026",1.82,"ytd",10]],
+     dd:{wm:[-5.75,"2022-09"],wy:[-9.61,"2022"]}},
+    {name:"Man High Yield Opportunities", mgr:{en:"Man Group",sc:"Man Group",tc:"Man Group"}, vehicle:"UCITS", inception:"2019-01", aum:6.1,
+     tag:{en:"Global High Yield",sc:"全球高收益债",tc:"全球高收益債"},
+     strategy:{en:"Global high-yield strategy, bottom-up, with a focus on small and mid-sized issuers.",
+               sc:"全球高收益债策略，自下而上，聚焦中小发行人。",
+               tc:"全球高收益債策略，自下而上，聚焦中小發行人。"},
+     perf:[["2019",15.85],["2020",13.45],["2021",11.60],["2022",-8.71],["2023",13.10],["2024",13.60],["2025",9.14],["2026",2.40,"ytd",10]],
+     dd:{wm:[-24.71,"2020-03"],wy:[-8.71,"2022"]},
+     note:{en:"AUM of €5,281M converted at EUR/USD ≈ 1.16.",sc:"规模 €5,281M，按 EUR/USD≈1.16 折算。",tc:"規模 €5,281M，按 EUR/USD≈1.16 折算。"}}
+  ],
+  illiquid:[
+    {name:"PARS IV", mgr:{en:"Global Macro",sc:"全球宏观",tc:"全球宏觀"}, vehicle:"private", inception:"2004-09", aum:4.932,
+     tag:{en:"Global Macro · Absolute Return",sc:"全球宏观 · 绝对收益",tc:"全球宏觀 · 絕對收益"},
+     strategy:{en:"Multi-asset macro positions; underlying exposures are not credit-based.",
+               sc:"多资产宏观头寸，底层资产非信用类。",
+               tc:"多資產宏觀頭寸，底層資產非信用類。"},
+     hist:[["2004",4.32,"p",10],["2005",6.50],["2006",5.13],["2007",19.03],["2008",-17.49],["2009",62.80],["2010",11.04],["2011",1.52],["2012",11.66],["2013",-0.78],["2014",5.61],["2015",4.25],["2016",0.50],["2017",3.24]],
+     perf:[["2018",-2.20],["2019",9.31],["2020",11.32],["2021",-6.81],["2022",20.17],["2023",10.35],["2024",12.44],["2025",10.17],["2026",9.43,"ytd",8]],
+     dd:{wm:[-12.56,"2020-03"],wy:[-17.49,"2008"],
+         extra:{en:"Worst year since 2020: 2021, −6.81%.",sc:"2020年以来最差年度：2021年 −6.81%。",tc:"2020年以來最差年度：2021年 −6.81%。"}},
+     liq:{en:"Monthly, 90-day notice",sc:"每月，提前90天",tc:"每月，提前90天"},
+     liqFull:{en:"Monthly dealing, 90-day redemption notice, 1/3 fund-level gate, 6-month soft lock (1% penalty).",
+              sc:"每月申赎，赎回提前90天通知，1/3 基金层面闸门，6个月软锁定 (1% 罚金)。",
+              tc:"每月申贖，贖回提前90天通知，1/3 基金層面閘門，6個月軟鎖定 (1% 罰金)。"},
+     note:{en:"PARS strategy total $6.5bn. Class N model, net of fees, as of 31 Aug 2026.",
+           sc:"PARS 策略合计 $6.5bn。Class N 模型费后回报，截至2026年8月31日。",
+           tc:"PARS 策略合計 $6.5bn。Class N 模型費後回報，截至2026年8月31日。"}},
+    {name:"LibreMax", mgr:{en:"Securitized Products",sc:"证券化产品",tc:"證券化產品"}, vehicle:"private", inception:"2010-10", aum:1.117,
+     tag:{en:"Securitized Products · Long/Short",sc:"证券化产品 · 多空",tc:"證券化產品 · 多空"},
+     strategy:{en:"Opportunistic structured credit long/short across housing, CRE, ABS, CLO and special situations; hedged with rates, equity index options, HY CDX and CMBX.",
+               sc:"机会型结构化信用多空，覆盖住房、商业地产、ABS、CLO 及特殊情况；以利率、股指期权、HY CDX、CMBX 对冲。",
+               tc:"機會型結構化信用多空，覆蓋住房、商業地產、ABS、CLO 及特殊情況；以利率、股指期權、HY CDX、CMBX 對沖。"},
+     hist:[["2010",4.16,"p",10],["2011",2.01],["2012",20.74],["2013",12.90],["2014",10.57],["2015",-0.91],["2016",3.69],["2017",9.15]],
+     perf:[["2018",6.73],["2019",6.12],["2020",-13.56],["2021",9.91],["2022",3.10],["2023",11.09],["2024",11.67],["2025",8.49],["2026",3.20,"ytd",10]],
+     dd:{wm:[-24.30,"2020-03"],wy:[-13.56,"2020"]},
+     liq:{en:"Quarterly, 90-day notice",sc:"季度，提前90天",tc:"季度，提前90天"},
+     liqFull:{en:"Quarterly redemption, 90-day notice, 25% investor-level gate, 9-month soft lock (5% early redemption fee).",
+              sc:"季度赎回，提前90天通知，25% 投资者层面闸门，9个月软锁定 (5% 提前赎回费)。",
+              tc:"季度贖回，提前90天通知，25% 投資者層面閘門，9個月軟鎖定 (5% 提前贖回費)。"},
+     note:{en:"Strategy AUM $3,415M. Net of fees as of 31 Oct 2026.",sc:"策略规模 $3,415M。费后净回报，截至2026年10月31日。",tc:"策略規模 $3,415M。費後淨回報，截至2026年10月31日。"}},
+    {name:"TPG AG MVP", mgr:{en:"Securitized Products",sc:"证券化产品",tc:"證券化產品"}, vehicle:"private", inception:"2009-05", aum:3.211,
+     tag:{en:"Securitized Products · Multi-Strategy",sc:"证券化产品 · 多策略",tc:"證券化產品 · 多策略"},
+     strategy:{en:"Multi-asset structured credit (core plus opportunistic), income-driven, annual turnover above 100%.",
+               sc:"多资产结构化信用 (Core+机会型)，收入驱动，年换手率100%以上。",
+               tc:"多資產結構化信用 (Core+機會型)，收入驅動，年換手率100%以上。"},
+     hist:[["2009",30.08,"p",5],["2010",24.22],["2011",6.36],["2012",20.87],["2013",13.17],["2014",10.82],["2015",5.28],["2016",8.53],["2017",15.64]],
+     perf:[["2018",9.05],["2019",9.31],["2020",-1.50],["2021",12.28],["2022",-0.95],["2023",9.92],["2024",11.45],["2025",9.44],["2026",1.32,"ytd",3]],
+     dd:{wm:[-31.42,"2020-03"],wy:[-1.50,"2020"]},
+     liq:{en:"Quarterly after 1-yr lock",sc:"1年锁定后按季度",tc:"1年鎖定後按季度"},
+     liqFull:{en:"Quarterly redemption after a 1-year lock-up; gates of 12.5–25% depending on share class.",
+              sc:"1年锁定期后季度赎回；不同份额类别闸门 12.5–25%。",
+              tc:"1年鎖定期後季度贖回；不同份額類別閘門 12.5–25%。"},
+     note:{en:"Size shown is NAV. Net returns as of 31 Mar 2026.",sc:"规模为 NAV。净回报，截至2026年3月31日。",tc:"規模為 NAV。淨回報，截至2026年3月31日。"}},
+    {name:"SCMF", mgr:{en:"Multi-Strategy",sc:"多策略",tc:"多策略"}, vehicle:"private", inception:"1998-01", aum:8.9,
+     tag:{en:"Multi-Strategy Hedge Fund",sc:"多策略对冲基金",tc:"多策略對沖基金"},
+     strategy:{en:"Multi-asset, with credit as only one component. Beta to global equities of 0.27.",
+               sc:"多资产策略，信用仅为其中一部分；对全球股票 beta 为 0.27。",
+               tc:"多資產策略，信用僅為其中一部分；對全球股票 beta 為 0.27。"},
+     hist:[["1994",28.23,"p",4],["1995",23.14],["1996",26.94],["1997",26.27],["1998",10.75],["1999",18.14],["2000",19.17],["2001",5.38],["2002",-2.14],["2003",22.89],["2004",10.87],["2005",8.39],["2006",12.89],["2007",10.23],["2008",-15.34],["2009",29.43],["2010",8.50],["2011",-0.01],["2012",12.48],["2013",14.75],["2014",5.55],["2015",-0.52],["2016",3.60],["2017",11.34]],
+     perf:[["2018",-2.40],["2019",15.75],["2020",18.91],["2021",4.58],["2022",-13.44],["2023",12.34],["2024",13.13],["2025",10.54],["2026",7.67,"ytd",6]],
+     dd:{wm:[-9.30,"2020-03"],wy:false,
+         extra:{en:"Worst year since 2020: 2022, −13.44%.",sc:"2020年以来最差年度：2022年 −13.44%。",tc:"2020年以來最差年度：2022年 −13.44%。"}},
+     liq:{en:"Quarterly / annual classes",sc:"季度 / 年度份额",tc:"季度 / 年度份額"},
+     liqFull:{en:"Quarterly class: quarterly, 30-day notice. Annual class: yearly after 1 year, 45-day notice. 3-year class: every 3 years, 90-day notice.",
+              sc:"季度份额：季度赎回，提前30天通知；年度份额：1年后每年赎回，提前45天；3年份额：每3年赎回，提前90天。",
+              tc:"季度份額：季度贖回，提前30天通知；年度份額：1年後每年贖回，提前45天；3年份額：每3年贖回，提前90天。"},
+     note:{en:"2.0% management fee composite; June figure preliminary, as of 30 Jun 2026.",
+           sc:"2.0%管理费 composite；6月为初步数据，截至2026年6月30日。",
+           tc:"2.0%管理費 composite；6月為初步數據，截至2026年6月30日。"}}
+  ]
+};
+
+/* ---------- helpers ---------- */
+const MON=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+let lang="en", tab="liquid";
+try{ const s=localStorage.getItem("jc-lang"); if(UI[s]) lang=s }catch(e){}
+const t=k=>UI[lang][k];
+const L=o=>o?(o[lang]||o.en):"";
+const zh=()=>lang!=="en";
+const fmt=v=>(v>0?"+":v<0?"−":"")+Math.abs(v).toFixed(2)+"%";
+const ym=s=>{const [y,m]=s.split("-");return zh()?`${y}年${+m}月`:`${MON[m-1]} ${y}`};
+const money=bn=>zh()?`${+(bn*10).toFixed(1)}亿美元`.replace("亿",lang==="tc"?"億":"亿"):`US$${bn.toFixed(bn<10?2:1)}bn`;
+const perLabel=([y,,k,m])=>k==="ytd"?(zh()?`${y} YTD (至${m}月)`:`${y} YTD (to ${MON[m-1]})`):k==="p"?(zh()?`${y} (${m}月起)`:`${y} (from ${MON[m-1]})`):y;
+const ann=p=>{const f=p.filter(x=>!x[2]);if(!f.length)return null;return(Math.pow(f.reduce((a,x)=>a*(1+x[1]/100),1),1/f.length)-1)*100};
+const liqTxt=f=>f.liq?L(f.liq):t("daily");
+const veh=f=>f.vehicle==="private"?t("private"):f.vehicle;
+
+function ddText(f){                                     // max drawdown as a plain sentence, same style as other drawer text
+  const d=f.dd, z=zh(), c=z?"：":": ", sep=z?"；":". ", end=z?"。":".";
+  const wm=`${d.since2020?t("wm20"):t("wm")}${c}${ym(d.wm[1])}${z?" ":", "}${fmt(d.wm[0])}`;
+  const wy=d.wy?`${t("wy")}${c}${d.wy[1]}${z?"年 ":", "}${fmt(d.wy[0])}`:t("noNeg");
+  return wm+(d.wy===false?"":sep+wy)+end+(d.extra?(z?"":" ")+L(d.extra):"");   // wy:false = leave the worst-year sentence out
+}
+
+const track=document.getElementById("track"), prog=document.getElementById("prog");
+
+function cardHTML(f,i){
+  const max=Math.max(...f.perf.map(x=>Math.abs(x[1])));
+  const bars=f.perf.map(p=>`<div class="bar ${p[2]==="ytd"?"ytd":""}" data-v="${perLabel(p)}: ${fmt(p[1])}"><i class="${p[1]>=0?"p":"n"}" style="height:0" data-h="${Math.abs(p[1])/max*50}%"></i><em>${p[2]==="ytd"?"YTD":"'"+p[0].slice(2)}</em></div>`).join("");
+  const a=ann(f.perf), last=f.perf.at(-1);
+  return `<article class="card">
+    <div class="card-top"><span class="tag">${L(f.tag)}</span><h3>${f.name}</h3><div class="mgr">${L(f.mgr)} · ${veh(f)}</div></div>
+    <div class="kpis">
+      <div><b>${money(f.aum)}</b><span>${t("aum")}</span></div>
+      <div><b>${f.inception.slice(0,4)}</b><span>${t("inception")}</span></div>
+      <div><b>${a!==null?fmt(a):"—"}</b><span>${t("ann")}</span></div>
+    </div>
+    <div class="card-body">
+      <p class="strategy">${L(f.strategy)}</p>
+      <div class="mini-label"><span>${t("annual")}</span><span>${fmt(last[1])} ${perLabel(last)}</span></div>
+      <div class="bars">${bars}</div>
+      <div class="mini-label"><span>${t("recent5")}</span></div>
+      <table class="recent"><tr><th>${t("period")}</th><th>${t("ret")}</th></tr>${f.perf.slice(-5).reverse().map(p=>`<tr><td>${perLabel(p)}</td><td class="${p[1]>=0?"pos":"neg"}">${fmt(p[1])}</td></tr>`).join("")}</table>
+      <div class="card-foot"><span class="liq ${tab!=="liquid"?"semi":""}">${liqTxt(f)}</span>
+        <button class="more" data-n="${i}">${t("view")} <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 7h10M8 3l4 4-4 4"/></svg></button></div>
+    </div></article>`;
+}
+
+const scroller=document.getElementById("scroller");
+
+function renderCards(keepPos){
+  const x=scroller.scrollLeft;
+  track.innerHTML=FUNDS[tab].map(cardHTML).join("");
+  document.getElementById("tabDesc").textContent=t(tab==="liquid"?"descLiquid":"descIlliquid");
+  requestAnimationFrame(()=>setTimeout(()=>track.querySelectorAll(".bar i").forEach(b=>b.style.height=b.dataset.h),80));
+  scroller.scrollLeft=keepPos?x:0;
+  updateProg();
+}
+function updateProg(){
+  const w=scroller.scrollWidth||1;
+  prog.style.width=Math.min(100,scroller.clientWidth/w*100)+"%";
+  prog.style.left=(scroller.scrollLeft/w*100)+"%";
+}
+scroller.addEventListener("scroll",updateProg,{passive:true});
+addEventListener("resize",updateProg);
+
+function applyLang(){
+  document.documentElement.lang={en:"en",sc:"zh-Hans",tc:"zh-Hant"}[lang];
+  document.querySelectorAll("[data-i]").forEach(el=>el.innerHTML=t(el.dataset.i));
+  document.querySelectorAll(".lang-menu button").forEach(b=>{const on=b.dataset.lang===lang;b.classList.toggle("on",on);b.setAttribute("aria-checked",on)});
+  document.getElementById("langCur").textContent={en:"EN",sc:"简体",tc:"繁體"}[lang];
+  const all=[...FUNDS.liquid,...FUNDS.illiquid];
+  document.getElementById("cLiquid").textContent=FUNDS.liquid.length;
+  document.getElementById("cIlliquid").textContent=FUNDS.illiquid.length;
+  renderCards(true);
+  if(openFund) openD(openFund);
+}
+const langBox=document.getElementById("lang"), langBtn=document.getElementById("langBtn");
+function setMenu(open){langBox.classList.toggle("open",open);langBtn.setAttribute("aria-expanded",open)}
+langBtn.onclick=e=>{e.stopPropagation();setMenu(!langBox.classList.contains("open"))};
+document.querySelectorAll(".lang-menu button").forEach(b=>b.onclick=()=>{lang=b.dataset.lang;try{localStorage.setItem("jc-lang",lang)}catch(e){}setMenu(false);applyLang()});
+document.addEventListener("click",e=>{if(!langBox.contains(e.target))setMenu(false)});
+addEventListener("keydown",e=>{if(e.key==="Escape")setMenu(false)});
+
+document.querySelectorAll(".tab").forEach(b=>b.onclick=()=>{
+  document.querySelectorAll(".tab").forEach(x=>x.classList.toggle("active",x===b));
+  tab=b.dataset.tab; renderCards();
+});
+
+/* mouse drag with momentum (touch uses native scrolling) */
+let drag=null, glide=0, justDragged=false;
+scroller.addEventListener("pointerdown",e=>{
+  if(e.pointerType!=="mouse"||e.button!==0||e.target.closest("button"))return;
+  cancelAnimationFrame(glide);
+  drag={x:e.clientX,start:scroller.scrollLeft,lastX:e.clientX,lastT:performance.now(),v:0,moved:false};
+});
+addEventListener("pointermove",e=>{
+  if(!drag)return;
+  const dx=e.clientX-drag.x;
+  if(!drag.moved&&Math.abs(dx)>4){drag.moved=true;scroller.classList.add("dragging")}
+  if(!drag.moved)return;
+  const now=performance.now(), dt=Math.max(1,now-drag.lastT);
+  drag.v=0.8*((drag.lastX-e.clientX)/dt)+0.2*drag.v;   // px per ms, smoothed
+  drag.lastX=e.clientX; drag.lastT=now;
+  scroller.scrollLeft=drag.start-dx;
+});
+addEventListener("pointerup",()=>{
+  if(!drag)return;
+  const {moved}=drag; let v=drag.v*16; drag=null;
+  if(!moved)return;
+  justDragged=true; setTimeout(()=>justDragged=false,0);
+  (function step(){                                     // decelerate, then let snap settle
+    if(Math.abs(v)<0.5){scroller.classList.remove("dragging");return}
+    scroller.scrollLeft+=v; v*=0.94; glide=requestAnimationFrame(step);
+  })();
+});
+scroller.addEventListener("click",e=>{if(justDragged){e.preventDefault();e.stopPropagation()}},true);
+
+/* Block trackpad swipe-to-go-back / forward (also covers Safari, which ignores overscroll-behavior for this).
+   Horizontal wheel movement is allowed only while the fund carousel can still scroll that way. */
+document.addEventListener("wheel",e=>{
+  if(Math.abs(e.deltaX)<=Math.abs(e.deltaY))return;            // vertical scrolling: leave alone
+  const sc=e.target.closest&&e.target.closest("#scroller");
+  if(sc){
+    const max=sc.scrollWidth-sc.clientWidth;
+    const canScroll=e.deltaX<0?sc.scrollLeft>0:sc.scrollLeft<max-1;
+    if(canScroll)return;                                        // carousel handles it natively
+  }
+  e.preventDefault();                                           // at an edge or outside the carousel: swallow it
+},{passive:false});
+
+/* keyboard: hold ← / → to slide continuously; Home / End jump */
+let keyDir=0, keyLoop=0, kv=0;
+function keySlide(){                                    // held: steady speed; released: glide out
+  if(keyDir) kv=keyDir*Math.max(Math.abs(kv),18); else kv*=0.9;
+  if(Math.abs(kv)<0.5){kv=0;scroller.classList.remove("dragging");return}
+  scroller.scrollLeft+=kv; keyLoop=requestAnimationFrame(keySlide);
+}
+addEventListener("keydown",e=>{
+  if(e.key==="Escape"){closeD();return}
+  if(drawer.classList.contains("on")||/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName))return;
+  if(e.key==="ArrowRight"||e.key==="ArrowLeft"){
+    e.preventDefault();
+    const d=e.key==="ArrowRight"?1:-1;
+    if(keyDir!==d){keyDir=d;if(Math.sign(kv)!==d)kv=0;cancelAnimationFrame(glide);scroller.classList.add("dragging");cancelAnimationFrame(keyLoop);keySlide()}
+  }
+  if(e.key==="Home"&&document.activeElement===scroller){e.preventDefault();scroller.scrollTo({left:0,behavior:"smooth"})}
+  if(e.key==="End"&&document.activeElement===scroller){e.preventDefault();scroller.scrollTo({left:scroller.scrollWidth,behavior:"smooth"})}
+});
+addEventListener("keyup",e=>{if(e.key==="ArrowRight"||e.key==="ArrowLeft")keyDir=0});
+addEventListener("blur",()=>keyDir=0);
+
+/* drawer */
+const drawer=document.getElementById("drawer"), scrim=document.getElementById("scrim");
+let openFund=null;
+track.addEventListener("click",e=>{const b=e.target.closest(".more");if(b)openD(FUNDS[tab][b.dataset.n])});
+function openD(f){
+  const keep=openFund===f?drawer.scrollTop:0; openFund=f;
+  drawer.innerHTML=`<div class="d-head"><button class="close" onclick="closeD()" aria-label="Close">✕</button><span class="tag">${L(f.tag)}</span><h3>${f.name}</h3><p>${L(f.mgr)} · ${veh(f)}</p></div>
+  <div class="d-body">
+    <h4>${t("overview")}</h4><p>${L(f.strategy)}</p>
+    <h4>${t("facts")}</h4>
+    <div class="facts">
+      <div><span>${t("inception")}</span><b>${ym(f.inception)}</b></div><div><span>${t("aum")}</span><b>${money(f.aum)}</b></div>
+      <div><span>${t("vehicle")}</span><b>${veh(f)}</b></div><div><span>${t("dealing")}</span><b>${liqTxt(f)}</b></div>
+    </div>
+    <h4>${t("maxdd")}</h4><p>${ddText(f)}</p>
+    <h4>${t("liqTerms")}</h4><p>${f.liqFull?L(f.liqFull):t("dailyFull")}</p>
+    <h4>${t("perfTitle")}</h4>
+    <table class="perf"><tr><th>${t("period")}</th><th>${t("ret")}</th></tr>${[...(f.hist||[]),...f.perf].map(p=>`<tr><td>${perLabel(p)}</td><td class="${p[1]>=0?"pos":"neg"}">${fmt(p[1])}</td></tr>`).join("")}</table>
+    <p class="note">${f.note?L(f.note)+" ":""}${t("past")}</p>
+  </div>`;
+  drawer.classList.add("on");scrim.classList.add("on");drawer.setAttribute("aria-hidden","false");drawer.scrollTop=keep;
+}
+function closeD(){openFund=null;drawer.classList.remove("on");scrim.classList.remove("on");drawer.setAttribute("aria-hidden","true")}
+scrim.onclick=closeD;
+
+/* nav: highlight the link for the section currently in view */
+const navLinks=[...document.querySelectorAll(".links a[data-sec]")];
+function spy(){
+  const line=innerHeight*0.4;
+  let cur="about";
+  for(const a of navLinks){const el=document.getElementById(a.dataset.sec); if(el&&el.getBoundingClientRect().top<=line) cur=a.dataset.sec}
+  if(innerHeight+scrollY>=document.documentElement.scrollHeight-4) cur="contact";
+  navLinks.forEach(a=>a.classList.toggle("on",a.dataset.sec===cur));
+}
+addEventListener("scroll",spy,{passive:true}); addEventListener("resize",spy);
+navLinks.forEach(a=>a.addEventListener("click",e=>{
+  e.preventDefault();
+  const el=document.getElementById(a.dataset.sec);
+  const y=a.dataset.sec==="about"?0:el.getBoundingClientRect().top+scrollY+(a.dataset.sec==="funds"?10:0);   // lands "Featured Strategies" just below the nav
+  window.scrollTo({top:Math.min(y,document.documentElement.scrollHeight-innerHeight),behavior:"smooth"});
+}));
+document.querySelector(".logo").addEventListener("click",e=>{e.preventDefault();window.scrollTo({top:0,behavior:"smooth"})});
+
+/* nav + reveal */
+addEventListener("scroll",()=>document.getElementById("nav").classList.toggle("solid",scrollY>40));
+const io=new IntersectionObserver(es=>es.forEach(e=>e.isIntersecting&&e.target.classList.add("in")),{threshold:.15});
+document.querySelectorAll(".reveal").forEach(el=>io.observe(el));
+
+applyLang();
+spy();
+</script>
+</body>
+</html>

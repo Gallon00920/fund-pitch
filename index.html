@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Alternative Investments | Fund Platform</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<nav id="nav">
+  <div class="wrap">
+    <a href="#" class="logo"><span class="wordmark" data-i="division"></span></a>
+    <div class="links"><a href="#about" class="on" data-sec="about" data-i="navAbout"></a><a href="#funds" data-sec="funds" data-i="navFunds"></a><a href="#contact" data-sec="contact" data-i="navContact"></a></div>
+    <div class="nav-right">
+      <button class="btn sm" id="addFundBtn" data-i="addFund" hidden></button>
+      <div class="lang" id="lang">
+        <button class="lang-btn" id="langBtn" aria-haspopup="true" aria-expanded="false" aria-label="Language">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9.5"/><path d="M2.5 12h19M12 2.5c2.6 2.6 4 6 4 9.5s-1.4 6.9-4 9.5c-2.6-2.6-4-6-4-9.5s1.4-6.9 4-9.5z"/></svg>
+          <span id="langCur">EN</span>
+          <svg class="chev" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 3.5 5 6.5 8 3.5"/></svg>
+        </button>
+        <ul class="lang-menu" role="menu">
+          <li><button role="menuitemradio" data-lang="en">English <small>EN</small></button></li>
+          <li><button role="menuitemradio" data-lang="sc">简体中文 <small>简</small></button></li>
+          <li><button role="menuitemradio" data-lang="tc">繁體中文 <small>繁</small></button></li>
+        </ul>
+      </div>
+      <button class="acct" id="acctBtn"></button>
+    </div>
+  </div>
+</nav>
+
+<header class="hero" id="about">
+  <svg class="lines" viewBox="0 0 600 300" fill="none">
+    <path d="M0 250 C120 230 160 180 240 170 S380 120 440 90 S560 40 600 30" stroke="#DAB56E" stroke-width="1"/>
+    <path d="M0 270 C140 260 180 220 260 210 S400 170 460 140 S560 100 600 90" stroke="#3a4a7d" stroke-width="1"/>
+    <path d="M0 290 C150 285 200 260 280 250 S420 220 480 200 S560 170 600 160" stroke="#2b3866" stroke-width="1"/>
+  </svg>
+  <div class="wrap">
+    <div class="eyebrow" data-i="heroEyebrow"></div>
+    <h1 data-i="heroTitle"></h1>
+    <p data-i="heroBody"></p>
+    <div class="hero-stats">
+      <div><b>130+</b><span data-i="stPipeline"></span></div>
+      <div><b>40+</b><span data-i="stGPs"></span></div>
+      <div><b>9</b><span data-i="stCategories"></span></div>
+    </div>
+  </div>
+</header>
+
+<section class="funds" id="funds">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div><div class="eyebrow" data-i="secEyebrow"></div><h2 data-i="secTitle"></h2></div>
+      <p data-i="secBody"></p>
+    </div>
+    <div class="tabbar reveal">
+      <div class="tabs" role="tablist">
+        <button class="tab active" data-tab="liquid" role="tab"><span data-i="tabLiquid"></span><span class="count" id="cLiquid"></span></button>
+        <button class="tab" data-tab="illiquid" role="tab"><span data-i="tabIlliquid"></span><span class="count" id="cIlliquid"></span></button>
+      </div>
+    </div>
+    <div class="track-outer" id="scroller" tabindex="0" aria-label="Funds"><div class="track" id="track"></div></div>
+    <div class="progress"><i id="prog"></i></div>
+    <p class="tab-desc" id="tabDesc"></p>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="wrap">
+    <div><span class="wordmark" data-i="division"></span></div>
+    <div data-i="disclaimer"></div>
+  </div>
+</footer>
+
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" id="drawer" aria-hidden="true"></aside>
+
+<!-- Login screen (shown first when CONFIG.REQUIRE_LOGIN is true) -->
+<div class="login" id="login" hidden>
+  <form class="login-card" id="loginForm" autocomplete="on">
+    <div class="wordmark" data-i="division"></div>
+    <h2 data-i="loginTitle"></h2>
+    <p data-i="loginSub"></p>
+    <label><span data-i="username"></span><input id="loginUser" name="username" autocomplete="username" required></label>
+    <label><span data-i="password"></span><input id="loginPass" name="password" type="password" autocomplete="current-password" required></label>
+    <p class="form-err" id="loginErr" hidden></p>
+    <button class="btn solid" type="submit" data-i="signIn"></button>
+    <button class="link-btn" type="button" id="loginCancel" data-i="cancel" hidden></button>
+    <div class="login-lang"><button type="button" data-lang="en">English</button><button type="button" data-lang="sc">简体中文</button><button type="button" data-lang="tc">繁體中文</button></div>
+  </form>
+</div>
+
+<!-- Add Fund form (admin only) -->
+<div class="modal" id="fundModal" hidden>
+  <form class="modal-card" id="fundForm" novalidate>
+    <div class="modal-head"><h3 data-i="afTitle"></h3><button class="close" type="button" id="fundClose" aria-label="Close">✕</button></div>
+    <div class="modal-body">
+      <label><span data-i="afCategory"></span><select id="fTab"><option value="liquid" data-i="tabLiquid"></option><option value="illiquid" data-i="tabIlliquid"></option></select></label>
+      <label><span data-i="afName"></span><input id="fName" required maxlength="80"></label>
+      <label><span data-i="afMgr"></span><input id="fMgr" required maxlength="60"></label>
+      <label><span data-i="afTag"></span><input id="fTag" required maxlength="60" data-ph="phTag"></label>
+      <label><span data-i="afVehicle"></span><input id="fVehicle" required maxlength="40" data-ph="phVehicle"></label>
+      <label><span data-i="afInception"></span><input id="fInception" type="month" required></label>
+      <label><span data-i="afAum"></span><input id="fAum" type="number" step="0.01" min="0" required></label>
+      <label><span data-i="afLiq"></span><input id="fLiq" required maxlength="60" data-ph="phLiq"></label>
+      <label class="wide"><span data-i="afStrategy"></span><textarea id="fStrategy" required maxlength="400"></textarea></label>
+      <label class="wide"><span data-i="afLiqFull"></span><textarea id="fLiqFull" maxlength="400"></textarea></label>
+      <label class="wide"><span data-i="afReturns"></span><textarea id="fReturns" rows="6" required></textarea><small data-i="afReturnsHelp"></small></label>
+      <label><span data-i="afYtd"></span><input id="fYtd" type="number" step="0.01"></label>
+      <label><span data-i="afYtdTo"></span><input id="fYtdTo" type="month"></label>
+      <label><span data-i="afWm"></span><input id="fWm" type="number" step="0.01"></label>
+      <label><span data-i="afWmAt"></span><input id="fWmAt" type="month"></label>
+      <label class="wide"><span data-i="afNote"></span><input id="fNote" maxlength="200"></label>
+    </div>
+    <div class="modal-foot">
+      <p class="form-err" id="fundErr" hidden></p>
+      <button class="btn ghost" type="button" id="fundCancel" data-i="cancel"></button>
+      <button class="btn solid" type="submit" data-i="save"></button>
+    </div>
+  </form>
+</div>
+
+<!-- Scripts load in this order on purpose: settings, wording, data, storage, auth, then the page logic -->
+<script src="js/config.js"></script>
+<script src="js/i18n.js"></script>
+<script src="js/funds-data.js"></script>
+<script src="js/fund-store.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/app.js"></script>
+<script src="js/account.js"></script>
+<script src="js/add-fund.js"></script>
+</body>
+</html>
