@@ -655,17 +655,9 @@
           "tc": "來源: Bayview Opportunity Fund deck (2026，數據截至 2025/9/30，AUM 與業績截至 2025/12/31)——條款/AUM p24，目標回報 p11，BOF Composite 年度淨回報 p19 (TWR 口徑，2022/12 起為 Evergreen BOF 本身)，個別基金 LTD 淨IRR / MOIC 與 Evergreen NAV p26；Bayview Residential Loan Fund deck (2026，數據截至 2025/12/31)——條款/規模/贖回 p31，目標回報 S+500 與平台比較 p10，本基金每月淨回報 p24 (2026/1 為估計值)，損失假設 &lt;0.3% p25，Bayview 全平台 Composite (BOF+MSR+BLCS+BRLF+BCCF，不含 BRMIF) p9。"
         },
         "redact": [
-          "Opportunity",
           "Oceanview",
           "Bayview",
-          "Closed",
-          "IIIa",
-          "IIIb",
-          "BOF",
-          "IIa",
-          "IIb",
-          "IVa",
-          "IVb"
+          "BOF"
         ],
         "translated": true,
         "cardFrom": "2023",
@@ -835,9 +827,7 @@
           "tc": "來源: Bayview Opportunity Fund deck (2026，數據截至 2025/9/30，AUM 與業績截至 2025/12/31)——條款/AUM p24，目標回報 p11，BOF Composite 年度淨回報 p19 (TWR 口徑，2022/12 起為 Evergreen BOF 本身)，個別基金 LTD 淨IRR / MOIC 與 Evergreen NAV p26；Bayview Residential Loan Fund deck (2026，數據截至 2025/12/31)——條款/規模/贖回 p31，目標回報 S+500 與平台比較 p10，本基金月度淨回報 p24 (2026/1 為估計值)，損失假設 &lt;0.3% p25，Bayview 全平台 Composite (BOF+MSR+BLCS+BRLF+BCCF，不含 BRMIF) p9。"
         },
         "redact": [
-          "Residential",
           "Bayview",
-          "Loan",
           "RLF"
         ],
         "translated": true,
@@ -929,12 +919,9 @@
           "tc": "來源: Cerberus CGRC deck (2026/3)——本基金 14.5% ITD 年化淨回報截至 2026/1/31，按 admission-period blended fee 口徑計算 (p6/p14，final close 後按實際費率 true-up 將略為下降)，規模/組合構成/毛收益率 p14-15，目標回報 p6，二按平台 ROE p23 (截至 2025/12)，損失率 p12 (FirstKey 數據截至 2026/1)，條款/投資期/清算期 p38；Balbec IGCF-VII deck (2026)——業績截至 2026/3/31，IGCF I–VI vintage 表 p8 (IGCF-VI 淨IRR 22.8% 未計入 subline 影響)，損失率與平台規模 p4，目標組合配置 p9，條款 (投資期/harvest/派息) p48 與 p13。"
         },
         "redact": [
-          "Residential",
           "Cerberus",
           "CGRC",
-          "CABO",
-          "ITD",
-          "ROE"
+          "CABO"
         ],
         "translated": true
       },
