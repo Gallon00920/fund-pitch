@@ -108,8 +108,11 @@ editForm.addEventListener("submit", e => {
   setText("strategy", escLines(lines(ef("efStrategy").value)));
   if (f.liq || val("efLiq") !== editing.liqShown) setText("liq", esc(val("efLiq")) || "—");   // keep the translated default unless it was changed
   optional("liqFull", escLines(lines(ef("efLiqFull").value)), true);
-  f.hist = all.slice(0, -9);                                 // the card shows the latest 9 periods; older years appear in View Fund only
-  f.perf = all.slice(-9);
+  // The card shows the latest 9 periods; older years appear in View Fund only. A fund with `cardFrom` (a year) keeps
+  // everything before that year off the card: those rows are a predecessor or composite record, not the fund's own.
+  const own = f.cardFrom ? all.filter(p => p[0] >= f.cardFrom) : all;
+  f.perf = own.slice(-9);
+  f.hist = all.filter(p => !f.perf.includes(p));
   const noteLines = lines(ef("efNotes").value).map(esc);
   if (perLang("perfNotes")) f.perfNotes[lang] = noteLines; else f.perfNotes = noteLines;
   const dd = ef("efDd").value.trim();

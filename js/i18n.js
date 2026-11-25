@@ -371,3 +371,13 @@ Object.assign(UI.tc,{
 
 /* ---------- Drag to reorder ---------- */
 UI.en.reorder="Drag to reorder"; UI.sc.reorder="拖动调整顺序"; UI.tc.reorder="拖動調整順序";
+
+/* shown when the site runs on this computer through a plain file server, which cannot save anything */
+UI.en.locNeedServer="This site was not started with server.py, so changes cannot be saved on this computer. Stop the current server and run  python server.py  in the project folder, then reload. (Or save a GitHub token to save changes for everyone.)";
+UI.sc.locNeedServer="本站不是通过 server.py 启动的，因此无法在本机保存修改。请停止当前服务器，在项目文件夹中运行  python server.py ，然后刷新页面。(或保存 GitHub 令牌，为所有人保存修改。)";
+UI.tc.locNeedServer="本站不是透過 server.py 啟動的，因此無法在本機儲存修改。請停止目前的伺服器，在專案資料夾中執行  python server.py ，然後重新整理頁面。(或儲存 GitHub 權杖，為所有人儲存修改。)";
+
+/* clearer labels for the two inception fields in the Edit Fund form */
+UI.en.efInception="Inception month (sets the year on the card)";  UI.en.efInceptionText="Inception note (extra detail in View Fund, optional)";
+UI.sc.efInception="成立月份 (决定卡片上的年份)";                      UI.sc.efInceptionText="成立说明 (显示在详情中的补充文字，选填)";
+UI.tc.efInception="成立月份 (決定卡片上的年份)";                      UI.tc.efInceptionText="成立說明 (顯示在詳情中的補充文字，選填)";

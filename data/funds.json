@@ -1,6 +1,1038 @@
 {
-  "strategies": [],
-  "funds": {},
+  "strategies": [
+    {
+      "id": "s-1795591058962",
+      "name": "ABL"
+    },
+    {
+      "id": "s-1795591188122",
+      "name": "Mortgage credit"
+    }
+  ],
+  "funds": {
+    "s-1795591058962": [
+      {
+        "id": "custom-1795591079440-0",
+        "custom": true,
+        "name": "Marathon ABL Evergreen Fund",
+        "mgr": {
+          "en": "Marathon"
+        },
+        "tag": {
+          "en": "Multi-Asset Asset-Based Lending (ABL) · Evergreen",
+          "sc": "多元资产抵押贷款 (ABL) · Evergreen",
+          "tc": "多元資產抵押貸款 (ABL) · Evergreen"
+        },
+        "vehicle": "private",
+        "inception": null,
+        "inceptionText": {
+          "en": "New fund, targeting first close 3Q26;<br>Marathon ABL strategy investing since 2005 (20+ years)",
+          "sc": "新发基金，目标首关 3Q26；<br>Marathon ABL 策略 2005 年起投资 (20+年)",
+          "tc": "新發基金，目標首次交割 3Q26；<br>Marathon ABL 策略 2005 年起投資 (20+年)"
+        },
+        "isNew": true,
+        "aum": 1.5,
+        "aumText": {
+          "en": "$1.5bn",
+          "sc": "$1.5bn",
+          "tc": "$1.5bn"
+        },
+        "strategy": {
+          "en": "Diversified ABL: transportation/aviation/equipment/residential RE/commercial RE/Corporate ABL/healthcare/Specialty Finance/consumer/public structured credit, each approx. 10-30%;",
+          "sc": "多元 ABL：运输/航空/设备/住宅RE/商业RE/Corporate ABL/医疗/Specialty Finance/消费/公开结构化信用，各约 10-30%；",
+          "tc": "多元 ABL：運輸/航空/設備/住宅RE/商業RE/Corporate ABL/醫療/Specialty Finance/消費/公開結構化信貸，各約 10-30%；"
+        },
+        "hist": [],
+        "perf": [
+          [
+            "2023",
+            11.2
+          ],
+          [
+            "2024",
+            10.7
+          ],
+          [
+            "2025",
+            8
+          ],
+          [
+            "2026",
+            1.5,
+            "ytd",
+            3
+          ]
+        ],
+        "perfNotes": {
+          "en": [
+            "Fund I 2015: 10.5% / 1.5x, fully exited, DPI 1.46x",
+            "Fund II 2019: target 12% / 1.7x, DPI 1.00x",
+            "Fund III 2022: target 11-12% / 1.5x (investment period)",
+            "Fund IV 2025: target 11-12% / 1.5x"
+          ],
+          "sc": [
+            "Fund I 2015: 10.5% / 1.5x，已退出，DPI 1.46x",
+            "Fund II 2019: 目标 12% / 1.7x，DPI 1.00x",
+            "Fund III 2022: 目标 11-12% / 1.5x (投资期)",
+            "Fund IV 2025: 目标 11-12% / 1.5x"
+          ],
+          "tc": [
+            "Fund I 2015: 10.5% / 1.5x，已退出，DPI 1.46x",
+            "Fund II 2019: 目標 12% / 1.7x，DPI 1.00x",
+            "Fund III 2022: 目標 11-12% / 1.5x (投資期)",
+            "Fund IV 2025: 目標 11-12% / 1.5x"
+          ]
+        },
+        "target": {
+          "en": "12%",
+          "sc": "12%",
+          "tc": "12%"
+        },
+        "ddLabel": {
+          "en": "Drawdown / Loss Rate",
+          "sc": "回撤 / 损失率",
+          "tc": "回撤 / 損失率"
+        },
+        "ddRaw": {
+          "en": "Annualized loss rate of 0.07% since 2014;<br>Return of +1.4% during COVID drawdown (Q1 2020) (ABL Fund II)",
+          "sc": "2014 年以来年化损失率 0.07%；<br>COVID 回撤期 (Q1 2020) 收益 +1.4% (ABL Fund II)",
+          "tc": "2014 年以來年化損失率 0.07%；<br>COVID 回撤期 (Q1 2020) 回報 +1.4% (ABL Fund II)"
+        },
+        "liq": {
+          "en": "1-year hard lock",
+          "sc": "硬锁定 1 年",
+          "tc": "硬鎖定期 1 年"
+        },
+        "liqFull": {
+          "en": "1-year hard lock; annual redemptions, paid out via liquidation account;",
+          "sc": "硬锁定 1 年；年度赎回，经 liquidation account 兑付；",
+          "tc": "硬鎖定期 1 年；每年贖回，經 liquidation account 支付；"
+        },
+        "note": {
+          "en": "Source: Marathon ABL Evergreen Fund deck (CVC Marathon, Q3 2026) — terms/strategy/size p19-20, vintage performance and DPI p8 (DPI as of 2026/8, called as of 2026/6), ABL program net IRR of 11.4% on a model fees basis for 2005–2025/9/30, loss rate for 2014–2024/12/31 (p10); KKR HCRx Evergreen deck (Aug 2026) — data as of 2026/3/31, Evergreen net return is for a Class A model investor since inception (p12), fund-level net IRR and legacy aggregate of ~12% see p13 (excluding Fund I/II under prior management), loss rate/strategy p10-16, terms p24 (fee structure updated from 2026/1/1).",
+          "sc": "来源: Marathon ABL Evergreen Fund deck (CVC Marathon, Q3 2026)——条款/策略/规模 p19-20，vintage 表现与 DPI p8 (DPI 截至 2026/8，called 截至 2026/6)，ABL program 净IRR 11.4% 为 2005–2025/9/30 model fees 口径，损失率为 2014–2024/12/31 (p10)；KKR HCRx Evergreen deck (Aug 2026)——数据截至 2026/3/31，Evergreen 净回报为 Class A 自成立模型投资者 (p12)，分基金净IRR 及 legacy 合计 ~12% 见 p13 (不含前管理层时期 Fund I/II)，损失率/策略 p10-16，条款 p24 (费用结构 2026/1/1 起更新)。",
+          "tc": "來源: Marathon ABL Evergreen Fund deck (CVC Marathon, Q3 2026)——條款/策略/規模 p19-20，vintage 表現與 DPI p8 (DPI 截至 2026/8，called 截至 2026/6)，ABL program 淨IRR 11.4% 為 2005–2025/9/30 model fees 口徑，損失率為 2014–2024/12/31 (p10)；KKR HCRx Evergreen deck (Aug 2026)——數據截至 2026/3/31，Evergreen 淨回報為 Class A 自成立模型投資者 (p12)，分基金淨IRR 及 legacy 合計 ~12% 見 p13 (不含前管理層時期 Fund I/II)，損失率/策略 p10-16，條款 p24 (費用結構 2026/1/1 起更新)。"
+        },
+        "redact": [
+          "Marathon"
+        ],
+        "translated": true
+      },
+      {
+        "id": "custom-1795591079441-1",
+        "custom": true,
+        "name": "KKR HCRx Healthcare Royalty Evergreen Fund",
+        "mgr": {
+          "en": "KKR"
+        },
+        "tag": {
+          "en": "Pharmaceutical Royalties (Royalty) · Evergreen",
+          "sc": "医药特许权收益 (Royalty) · Evergreen",
+          "tc": "醫藥特許權收益 (Royalty) · Evergreen"
+        },
+        "vehicle": "private",
+        "inception": "2022-10",
+        "inceptionText": {
+          "en": "2022/10 (Evergreen launched, 4 years);<br>HCRx founded 2006 (20 years)",
+          "sc": "2022/10 (Evergreen 成立，4年)；<br>HCRx 2006 年创立 (20年)",
+          "tc": "2022/10 (Evergreen 成立，4年)；<br>HCRx 2006 年創立 (20年)"
+        },
+        "isNew": false,
+        "aum": 1.8,
+        "aumText": {
+          "en": "$1.8bn",
+          "sc": "$1.8bn",
+          "tc": "$1.8bn"
+        },
+        "strategy": {
+          "en": "Royalties on approved, commercialized biopharma products (royalty acquisitions / synthetic royalties / royalty notes / senior debt);<br>40+ therapeutic areas, orphan/rare diseases 43%, average remaining duration 9 years;",
+          "sc": "已获批商业化 biopharma 产品 royalty (royalty 收购 / 合成 royalty / royalty note / senior debt)；<br>40+ 治疗领域，孤儿/罕见病 43%，平均剩余久期 9 年；",
+          "tc": "已獲批商業化 biopharma 產品 royalty (royalty 收購 / 合成 royalty / royalty note / senior debt)；<br>40+ 治療領域，孤兒/罕見病 43%，平均剩餘存續期 9 年；"
+        },
+        "hist": [],
+        "perf": [
+          [
+            "2022",
+            3.1,
+            "p",
+            10
+          ],
+          [
+            "2023",
+            6.9
+          ],
+          [
+            "2024",
+            10
+          ],
+          [
+            "2025",
+            12.6
+          ],
+          [
+            "2026",
+            4.8,
+            "ytd",
+            3
+          ]
+        ],
+        "perfNotes": {
+          "en": [
+            "Legacy drawdown fund net IRR:",
+            "HCR III 2013: 8.8% / 1.3x; HCR IV 2019: 15.4% / 1.4x",
+            "MOLAG 2013: 11.2%; Overflow A/B/C: 13.3% / 15.6% / 14.5%",
+            "Stafford A/B: 9.5% / 14.6%; Potomac 2020: 17.4%; Canary 2020: 14.1%",
+            "Stafford II 2024: 13.5%; Potomac II 2024: 15.9%"
+          ],
+          "sc": [
+            "Legacy drawdown 基金净IRR:",
+            "HCR III 2013: 8.8% / 1.3x；HCR IV 2019: 15.4% / 1.4x",
+            "MOLAG 2013: 11.2%；Overflow A/B/C: 13.3% / 15.6% / 14.5%",
+            "Stafford A/B: 9.5% / 14.6%；Potomac 2020: 17.4%；Canary 2020: 14.1%",
+            "Stafford II 2024: 13.5%；Potomac II 2024: 15.9%"
+          ],
+          "tc": [
+            "Legacy drawdown 基金淨IRR:",
+            "HCR III 2013: 8.8% / 1.3x；HCR IV 2019: 15.4% / 1.4x",
+            "MOLAG 2013: 11.2%；Overflow A/B/C: 13.3% / 15.6% / 14.5%",
+            "Stafford A/B: 9.5% / 14.6%；Potomac 2020: 17.4%；Canary 2020: 14.1%",
+            "Stafford II 2024: 13.5%；Potomac II 2024: 15.9%"
+          ]
+        },
+        "target": null,
+        "ddLabel": {
+          "en": "Drawdown / Loss Rate",
+          "sc": "回撤 / 损失率",
+          "tc": "回撤 / 損失率"
+        },
+        "ddRaw": {
+          "en": "No negative year since Evergreen inception;<br>Realized loss rate &lt;1.5% (since 2006 founding)",
+          "sc": "Evergreen 成立以来无负年度；<br>实现损失率 &lt;1.5% (2006 年成立以来)",
+          "tc": "Evergreen 成立以來無負年度；<br>實現損失率 &lt;1.5% (2006 年成立以來)"
+        },
+        "liq": {
+          "en": "Run-off option every 4 years",
+          "sc": "每 4 年一次 run-off 选择权",
+          "tc": "每 4 年一次 run-off 選擇權"
+        },
+        "liqFull": {
+          "en": "Run-off option every 4 years;",
+          "sc": "每 4 年一次 run-off 选择权；",
+          "tc": "每 4 年一次 run-off 選擇權；"
+        },
+        "note": {
+          "en": "Source: Marathon ABL Evergreen Fund deck (CVC Marathon, Q3 2026): terms/strategy/AUM p19-20; vintage performance and DPI p8 (DPI as of 2026/8, called as of 2026/6); ABL program net IRR of 11.4% is on a 2005–2025/9/30 model-fees basis; loss rate covers 2014–2024/12/31 (p10). KKR HCRx Evergreen deck (Aug 2026): data as of 2026/3/31; Evergreen net return is for a Class A since-inception model investor (p12); net IRR by fund and legacy aggregate of ~12% on p13 (excluding Fund I/II from the prior management era); loss rate/strategy p10-16; terms p24 (fee structure updated effective 2026/1/1).",
+          "sc": "来源: Marathon ABL Evergreen Fund deck (CVC Marathon, Q3 2026)——条款/策略/规模 p19-20，vintage 表现与 DPI p8 (DPI 截至 2026/8，called 截至 2026/6)，ABL program 净IRR 11.4% 为 2005–2025/9/30 model fees 口径，损失率为 2014–2024/12/31 (p10)；KKR HCRx Evergreen deck (Aug 2026)——数据截至 2026/3/31，Evergreen 净回报为 Class A 自成立模型投资者 (p12)，分基金净IRR 及 legacy 合计 ~12% 见 p13 (不含前管理层时期 Fund I/II)，损失率/策略 p10-16，条款 p24 (费用结构 2026/1/1 起更新)。",
+          "tc": "來源: Marathon ABL Evergreen Fund deck (CVC Marathon, Q3 2026)——條款/策略/基金規模 p19-20，vintage 表現與 DPI p8 (DPI 截至 2026/8，called 截至 2026/6)，ABL program 淨IRR 11.4% 為 2005–2025/9/30 model fees 口徑，損失率為 2014–2024/12/31 (p10)；KKR HCRx Evergreen deck (Aug 2026)——數據截至 2026/3/31，Evergreen 淨回報為 Class A 自成立模型投資者 (p12)，分基金淨IRR 及 legacy 合計 ~12% 見 p13 (不含前管理層時期 Fund I/II)，損失率/策略 p10-16，條款 p24 (費用結構 2026/1/1 起更新)。"
+        },
+        "redact": [
+          "Overflow",
+          "Stafford",
+          "Potomac",
+          "Canary",
+          "MOLAG",
+          "HCRx",
+          "KKR",
+          "HCR"
+        ],
+        "translated": true
+      },
+      {
+        "id": "custom-1795591079442-2",
+        "custom": true,
+        "name": "Sculptor Asset Based Finance Fund III (SABF III)",
+        "mgr": {
+          "en": "Sculptor"
+        },
+        "tag": {
+          "en": "All-Weather ABF · 7-Year Drawdown",
+          "sc": "全天候 ABF · 7 年期 Drawdown",
+          "tc": "全天候 ABF · 7 年期 Drawdown"
+        },
+        "vehicle": "private",
+        "inception": null,
+        "inceptionText": {
+          "en": "New fund;<br>Sculptor ABF platform since 2009 (17 years)",
+          "sc": "新发基金；<br>Sculptor ABF 平台 2009 年起 (17年)",
+          "tc": "新發基金；<br>Sculptor ABF 平台 2009 年起 (17年)"
+        },
+        "isNew": true,
+        "aum": 1.5,
+        "aumText": {
+          "en": "$1.5bn",
+          "sc": "$1.5bn",
+          "tc": "$1.5bn"
+        },
+        "strategy": {
+          "en": "All-weather ABF across the US and Europe, covering four sectors: Residential / Commercial / Specialty Finance / Consumer.",
+          "sc": "美欧全天候 ABF，覆盖住宅 / 商业 / Specialty Finance / 消费四大板块。",
+          "tc": "美歐全天候 ABF，涵蓋住宅 / 商業 / Specialty Finance / 消費四大板塊。"
+        },
+        "hist": [
+          [
+            "2009",
+            37.5
+          ],
+          [
+            "2010",
+            24.9
+          ],
+          [
+            "2011",
+            6.5
+          ],
+          [
+            "2012",
+            23.9
+          ],
+          [
+            "2013",
+            14.9
+          ],
+          [
+            "2014",
+            13.3
+          ],
+          [
+            "2015",
+            1.6
+          ],
+          [
+            "2016",
+            16.4
+          ],
+          [
+            "2017",
+            17.7
+          ],
+          [
+            "2018",
+            7
+          ],
+          [
+            "2019",
+            7
+          ],
+          [
+            "2020",
+            7
+          ],
+          [
+            "2021",
+            13.5
+          ],
+          [
+            "2022",
+            3.6
+          ],
+          [
+            "2023",
+            10.1
+          ],
+          [
+            "2024",
+            9.6
+          ],
+          [
+            "2025",
+            7.2
+          ],
+          [
+            "2026",
+            1.6,
+            "ytd",
+            3
+          ]
+        ],
+        "perf": [],
+        "perfNotes": {
+          "en": [
+            "Fund target net IRR 11-13%",
+            "SABF I 2010: 18.9% / 1.8x, fully realized",
+            "SABF II 2011: 15.1% / 1.8x",
+            "ABF Fund of One 2010: 14.7% / 4.5x (investing)",
+            "ABF Privates Composite: 17.4% / 1.6x"
+          ],
+          "sc": [
+            "基金本体目标净 IRR 11-13%",
+            "SABF I 2010: 18.9% / 1.8x，已全部实现",
+            "SABF II 2011: 15.1% / 1.8x",
+            "ABF Fund of One 2010: 14.7% / 4.5x (投资中)",
+            "ABF Privates Composite: 17.4% / 1.6x"
+          ],
+          "tc": [
+            "基金本身目標淨 IRR 11-13%",
+            "SABF I 2010: 18.9% / 1.8x，已全數實現",
+            "SABF II 2011: 15.1% / 1.8x",
+            "ABF Fund of One 2010: 14.7% / 4.5x (投資中)",
+            "ABF Privates Composite: 17.4% / 1.6x"
+          ]
+        },
+        "target": {
+          "en": "11-13%",
+          "sc": "11-13%",
+          "tc": "11-13%"
+        },
+        "ddLabel": {
+          "en": "Loss Rate",
+          "sc": "损失率",
+          "tc": "損失率"
+        },
+        "ddRaw": {
+          "en": "ABF Privates Composite annualized loss rate 0.02%;<br>SABF I / SABF II 0.01% each",
+          "sc": "ABF Privates Composite 年化损失率 0.02%；<br>SABF I / SABF II 各 0.01%",
+          "tc": "ABF Privates Composite 年化損失率 0.02%；<br>SABF I / SABF II 各 0.01%"
+        },
+        "liq": {
+          "en": "Closed-end: 7-year term + 1-year extension (from fin…",
+          "sc": "封闭式：期限 7 年 + 1 年延展 (自 fin…",
+          "tc": "封閉式：存續期 7 年 + 1 年延長 (自 fin…"
+        },
+        "liqFull": {
+          "en": "Closed-end: 7-year term + 1-year extension (from final close); 3-year investment period",
+          "sc": "封闭式：期限 7 年 + 1 年延展 (自 final close 起)；投资期 3 年",
+          "tc": "封閉式：存續期 7 年 + 1 年延長 (自 final close 起)；投資期 3 年"
+        },
+        "note": {
+          "en": "Source: Sculptor SABF III deck (as of June 2026, performance as of 2026/3/31) — vintage performance, Composite and loss rates per the ABF Composite Performance page (Fund I/II on an earlier-commenced entities basis; Fund I uses offshore 18.9%); target size/return and term per the Summary of Terms. Oaktree OABF I deck (April 2026) — track record as of 2025/12/31 (net figures pro forma based on proposed fees); dedicated strategy deployment as of 2026/3/31; target size/return/leverage and term per the Summary of Terms.",
+          "sc": "来源: Sculptor SABF III deck (as of June 2026，业绩截至 2026/3/31)——vintage 表现、Composite 与损失率见 ABF Composite Performance 页 (Fund I/II 为 earlier-commenced entities 口径，Fund I 取 offshore 18.9%)，目标规模/回报与期限见 Summary of Terms；Oaktree OABF I deck (April 2026)——track record 截至 2025/12/31 (净值为按拟议费率 pro forma 推算)，专门策略投放截至 2026/3/31，目标规模/回报/杠杆与期限见 Summary of Terms。",
+          "tc": "來源: Sculptor SABF III deck (as of June 2026，績效截至 2026/3/31)——vintage 表現、Composite 與損失率見 ABF Composite Performance 頁 (Fund I/II 為 earlier-commenced entities 口徑，Fund I 採 offshore 18.9%)，目標規模/回報與存續期見 Summary of Terms；Oaktree OABF I deck (April 2026)——track record 截至 2025/12/31 (淨值為按擬議費率 pro forma 推算)，專門策略投放截至 2026/3/31，目標規模/回報/槓桿與存續期見 Summary of Terms。"
+        },
+        "redact": [
+          "Sculptor",
+          "SABF"
+        ],
+        "translated": true,
+        "cardFrom": "9999",
+        "perfCaption": {
+          "en": "These are the Sculptor ABF Net Composite (ROA), January 2009 to March 2026: the manager's earlier asset based finance portfolios, not this fund, which is new and has no returns yet. 2026 is January to March.",
+          "sc": "以下为 Sculptor ABF Net Composite (ROA)，2009 年 1 月至 2026 年 3 月：为管理人此前的 ABF 组合业绩，并非本基金；本基金为新发基金，尚无业绩。2026 年为 1–3 月数据。",
+          "tc": "以下為 Sculptor ABF Net Composite (ROA)，2009 年 1 月至 2026 年 3 月：為管理人此前的 ABF 組合業績，並非本基金；本基金為新發基金，尚無業績。2026 年為 1–3 月數據。"
+        }
+      },
+      {
+        "id": "custom-1795591079442-3",
+        "custom": true,
+        "name": "Oaktree Asset-Backed Finance Fund I (OABF I)",
+        "mgr": {
+          "en": "Oaktree"
+        },
+        "tag": {
+          "en": "Core + Opportunistic ABF · 6-Year Drawdown",
+          "sc": "核心+机会型 ABF · 6 年期 Drawdown",
+          "tc": "核心+機會型 ABF · 6 年期 Drawdown"
+        },
+        "vehicle": "private",
+        "inception": null,
+        "inceptionText": {
+          "en": "New fund;<br>Oaktree ABF investing since 2004 (~20 years)",
+          "sc": "新发基金；<br>Oaktree ABF 投资始于 2004 年 (~20 年)",
+          "tc": "新發基金；<br>Oaktree ABF 投資始於 2004 年 (~20 年)"
+        },
+        "isNew": true,
+        "aum": 2,
+        "aumText": {
+          "en": "$2.0bn",
+          "sc": "$2.0bn",
+          "tc": "$2.0bn"
+        },
+        "strategy": {
+          "en": "80% Core (target levered return 10-13%) + 20% Opportunistic (15-20%+);",
+          "sc": "80% Core (目标杠杆回报 10-13%) + 20% Opportunistic (15-20%+)；",
+          "tc": "80% Core (目標槓桿回報 10-13%) + 20% Opportunistic (15-20%+)；"
+        },
+        "hist": [],
+        "perf": [],
+        "perfNotes": {
+          "en": [
+            "Fund targets net levered return of 12-15%, with quarterly distribution target of 8-9% p.a.",
+            "ABF track record (since 2010): net IRR 14.1% / net MOIC 1.3x"
+          ],
+          "sc": [
+            "基金目标净杠杆回报 12-15%，季度分红目标 8-9%/年",
+            "ABF track record (自2010): 净IRR 14.1% / 净MOIC 1.3x"
+          ],
+          "tc": [
+            "基金目標淨槓桿回報 12-15%，季度配息目標 8-9%/年",
+            "ABF track record (自2010): 淨IRR 14.1% / 淨MOIC 1.3x"
+          ]
+        },
+        "target": {
+          "en": "12-15%",
+          "sc": "12-15%",
+          "tc": "12-15%"
+        },
+        "ddLabel": {
+          "en": "Loss Rate",
+          "sc": "损失率",
+          "tc": "損失率"
+        },
+        "ddRaw": "",
+        "liq": {
+          "en": "Closed-end: 6-year term + 2×1-year extensions",
+          "sc": "封闭式：期限 6 年 + 2×1 年延展",
+          "tc": "封閉式：存續期 6 年 + 2×1 年延長"
+        },
+        "liqFull": {
+          "en": "Closed-end: 6-year term + 2×1-year extensions; 3-year investment period (recyclable)",
+          "sc": "封闭式：期限 6 年 + 2×1 年延展；投资期 3 年 (可回收)",
+          "tc": "封閉式：存續期 6 年 + 2×1 年延長；投資期 3 年 (可循環再投資)"
+        },
+        "note": {
+          "en": "Source: Sculptor SABF III deck (as of June 2026, performance as of 2026/3/31) — vintage performance, Composite and loss rates per the ABF Composite Performance page (Fund I/II on an earlier-commenced entities basis; Fund I uses offshore 18.9%); target size/return and term per Summary of Terms. Oaktree OABF I deck (April 2026) — track record as of 2025/12/31 (net figures pro forma based on proposed fee rates); dedicated strategy deployment as of 2026/3/31; target size/return/leverage and term per Summary of Terms.",
+          "sc": "来源: Sculptor SABF III deck (as of June 2026，业绩截至 2026/3/31)——vintage 表现、Composite 与损失率见 ABF Composite Performance 页 (Fund I/II 为 earlier-commenced entities 口径，Fund I 取 offshore 18.9%)，目标规模/回报与期限见 Summary of Terms；Oaktree OABF I deck (April 2026)——track record 截至 2025/12/31 (净值为按拟议费率 pro forma 推算)，专门策略投放截至 2026/3/31，目标规模/回报/杠杆与期限见 Summary of Terms。",
+          "tc": "來源: Sculptor SABF III deck (as of June 2026，業績截至 2026/3/31)——vintage 表現、Composite 與損失率見 ABF Composite Performance 頁 (Fund I/II 為 earlier-commenced entities 口徑，Fund I 採 offshore 18.9%)，目標規模/回報與存續期見 Summary of Terms；Oaktree OABF I deck (April 2026)——track record 截至 2025/12/31 (淨值依擬議費率 pro forma 推算)，專門策略投放截至 2026/3/31，目標規模/回報/槓桿與存續期見 Summary of Terms。"
+        },
+        "redact": [
+          "Oaktree",
+          "OABF"
+        ],
+        "translated": true
+      }
+    ],
+    "s-1795591188122": [
+      {
+        "id": "custom-1795591212538-0",
+        "custom": true,
+        "name": "Bayview Opportunity Fund (BOF)",
+        "mgr": {
+          "en": "Bayview"
+        },
+        "tag": {
+          "en": "Multi-Strategy Residential/Consumer Credit · Evergreen",
+          "sc": "多策略住宅/消费信贷 · Evergreen",
+          "tc": "多策略住宅/消費信貸 · Evergreen"
+        },
+        "vehicle": "private",
+        "inception": null,
+        "inceptionText": {
+          "en": "2022 (Evergreen launched, 4 years);<br>BOF closed-end series since 2007 (19 years)",
+          "sc": "2022 (Evergreen 成立，4年)；<br>BOF closed-end 系列 2007 年起 (19年)",
+          "tc": "2022 (Evergreen 成立，4年)；<br>BOF closed-end 系列 2007 年起 (19年)"
+        },
+        "isNew": false,
+        "aum": 4.7,
+        "aumText": {
+          "en": "$4.7bn",
+          "sc": "$4.7bn",
+          "tc": "$4.7bn"
+        },
+        "strategy": {
+          "en": "Multi-strategy opportunistic: residential loans (HELOC / Scratch &amp; Dent / Italian NPL), consumer loans (auto / home improvement / small business), commercial loans, MSR, special opportunities;",
+          "sc": "多策略机会型：住宅贷款 (HELOC / Scratch &amp; Dent / 意大利 NPL)、消费贷 (车贷/家装/小企业)、商业贷款、MSR、特殊机会；",
+          "tc": "多策略機會型：住宅貸款 (HELOC / Scratch &amp; Dent / 意大利 NPL)、消費貸款 (車貸/家居裝修/小企業)、商業貸款、MSR、特殊機會；"
+        },
+        "hist": [
+          [
+            "2008",
+            -5.4
+          ],
+          [
+            "2009",
+            16.5
+          ],
+          [
+            "2010",
+            14.7
+          ],
+          [
+            "2011",
+            7.6
+          ],
+          [
+            "2012",
+            17.1
+          ],
+          [
+            "2013",
+            31.1
+          ],
+          [
+            "2014",
+            18.6
+          ],
+          [
+            "2015",
+            5.4
+          ],
+          [
+            "2016",
+            10.5
+          ],
+          [
+            "2017",
+            20.8
+          ],
+          [
+            "2018",
+            15.4
+          ],
+          [
+            "2019",
+            15.8
+          ],
+          [
+            "2020",
+            -4.8
+          ],
+          [
+            "2021",
+            10.8
+          ],
+          [
+            "2022",
+            8
+          ]
+        ],
+        "perf": [
+          [
+            "2023",
+            21.8
+          ],
+          [
+            "2024",
+            16.4
+          ],
+          [
+            "2025",
+            15.7
+          ],
+          [
+            "2026",
+            0.9,
+            "ytd",
+            1
+          ]
+        ],
+        "perfNotes": {
+          "en": [
+            "Fund target net return 12-14%",
+            "Prior closed-end net IRR: BOF-I 2007: 13.3% / 1.50x; IIa / IIb 2010: 20.5% / 19.1%",
+            "IIIa / IIIb 2012: 17.6% / 10.3%; IVa / IVb 2014: 14.5% / 13.1%",
+            "V 2017: 8.9%; V Oceanview 2018: 9.5%; VI 2020: 9.0%"
+          ],
+          "sc": [
+            "基金目标净回报 12-14%",
+            "Closed-end 前序净IRR: BOF-I 2007: 13.3% / 1.50x；IIa / IIb 2010: 20.5% / 19.1%",
+            "IIIa / IIIb 2012: 17.6% / 10.3%；IVa / IVb 2014: 14.5% / 13.1%",
+            "V 2017: 8.9%；V Oceanview 2018: 9.5%；VI 2020: 9.0%"
+          ],
+          "tc": [
+            "基金目標淨回報 12-14%",
+            "Closed-end 過往基金淨IRR: BOF-I 2007: 13.3% / 1.50x；IIa / IIb 2010: 20.5% / 19.1%",
+            "IIIa / IIIb 2012: 17.6% / 10.3%；IVa / IVb 2014: 14.5% / 13.1%",
+            "V 2017: 8.9%；V Oceanview 2018: 9.5%；VI 2020: 9.0%"
+          ]
+        },
+        "target": {
+          "en": "12-14%",
+          "sc": "12-14%",
+          "tc": "12-14%"
+        },
+        "ddLabel": {
+          "en": "Drawdown / Loss Rate",
+          "sc": "回撤 / 损失率",
+          "tc": "回撤 / 損失率"
+        },
+        "ddRaw": {
+          "en": "BOF Composite has had only two negative years since 2008:<br>2008 (-5.4%), 2020 COVID (-4.8%); all other years positive",
+          "sc": "BOF Composite 2008 年以来仅两个负年度：<br>2008 (-5.4%)、2020 COVID (-4.8%)，其余均正",
+          "tc": "BOF Composite 2008 年以來僅兩個負回報年度：<br>2008 (-5.4%)、2020 COVID (-4.8%)，其餘年度均為正回報"
+        },
+        "liq": {
+          "en": "No lock-up",
+          "sc": "无锁定",
+          "tc": "無鎖定期"
+        },
+        "liqFull": {
+          "en": "No lock-up; semi-annual redemptions (65 days&#x27; notice), converted into a redemption share class and returned as underlying assets are realized",
+          "sc": "无锁定；半年度赎回 (65 天通知)，转入 redemption share class 随底层实现返还",
+          "tc": "無鎖定期；每半年贖回 (65 天通知期)，轉入 redemption share class，隨相關資產變現返還"
+        },
+        "note": {
+          "en": "Source: Bayview Opportunity Fund deck (2026, data as of 2025/9/30, AUM and performance as of 2025/12/31) — terms/AUM p24, target return p11, BOF Composite annual net returns p19 (TWR basis; from 2022/12 refers to the Evergreen BOF itself), fund-level LTD net IRR / MOIC and Evergreen NAV p26; Bayview Residential Loan Fund deck (2026, data as of 2025/12/31) — terms/size/redemptions p31, target return S+500 and platform comparison p10, fund monthly net returns p24 (2026/1 is an estimate), loss assumption &lt;0.3% p25, Bayview platform-wide Composite (BOF+MSR+BLCS+BRLF+BCCF, excluding BRMIF) p9.",
+          "sc": "来源: Bayview Opportunity Fund deck (2026，数据截至 2025/9/30，AUM 与业绩截至 2025/12/31)——条款/AUM p24，目标回报 p11，BOF Composite 年度净回报 p19 (TWR 口径，2022/12 起为 Evergreen BOF 本体)，分基金 LTD 净IRR / MOIC 与 Evergreen NAV p26；Bayview Residential Loan Fund deck (2026，数据截至 2025/12/31)——条款/规模/赎回 p31，目标回报 S+500 与平台对比 p10，本体月度净回报 p24 (2026/1 为估计值)，损失假设 &lt;0.3% p25，Bayview 全平台 Composite (BOF+MSR+BLCS+BRLF+BCCF，不含 BRMIF) p9。",
+          "tc": "來源: Bayview Opportunity Fund deck (2026，數據截至 2025/9/30，AUM 與業績截至 2025/12/31)——條款/AUM p24，目標回報 p11，BOF Composite 年度淨回報 p19 (TWR 口徑，2022/12 起為 Evergreen BOF 本身)，個別基金 LTD 淨IRR / MOIC 與 Evergreen NAV p26；Bayview Residential Loan Fund deck (2026，數據截至 2025/12/31)——條款/規模/贖回 p31，目標回報 S+500 與平台比較 p10，本基金每月淨回報 p24 (2026/1 為估計值)，損失假設 &lt;0.3% p25，Bayview 全平台 Composite (BOF+MSR+BLCS+BRLF+BCCF，不含 BRMIF) p9。"
+        },
+        "redact": [
+          "Opportunity",
+          "Oceanview",
+          "Bayview",
+          "Closed",
+          "IIIa",
+          "IIIb",
+          "BOF",
+          "IIa",
+          "IIb",
+          "IVa",
+          "IVb"
+        ],
+        "translated": true,
+        "cardFrom": "2023",
+        "perfCaption": {
+          "en": "2008–2022 are the Bayview Opportunity Fund Composite: the closed-end BOF funds, weighted by NAV, net of fees. From December 2022 the figures are the evergreen BOF itself. 2026 is January only and estimated.",
+          "sc": "2008–2022 年为 Bayview Opportunity Fund Composite：各期 closed-end BOF 基金按 NAV 加权的费后净回报。2022 年 12 月起为 Evergreen BOF 本体。2026 年仅为 1 月数据，且为估算值。",
+          "tc": "2008–2022 年為 Bayview Opportunity Fund Composite：各期 closed-end BOF 基金按 NAV 加權的費後淨回報。2022 年 12 月起為 Evergreen BOF 本體。2026 年僅為 1 月數據，且為估算值。"
+        }
+      },
+      {
+        "id": "custom-1795591212539-1",
+        "custom": true,
+        "name": "Bayview Residential Loan Fund (RLF)",
+        "mgr": {
+          "en": "Bayview"
+        },
+        "tag": {
+          "en": "Performing Residential Whole Loans · Evergreen",
+          "sc": "在息住宅整贷 · Evergreen",
+          "tc": "在息住宅整體貸款 · Evergreen"
+        },
+        "vehicle": "private",
+        "inception": null,
+        "inceptionText": {
+          "en": "2025 (1 year since inception);Bayview: 30 years of residential mortgage investing",
+          "sc": "2025 (成立 1 年)；<br>Bayview 住宅按揭投资 30 年",
+          "tc": "2025 (成立 1 年)；<br>Bayview 住宅按揭投資 30 年"
+        },
+        "isNew": false,
+        "aum": 1,
+        "aumText": {
+          "en": "$1.0bn",
+          "sc": "$1.0bn",
+          "tc": "$1.0bn"
+        },
+        "strategy": {
+          "en": "Performing residential whole loans (agency / non-agency / second liens), hedging interest-rate and spread risk to generate absolute returns; ~90% AAA-quality cash flows",
+          "sc": "在息住宅整贷 (agency / non-agency / 二押)，对冲利率与利差风险、获取绝对收益；~90% AAA 级现金流质量",
+          "tc": "在息住宅整體貸款 (agency / non-agency / 二按)，對沖利率與利差風險、獲取絕對回報；~90% AAA 級現金流質素"
+        },
+        "hist": [
+          [
+            "2008",
+            -5.4
+          ],
+          [
+            "2009",
+            16.5
+          ],
+          [
+            "2010",
+            14.7
+          ],
+          [
+            "2011",
+            7.8
+          ],
+          [
+            "2012",
+            18.1
+          ],
+          [
+            "2013",
+            31.1
+          ],
+          [
+            "2014",
+            17.1
+          ],
+          [
+            "2015",
+            7
+          ],
+          [
+            "2016",
+            9.6
+          ],
+          [
+            "2017",
+            15.6
+          ],
+          [
+            "2018",
+            10.9
+          ],
+          [
+            "2019",
+            12.5
+          ],
+          [
+            "2020",
+            1
+          ],
+          [
+            "2021",
+            11.7
+          ],
+          [
+            "2022",
+            10
+          ],
+          [
+            "2023",
+            10.6
+          ],
+          [
+            "2024",
+            10.9
+          ]
+        ],
+        "perf": [
+          [
+            "2025",
+            11.3
+          ],
+          [
+            "2026",
+            0.9,
+            "ytd",
+            1
+          ]
+        ],
+        "perfNotes": {
+          "en": [
+            "Fund target net return S+500bps",
+            "Fund net returns: 2025 +11.3% (first year since inception), 2026/1 +0.9%",
+            "Bayview platform-wide blended fund Composite (since 2008):",
+            "Annualized net return 11.4%"
+          ],
+          "sc": [
+            "基金目标净回报 S+500bps",
+            "本体净回报: 2025 +11.3% (成立首年)、2026/1 +0.9%",
+            "Bayview 全平台混合基金 Composite (2008 年起):",
+            "年化净回报 11.4%"
+          ],
+          "tc": [
+            "基金目標淨回報 S+500bps",
+            "本基金淨回報: 2025 +11.3% (成立首年)、2026/1 +0.9%",
+            "Bayview 全平台混合基金 Composite (2008 年起):",
+            "年化淨回報 11.4%"
+          ]
+        },
+        "target": null,
+        "ddLabel": {
+          "en": "Drawdown / Loss Rate",
+          "sc": "回撤 / 损失率",
+          "tc": "回撤 / 損失率"
+        },
+        "ddRaw": {
+          "en": "No negative months since inception;<br>Underlying loan loss assumption &lt;0.3%/yr",
+          "sc": "成立以来无负月份；<br>底层贷款损失假设 &lt;0.3%/年",
+          "tc": "成立以來無負回報月份；<br>底層貸款損失假設 &lt;0.3%/年"
+        },
+        "liq": {
+          "en": "No lock-up",
+          "sc": "无锁定",
+          "tc": "無鎖定期"
+        },
+        "liqFull": {
+          "en": "No lock-up; quarterly redemptions (90 days&#39; notice), 80% of NAV returned within year 1, 100% in year 2",
+          "sc": "无锁定；季度赎回 (90 天通知)，第 1 年内返还 80% NAV、第 2 年返还 100%",
+          "tc": "無鎖定期；每季贖回 (90 天通知)，第 1 年內返還 80% NAV、第 2 年返還 100%"
+        },
+        "note": {
+          "en": "Source: Bayview Opportunity Fund deck (2026, data as of 2025/9/30, AUM and performance as of 2025/12/31) — terms/AUM p24, target return p11, BOF Composite annual net returns p19 (TWR basis; from 2022/12 reflects the Evergreen BOF itself), fund-level LTD net IRR / MOIC and Evergreen NAV p26; Bayview Residential Loan Fund deck (2026, data as of 2025/12/31) — terms/size/redemptions p31, target return S+500 and platform comparison p10, fund monthly net returns p24 (2026/1 is an estimate), loss assumption &lt;0.3% p25, Bayview platform-wide Composite (BOF+MSR+BLCS+BRLF+BCCF, excluding BRMIF) p9.",
+          "sc": "来源: Bayview Opportunity Fund deck (2026，数据截至 2025/9/30，AUM 与业绩截至 2025/12/31)——条款/AUM p24，目标回报 p11，BOF Composite 年度净回报 p19 (TWR 口径，2022/12 起为 Evergreen BOF 本体)，分基金 LTD 净IRR / MOIC 与 Evergreen NAV p26；Bayview Residential Loan Fund deck (2026，数据截至 2025/12/31)——条款/规模/赎回 p31，目标回报 S+500 与平台对比 p10，本体月度净回报 p24 (2026/1 为估计值)，损失假设 &lt;0.3% p25，Bayview 全平台 Composite (BOF+MSR+BLCS+BRLF+BCCF，不含 BRMIF) p9。",
+          "tc": "來源: Bayview Opportunity Fund deck (2026，數據截至 2025/9/30，AUM 與業績截至 2025/12/31)——條款/AUM p24，目標回報 p11，BOF Composite 年度淨回報 p19 (TWR 口徑，2022/12 起為 Evergreen BOF 本身)，個別基金 LTD 淨IRR / MOIC 與 Evergreen NAV p26；Bayview Residential Loan Fund deck (2026，數據截至 2025/12/31)——條款/規模/贖回 p31，目標回報 S+500 與平台比較 p10，本基金月度淨回報 p24 (2026/1 為估計值)，損失假設 &lt;0.3% p25，Bayview 全平台 Composite (BOF+MSR+BLCS+BRLF+BCCF，不含 BRMIF) p9。"
+        },
+        "redact": [
+          "Residential",
+          "Bayview",
+          "Loan",
+          "RLF"
+        ],
+        "translated": true,
+        "cardFrom": "2025",
+        "perfCaption": {
+          "en": "2025 and 2026 are this fund's own net returns: 2025 is its first year, counted from launch, and 2026 is January only. 2008–2024 are the Bayview Fund Composite, which covers all of Bayview's commingled funds, not this fund. The composite returned 10.0% in 2025.",
+          "sc": "2025 与 2026 年为本基金本体净回报：2025 年为成立首年 (自成立起计)，2026 年仅为 1 月数据。2008–2024 年为 Bayview Fund Composite，涵盖 Bayview 旗下全部混合基金，并非本基金。该 Composite 2025 年回报为 10.0%。",
+          "tc": "2025 與 2026 年為本基金本體淨回報：2025 年為成立首年 (自成立起計)，2026 年僅為 1 月數據。2008–2024 年為 Bayview Fund Composite，涵蓋 Bayview 旗下全部混合基金，並非本基金。該 Composite 2025 年回報為 10.0%。"
+        }
+      },
+      {
+        "id": "custom-1795591212540-2",
+        "custom": true,
+        "name": "Cerberus Global Residential Credit Fund (CGRC)",
+        "mgr": {
+          "en": "Cerberus"
+        },
+        "tag": {
+          "en": "Residential/Consumer Credit · Investing Drawdown",
+          "sc": "住宅/消费信贷 · 已在投 Drawdown",
+          "tc": "住宅/消費信貸 · 投資中 Drawdown"
+        },
+        "vehicle": "private",
+        "inception": "2024-05",
+        "inceptionText": {
+          "en": "Launched 2024/5 (~2 years invested);<br>CABO platform since 2008 (17 years)",
+          "sc": "2024/5 成立 (已投资 ~2 年)；<br>CABO 平台 2008 年起 (17年)",
+          "tc": "2024/5 成立 (已投資 ~2 年)；<br>CABO 平台 2008 年起 (17年)"
+        },
+        "isNew": false,
+        "aum": 0.5,
+        "aumText": {
+          "en": "$0.5bn",
+          "sc": "$0.5bn",
+          "tc": "$0.5bn"
+        },
+        "strategy": {
+          "en": "US residential/consumer credit, direct origination via proprietary platforms + securitization: residential second liens 51%, seasoned performing loans 16%, consumer 18%, proprietary platforms/risk retention 13%;",
+          "sc": "美国住宅/消费信贷，自营平台直接始发 + 证券化：住宅二押 51%、seasoned 在息贷 16%、消费 18%、自营平台/风险自留 13%；",
+          "tc": "美國住宅/消費信貸，自營平台直接發起 + 證券化：住宅二按 51%、seasoned 正常付息貸款 16%、消費 18%、自營平台/風險自留 13%；"
+        },
+        "hist": [],
+        "perf": [],
+        "perfNotes": {
+          "en": [
+            "Fund target net return 12-15%",
+            "Fund ITD annualized net return 14.5% (since 2024/5 launch, 41% invested)",
+            "Second-lien platform annualized net ROE of 15.6% since 2023"
+          ],
+          "sc": [
+            "基金目标净回报 12-15%",
+            "本体 ITD 年化净回报 14.5% (2024/5 成立以来，已投 41%)",
+            "二押平台 2023 年以来年化净 ROE 15.6%"
+          ],
+          "tc": [
+            "基金目標淨回報 12-15%",
+            "本基金 ITD 年化淨回報 14.5% (2024/5 成立以來，已投資 41%)",
+            "二按平台 2023 年以來年化淨 ROE 15.6%"
+          ]
+        },
+        "target": {
+          "en": "12-15%",
+          "sc": "12-15%",
+          "tc": "12-15%"
+        },
+        "ddLabel": {
+          "en": "Loss Rate",
+          "sc": "损失率",
+          "tc": "損失率"
+        },
+        "ddRaw": {
+          "en": "CABO first liens: cumulative realized losses of 55bps over nearly 10 years;<br>Second liens originated since 2023: realized losses of 0bps",
+          "sc": "CABO 一押近 10 年累计实现损失 55bps；<br>2023 年以来新发二押实现损失 0bps",
+          "tc": "CABO 一按近 10 年累計實現損失 55bps；<br>2023 年以來新發二按實現損失 0bps"
+        },
+        "liq": {
+          "en": "Closed-end: investment period to 2027/11",
+          "sc": "封闭式：投资期至 2027/11",
+          "tc": "封閉式：投資期至 2027/11"
+        },
+        "liqFull": {
+          "en": "Closed-end: investment period to 2027/11, followed by a 4-year liquidation period (to ~2031); optional 5% annual distribution",
+          "sc": "封闭式：投资期至 2027/11，后接 4 年清算期 (至 ~2031)；可选 5% 年度分红",
+          "tc": "封閉式：投資期至 2027/11，其後 4 年清算期 (至 ~2031)；可選 5% 年度派息"
+        },
+        "note": {
+          "en": "Source: Cerberus CGRC deck (2026/3) — fund ITD annualized net return of 14.5% as of 2026/1/31, on an admission-period blended fee basis (p6/p14; will decline slightly after true-up to actual fee rates following final close); size/portfolio composition/gross yield p14-15; target return p6; second-lien platform ROE p23 (as of 2025/12); loss rate p12 (FirstKey data as of 2026/1); terms/investment period/liquidation period p38. Balbec IGCF-VII deck (2026) — performance as of 2026/3/31; IGCF I–VI vintage table p8 (IGCF-VI net IRR of 22.8% excludes subline impact); loss rate and platform size p4; target portfolio allocation p9; terms (investment period/harvest/distributions) p48 and p13.",
+          "sc": "来源: Cerberus CGRC deck (2026/3)——本体 14.5% ITD 年化净回报截至 2026/1/31、为 admission-period blended fee 口径 (p6/p14，final close 后按实际费率 true-up 将略降低)，规模/组合构成/毛收益率 p14-15，目标回报 p6，二押平台 ROE p23 (截至 2025/12)，损失率 p12 (FirstKey 数据截至 2026/1)，条款/投资期/清算期 p38；Balbec IGCF-VII deck (2026)——业绩截至 2026/3/31，IGCF I–VI vintage 表 p8 (IGCF-VI 净IRR 22.8% 未含 subline 影响)，损失率与平台规模 p4，目标组合配置 p9，条款 (投资期/harvest/分红) p48 与 p13。",
+          "tc": "來源: Cerberus CGRC deck (2026/3)——本基金 14.5% ITD 年化淨回報截至 2026/1/31，按 admission-period blended fee 口徑計算 (p6/p14，final close 後按實際費率 true-up 將略為下降)，規模/組合構成/毛收益率 p14-15，目標回報 p6，二按平台 ROE p23 (截至 2025/12)，損失率 p12 (FirstKey 數據截至 2026/1)，條款/投資期/清算期 p38；Balbec IGCF-VII deck (2026)——業績截至 2026/3/31，IGCF I–VI vintage 表 p8 (IGCF-VI 淨IRR 22.8% 未計入 subline 影響)，損失率與平台規模 p4，目標組合配置 p9，條款 (投資期/harvest/派息) p48 與 p13。"
+        },
+        "redact": [
+          "Residential",
+          "Cerberus",
+          "CGRC",
+          "CABO",
+          "ITD",
+          "ROE"
+        ],
+        "translated": true
+      },
+      {
+        "id": "custom-1795591212541-3",
+        "custom": true,
+        "name": "Balbec IGCF-VII",
+        "mgr": {
+          "en": "Balbec"
+        },
+        "tag": {
+          "en": "Residential NPL/RPL-led multi-asset · 7-year Drawdown",
+          "sc": "住宅 NPL/RPL 为主多元资产 · 7 年期 Drawdown",
+          "tc": "住宅 NPL/RPL 為主多元資產 · 7 年期 Drawdown"
+        },
+        "vehicle": "private",
+        "inception": null,
+        "inceptionText": {
+          "en": "New fund, first close expected 2Q26;<br>Balbec IGCF series since 2011",
+          "sc": "新发基金，首关预计 2Q26；<br>Balbec IGCF 系列 2011 年起",
+          "tc": "新發基金，首次交割預計 2Q26；<br>Balbec IGCF 系列 2011 年起"
+        },
+        "isNew": true,
+        "aum": 1.75,
+        "aumText": {
+          "en": "Target $1.75bn+",
+          "sc": "目标 $1.75bn+",
+          "tc": "目標 $1.75bn+"
+        },
+        "strategy": {
+          "en": "Aggregation of small US and European portfolios (most individual deals &lt;$5M): residential mortgages (S&amp;D / RPL / NPL / bankruptcy) 55-60%, MSR 15-20%, consumer and SME NPL 15-20%, CRE debt 10-12%;",
+          "sc": "美欧小额组合聚合 (单笔多 &lt;$5M)：住宅按揭 (S&amp;D / RPL / NPL / 破产) 55-60%、MSR 15-20%、消费及 SME NPL 15-20%、CRE 债 10-12%；",
+          "tc": "美歐小額組合聚合 (單筆多 &lt;$5M)：住宅按揭 (S&amp;D / RPL / NPL / 破產) 55-60%、MSR 15-20%、消費及 SME NPL 15-20%、CRE 債 10-12%；"
+        },
+        "hist": [],
+        "perf": [],
+        "perfNotes": {
+          "en": [
+            "Fund target net IRR 14-16% / 1.5x+, monthly distributions starting during the investment period",
+            "IGCF-I 2011: 11.3% / 1.23x; II 2014: 11.7% / 1.33x; III 2017: 13.1% / 1.45x (liquidated)",
+            "IV 2019: 12.3%, DPI 1.05x (projected 12-13% / 1.50-1.55x)",
+            "V 2021: 7.0%, DPI 0.44x (projected 9-10% / 1.45-1.55x)",
+            "VI 2023: 22.8%, DPI 0.12x (projected 14-16% / 1.60-1.70x)"
+          ],
+          "sc": [
+            "基金目标净 IRR 14-16% / 1.5x+，投资期内即月度分红",
+            "IGCF-I 2011: 11.3% / 1.23x；II 2014: 11.7% / 1.33x；III 2017: 13.1% / 1.45x (已清算)",
+            "IV 2019: 12.3%，DPI 1.05x (预计 12-13% / 1.50-1.55x)",
+            "V 2021: 7.0%，DPI 0.44x (预计 9-10% / 1.45-1.55x)",
+            "VI 2023: 22.8%，DPI 0.12x (预计 14-16% / 1.60-1.70x)"
+          ],
+          "tc": [
+            "基金目標淨 IRR 14-16% / 1.5x+，投資期內即每月派息",
+            "IGCF-I 2011: 11.3% / 1.23x；II 2014: 11.7% / 1.33x；III 2017: 13.1% / 1.45x (已清算)",
+            "IV 2019: 12.3%，DPI 1.05x (預計 12-13% / 1.50-1.55x)",
+            "V 2021: 7.0%，DPI 0.44x (預計 9-10% / 1.45-1.55x)",
+            "VI 2023: 22.8%，DPI 0.12x (預計 14-16% / 1.60-1.70x)"
+          ]
+        },
+        "target": {
+          "en": "14-16%",
+          "sc": "14-16%",
+          "tc": "14-16%"
+        },
+        "ddLabel": {
+          "en": "Loss rate",
+          "sc": "损失率",
+          "tc": "損失率"
+        },
+        "ddRaw": {
+          "en": "Cumulative deployment $35bn, loss rate 0.18%<br>(47 deals realized/projected MOIC&lt;1.0x)",
+          "sc": "累计投放 $35bn，损失率 0.18%<br>(47 笔实现/预计 MOIC&lt;1.0x)",
+          "tc": "累計投放 $35bn，損失率 0.18%<br>(47 筆實現/預計 MOIC&lt;1.0x)"
+        },
+        "liq": {
+          "en": "Closed-end: 2-year investment period + 5-year harvest…",
+          "sc": "封闭式：投资期 2 年 + harvest 5 年…",
+          "tc": "封閉式：投資期 2 年 + harvest 5 年…"
+        },
+        "liqFull": {
+          "en": "Closed-end: 2-year investment period + 5-year harvest (from final close 2Q27);",
+          "sc": "封闭式：投资期 2 年 + harvest 5 年 (自 final close 2Q27 起)；",
+          "tc": "封閉式：投資期 2 年 + harvest 5 年 (自 final close 2Q27 起)；"
+        },
+        "note": {
+          "en": "Source: Cerberus CGRC deck (2026/3) — fund 14.5% ITD annualized net return as of 2026/1/31, on an admission-period blended fee basis (p6/p14; will decline slightly after true-up to actual fee rates following final close), size/portfolio composition/gross yield p14-15, target return p6, second-lien platform ROE p23 (as of 2025/12), loss rate p12 (FirstKey data as of 2026/1), terms/investment period/liquidation period p38; Balbec IGCF-VII deck (2026) — performance as of 2026/3/31, IGCF I–VI vintage table p8 (IGCF-VI net IRR 22.8% excludes subline impact), loss rate and platform size p4, target portfolio allocation p9, terms (investment period/harvest/distributions) p48 and p13.",
+          "sc": "来源: Cerberus CGRC deck (2026/3)——本体 14.5% ITD 年化净回报截至 2026/1/31、为 admission-period blended fee 口径 (p6/p14，final close 后按实际费率 true-up 将略降低)，规模/组合构成/毛收益率 p14-15，目标回报 p6，二押平台 ROE p23 (截至 2025/12)，损失率 p12 (FirstKey 数据截至 2026/1)，条款/投资期/清算期 p38；Balbec IGCF-VII deck (2026)——业绩截至 2026/3/31，IGCF I–VI vintage 表 p8 (IGCF-VI 净IRR 22.8% 未含 subline 影响)，损失率与平台规模 p4，目标组合配置 p9，条款 (投资期/harvest/分红) p48 与 p13。",
+          "tc": "來源: Cerberus CGRC deck (2026/3)——本基金 14.5% ITD 年化淨回報截至 2026/1/31、為 admission-period blended fee 口徑 (p6/p14，final close 後按實際費率 true-up 將略降低)，規模/組合構成/毛收益率 p14-15，目標回報 p6，二按平台 ROE p23 (截至 2025/12)，損失率 p12 (FirstKey 數據截至 2026/1)，條款/投資期/清算期 p38；Balbec IGCF-VII deck (2026)——業績截至 2026/3/31，IGCF I–VI vintage 表 p8 (IGCF-VI 淨IRR 22.8% 未含 subline 影響)，損失率與平台規模 p4，目標組合配置 p9，條款 (投資期/harvest/派息) p48 與 p13。"
+        },
+        "redact": [
+          "Balbec",
+          "IGCF"
+        ],
+        "translated": true
+      }
+    ]
+  },
   "hidden": [],
-  "overrides": {}
+  "overrides": {},
+  "order": {}
 }

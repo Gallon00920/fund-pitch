@@ -148,6 +148,8 @@ const Local = {
   }
 };
 const localReady = Local.detect();
+// Opened from this computer (localhost or a file) but without server.py: the usual cause of "why does it want a token?"
+const onThisComputer = ["localhost", "127.0.0.1", "[::1]", ""].includes(location.hostname);
 
 /* ---------- small status banner ---------- */
 const toastEl = document.getElementById("toast");
@@ -164,7 +166,7 @@ toastEl.addEventListener("click", () => { toastEl.hidden = true; });
 /** Admin actions call this first. Without a GitHub token nothing can be saved for everyone, so the action is stopped. */
 function needToken() {
   if (Repo.hasToken() || Local.on) return false;           // the local server can save to this computer without a token
-  toast(t("ghNeedToken"), "warn", true);
+  toast(t(onThisComputer ? "locNeedServer" : "ghNeedToken"), "warn", true);
   return true;
 }
 
@@ -242,7 +244,7 @@ function translateNow(id) {
 /* ---------- GitHub token box in the Add Fund window ---------- */
 const ghInput = document.getElementById("ghInput"), ghStatus = document.getElementById("ghStatus");
 function refreshTokenBox() {
-  ghStatus.textContent = t(Repo.hasToken() ? "ghTokenSaved" : Local.on ? "locStatus" : "ghTokenNone");
+  ghStatus.textContent = t(Repo.hasToken() ? "ghTokenSaved" : Local.on ? "locStatus" : onThisComputer ? "locNeedServer" : "ghTokenNone");
   ghStatus.classList.toggle("ok", Repo.hasToken());
   document.getElementById("ghRemove").hidden = !Repo.hasToken();
   document.getElementById("ghBox").open = !Repo.hasToken();          // show the instructions until a token is saved

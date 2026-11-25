@@ -7,6 +7,23 @@ const L=o=>o?(o[lang]||o.en):"";
 const zh=()=>lang!=="en";
 // Free-text fields of added funds hold either one text (shown in every language) or, once translated, { en, sc, tc }.
 const LX=v=>v&&typeof v==="object"&&!Array.isArray(v)?(v[lang]||v.en||""):v||"";
+/* Inception is held two ways: `inception` ("YYYY-MM", from the Inception month field) and optional free text.
+   The month is the authority when it is set. Without it, a year at the start of the text is used, so
+   "2025 (first year)" still puts 2025 on the card. */
+const LEAD_DATE=/^\s*((?:19|20)\d{2})(?:\s*[\/\-.年]\s*\d{1,2}\s*月?)?\s*/;
+const incYear=f=>{
+  if(f.inception) return f.inception.slice(0,4);
+  const texts=f.inceptionText&&typeof f.inceptionText==="object"?[LX(f.inceptionText),...Object.values(f.inceptionText)]:[f.inceptionText];
+  for(const x of texts){const m=String(x||"").match(LEAD_DATE); if(m) return m[1]}
+  return "";
+};
+/** Inception as shown in View Fund: the month first, then the free text without its own leading date. */
+function incShown(f){
+  const text=LX(f.inceptionText);
+  if(!f.inception) return text?R(f,text):"—";
+  const rest=text.replace(LEAD_DATE,"");
+  return ym(f.inception)+(rest?(/^[(（;；,，]/.test(rest)?" ":"<br>")+R(f,rest):"");
+}
 const notesOf=f=>Array.isArray(f.perfNotes)?f.perfNotes:(f.perfNotes&&(f.perfNotes[lang]||f.perfNotes.en))||[];
 const fmt=v=>(v>0?"+":v<0?"−":"")+Math.abs(v).toFixed(2)+"%";
 const ym=s=>{const [y,m]=s.split("-");return zh()?`${y}年${+m}月`:`${MON[m-1]} ${y}`};
@@ -48,7 +65,7 @@ function cardHTML(f,i){
       </div>`:""}${anon()?"":`<span class="tag">${L(f.tag)}</span>`}<h3>${title(f)}</h3>${anon()?"":`<div class="mgr">${L(f.mgr)} · ${veh(f)}</div>`}</div>
     <div class="kpis">
       <div>${f.aum!=null?`<b>${money(f.aum)}</b>`:`<b class="txt">${LX(f.aumText)||"—"}</b>`}<span>${t("aum")}</span></div>
-      <div><b>${f.inception?f.inception.slice(0,4):f.isNew?t("newFund"):"—"}</b><span>${t("inception")}</span></div>
+      <div><b>${incYear(f)||(f.isNew?t("newFund"):"—")}</b><span>${t("inception")}</span></div>
       <div><b>${a!==null?fmt(a):LX(f.target)||"—"}</b><span>${a===null&&LX(f.target)?t("target"):t("ann")}</span></div>
     </div>
     <div class="card-body">
@@ -216,7 +233,8 @@ function openD(f){
   const rows=[...(f.hist||[]),...f.perf];
   const ddRaw=LX(f.ddRaw), notes=notesOf(f), incText=LX(f.inceptionText), aumText=LX(f.aumText);
   const ddBlock=ddRaw||f.dd?`<h4>${LX(f.ddLabel)||t("maxdd")}</h4><p>${ddRaw?R(f,ddRaw):ddText(f)}</p>`:"";
-  const perfBlock=rows.length?`<h4>${t("perfTitle")}</h4>
+  // perfCaption explains rows that are not this fund's own record (a predecessor or composite series)
+  const perfBlock=rows.length?`<h4>${t("perfTitle")}</h4>${LX(f.perfCaption)?`<p class="perf-cap">${R(f,LX(f.perfCaption))}</p>`:""}
     <table class="perf"><tr><th>${t("period")}</th><th>${t("ret")}</th></tr>${rows.map(p=>`<tr><td>${perLabel(p)}</td><td class="${p[1]>=0?"pos":"neg"}">${fmt(p[1])}</td></tr>`).join("")}</table>`:"";
   const notesBlock=notes.length?`<h4>${t("trackRecord")}</h4><p>${notes.map(x=>R(f,x)).join("<br>")}</p>`:"";
   drawer.innerHTML=`<div class="d-head"><button class="close" onclick="closeD()" aria-label="Close">✕</button>${anon()?"":`<span class="tag">${L(f.tag)}</span>`}<h3>${title(f)}</h3>${anon()?"":`<p>${L(f.mgr)} · ${veh(f)}</p>`}</div>
@@ -224,7 +242,7 @@ function openD(f){
     <h4>${t("overview")}</h4><p>${R(f,L(f.strategy))}</p>
     <h4>${t("facts")}</h4>
     <div class="facts">
-      <div><span>${t("inception")}</span><b>${incText?R(f,incText):f.inception?ym(f.inception):"—"}</b></div><div><span>${t("aum")}</span><b>${aumText?R(f,aumText):f.aum!=null?money(f.aum):"—"}</b></div>
+      <div><span>${t("inception")}</span><b>${incShown(f)}</b></div><div><span>${t("aum")}</span><b>${aumText?R(f,aumText):f.aum!=null?money(f.aum):"—"}</b></div>
       <div><span>${t("vehicle")}</span><b>${veh(f)}</b></div><div><span>${t("dealing")}</span><b>${liqTxt(f)}</b></div>
     </div>
     ${ddBlock}

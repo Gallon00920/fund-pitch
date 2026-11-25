@@ -354,6 +354,9 @@ html:not([lang="en"]) .wordmark{font-size:19px;letter-spacing:5px}
 .track-outer.reordering .card:hover{transform:none}
 .track-outer.reordering .card.moving{transition:none;z-index:5;opacity:.96;box-shadow:0 30px 60px -20px rgba(18,28,58,.55);outline:2px solid var(--gold)}
 .track-outer.reordering .card.moving .grip{cursor:grabbing;background:var(--gold);border-color:var(--gold);color:var(--navy)}
+
+/* note above the yearly table in View Fund */
+.d-body .perf-cap{font-size:13px;line-height:1.65;color:var(--muted);margin:-4px 0 14px}
 </style>
 </head>
 <body>
@@ -908,6 +911,16 @@ Object.assign(UI.tc,{
 
 /* ---------- Drag to reorder ---------- */
 UI.en.reorder="Drag to reorder"; UI.sc.reorder="拖动调整顺序"; UI.tc.reorder="拖動調整順序";
+
+/* shown when the site runs on this computer through a plain file server, which cannot save anything */
+UI.en.locNeedServer="This site was not started with server.py, so changes cannot be saved on this computer. Stop the current server and run  python server.py  in the project folder, then reload. (Or save a GitHub token to save changes for everyone.)";
+UI.sc.locNeedServer="本站不是通过 server.py 启动的，因此无法在本机保存修改。请停止当前服务器，在项目文件夹中运行  python server.py ，然后刷新页面。(或保存 GitHub 令牌，为所有人保存修改。)";
+UI.tc.locNeedServer="本站不是透過 server.py 啟動的，因此無法在本機儲存修改。請停止目前的伺服器，在專案資料夾中執行  python server.py ，然後重新整理頁面。(或儲存 GitHub 權杖，為所有人儲存修改。)";
+
+/* clearer labels for the two inception fields in the Edit Fund form */
+UI.en.efInception="Inception month (sets the year on the card)";  UI.en.efInceptionText="Inception note (extra detail in View Fund, optional)";
+UI.sc.efInception="成立月份 (决定卡片上的年份)";                      UI.sc.efInceptionText="成立说明 (显示在详情中的补充文字，选填)";
+UI.tc.efInception="成立月份 (決定卡片上的年份)";                      UI.tc.efInceptionText="成立說明 (顯示在詳情中的補充文字，選填)";
 </script>
 <script>
 /* ===== js/funds-data.js ===== */
@@ -1199,6 +1212,23 @@ const L=o=>o?(o[lang]||o.en):"";
 const zh=()=>lang!=="en";
 // Free-text fields of added funds hold either one text (shown in every language) or, once translated, { en, sc, tc }.
 const LX=v=>v&&typeof v==="object"&&!Array.isArray(v)?(v[lang]||v.en||""):v||"";
+/* Inception is held two ways: `inception` ("YYYY-MM", from the Inception month field) and optional free text.
+   The month is the authority when it is set. Without it, a year at the start of the text is used, so
+   "2025 (first year)" still puts 2025 on the card. */
+const LEAD_DATE=/^\s*((?:19|20)\d{2})(?:\s*[\/\-.年]\s*\d{1,2}\s*月?)?\s*/;
+const incYear=f=>{
+  if(f.inception) return f.inception.slice(0,4);
+  const texts=f.inceptionText&&typeof f.inceptionText==="object"?[LX(f.inceptionText),...Object.values(f.inceptionText)]:[f.inceptionText];
+  for(const x of texts){const m=String(x||"").match(LEAD_DATE); if(m) return m[1]}
+  return "";
+};
+/** Inception as shown in View Fund: the month first, then the free text without its own leading date. */
+function incShown(f){
+  const text=LX(f.inceptionText);
+  if(!f.inception) return text?R(f,text):"—";
+  const rest=text.replace(LEAD_DATE,"");
+  return ym(f.inception)+(rest?(/^[(（;；,，]/.test(rest)?" ":"<br>")+R(f,rest):"");
+}
 const notesOf=f=>Array.isArray(f.perfNotes)?f.perfNotes:(f.perfNotes&&(f.perfNotes[lang]||f.perfNotes.en))||[];
 const fmt=v=>(v>0?"+":v<0?"−":"")+Math.abs(v).toFixed(2)+"%";
 const ym=s=>{const [y,m]=s.split("-");return zh()?`${y}年${+m}月`:`${MON[m-1]} ${y}`};
@@ -1240,7 +1270,7 @@ function cardHTML(f,i){
       </div>`:""}${anon()?"":`<span class="tag">${L(f.tag)}</span>`}<h3>${title(f)}</h3>${anon()?"":`<div class="mgr">${L(f.mgr)} · ${veh(f)}</div>`}</div>
     <div class="kpis">
       <div>${f.aum!=null?`<b>${money(f.aum)}</b>`:`<b class="txt">${LX(f.aumText)||"—"}</b>`}<span>${t("aum")}</span></div>
-      <div><b>${f.inception?f.inception.slice(0,4):f.isNew?t("newFund"):"—"}</b><span>${t("inception")}</span></div>
+      <div><b>${incYear(f)||(f.isNew?t("newFund"):"—")}</b><span>${t("inception")}</span></div>
       <div><b>${a!==null?fmt(a):LX(f.target)||"—"}</b><span>${a===null&&LX(f.target)?t("target"):t("ann")}</span></div>
     </div>
     <div class="card-body">
@@ -1408,7 +1438,8 @@ function openD(f){
   const rows=[...(f.hist||[]),...f.perf];
   const ddRaw=LX(f.ddRaw), notes=notesOf(f), incText=LX(f.inceptionText), aumText=LX(f.aumText);
   const ddBlock=ddRaw||f.dd?`<h4>${LX(f.ddLabel)||t("maxdd")}</h4><p>${ddRaw?R(f,ddRaw):ddText(f)}</p>`:"";
-  const perfBlock=rows.length?`<h4>${t("perfTitle")}</h4>
+  // perfCaption explains rows that are not this fund's own record (a predecessor or composite series)
+  const perfBlock=rows.length?`<h4>${t("perfTitle")}</h4>${LX(f.perfCaption)?`<p class="perf-cap">${R(f,LX(f.perfCaption))}</p>`:""}
     <table class="perf"><tr><th>${t("period")}</th><th>${t("ret")}</th></tr>${rows.map(p=>`<tr><td>${perLabel(p)}</td><td class="${p[1]>=0?"pos":"neg"}">${fmt(p[1])}</td></tr>`).join("")}</table>`:"";
   const notesBlock=notes.length?`<h4>${t("trackRecord")}</h4><p>${notes.map(x=>R(f,x)).join("<br>")}</p>`:"";
   drawer.innerHTML=`<div class="d-head"><button class="close" onclick="closeD()" aria-label="Close">✕</button>${anon()?"":`<span class="tag">${L(f.tag)}</span>`}<h3>${title(f)}</h3>${anon()?"":`<p>${L(f.mgr)} · ${veh(f)}</p>`}</div>
@@ -1416,7 +1447,7 @@ function openD(f){
     <h4>${t("overview")}</h4><p>${R(f,L(f.strategy))}</p>
     <h4>${t("facts")}</h4>
     <div class="facts">
-      <div><span>${t("inception")}</span><b>${incText?R(f,incText):f.inception?ym(f.inception):"—"}</b></div><div><span>${t("aum")}</span><b>${aumText?R(f,aumText):f.aum!=null?money(f.aum):"—"}</b></div>
+      <div><span>${t("inception")}</span><b>${incShown(f)}</b></div><div><span>${t("aum")}</span><b>${aumText?R(f,aumText):f.aum!=null?money(f.aum):"—"}</b></div>
       <div><span>${t("vehicle")}</span><b>${veh(f)}</b></div><div><span>${t("dealing")}</span><b>${liqTxt(f)}</b></div>
     </div>
     ${ddBlock}
@@ -1972,8 +2003,11 @@ editForm.addEventListener("submit", e => {
   setText("strategy", escLines(lines(ef("efStrategy").value)));
   if (f.liq || val("efLiq") !== editing.liqShown) setText("liq", esc(val("efLiq")) || "—");   // keep the translated default unless it was changed
   optional("liqFull", escLines(lines(ef("efLiqFull").value)), true);
-  f.hist = all.slice(0, -9);                                 // the card shows the latest 9 periods; older years appear in View Fund only
-  f.perf = all.slice(-9);
+  // The card shows the latest 9 periods; older years appear in View Fund only. A fund with `cardFrom` (a year) keeps
+  // everything before that year off the card: those rows are a predecessor or composite record, not the fund's own.
+  const own = f.cardFrom ? all.filter(p => p[0] >= f.cardFrom) : all;
+  f.perf = own.slice(-9);
+  f.hist = all.filter(p => !f.perf.includes(p));
   const noteLines = lines(ef("efNotes").value).map(esc);
   if (perLang("perfNotes")) f.perfNotes[lang] = noteLines; else f.perfNotes = noteLines;
   const dd = ef("efDd").value.trim();
@@ -2161,6 +2195,8 @@ const Local = {
   }
 };
 const localReady = Local.detect();
+// Opened from this computer (localhost or a file) but without server.py: the usual cause of "why does it want a token?"
+const onThisComputer = ["localhost", "127.0.0.1", "[::1]", ""].includes(location.hostname);
 
 /* ---------- small status banner ---------- */
 const toastEl = document.getElementById("toast");
@@ -2177,7 +2213,7 @@ toastEl.addEventListener("click", () => { toastEl.hidden = true; });
 /** Admin actions call this first. Without a GitHub token nothing can be saved for everyone, so the action is stopped. */
 function needToken() {
   if (Repo.hasToken() || Local.on) return false;           // the local server can save to this computer without a token
-  toast(t("ghNeedToken"), "warn", true);
+  toast(t(onThisComputer ? "locNeedServer" : "ghNeedToken"), "warn", true);
   return true;
 }
 
@@ -2255,7 +2291,7 @@ function translateNow(id) {
 /* ---------- GitHub token box in the Add Fund window ---------- */
 const ghInput = document.getElementById("ghInput"), ghStatus = document.getElementById("ghStatus");
 function refreshTokenBox() {
-  ghStatus.textContent = t(Repo.hasToken() ? "ghTokenSaved" : Local.on ? "locStatus" : "ghTokenNone");
+  ghStatus.textContent = t(Repo.hasToken() ? "ghTokenSaved" : Local.on ? "locStatus" : onThisComputer ? "locNeedServer" : "ghTokenNone");
   ghStatus.classList.toggle("ok", Repo.hasToken());
   document.getElementById("ghRemove").hidden = !Repo.hasToken();
   document.getElementById("ghBox").open = !Repo.hasToken();          // show the instructions until a token is saved

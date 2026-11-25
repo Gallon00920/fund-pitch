@@ -345,3 +345,6 @@ html:not([lang="en"]) .wordmark{font-size:19px;letter-spacing:5px}
 .track-outer.reordering .card:hover{transform:none}
 .track-outer.reordering .card.moving{transition:none;z-index:5;opacity:.96;box-shadow:0 30px 60px -20px rgba(18,28,58,.55);outline:2px solid var(--gold)}
 .track-outer.reordering .card.moving .grip{cursor:grabbing;background:var(--gold);border-color:var(--gold);color:var(--navy)}
+
+/* note above the yearly table in View Fund */
+.d-body .perf-cap{font-size:13px;line-height:1.65;color:var(--muted);margin:-4px 0 14px}
