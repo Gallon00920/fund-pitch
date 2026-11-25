@@ -5,6 +5,9 @@ try{ const s=localStorage.getItem("jc-lang"); if(UI[s]) lang=s }catch(e){}
 const t=k=>UI[lang][k];
 const L=o=>o?(o[lang]||o.en):"";
 const zh=()=>lang!=="en";
+// Free-text fields of added funds hold either one text (shown in every language) or, once translated, { en, sc, tc }.
+const LX=v=>v&&typeof v==="object"&&!Array.isArray(v)?(v[lang]||v.en||""):v||"";
+const notesOf=f=>Array.isArray(f.perfNotes)?f.perfNotes:(f.perfNotes&&(f.perfNotes[lang]||f.perfNotes.en))||[];
 const fmt=v=>(v>0?"+":v<0?"−":"")+Math.abs(v).toFixed(2)+"%";
 const ym=s=>{const [y,m]=s.split("-");return zh()?`${y}年${+m}月`:`${MON[m-1]} ${y}`};
 const money=bn=>zh()?`${+(bn*10).toFixed(1)}亿美元`.replace("亿",lang==="tc"?"億":"亿"):`US$${bn.toFixed(bn<10?2:1)}bn`;
@@ -12,10 +15,16 @@ const perLabel=([y,,k,m])=>k==="ytd"?(zh()?`${y} YTD (至${m}月)`:`${y} YTD (to
 const ann=p=>{const f=p.filter(x=>!x[2]);if(!f.length)return null;return(Math.pow(f.reduce((a,x)=>a*(1+x[1]/100),1),1/f.length)-1)*100};
 const liqTxt=f=>f.liq?L(f.liq):t("daily");
 const veh=f=>f.vehicle==="private"?t("private"):f.vehicle;
+// text typed by an admin or read from a deck is inserted into the page as HTML, so neutralise any markup first
+const esc=s=>String(s==null?"":s).trim().replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 /* Investors (anyone who is not an admin) never see the real fund or manager name:
    the strategy label is shown as the fund's title instead. Admins see everything. */
 const anon=()=>!Auth.isAdmin();
 const title=f=>anon()?L(f.tag):f.name;
+/* Deck-imported text can mention the fund or manager by name. For investors, mask the words the admin typed as the
+   fund name and manager. This is best-effort: other names in the deck text (sister funds, vintages) are not caught. */
+const R=(f,s)=>anon()&&f.redact&&f.redact.length&&s?s.replace(new RegExp(f.redact.join("|"),"gi"),"●●●"):s;
+const trackHTML=f=>`<div class="trk"><div class="mini-label"><span>${t("trackRecord")}</span></div><ul>${notesOf(f).slice(0,6).map(x=>`<li>${R(f,x)}</li>`).join("")||"<li>—</li>"}</ul></div>`;
 
 function ddText(f){                                     // max drawdown as a plain sentence, same style as other drawer text
   const d=f.dd, z=zh(), c=z?"：":": ", sep=z?"；":". ", end=z?"。":".";
@@ -27,22 +36,26 @@ function ddText(f){                                     // max drawdown as a pla
 const track=document.getElementById("track"), prog=document.getElementById("prog");
 
 function cardHTML(f,i){
-  const max=Math.max(...f.perf.map(x=>Math.abs(x[1])));
+  const has=f.perf.length>0;                               // deck-imported funds may have no yearly returns
+  const max=has?Math.max(...f.perf.map(x=>Math.abs(x[1])))||1:1;
   const bars=f.perf.map(p=>`<div class="bar ${p[2]==="ytd"?"ytd":""}" data-v="${perLabel(p)}: ${fmt(p[1])}"><i class="${p[1]>=0?"p":"n"}" style="height:0" data-h="${Math.abs(p[1])/max*50}%"></i><em>${p[2]==="ytd"?"YTD":"'"+p[0].slice(2)}</em></div>`).join("");
-  const a=ann(f.perf), last=f.perf.at(-1);
+  const a=has?ann(f.perf):null, last=f.perf.at(-1);
   return `<article class="card">
-    <div class="card-top">${anon()?"":`<span class="tag">${L(f.tag)}</span>`}<h3>${title(f)}</h3>${anon()?"":`<div class="mgr">${L(f.mgr)} · ${veh(f)}</div>`}</div>
+    <div class="card-top${Auth.isAdmin()?" has-tools":""}">${Auth.isAdmin()?`<div class="card-tools">
+        <button class="tool" data-edit="${f.id}" title="${t("edit")}" aria-label="${t("edit")}"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 20h4L19 9l-4-4L4 16v4zM13.5 6.5l4 4"/></svg></button>
+        <button class="tool del" data-delfund="${f.id}" title="${t("del")}" aria-label="${t("del")}"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13M10 11v6M14 11v6"/></svg></button>
+      </div>`:""}${anon()?"":`<span class="tag">${L(f.tag)}</span>`}<h3>${title(f)}</h3>${anon()?"":`<div class="mgr">${L(f.mgr)} · ${veh(f)}</div>`}</div>
     <div class="kpis">
-      <div><b>${money(f.aum)}</b><span>${t("aum")}</span></div>
-      <div><b>${f.inception.slice(0,4)}</b><span>${t("inception")}</span></div>
-      <div><b>${a!==null?fmt(a):"—"}</b><span>${t("ann")}</span></div>
+      <div>${f.aum!=null?`<b>${money(f.aum)}</b>`:`<b class="txt">${LX(f.aumText)||"—"}</b>`}<span>${t("aum")}</span></div>
+      <div><b>${f.inception?f.inception.slice(0,4):f.isNew?t("newFund"):"—"}</b><span>${t("inception")}</span></div>
+      <div><b>${a!==null?fmt(a):LX(f.target)||"—"}</b><span>${a===null&&LX(f.target)?t("target"):t("ann")}</span></div>
     </div>
     <div class="card-body">
-      <p class="strategy">${L(f.strategy)}</p>
-      <div class="mini-label"><span>${t("annual")}</span><span>${fmt(last[1])} ${perLabel(last)}</span></div>
+      <p class="strategy">${R(f,L(f.strategy))}</p>
+      ${has?`<div class="mini-label"><span>${t("annual")}</span><span>${fmt(last[1])} ${perLabel(last)}</span></div>
       <div class="bars">${bars}</div>
       <div class="mini-label"><span>${t("recent5")}</span></div>
-      <table class="recent"><tr><th>${t("period")}</th><th>${t("ret")}</th></tr>${f.perf.slice(-5).reverse().map(p=>`<tr><td>${perLabel(p)}</td><td class="${p[1]>=0?"pos":"neg"}">${fmt(p[1])}</td></tr>`).join("")}</table>
+      <table class="recent"><tr><th>${t("period")}</th><th>${t("ret")}</th></tr>${f.perf.slice(-5).reverse().map(p=>`<tr><td>${perLabel(p)}</td><td class="${p[1]>=0?"pos":"neg"}">${fmt(p[1])}</td></tr>`).join("")}</table>`:trackHTML(f)}
       <div class="card-foot"><span class="liq ${tab!=="liquid"?"semi":""}">${liqTxt(f)}</span>
         <button class="more" data-n="${i}">${t("view")} <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 7h10M8 3l4 4-4 4"/></svg></button></div>
     </div></article>`;
@@ -53,8 +66,9 @@ const scroller=document.getElementById("scroller");
 function renderCards(keepPos){
   const x=scroller.scrollLeft;
   track.innerHTML=FUNDS[tab].map(cardHTML).join("");
-  document.getElementById("tabDesc").textContent=t(tab==="liquid"?(anon()?"descLiquidAnon":"descLiquid"):"descIlliquid");
+  document.getElementById("tabDesc").textContent=tab==="liquid"?t(anon()?"descLiquidAnon":"descLiquid"):tab==="illiquid"?t("descIlliquid"):"";   // custom strategies have no description line
   requestAnimationFrame(()=>setTimeout(()=>track.querySelectorAll(".bar i").forEach(b=>b.style.height=b.dataset.h),80));
+  document.getElementById("restoreBtn").hidden=!(Auth.isAdmin()&&FundStore.builtInsChanged());
   scroller.scrollLeft=keepPos?x:0;
   updateProg();
 }
@@ -71,8 +85,7 @@ function applyLang(){
   document.querySelectorAll("[data-i]").forEach(el=>el.innerHTML=t(el.dataset.i));
   document.querySelectorAll(".lang-menu button").forEach(b=>{const on=b.dataset.lang===lang;b.classList.toggle("on",on);b.setAttribute("aria-checked",on)});
   document.getElementById("langCur").textContent={en:"EN",sc:"简体",tc:"繁體"}[lang];
-  document.getElementById("cLiquid").textContent=FUNDS.liquid.length;
-  document.getElementById("cIlliquid").textContent=FUNDS.illiquid.length;
+  renderTabs();
   renderCards(true);
   if(openFund) openD(openFund);
   if(window.onLangChange) onLangChange();                 // lets account.js refresh login / admin controls
@@ -84,10 +97,51 @@ document.querySelectorAll(".lang-menu button").forEach(b=>b.onclick=()=>{lang=b.
 document.addEventListener("click",e=>{if(!langBox.contains(e.target))setMenu(false)});
 addEventListener("keydown",e=>{if(e.key==="Escape")setMenu(false)});
 
-document.querySelectorAll(".tab").forEach(b=>b.onclick=()=>{
-  document.querySelectorAll(".tab").forEach(x=>x.classList.toggle("active",x===b));
-  tab=b.dataset.tab; renderCards();
+/* ---------- strategy tabs ----------
+   Two built-in tabs (liquid, illiquid) plus any strategies an admin has added. `tab` holds the id of the open one.
+   Admins also get a small × on their own strategies and a "+ Add Strategy" button at the end. */
+const tabsEl=document.getElementById("tabs");
+const stratName=s=>s.builtIn?t(s.id==="liquid"?"tabLiquid":"tabIlliquid"):s.name;
+let addingStrat=false;
+function renderTabs(){
+  const list=FundStore.strategies(), admin=Auth.isAdmin();
+  if(!list.some(s=>s.id===tab)) tab="liquid";
+  if(!admin) addingStrat=false;
+  tabsEl.innerHTML=list.map(s=>`<button class="tab ${s.id===tab?"active":""}" data-tab="${s.id}" role="tab"><span>${stratName(s)}</span><span class="count">${(FUNDS[s.id]||[]).length}</span>${admin&&!s.builtIn?`<span class="tab-del" data-del="${s.id}" title="${t("stratDelete")}">×</span>`:""}</button>`).join("")
+    +(!admin?"":addingStrat
+      ?`<form class="strat-new" id="stratForm"><input id="stratName" maxlength="40" placeholder="${t("stratPh")}"><button class="btn sm solid" type="submit">${t("stratAdd")}</button><button class="strat-x" type="button" id="stratCancel" aria-label="${t("cancel")}">×</button></form>`
+      :`<button class="tab tab-add" id="stratAddBtn">${t("addStrategy")}</button>`);
+}
+function selectTab(id){tab=id;renderTabs();renderCards()}
+
+/** Creates a strategy tab from typed text. Returns the new strategy, or null if the name is empty or already used. */
+function createStrategy(raw){
+  if(!Auth.isAdmin()||needToken()) return null;
+  const name=esc(raw);
+  if(!name) return null;
+  if(FundStore.strategies().some(s=>stratName(s).toLowerCase()===name.toLowerCase())){alert(t("stratExists"));return null}
+  return FundStore.addStrategy(name);
+}
+tabsEl.addEventListener("click",e=>{
+  const del=e.target.closest("[data-del]");
+  if(del){
+    const id=del.dataset.del, s=FundStore.strategies().find(x=>x.id===id);
+    if(s&&Auth.isAdmin()&&!needToken()&&confirm(t("stratDelConfirm")(del.parentElement.firstChild.textContent,(FUNDS[id]||[]).length))){
+      FundStore.removeStrategy(id); closeD(); selectTab(tab===id?"liquid":tab);
+    }
+    return;
+  }
+  if(e.target.closest("#stratAddBtn")){addingStrat=true;renderTabs();document.getElementById("stratName").focus();return}
+  if(e.target.closest("#stratCancel")){addingStrat=false;renderTabs();return}
+  const b=e.target.closest(".tab[data-tab]");
+  if(b) selectTab(b.dataset.tab);
 });
+tabsEl.addEventListener("submit",e=>{
+  e.preventDefault();
+  const s=createStrategy(document.getElementById("stratName").value);
+  if(s){addingStrat=false;selectTab(s.id)}
+});
+tabsEl.addEventListener("keydown",e=>{if(e.key==="Escape"&&addingStrat){addingStrat=false;renderTabs()}});
 
 /* mouse drag with momentum (touch uses native scrolling) */
 let drag=null, glide=0, justDragged=false;
@@ -158,20 +212,25 @@ let openFund=null;
 track.addEventListener("click",e=>{const b=e.target.closest(".more");if(b)openD(FUNDS[tab][b.dataset.n])});
 function openD(f){
   const keep=openFund===f?drawer.scrollTop:0; openFund=f;
+  const rows=[...(f.hist||[]),...f.perf];
+  const ddRaw=LX(f.ddRaw), notes=notesOf(f), incText=LX(f.inceptionText), aumText=LX(f.aumText);
+  const ddBlock=ddRaw||f.dd?`<h4>${LX(f.ddLabel)||t("maxdd")}</h4><p>${ddRaw?R(f,ddRaw):ddText(f)}</p>`:"";
+  const perfBlock=rows.length?`<h4>${t("perfTitle")}</h4>
+    <table class="perf"><tr><th>${t("period")}</th><th>${t("ret")}</th></tr>${rows.map(p=>`<tr><td>${perLabel(p)}</td><td class="${p[1]>=0?"pos":"neg"}">${fmt(p[1])}</td></tr>`).join("")}</table>`:"";
+  const notesBlock=notes.length?`<h4>${t("trackRecord")}</h4><p>${notes.map(x=>R(f,x)).join("<br>")}</p>`:"";
   drawer.innerHTML=`<div class="d-head"><button class="close" onclick="closeD()" aria-label="Close">✕</button>${anon()?"":`<span class="tag">${L(f.tag)}</span>`}<h3>${title(f)}</h3>${anon()?"":`<p>${L(f.mgr)} · ${veh(f)}</p>`}</div>
   <div class="d-body">
-    <h4>${t("overview")}</h4><p>${L(f.strategy)}</p>
+    <h4>${t("overview")}</h4><p>${R(f,L(f.strategy))}</p>
     <h4>${t("facts")}</h4>
     <div class="facts">
-      <div><span>${t("inception")}</span><b>${ym(f.inception)}</b></div><div><span>${t("aum")}</span><b>${money(f.aum)}</b></div>
+      <div><span>${t("inception")}</span><b>${incText?R(f,incText):f.inception?ym(f.inception):"—"}</b></div><div><span>${t("aum")}</span><b>${aumText?R(f,aumText):f.aum!=null?money(f.aum):"—"}</b></div>
       <div><span>${t("vehicle")}</span><b>${veh(f)}</b></div><div><span>${t("dealing")}</span><b>${liqTxt(f)}</b></div>
     </div>
-    <h4>${t("maxdd")}</h4><p>${ddText(f)}</p>
-    <h4>${t("liqTerms")}</h4><p>${f.liqFull?L(f.liqFull):t("dailyFull")}</p>
-    <h4>${t("perfTitle")}</h4>
-    <table class="perf"><tr><th>${t("period")}</th><th>${t("ret")}</th></tr>${[...(f.hist||[]),...f.perf].map(p=>`<tr><td>${perLabel(p)}</td><td class="${p[1]>=0?"pos":"neg"}">${fmt(p[1])}</td></tr>`).join("")}</table>
+    ${ddBlock}
+    <h4>${t("liqTerms")}</h4><p>${f.liqFull?R(f,L(f.liqFull)):t("dailyFull")}</p>
+    ${perfBlock}${notesBlock}
     <p class="note">${f.note&&!anon()?L(f.note)+" ":""}${t("past")}</p>
-    ${f.custom&&Auth.isAdmin()?`<button class="btn danger" onclick="deleteFund('${f.id}')">${t("del")}</button>`:""}
+    ${Auth.isAdmin()?`<div class="d-admin"><button class="btn ghost" onclick="openEdit('${f.id}')">${t("edit")}</button>${f.custom?`<button class="btn ghost" onclick="translateNow('${f.id}')">${t(f.translated?"retranslate":"translate")}</button>`:""}<button class="btn danger" onclick="deleteFund('${f.id}')">${t("del")}</button></div>`:""}
   </div>`;
   drawer.classList.add("on");scrim.classList.add("on");drawer.setAttribute("aria-hidden","false");drawer.scrollTop=keep;
 }

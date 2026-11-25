@@ -6,7 +6,7 @@
 <title>Alternative Investments | Fund Platform</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/styles.css">
+<link rel="stylesheet" href="css/styles.css?v=202611251437">
 </head>
 <body>
 
@@ -58,14 +58,12 @@
       <p data-i="secBody"></p>
     </div>
     <div class="tabbar reveal">
-      <div class="tabs" role="tablist">
-        <button class="tab active" data-tab="liquid" role="tab"><span data-i="tabLiquid"></span><span class="count" id="cLiquid"></span></button>
-        <button class="tab" data-tab="illiquid" role="tab"><span data-i="tabIlliquid"></span><span class="count" id="cIlliquid"></span></button>
-      </div>
+      <div class="tabs" id="tabs" role="tablist"></div>   <!-- filled by renderTabs() in js/app.js -->
     </div>
     <div class="track-outer" id="scroller" tabindex="0" aria-label="Funds"><div class="track" id="track"></div></div>
     <div class="progress"><i id="prog"></i></div>
     <p class="tab-desc" id="tabDesc"></p>
+    <button class="restore" id="restoreBtn" type="button" data-i="restore" hidden></button>
   </div>
 </section>
 
@@ -94,44 +92,89 @@
   </form>
 </div>
 
-<!-- Add Fund form (admin only) -->
+<!-- Add Funds from a PPTX deck (admin only) -->
 <div class="modal" id="fundModal" hidden>
   <form class="modal-card" id="fundForm" novalidate>
-    <div class="modal-head"><h3 data-i="afTitle"></h3><button class="close" type="button" id="fundClose" aria-label="Close">✕</button></div>
-    <div class="modal-body">
-      <label><span data-i="afCategory"></span><select id="fTab"><option value="liquid" data-i="tabLiquid"></option><option value="illiquid" data-i="tabIlliquid"></option></select></label>
-      <label><span data-i="afName"></span><input id="fName" required maxlength="80"></label>
-      <label><span data-i="afMgr"></span><input id="fMgr" required maxlength="60"></label>
-      <label><span data-i="afTag"></span><input id="fTag" required maxlength="60" data-ph="phTag"></label>
-      <label><span data-i="afVehicle"></span><input id="fVehicle" required maxlength="40" data-ph="phVehicle"></label>
-      <label><span data-i="afInception"></span><input id="fInception" type="month" required></label>
-      <label><span data-i="afAum"></span><input id="fAum" type="number" step="0.01" min="0" required></label>
-      <label><span data-i="afLiq"></span><input id="fLiq" required maxlength="60" data-ph="phLiq"></label>
-      <label class="wide"><span data-i="afStrategy"></span><textarea id="fStrategy" required maxlength="400"></textarea></label>
-      <label class="wide"><span data-i="afLiqFull"></span><textarea id="fLiqFull" maxlength="400"></textarea></label>
-      <label class="wide"><span data-i="afReturns"></span><textarea id="fReturns" rows="6" required></textarea><small data-i="afReturnsHelp"></small></label>
-      <label><span data-i="afYtd"></span><input id="fYtd" type="number" step="0.01"></label>
-      <label><span data-i="afYtdTo"></span><input id="fYtdTo" type="month"></label>
-      <label><span data-i="afWm"></span><input id="fWm" type="number" step="0.01"></label>
-      <label><span data-i="afWmAt"></span><input id="fWmAt" type="month"></label>
-      <label class="wide"><span data-i="afNote"></span><input id="fNote" maxlength="200"></label>
+    <div class="modal-head"><h3 data-i="imTitle"></h3><button class="close" type="button" id="fundClose" aria-label="Close">✕</button></div>
+    <div class="im-body">
+      <p class="im-intro" data-i="imIntro"></p>
+      <label class="im-file" id="dropZone">
+        <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><path d="M12 16V4M7.5 8.5 12 4l4.5 4.5M4 15v3.5A1.5 1.5 0 0 0 5.5 20h13a1.5 1.5 0 0 0 1.5-1.5V15"/></svg>
+        <b data-i="imDrop"></b>
+        <span data-i="imChoose"></span>
+        <input id="fundFile" type="file" accept=".pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation"></label>
+      <p class="im-status" id="imStatus"></p>
+      <div class="im-strat" id="imStratRow" hidden>
+        <label><span data-i="imNewStrat"></span><input id="imStratName" maxlength="40" data-ph="stratPh"></label>
+        <button class="btn sm ghost" type="button" id="imStratCreate" data-i="imCreate"></button>
+      </div>
+      <div id="imList"></div>
+      <details class="im-key" id="ghBox">
+        <summary data-i="ghTitle"></summary>
+        <p data-i="ghHelp"></p>
+        <div class="im-strat">
+          <label><span data-i="ghLabel"></span><input id="ghInput" type="password" autocomplete="off" spellcheck="false" placeholder="github_pat_…"></label>
+          <button class="btn sm ghost" type="button" id="ghSave" data-i="ghSave"></button>
+          <button class="btn sm ghost" type="button" id="ghRemove" data-i="ghRemove" hidden></button>
+        </div>
+        <p class="im-status" id="ghStatus"></p>
+      </details>
     </div>
     <div class="modal-foot">
       <p class="form-err" id="fundErr" hidden></p>
       <button class="btn ghost" type="button" id="fundCancel" data-i="cancel"></button>
-      <button class="btn solid" type="submit" data-i="save"></button>
+      <button class="btn solid" type="submit" id="imSubmit" data-i="imAdd" hidden></button>
     </div>
   </form>
 </div>
 
-<!-- Scripts load in this order on purpose: settings, wording, data, storage, auth, then the page logic -->
-<script src="js/config.js"></script>
-<script src="js/i18n.js"></script>
-<script src="js/funds-data.js"></script>
-<script src="js/fund-store.js"></script>
-<script src="js/auth.js"></script>
-<script src="js/app.js"></script>
-<script src="js/account.js"></script>
-<script src="js/add-fund.js"></script>
+<div class="toast" id="toast" role="status" hidden></div>
+
+<!-- Edit Fund form (admin only) -->
+<div class="modal" id="editModal" hidden>
+  <form class="modal-card" id="editForm" novalidate>
+    <div class="modal-head"><h3 data-i="efTitle"></h3><button class="close" type="button" id="editClose" aria-label="Close">✕</button></div>
+    <div class="modal-body">
+      <label><span data-i="afName"></span><input id="efName" maxlength="80"></label>
+      <label><span data-i="afCategory"></span><select id="efStrat"></select></label>
+      <label><span data-i="afMgr"></span><input id="efMgr" maxlength="60"></label>
+      <label><span data-i="afTag"></span><input id="efTag" maxlength="80"></label>
+      <label><span data-i="afVehicle"></span><input id="efVehicle" maxlength="40"></label>
+      <label><span data-i="afLiq"></span><input id="efLiq" maxlength="60"></label>
+      <label><span data-i="efInception"></span><input id="efInception" type="month"></label>
+      <label><span data-i="efInceptionText"></span><input id="efInceptionText" maxlength="200"></label>
+      <label><span data-i="efAum"></span><input id="efAum" type="number" step="0.001" min="0"></label>
+      <label><span data-i="efAumText"></span><input id="efAumText" maxlength="120"></label>
+      <label class="wide"><span data-i="afStrategy"></span><textarea id="efStrategy" maxlength="600"></textarea></label>
+      <label class="wide"><span data-i="efReturns"></span><textarea id="efReturns" rows="7"></textarea><small data-i="efReturnsHelp"></small></label>
+      <label><span data-i="efTarget"></span><input id="efTarget" maxlength="40"></label>
+      <label><span data-i="imHide"></span><input id="efHide" maxlength="300"></label>
+      <label class="wide"><span data-i="efNotes"></span><textarea id="efNotes" rows="4"></textarea></label>
+      <label class="wide"><span data-i="efDd"></span><textarea id="efDd" rows="3"></textarea></label>
+      <label class="wide"><span data-i="efLiqFull"></span><textarea id="efLiqFull" rows="3"></textarea></label>
+      <label class="wide"><span data-i="efNote"></span><textarea id="efNote" rows="3"></textarea></label>
+    </div>
+    <div class="modal-foot">
+      <p class="form-err" id="editErr" hidden></p>
+      <button class="btn ghost" type="button" id="editCancel" data-i="cancel"></button>
+      <button class="btn solid" type="submit" data-i="efSave"></button>
+    </div>
+  </form>
+</div>
+
+<!-- Scripts load in this order on purpose: settings, wording, data, storage, auth, then the page logic.
+     The ?v= number makes browsers fetch fresh copies. Change it (all at once) whenever these files change,
+     otherwise a browser can mix an old script with a new page and the funds will not show. -->
+<script src="js/config.js?v=202611251437"></script>
+<script src="js/i18n.js?v=202611251437"></script>
+<script src="js/funds-data.js?v=202611251437"></script>
+<script src="js/fund-store.js?v=202611251437"></script>
+<script src="js/auth.js?v=202611251437"></script>
+<script src="js/app.js?v=202611251437"></script>
+<script src="js/account.js?v=202611251437"></script>
+<script src="js/pptx-reader.js?v=202611251437"></script>
+<script src="js/add-fund.js?v=202611251437"></script>
+<script src="js/edit-fund.js?v=202611251437"></script>
+<script src="js/repo.js?v=202611251437"></script>
 </body>
 </html>

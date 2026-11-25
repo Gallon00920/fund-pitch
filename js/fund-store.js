@@ -1,45 +1,131 @@
 /* ---------- Fund store ----------
-   Built-in funds come from js/funds-data.js. Funds added through the "Add Fund" form are kept in this
-   browser's localStorage and merged into FUNDS here, before the page renders.
-   They are NOT shared with other people or browsers. To make a fund permanent for everyone,
-   copy it into js/funds-data.js (FundStore.exportJSON() in the browser console prints the saved funds). */
+   Built-in funds come from js/funds-data.js, under the two built-in strategy tabs "liquid" and "illiquid".
+   Everything admins change lives in ONE shared file in the repository, data/funds.json, so every visitor sees it:
+     strategies  [ { id, name } ]            strategy tabs admins added, in display order
+     funds       { strategyId: [fund, ...] } funds admins added
+     hidden      [ fundId, ... ]             built-in funds admins deleted (can be restored)
+     overrides   { fundId: { fund, strat } } edited built-in funds (js/funds-data.js itself is never changed)
+   This file only holds that state in memory and rebuilds the live FUNDS list from it.
+   Loading and saving the file is done by js/repo.js, which is told about every change through onChange(). */
 const FundStore = (() => {
-  const KEY = "jc-custom-funds";
+  const BUILT_IN = ["liquid", "illiquid"];
+  const clone = x => JSON.parse(JSON.stringify(x));
+  const isBuiltInFund = id => String(id).startsWith("b-");
 
-  function read() {
-    try {
-      const d = JSON.parse(localStorage.getItem(KEY));
-      return { liquid: (d && d.liquid) || [], illiquid: (d && d.illiquid) || [] };
-    } catch (e) { return { liquid: [], illiquid: [] }; }
-  }
-  function write(d) {
-    try { localStorage.setItem(KEY, JSON.stringify(d)); return true; } catch (e) { return false; }
-  }
+  BUILT_IN.forEach(s => FUNDS[s].forEach((f, i) => { f.id = `b-${s}-${i}`; f.builtIn = true; }));   // stable ids for built-ins
+  const ORIGINAL = clone({ liquid: FUNDS.liquid, illiquid: FUNDS.illiquid });                        // pristine copy to rebuild from
 
-  // merge saved funds into the live list once, at load
-  const saved = read();
-  FUNDS.liquid.push(...saved.liquid);
-  FUNDS.illiquid.push(...saved.illiquid);
+  const empty = () => ({ strategies: [], funds: {}, hidden: [], overrides: {} });
+  const normalise = s => ({
+    strategies: Array.isArray(s && s.strategies) ? s.strategies : [],
+    funds: s && s.funds && typeof s.funds === "object" ? s.funds : {},
+    hidden: Array.isArray(s && s.hidden) ? s.hidden : [],
+    overrides: s && s.overrides && typeof s.overrides === "object" ? s.overrides : {}
+  });
+  let state = empty();
+  let listener = () => {};
+
+  const locate = id => {                                              // where a fund currently sits in the live list
+    for (const strat of Object.keys(FUNDS)) {
+      const index = FUNDS[strat].findIndex(f => f.id === id);
+      if (index > -1) return { strat, index };
+    }
+    return null;
+  };
+
+  /** Rebuilds the live FUNDS list from the built-in funds plus the shared state. */
+  function rebuild() {
+    Object.keys(FUNDS).forEach(k => delete FUNDS[k]);
+    BUILT_IN.forEach(s => { FUNDS[s] = clone(ORIGINAL[s]).filter(f => !state.hidden.includes(f.id)); });
+    state.strategies.forEach(s => { FUNDS[s.id] = []; });
+    Object.entries(state.overrides).forEach(([id, o]) => {
+      const at = locate(id);
+      if (!at || !o || !o.fund) return;
+      if (o.strat === at.strat || !FUNDS[o.strat]) FUNDS[at.strat][at.index] = clone(o.fund);        // edited in place
+      else { FUNDS[at.strat].splice(at.index, 1); FUNDS[o.strat].push(clone(o.fund)); }              // edited and moved
+    });
+    Object.keys(state.funds).forEach(id => {
+      if (FUNDS[id] && Array.isArray(state.funds[id])) FUNDS[id].push(...clone(state.funds[id]));    // funds of a deleted strategy are ignored
+    });
+  }
+  const changed = () => { rebuild(); listener(); };
 
   return {
-    /** Adds a fund to "liquid" or "illiquid". Returns false if the browser refused to save it. */
-    add(tab, fund) {
-      const d = read();
-      d[tab].push(fund);
-      const ok = write(d);
-      FUNDS[tab].push(fund);
-      return ok;
+    /** The shared state as plain data (a copy). */
+    getState: () => clone(state),
+    /** Replaces the shared state, for example after loading data/funds.json. Does not trigger a save. */
+    setState(s) { state = normalise(clone(s || {})); rebuild(); },
+    /** Registers the function called after every change an admin makes (js/repo.js saves to GitHub there). */
+    onChange(fn) { listener = fn; },
+
+    /** All strategy tabs in display order: the two built-in ones, then the custom ones. */
+    strategies: () => [...BUILT_IN.map(id => ({ id, builtIn: true })), ...state.strategies],
+    isBuiltIn: id => BUILT_IN.includes(id),
+
+    /** Creates a strategy tab. `name` must already be safe to insert as HTML. Returns the new strategy. */
+    addStrategy(name) {
+      const s = { id: "s-" + Date.now(), name };
+      state.strategies.push(s);
+      changed();
+      return s;
     },
-    /** Removes a fund that was added through the form (built-in funds cannot be removed here). */
-    remove(id) {
-      const d = read();
-      for (const tab of ["liquid", "illiquid"]) {
-        d[tab] = d[tab].filter(f => f.id !== id);
-        const i = FUNDS[tab].findIndex(f => f.id === id);
-        if (i > -1) FUNDS[tab].splice(i, 1);
+    /** Removes a custom strategy tab together with the funds in it. Built-in tabs cannot be removed. */
+    removeStrategy(id) {
+      if (BUILT_IN.includes(id)) return;
+      Object.entries(state.overrides).forEach(([fid, o]) => {                                        // built-ins moved here go too
+        if (o && o.strat === id) { if (!state.hidden.includes(fid)) state.hidden.push(fid); delete state.overrides[fid]; }
+      });
+      state.strategies = state.strategies.filter(s => s.id !== id);
+      delete state.funds[id];
+      changed();
+    },
+
+    /** Finds a fund by id. Returns { fund, strat } or null. */
+    find(id) {
+      const at = locate(id);
+      return at ? { fund: FUNDS[at.strat][at.index], strat: at.strat } : null;
+    },
+
+    /** Adds a fund under a strategy id. */
+    add(strategyId, fund) {
+      (state.funds[strategyId] = state.funds[strategyId] || []).push(fund);
+      changed();
+      return true;
+    },
+
+    /** Replaces a fund with an edited copy, optionally moving it to another strategy. Works for built-in and added funds. */
+    update(id, fund, strategyId) {
+      const at = locate(id);
+      if (!at || !FUNDS[strategyId]) return false;
+      fund.id = id;
+      if (isBuiltInFund(id)) {
+        fund.builtIn = true;
+        state.overrides[id] = { fund, strat: strategyId };
+      } else {
+        const list = state.funds[at.strat] || [], i = list.findIndex(f => f.id === id);
+        if (strategyId === at.strat && i > -1) list[i] = fund;
+        else { if (i > -1) list.splice(i, 1); (state.funds[strategyId] = state.funds[strategyId] || []).push(fund); }
       }
-      write(d);
+      changed();
+      return true;
     },
-    exportJSON: () => JSON.stringify(read(), null, 2)
+
+    /** Deletes a fund. An added fund is removed for good; a built-in fund is hidden and can be restored. */
+    remove(id) {
+      if (isBuiltInFund(id)) {
+        if (!state.hidden.includes(id)) state.hidden.push(id);
+        delete state.overrides[id];
+      } else {
+        Object.keys(state.funds).forEach(s => { state.funds[s] = state.funds[s].filter(f => f.id !== id); });
+      }
+      changed();
+    },
+
+    /** True when an admin has edited or deleted any built-in fund. */
+    builtInsChanged: () => state.hidden.length > 0 || Object.keys(state.overrides).length > 0,
+    /** Forgets every edit and deletion of built-in funds. */
+    restoreBuiltIns() { state.hidden = []; state.overrides = {}; changed(); },
+
+    exportJSON: () => JSON.stringify(state, null, 2)
   };
 })();

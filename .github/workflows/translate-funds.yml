@@ -1,0 +1,51 @@
+name: Translate funds
+
+# Runs when the site (or anyone) commits data/funds.json, and can be started by hand from the Actions tab.
+# It translates newly added funds with Claude and commits the result back, which republishes the site.
+on:
+  push:
+    branches: [main]
+    paths:
+      - "data/funds.json"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+# one run at a time, so two saves close together cannot overwrite each other's translations
+concurrency:
+  group: translate-funds
+  cancel-in-progress: false
+
+jobs:
+  translate:
+    runs-on: ubuntu-latest
+    env:
+      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Install the Anthropic SDK
+        run: pip install anthropic
+
+      - name: Translate new funds
+        run: python scripts/translate_funds.py
+
+      - name: Commit translations
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/funds.json
+          if git diff --cached --quiet; then
+            echo "No translation changes to commit."
+          else
+            git commit -m "Translate new funds"
+            git pull --rebase
+            git push
+          fi

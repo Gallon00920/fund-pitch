@@ -110,3 +110,223 @@ Object.assign(UI.tc,{
 UI.en.descLiquidAnon="UCITS vehicles with daily dealing. Source: manager monthly factsheets as of 30 Oct 2026.";
 UI.sc.descLiquidAnon="UCITS 结构，每日申赎。数据来源：管理人官方月度 Factsheet，截至2026年10月30日。";
 UI.tc.descLiquidAnon="UCITS 結構，每日申贖。資料來源：管理人官方月度 Factsheet，截至2026年10月30日。";
+
+/* ---------- Add Funds from a PPTX deck ---------- */
+Object.assign(UI.en,{
+  imTitle:"Add Funds from a Deck",
+  imIntro:"Upload a fund screening deck (.pptx). Each column of the comparison table on each slide becomes one fund card. Text is shown as written in the deck.",
+  imChoose:"Choose a .pptx file",imReading:"Reading the deck…",
+  imFound:(n,file)=>`${n} fund${n===1?"":"s"} found in ${file}. Check the names, then add the ones you want.`,
+  imNone:"No fund comparison table was found. The deck needs a table with one fund per column and rows such as 成立日期, 基金规模, 基金策略, 表现 and 流动性.",
+  imBad:"This file could not be read as a PowerPoint (.pptx) file.",
+  imName:"Fund name (admin view only)",imSlide:"Slide",imInclude:"Include this fund",
+  imReturns:n=>`${n} period${n===1?"":"s"} found`,imNoReturns:"No yearly returns in the deck. The card will show the track record text instead.",
+  imAdd:"Add Selected Funds",imNoneSel:"Tick at least one fund, and give every ticked fund a name.",
+  newFund:"New",target:"Target return",trackRecord:"Track Record"
+});
+Object.assign(UI.sc,{
+  imTitle:"从PPT导入基金",
+  imIntro:"上传基金筛选汇报 (.pptx)。每页比较表中的每一列将生成一张基金卡片，文字按PPT原文显示。",
+  imChoose:"选择 .pptx 文件",imReading:"正在读取…",
+  imFound:(n,file)=>`在 ${file} 中找到 ${n} 只基金。请核对名称后添加。`,
+  imNone:"未找到基金比较表。PPT 需包含一张表格：每列一只基金，行标题如 成立日期、基金规模、基金策略、表现、流动性。",
+  imBad:"无法将此文件读取为 PowerPoint (.pptx) 文件。",
+  imName:"基金名称 (仅管理员可见)",imSlide:"第",imInclude:"包含此基金",
+  imReturns:n=>`找到 ${n} 个期间`,imNoReturns:"PPT 中没有年度回报，卡片将显示业绩记录文字。",
+  imAdd:"添加所选基金",imNoneSel:"请至少勾选一只基金，并为每只勾选的基金填写名称。",
+  newFund:"新发",target:"目标回报",trackRecord:"业绩记录"
+});
+Object.assign(UI.tc,{
+  imTitle:"從PPT匯入基金",
+  imIntro:"上傳基金篩選匯報 (.pptx)。每頁比較表中的每一列將生成一張基金卡片，文字按PPT原文顯示。",
+  imChoose:"選擇 .pptx 檔案",imReading:"正在讀取…",
+  imFound:(n,file)=>`在 ${file} 中找到 ${n} 隻基金。請核對名稱後新增。`,
+  imNone:"未找到基金比較表。PPT 需包含一張表格：每列一隻基金，行標題如 成立日期、基金規模、基金策略、表現、流動性。",
+  imBad:"無法將此檔案讀取為 PowerPoint (.pptx) 檔案。",
+  imName:"基金名稱 (僅管理員可見)",imSlide:"第",imInclude:"包含此基金",
+  imReturns:n=>`找到 ${n} 個期間`,imNoReturns:"PPT 中沒有年度回報，卡片將顯示業績記錄文字。",
+  imAdd:"新增所選基金",imNoneSel:"請至少勾選一隻基金，並為每隻勾選的基金填寫名稱。",
+  newFund:"新發",target:"目標回報",trackRecord:"業績記錄"
+});
+
+UI.en.imHide="Words hidden from investors (comma-separated)";
+UI.sc.imHide="对投资者隐藏的词 (用逗号分隔)";
+UI.tc.imHide="對投資者隱藏的詞 (用逗號分隔)";
+
+/* drag-and-drop wording for the deck upload */
+UI.en.imDrop="Drag a .pptx deck here";   UI.en.imChoose="or click to choose a file";
+UI.sc.imDrop="将 .pptx 文件拖到此处";      UI.sc.imChoose="或点击选择文件";
+UI.tc.imDrop="將 .pptx 檔案拖到此處";      UI.tc.imChoose="或點擊選擇檔案";
+
+/* ---------- Strategy tabs ---------- */
+Object.assign(UI.en,{
+  addStrategy:"+ Add Strategy",stratPh:"Strategy name",stratAdd:"Add",stratDelete:"Delete this strategy",
+  stratExists:"A strategy with this name already exists.",
+  stratDelConfirm:(name,n)=>`Delete the strategy "${name}"${n?` and the ${n} fund${n===1?"":"s"} in it`:""}? This cannot be undone.`,
+  afCategory:"Strategy",imNewStrat:"Or put these funds under a new strategy",imCreate:"Create"
+});
+Object.assign(UI.sc,{
+  addStrategy:"+ 新增策略",stratPh:"策略名称",stratAdd:"添加",stratDelete:"删除此策略",
+  stratExists:"已存在同名策略。",
+  stratDelConfirm:(name,n)=>`确定删除策略“${name}”${n?`及其中的 ${n} 只基金`:""}？此操作无法撤销。`,
+  afCategory:"策略",imNewStrat:"或将这些基金放入新策略",imCreate:"创建"
+});
+Object.assign(UI.tc,{
+  addStrategy:"+ 新增策略",stratPh:"策略名稱",stratAdd:"新增",stratDelete:"刪除此策略",
+  stratExists:"已存在同名策略。",
+  stratDelConfirm:(name,n)=>`確定刪除策略「${name}」${n?`及其中的 ${n} 隻基金`:""}？此操作無法復原。`,
+  afCategory:"策略",imNewStrat:"或將這些基金放入新策略",imCreate:"建立"
+});
+
+/* ---------- Edit / delete a fund ---------- */
+Object.assign(UI.en,{
+  edit:"Edit Fund",del:"Delete Fund",efTitle:"Edit Fund",efSave:"Save Changes",
+  efInception:"Inception month",efInceptionText:"Inception text (optional)",efAum:"Fund size (US$ bn)",efAumText:"Fund size text (optional)",
+  efTarget:"Target return (optional)",efReturns:"Returns by period",
+  efReturnsHelp:"One period per line.  Full year: 2024: 12.5    Part year from June: 2022 from 6: 15.62    Year to date through October: 2026 YTD 10: 4.78",
+  efNotes:"Track record notes (one per line, optional)",efDd:"Drawdown / loss text (optional)",efLiqFull:"Liquidity terms (full, optional)",efNote:"Source note (admins only, optional)",
+  efErrRequired:"The fund name and the strategy label cannot be empty.",
+  efErrReturns:"Check the returns: one period per line, like  2024: 12.5 ,  2022 from 6: 15.62  or  2026 YTD 10: 4.78 , and each period only once.",
+  confirmDeleteBuiltIn:"Delete this fund from the site? You can bring it back later with \"Restore original funds\".",
+  restore:"Restore original funds",restoreConfirm:"Undo every edit and deletion of the original funds? Funds and strategies you added are kept."
+});
+Object.assign(UI.sc,{
+  edit:"编辑基金",del:"删除基金",efTitle:"编辑基金",efSave:"保存修改",
+  efInception:"成立月份",efInceptionText:"成立说明 (选填)",efAum:"基金规模 (十亿美元)",efAumText:"规模说明 (选填)",
+  efTarget:"目标回报 (选填)",efReturns:"各期间回报",
+  efReturnsHelp:"每行一个期间。完整年度：2024: 12.5    自6月起的部分年度：2022 from 6: 15.62    年初至10月：2026 YTD 10: 4.78",
+  efNotes:"业绩记录备注 (每行一条，选填)",efDd:"回撤 / 损失说明 (选填)",efLiqFull:"流动性条款 (完整，选填)",efNote:"来源备注 (仅管理员可见，选填)",
+  efErrRequired:"基金名称和策略标签不能为空。",
+  efErrReturns:"请检查回报：每行一个期间，例如  2024: 12.5 、 2022 from 6: 15.62  或  2026 YTD 10: 4.78 ，且每个期间只能出现一次。",
+  confirmDeleteBuiltIn:"确定从网站删除此基金？之后可通过“恢复原始基金”找回。",
+  restore:"恢复原始基金",restoreConfirm:"撤销对原始基金的所有修改和删除？您新增的基金和策略将保留。"
+});
+Object.assign(UI.tc,{
+  edit:"編輯基金",del:"刪除基金",efTitle:"編輯基金",efSave:"儲存修改",
+  efInception:"成立月份",efInceptionText:"成立說明 (選填)",efAum:"基金規模 (十億美元)",efAumText:"規模說明 (選填)",
+  efTarget:"目標回報 (選填)",efReturns:"各期間回報",
+  efReturnsHelp:"每行一個期間。完整年度：2024: 12.5    自6月起的部分年度：2022 from 6: 15.62    年初至10月：2026 YTD 10: 4.78",
+  efNotes:"業績記錄備註 (每行一條，選填)",efDd:"回撤 / 損失說明 (選填)",efLiqFull:"流動性條款 (完整，選填)",efNote:"來源備註 (僅管理員可見，選填)",
+  efErrRequired:"基金名稱和策略標籤不能為空。",
+  efErrReturns:"請檢查回報：每行一個期間，例如  2024: 12.5 、 2022 from 6: 15.62  或  2026 YTD 10: 4.78 ，且每個期間只能出現一次。",
+  confirmDeleteBuiltIn:"確定從網站刪除此基金？之後可透過「恢復原始基金」找回。",
+  restore:"恢復原始基金",restoreConfirm:"撤銷對原始基金的所有修改和刪除？您新增的基金和策略將保留。"
+});
+
+/* ---------- Translation with the Claude API ---------- */
+Object.assign(UI.en,{
+  keyTitle:"Automatic translation (Claude API key)",
+  keyHelp:"With a key saved, funds you add are translated into English, 简体 and 繁體 by Claude. The key is kept only in this browser and sent only to Anthropic. Use a key with a spend limit, and remove it on a shared computer.",
+  keyLabel:"Claude API key",keySave:"Save Key",keyRemove:"Remove Key",
+  keySaved:"A key is saved in this browser. New funds will be translated automatically.",
+  keyNone:"No key saved. New funds are added in the deck's own language only.",
+  translate:"Translate",retranslate:"Translate Again",
+  trNoKey:"Funds added in the deck's language. Save a Claude API key in the Add Fund window to translate them.",
+  trWorking:(d,n)=>`Translating funds with Claude… ${d} of ${n} done`,
+  trDone:n=>`${n} fund${n===1?"":"s"} translated into English, 简体 and 繁體.`,
+  trFailed:(k,n)=>`${k} of ${n} fund${n===1?"":"s"} could not be translated and stay in the deck's language.`,
+  trErr_key:"The API key was rejected. Check it in the Add Fund window.",
+  trErr_rate:"The API rate limit was reached. Try Translate again in a minute.",
+  trErr_network:"Could not reach the translation service. Check the internet connection.",
+  trErr_refused:"The request was declined by the model.",
+  trErr_cut:"The text was too long to translate in one go.",
+  trErr_api:"The API returned an error:"
+});
+Object.assign(UI.sc,{
+  keyTitle:"自动翻译 (Claude API 密钥)",
+  keyHelp:"保存密钥后，新增的基金将由 Claude 翻译为 English、简体和繁體。密钥仅保存在此浏览器中，且只发送给 Anthropic。请使用设有支出上限的密钥，并在共用电脑上将其移除。",
+  keyLabel:"Claude API 密钥",keySave:"保存密钥",keyRemove:"移除密钥",
+  keySaved:"此浏览器已保存密钥，新增基金将自动翻译。",
+  keyNone:"尚未保存密钥，新增基金仅以PPT原文语言显示。",
+  translate:"翻译",retranslate:"重新翻译",
+  trNoKey:"基金已按PPT原文语言添加。在“新增基金”窗口保存 Claude API 密钥后即可翻译。",
+  trWorking:(d,n)=>`正在使用 Claude 翻译基金… 已完成 ${d} / ${n}`,
+  trDone:n=>`已将 ${n} 只基金翻译为 English、简体和繁體。`,
+  trFailed:(k,n)=>`${n} 只基金中有 ${k} 只未能翻译，仍以PPT原文语言显示。`,
+  trErr_key:"API 密钥被拒绝，请在“新增基金”窗口检查。",
+  trErr_rate:"已达到 API 速率上限，请稍后再点“翻译”。",
+  trErr_network:"无法连接翻译服务，请检查网络连接。",
+  trErr_refused:"模型拒绝了该请求。",
+  trErr_cut:"文本过长，无法一次完成翻译。",
+  trErr_api:"API 返回错误："
+});
+Object.assign(UI.tc,{
+  keyTitle:"自動翻譯 (Claude API 金鑰)",
+  keyHelp:"儲存金鑰後，新增的基金將由 Claude 翻譯為 English、简体和繁體。金鑰僅儲存在此瀏覽器中，且只傳送給 Anthropic。請使用設有支出上限的金鑰，並在共用電腦上將其移除。",
+  keyLabel:"Claude API 金鑰",keySave:"儲存金鑰",keyRemove:"移除金鑰",
+  keySaved:"此瀏覽器已儲存金鑰，新增基金將自動翻譯。",
+  keyNone:"尚未儲存金鑰，新增基金僅以PPT原文語言顯示。",
+  translate:"翻譯",retranslate:"重新翻譯",
+  trNoKey:"基金已按PPT原文語言新增。在「新增基金」視窗儲存 Claude API 金鑰後即可翻譯。",
+  trWorking:(d,n)=>`正在使用 Claude 翻譯基金… 已完成 ${d} / ${n}`,
+  trDone:n=>`已將 ${n} 隻基金翻譯為 English、简体和繁體。`,
+  trFailed:(k,n)=>`${n} 隻基金中有 ${k} 隻未能翻譯，仍以PPT原文語言顯示。`,
+  trErr_key:"API 金鑰被拒絕，請在「新增基金」視窗檢查。",
+  trErr_rate:"已達到 API 速率上限，請稍後再點「翻譯」。",
+  trErr_network:"無法連接翻譯服務，請檢查網路連線。",
+  trErr_refused:"模型拒絕了該請求。",
+  trErr_cut:"文字過長，無法一次完成翻譯。",
+  trErr_api:"API 傳回錯誤："
+});
+
+/* ---------- Saving to GitHub (shared data + translation by workflow) ---------- */
+Object.assign(UI.en,{
+  ghTitle:"Save for everyone (GitHub token)",
+  ghHelp:"Changes are saved to the site's GitHub repository, so every visitor sees them, and new funds are translated there automatically. This needs a GitHub token.<br><br><b>To create one:</b> on GitHub open Settings → Developer settings → Personal access tokens → Fine-grained tokens → Generate new token. Under Repository access choose <b>Only select repositories → fund-pitch</b>. Under Permissions set <b>Contents: Read and write</b>. Paste the token below. It is kept only in this browser and sent only to GitHub.",
+  ghLabel:"GitHub token",ghSave:"Save Token",ghRemove:"Remove Token",
+  ghTokenSaved:"A token is saved in this browser. Your changes are saved for everyone.",
+  ghTokenNone:"No token saved. You can look around, but changes cannot be saved.",
+  ghTokenOk:"The token works. Your changes will be saved for everyone.",
+  ghNeedToken:"To change funds, first save a GitHub token: click + Add Fund and open \"Save for everyone\".",
+  ghNeedTokenHere:"Save a GitHub token first, under \"Save for everyone\" below.",
+  ghSaving:"Saving for everyone…",
+  ghSaved:"Saved. Other visitors will see it once the site republishes, usually within a couple of minutes.",
+  ghSavedTranslating:n=>`Saved. Translating ${n} fund${n===1?"":"s"} on GitHub. This page updates when it is done.`,
+  ghTranslated:"Translation finished. The funds are now in English, 简体 and 繁體.",
+  ghTranslateSlow:"The translation has not finished. Open the Actions tab of the GitHub repository to see why; the ANTHROPIC_API_KEY secret may be missing.",
+  ghNotSaved:"Not saved.",
+  ghErr_auth:"GitHub rejected the token. It needs Contents: Read and write on this repository.",
+  ghErr_network:"Could not reach GitHub. Check the internet connection.",
+  ghErr_conflict:"Someone else saved at the same moment. Make the change again.",
+  ghErr_api:"GitHub returned an error. Try again in a moment."
+});
+Object.assign(UI.sc,{
+  ghTitle:"为所有人保存 (GitHub 令牌)",
+  ghHelp:"修改会保存到网站的 GitHub 仓库，所有访客都能看到，新基金也会在那里自动翻译。这需要一个 GitHub 令牌。<br><br><b>创建方法：</b>在 GitHub 打开 Settings → Developer settings → Personal access tokens → Fine-grained tokens → Generate new token。Repository access 选择 <b>Only select repositories → fund-pitch</b>，Permissions 中将 <b>Contents 设为 Read and write</b>。将令牌粘贴到下方。令牌仅保存在此浏览器中，且只发送给 GitHub。",
+  ghLabel:"GitHub 令牌",ghSave:"保存令牌",ghRemove:"移除令牌",
+  ghTokenSaved:"此浏览器已保存令牌，您的修改将为所有人保存。",
+  ghTokenNone:"尚未保存令牌。可以浏览，但无法保存修改。",
+  ghTokenOk:"令牌有效，您的修改将为所有人保存。",
+  ghNeedToken:"修改基金前，请先保存 GitHub 令牌：点击“+ 新增基金”，展开“为所有人保存”。",
+  ghNeedTokenHere:"请先在下方“为所有人保存”中保存 GitHub 令牌。",
+  ghSaving:"正在为所有人保存…",
+  ghSaved:"已保存。网站重新发布后其他访客即可看到，通常在几分钟内。",
+  ghSavedTranslating:n=>`已保存。正在 GitHub 上翻译 ${n} 只基金，完成后本页会自动更新。`,
+  ghTranslated:"翻译完成，基金现已提供 English、简体和繁體。",
+  ghTranslateSlow:"翻译尚未完成。请打开 GitHub 仓库的 Actions 页面查看原因；可能缺少 ANTHROPIC_API_KEY 密钥。",
+  ghNotSaved:"未保存。",
+  ghErr_auth:"GitHub 拒绝了该令牌。它需要对本仓库具有 Contents: Read and write 权限。",
+  ghErr_network:"无法连接 GitHub，请检查网络连接。",
+  ghErr_conflict:"有人同时保存了修改，请重新操作一次。",
+  ghErr_api:"GitHub 返回错误，请稍后再试。"
+});
+Object.assign(UI.tc,{
+  ghTitle:"為所有人儲存 (GitHub 權杖)",
+  ghHelp:"修改會儲存到網站的 GitHub 儲存庫，所有訪客都能看到，新基金也會在那裡自動翻譯。這需要一個 GitHub 權杖。<br><br><b>建立方法：</b>在 GitHub 開啟 Settings → Developer settings → Personal access tokens → Fine-grained tokens → Generate new token。Repository access 選擇 <b>Only select repositories → fund-pitch</b>，Permissions 中將 <b>Contents 設為 Read and write</b>。將權杖貼到下方。權杖僅儲存在此瀏覽器中，且只傳送給 GitHub。",
+  ghLabel:"GitHub 權杖",ghSave:"儲存權杖",ghRemove:"移除權杖",
+  ghTokenSaved:"此瀏覽器已儲存權杖，您的修改將為所有人儲存。",
+  ghTokenNone:"尚未儲存權杖。可以瀏覽，但無法儲存修改。",
+  ghTokenOk:"權杖有效，您的修改將為所有人儲存。",
+  ghNeedToken:"修改基金前，請先儲存 GitHub 權杖：點擊「+ 新增基金」，展開「為所有人儲存」。",
+  ghNeedTokenHere:"請先在下方「為所有人儲存」中儲存 GitHub 權杖。",
+  ghSaving:"正在為所有人儲存…",
+  ghSaved:"已儲存。網站重新發布後其他訪客即可看到，通常在幾分鐘內。",
+  ghSavedTranslating:n=>`已儲存。正在 GitHub 上翻譯 ${n} 隻基金，完成後本頁會自動更新。`,
+  ghTranslated:"翻譯完成，基金現已提供 English、简体和繁體。",
+  ghTranslateSlow:"翻譯尚未完成。請開啟 GitHub 儲存庫的 Actions 頁面查看原因；可能缺少 ANTHROPIC_API_KEY 密鑰。",
+  ghNotSaved:"未儲存。",
+  ghErr_auth:"GitHub 拒絕了該權杖。它需要對本儲存庫具有 Contents: Read and write 權限。",
+  ghErr_network:"無法連接 GitHub，請檢查網路連線。",
+  ghErr_conflict:"有人同時儲存了修改，請重新操作一次。",
+  ghErr_api:"GitHub 傳回錯誤，請稍後再試。"
+});

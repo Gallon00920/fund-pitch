@@ -23,7 +23,7 @@ html = read("index.html")
 
 # stylesheet -> <style>
 html, n_css = re.subn(
-    r'<link rel="stylesheet" href="(css/[^"]+)">',
+    r'<link rel="stylesheet" href="(css/[^"?]+)(?:\?v=\d+)?">',
     lambda m: "<style>\n" + read(m.group(1)) + "</style>",
     html,
 )
@@ -35,7 +35,7 @@ def inline_script(m):
         sys.exit(f"{m.group(1)} contains '</script', which cannot be inlined safely")
     return f"<script>\n/* ===== {m.group(1)} ===== */\n{code}</script>"
 
-html, n_js = re.subn(r'<script src="(js/[^"]+)"></script>', inline_script, html)
+html, n_js = re.subn(r'<script src="(js/[^"?]+)(?:\?v=\d+)?"></script>', inline_script, html)
 
 left = re.findall(r'(?:src|href)="(?!https?:|#|data:)([^"]+)"', html)
 if left:

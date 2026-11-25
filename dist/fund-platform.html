@@ -262,6 +262,89 @@ body.modal-open{overflow:hidden}
 footer .wordmark{font-size:14px}
 html:not([lang="en"]) .wordmark{font-size:19px;letter-spacing:5px}
 @media (max-width:680px){.wordmark{font-size:12px;letter-spacing:1.6px;white-space:normal}}
+
+/* ---------- Add Funds from a deck: upload + review list ---------- */
+.im-body{padding:28px 36px 6px}
+.im-intro{font-size:14.5px;line-height:1.7;color:#334155;margin-bottom:20px}
+.im-file{display:block;border:1px dashed #b9bfd1;background:#fafbfd;padding:20px 22px;cursor:pointer;transition:border-color .2s}
+.im-file:hover{border-color:var(--navy)}
+.im-file>span{display:block;font-size:10.5px;letter-spacing:1.3px;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+.im-file input{font:inherit;font-size:14px;width:100%}
+.im-status{font-size:13.5px;color:var(--navy);font-weight:500;margin:16px 0 4px;min-height:1em}
+.im-item{display:flex;gap:16px;align-items:flex-start;border:1px solid var(--line);padding:18px 20px;margin-top:14px}
+.im-on{width:18px;height:18px;margin-top:3px;accent-color:var(--navy);flex:none}
+.im-main{flex:1;min-width:0}
+.im-tag{font-weight:600;font-size:17px;color:var(--navy);line-height:1.3}
+.im-tag small{display:block;font-weight:400;font-size:12px;color:var(--muted);margin-top:3px}
+.im-fields{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:12px;margin:14px 0 12px}
+.im-fields label>span{display:block;font-size:10px;letter-spacing:1.2px;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.im-fields input,.im-fields select{width:100%;padding:9px 10px;font:inherit;font-size:14px;color:var(--ink);background:#fff;border:1px solid #cfd3df;outline:none}
+.im-fields input:focus,.im-fields select:focus{border-color:var(--navy)}
+.im-sum{list-style:none;font-size:12.5px;line-height:1.7;color:#475069}
+.im-sum b{font-weight:600;color:var(--navy)}
+/* card and panel pieces used by funds that have text instead of yearly returns */
+.trk{grid-row:span 4;align-self:start;margin-bottom:22px}
+.trk ul{list-style:none;font-size:13px;line-height:1.6;color:#334155}
+.trk li{padding:7px 0;border-bottom:1px solid var(--line)}
+.trk li:first-child{border-top:1px solid var(--navy)}
+.kpis b.txt{font-size:15px;white-space:normal;line-height:1.3}
+@media (max-width:680px){.im-body{padding:22px 20px 4px}.im-fields{grid-template-columns:1fr}}
+.im-fields label.wide{grid-column:1/-1}
+
+/* drop zone for the deck upload */
+.im-file{display:flex;flex-direction:column;align-items:center;text-align:center;gap:6px;padding:34px 22px;border-width:1.5px;color:var(--navy);transition:border-color .2s,background .2s}
+.im-file svg{color:var(--gold);margin-bottom:6px}
+.im-file b{font-weight:600;font-size:16px}
+.im-file>span{margin:0;font-size:12.5px;letter-spacing:.3px;text-transform:none}
+.im-file input{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}   /* the whole zone is the click target */
+.im-file:focus-within{border-color:var(--navy)}
+.im-file.drag{border-color:var(--gold);border-style:solid;background:#fbf6ea}
+.im-file.drag b{color:#8a6a2b}
+.im-file{position:relative}
+
+/* ---------- Strategy tabs: any number of tabs, admin add / delete ---------- */
+.tabs{flex-wrap:wrap;align-items:center;row-gap:0;column-gap:40px}
+.tab{display:inline-flex;align-items:center;white-space:nowrap}
+.tab-del{display:inline-grid;place-items:center;width:20px;height:20px;margin-left:8px;border-radius:50%;font-size:15px;line-height:1;color:var(--muted);transition:.2s}
+.tab-del:hover{background:var(--neg);color:#fff}
+.tab-add{color:var(--navy);font-weight:600;letter-spacing:1.2px;font-size:12.5px;opacity:.75}
+.tab-add:hover{opacity:1;color:#8a6a2b}
+.strat-new{display:flex;align-items:center;gap:8px;padding:9px 0}
+.strat-new input{width:200px;padding:9px 10px;font:inherit;font-size:14px;color:var(--ink);border:1px solid #cfd3df;outline:none;background:#fff}
+.strat-new input:focus{border-color:var(--navy)}
+.strat-new .btn.sm{padding:9px 14px}
+.strat-x{background:none;border:none;font-size:20px;line-height:1;color:var(--muted);cursor:pointer;padding:4px 6px}
+.strat-x:hover{color:var(--navy)}
+.im-strat{display:flex;align-items:flex-end;gap:12px;margin:14px 0 2px;padding:16px 18px;background:#f6f6f9;border:1px solid var(--line)}
+.im-strat label{flex:1;min-width:0}
+.im-strat label>span{display:block;font-size:10.5px;letter-spacing:1.2px;text-transform:uppercase;color:var(--muted);margin-bottom:7px}
+.im-strat input{width:100%;padding:9px 10px;font:inherit;font-size:14px;color:var(--ink);border:1px solid #cfd3df;outline:none;background:#fff}
+.im-strat input:focus{border-color:var(--navy)}
+.im-strat .btn{padding:10px 18px;background:#fff}
+@media (max-width:680px){.tabs{column-gap:22px}.strat-new input{width:150px}}
+
+/* ---------- Edit / Delete controls (admin) ---------- */
+.card-tools{position:absolute;top:10px;right:10px;z-index:2;display:flex;gap:6px}
+.tool{width:30px;height:30px;display:grid;place-items:center;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.28);color:#fff;cursor:pointer;transition:.2s}
+.tool:hover{background:var(--gold);border-color:var(--gold);color:var(--navy)}
+.tool.del:hover{background:var(--neg);border-color:var(--neg);color:#fff}
+.d-admin{display:flex;gap:12px;margin-top:26px;flex-wrap:wrap}
+.d-admin .btn.danger{margin-top:0}
+.restore{display:inline-block;margin-top:12px;background:none;border:none;padding:0;font:inherit;font-size:13px;color:var(--navy);text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+.restore:hover{color:#8a6a2b}
+.has-tools .tag{max-width:calc(100% - 64px)}   /* keep the label clear of the Edit / Delete buttons */
+
+/* ---------- Translation: key box and status banner ---------- */
+.im-key{margin-top:22px;border-top:1px solid var(--line);padding-top:16px}
+.im-key summary{cursor:pointer;font-size:13px;font-weight:600;color:var(--navy);letter-spacing:.3px}
+.im-key>p{font-size:13px;line-height:1.65;color:#475069;margin-top:10px}
+.im-key .im-strat{margin-top:12px}
+.im-status.ok{color:var(--pos)}
+.toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%);z-index:300;max-width:min(680px,calc(100% - 32px));background:var(--navy);color:#fff;
+  padding:14px 22px;font-size:14px;line-height:1.5;box-shadow:0 18px 40px -12px rgba(18,28,58,.55);border-left:3px solid var(--gold);cursor:pointer}
+.toast.ok{border-left-color:#4fbf93}
+.toast.warn{border-left-color:var(--gold)}
+.toast.err{border-left-color:#e2776b}
 </style>
 </head>
 <body>
@@ -314,14 +397,12 @@ html:not([lang="en"]) .wordmark{font-size:19px;letter-spacing:5px}
       <p data-i="secBody"></p>
     </div>
     <div class="tabbar reveal">
-      <div class="tabs" role="tablist">
-        <button class="tab active" data-tab="liquid" role="tab"><span data-i="tabLiquid"></span><span class="count" id="cLiquid"></span></button>
-        <button class="tab" data-tab="illiquid" role="tab"><span data-i="tabIlliquid"></span><span class="count" id="cIlliquid"></span></button>
-      </div>
+      <div class="tabs" id="tabs" role="tablist"></div>   <!-- filled by renderTabs() in js/app.js -->
     </div>
     <div class="track-outer" id="scroller" tabindex="0" aria-label="Funds"><div class="track" id="track"></div></div>
     <div class="progress"><i id="prog"></i></div>
     <p class="tab-desc" id="tabDesc"></p>
+    <button class="restore" id="restoreBtn" type="button" data-i="restore" hidden></button>
   </div>
 </section>
 
@@ -350,37 +431,79 @@ html:not([lang="en"]) .wordmark{font-size:19px;letter-spacing:5px}
   </form>
 </div>
 
-<!-- Add Fund form (admin only) -->
+<!-- Add Funds from a PPTX deck (admin only) -->
 <div class="modal" id="fundModal" hidden>
   <form class="modal-card" id="fundForm" novalidate>
-    <div class="modal-head"><h3 data-i="afTitle"></h3><button class="close" type="button" id="fundClose" aria-label="Close">✕</button></div>
-    <div class="modal-body">
-      <label><span data-i="afCategory"></span><select id="fTab"><option value="liquid" data-i="tabLiquid"></option><option value="illiquid" data-i="tabIlliquid"></option></select></label>
-      <label><span data-i="afName"></span><input id="fName" required maxlength="80"></label>
-      <label><span data-i="afMgr"></span><input id="fMgr" required maxlength="60"></label>
-      <label><span data-i="afTag"></span><input id="fTag" required maxlength="60" data-ph="phTag"></label>
-      <label><span data-i="afVehicle"></span><input id="fVehicle" required maxlength="40" data-ph="phVehicle"></label>
-      <label><span data-i="afInception"></span><input id="fInception" type="month" required></label>
-      <label><span data-i="afAum"></span><input id="fAum" type="number" step="0.01" min="0" required></label>
-      <label><span data-i="afLiq"></span><input id="fLiq" required maxlength="60" data-ph="phLiq"></label>
-      <label class="wide"><span data-i="afStrategy"></span><textarea id="fStrategy" required maxlength="400"></textarea></label>
-      <label class="wide"><span data-i="afLiqFull"></span><textarea id="fLiqFull" maxlength="400"></textarea></label>
-      <label class="wide"><span data-i="afReturns"></span><textarea id="fReturns" rows="6" required></textarea><small data-i="afReturnsHelp"></small></label>
-      <label><span data-i="afYtd"></span><input id="fYtd" type="number" step="0.01"></label>
-      <label><span data-i="afYtdTo"></span><input id="fYtdTo" type="month"></label>
-      <label><span data-i="afWm"></span><input id="fWm" type="number" step="0.01"></label>
-      <label><span data-i="afWmAt"></span><input id="fWmAt" type="month"></label>
-      <label class="wide"><span data-i="afNote"></span><input id="fNote" maxlength="200"></label>
+    <div class="modal-head"><h3 data-i="imTitle"></h3><button class="close" type="button" id="fundClose" aria-label="Close">✕</button></div>
+    <div class="im-body">
+      <p class="im-intro" data-i="imIntro"></p>
+      <label class="im-file" id="dropZone">
+        <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><path d="M12 16V4M7.5 8.5 12 4l4.5 4.5M4 15v3.5A1.5 1.5 0 0 0 5.5 20h13a1.5 1.5 0 0 0 1.5-1.5V15"/></svg>
+        <b data-i="imDrop"></b>
+        <span data-i="imChoose"></span>
+        <input id="fundFile" type="file" accept=".pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation"></label>
+      <p class="im-status" id="imStatus"></p>
+      <div class="im-strat" id="imStratRow" hidden>
+        <label><span data-i="imNewStrat"></span><input id="imStratName" maxlength="40" data-ph="stratPh"></label>
+        <button class="btn sm ghost" type="button" id="imStratCreate" data-i="imCreate"></button>
+      </div>
+      <div id="imList"></div>
+      <details class="im-key" id="ghBox">
+        <summary data-i="ghTitle"></summary>
+        <p data-i="ghHelp"></p>
+        <div class="im-strat">
+          <label><span data-i="ghLabel"></span><input id="ghInput" type="password" autocomplete="off" spellcheck="false" placeholder="github_pat_…"></label>
+          <button class="btn sm ghost" type="button" id="ghSave" data-i="ghSave"></button>
+          <button class="btn sm ghost" type="button" id="ghRemove" data-i="ghRemove" hidden></button>
+        </div>
+        <p class="im-status" id="ghStatus"></p>
+      </details>
     </div>
     <div class="modal-foot">
       <p class="form-err" id="fundErr" hidden></p>
       <button class="btn ghost" type="button" id="fundCancel" data-i="cancel"></button>
-      <button class="btn solid" type="submit" data-i="save"></button>
+      <button class="btn solid" type="submit" id="imSubmit" data-i="imAdd" hidden></button>
     </div>
   </form>
 </div>
 
-<!-- Scripts load in this order on purpose: settings, wording, data, storage, auth, then the page logic -->
+<div class="toast" id="toast" role="status" hidden></div>
+
+<!-- Edit Fund form (admin only) -->
+<div class="modal" id="editModal" hidden>
+  <form class="modal-card" id="editForm" novalidate>
+    <div class="modal-head"><h3 data-i="efTitle"></h3><button class="close" type="button" id="editClose" aria-label="Close">✕</button></div>
+    <div class="modal-body">
+      <label><span data-i="afName"></span><input id="efName" maxlength="80"></label>
+      <label><span data-i="afCategory"></span><select id="efStrat"></select></label>
+      <label><span data-i="afMgr"></span><input id="efMgr" maxlength="60"></label>
+      <label><span data-i="afTag"></span><input id="efTag" maxlength="80"></label>
+      <label><span data-i="afVehicle"></span><input id="efVehicle" maxlength="40"></label>
+      <label><span data-i="afLiq"></span><input id="efLiq" maxlength="60"></label>
+      <label><span data-i="efInception"></span><input id="efInception" type="month"></label>
+      <label><span data-i="efInceptionText"></span><input id="efInceptionText" maxlength="200"></label>
+      <label><span data-i="efAum"></span><input id="efAum" type="number" step="0.001" min="0"></label>
+      <label><span data-i="efAumText"></span><input id="efAumText" maxlength="120"></label>
+      <label class="wide"><span data-i="afStrategy"></span><textarea id="efStrategy" maxlength="600"></textarea></label>
+      <label class="wide"><span data-i="efReturns"></span><textarea id="efReturns" rows="7"></textarea><small data-i="efReturnsHelp"></small></label>
+      <label><span data-i="efTarget"></span><input id="efTarget" maxlength="40"></label>
+      <label><span data-i="imHide"></span><input id="efHide" maxlength="300"></label>
+      <label class="wide"><span data-i="efNotes"></span><textarea id="efNotes" rows="4"></textarea></label>
+      <label class="wide"><span data-i="efDd"></span><textarea id="efDd" rows="3"></textarea></label>
+      <label class="wide"><span data-i="efLiqFull"></span><textarea id="efLiqFull" rows="3"></textarea></label>
+      <label class="wide"><span data-i="efNote"></span><textarea id="efNote" rows="3"></textarea></label>
+    </div>
+    <div class="modal-foot">
+      <p class="form-err" id="editErr" hidden></p>
+      <button class="btn ghost" type="button" id="editCancel" data-i="cancel"></button>
+      <button class="btn solid" type="submit" data-i="efSave"></button>
+    </div>
+  </form>
+</div>
+
+<!-- Scripts load in this order on purpose: settings, wording, data, storage, auth, then the page logic.
+     The ?v= number makes browsers fetch fresh copies. Change it (all at once) whenever these files change,
+     otherwise a browser can mix an old script with a new page and the funds will not show. -->
 <script>
 /* ===== js/config.js ===== */
 /* ---------- Local demo configuration ----------
@@ -391,6 +514,9 @@ const CONFIG = {
   // true  = visitors must sign in before they can see the site
   // false = the site is public; signing in only unlocks admin tools (Add Fund)
   REQUIRE_LOGIN: true,
+
+  // The GitHub repository that holds the shared fund data. Admin changes are committed to `path` on `branch`.
+  REPO: { owner: "Gallon00920", name: "fund-pitch", branch: "main", path: "data/funds.json" },
 
   DEMO_USERS: [
     { username: "admin",    password: "Junson-Admin-Demo1",  role: "admin",  name: "Admin" },     // can add and delete funds
@@ -512,6 +638,226 @@ Object.assign(UI.tc,{
 UI.en.descLiquidAnon="UCITS vehicles with daily dealing. Source: manager monthly factsheets as of 30 Oct 2026.";
 UI.sc.descLiquidAnon="UCITS 结构，每日申赎。数据来源：管理人官方月度 Factsheet，截至2026年10月30日。";
 UI.tc.descLiquidAnon="UCITS 結構，每日申贖。資料來源：管理人官方月度 Factsheet，截至2026年10月30日。";
+
+/* ---------- Add Funds from a PPTX deck ---------- */
+Object.assign(UI.en,{
+  imTitle:"Add Funds from a Deck",
+  imIntro:"Upload a fund screening deck (.pptx). Each column of the comparison table on each slide becomes one fund card. Text is shown as written in the deck.",
+  imChoose:"Choose a .pptx file",imReading:"Reading the deck…",
+  imFound:(n,file)=>`${n} fund${n===1?"":"s"} found in ${file}. Check the names, then add the ones you want.`,
+  imNone:"No fund comparison table was found. The deck needs a table with one fund per column and rows such as 成立日期, 基金规模, 基金策略, 表现 and 流动性.",
+  imBad:"This file could not be read as a PowerPoint (.pptx) file.",
+  imName:"Fund name (admin view only)",imSlide:"Slide",imInclude:"Include this fund",
+  imReturns:n=>`${n} period${n===1?"":"s"} found`,imNoReturns:"No yearly returns in the deck. The card will show the track record text instead.",
+  imAdd:"Add Selected Funds",imNoneSel:"Tick at least one fund, and give every ticked fund a name.",
+  newFund:"New",target:"Target return",trackRecord:"Track Record"
+});
+Object.assign(UI.sc,{
+  imTitle:"从PPT导入基金",
+  imIntro:"上传基金筛选汇报 (.pptx)。每页比较表中的每一列将生成一张基金卡片，文字按PPT原文显示。",
+  imChoose:"选择 .pptx 文件",imReading:"正在读取…",
+  imFound:(n,file)=>`在 ${file} 中找到 ${n} 只基金。请核对名称后添加。`,
+  imNone:"未找到基金比较表。PPT 需包含一张表格：每列一只基金，行标题如 成立日期、基金规模、基金策略、表现、流动性。",
+  imBad:"无法将此文件读取为 PowerPoint (.pptx) 文件。",
+  imName:"基金名称 (仅管理员可见)",imSlide:"第",imInclude:"包含此基金",
+  imReturns:n=>`找到 ${n} 个期间`,imNoReturns:"PPT 中没有年度回报，卡片将显示业绩记录文字。",
+  imAdd:"添加所选基金",imNoneSel:"请至少勾选一只基金，并为每只勾选的基金填写名称。",
+  newFund:"新发",target:"目标回报",trackRecord:"业绩记录"
+});
+Object.assign(UI.tc,{
+  imTitle:"從PPT匯入基金",
+  imIntro:"上傳基金篩選匯報 (.pptx)。每頁比較表中的每一列將生成一張基金卡片，文字按PPT原文顯示。",
+  imChoose:"選擇 .pptx 檔案",imReading:"正在讀取…",
+  imFound:(n,file)=>`在 ${file} 中找到 ${n} 隻基金。請核對名稱後新增。`,
+  imNone:"未找到基金比較表。PPT 需包含一張表格：每列一隻基金，行標題如 成立日期、基金規模、基金策略、表現、流動性。",
+  imBad:"無法將此檔案讀取為 PowerPoint (.pptx) 檔案。",
+  imName:"基金名稱 (僅管理員可見)",imSlide:"第",imInclude:"包含此基金",
+  imReturns:n=>`找到 ${n} 個期間`,imNoReturns:"PPT 中沒有年度回報，卡片將顯示業績記錄文字。",
+  imAdd:"新增所選基金",imNoneSel:"請至少勾選一隻基金，並為每隻勾選的基金填寫名稱。",
+  newFund:"新發",target:"目標回報",trackRecord:"業績記錄"
+});
+
+UI.en.imHide="Words hidden from investors (comma-separated)";
+UI.sc.imHide="对投资者隐藏的词 (用逗号分隔)";
+UI.tc.imHide="對投資者隱藏的詞 (用逗號分隔)";
+
+/* drag-and-drop wording for the deck upload */
+UI.en.imDrop="Drag a .pptx deck here";   UI.en.imChoose="or click to choose a file";
+UI.sc.imDrop="将 .pptx 文件拖到此处";      UI.sc.imChoose="或点击选择文件";
+UI.tc.imDrop="將 .pptx 檔案拖到此處";      UI.tc.imChoose="或點擊選擇檔案";
+
+/* ---------- Strategy tabs ---------- */
+Object.assign(UI.en,{
+  addStrategy:"+ Add Strategy",stratPh:"Strategy name",stratAdd:"Add",stratDelete:"Delete this strategy",
+  stratExists:"A strategy with this name already exists.",
+  stratDelConfirm:(name,n)=>`Delete the strategy "${name}"${n?` and the ${n} fund${n===1?"":"s"} in it`:""}? This cannot be undone.`,
+  afCategory:"Strategy",imNewStrat:"Or put these funds under a new strategy",imCreate:"Create"
+});
+Object.assign(UI.sc,{
+  addStrategy:"+ 新增策略",stratPh:"策略名称",stratAdd:"添加",stratDelete:"删除此策略",
+  stratExists:"已存在同名策略。",
+  stratDelConfirm:(name,n)=>`确定删除策略“${name}”${n?`及其中的 ${n} 只基金`:""}？此操作无法撤销。`,
+  afCategory:"策略",imNewStrat:"或将这些基金放入新策略",imCreate:"创建"
+});
+Object.assign(UI.tc,{
+  addStrategy:"+ 新增策略",stratPh:"策略名稱",stratAdd:"新增",stratDelete:"刪除此策略",
+  stratExists:"已存在同名策略。",
+  stratDelConfirm:(name,n)=>`確定刪除策略「${name}」${n?`及其中的 ${n} 隻基金`:""}？此操作無法復原。`,
+  afCategory:"策略",imNewStrat:"或將這些基金放入新策略",imCreate:"建立"
+});
+
+/* ---------- Edit / delete a fund ---------- */
+Object.assign(UI.en,{
+  edit:"Edit Fund",del:"Delete Fund",efTitle:"Edit Fund",efSave:"Save Changes",
+  efInception:"Inception month",efInceptionText:"Inception text (optional)",efAum:"Fund size (US$ bn)",efAumText:"Fund size text (optional)",
+  efTarget:"Target return (optional)",efReturns:"Returns by period",
+  efReturnsHelp:"One period per line.  Full year: 2024: 12.5    Part year from June: 2022 from 6: 15.62    Year to date through October: 2026 YTD 10: 4.78",
+  efNotes:"Track record notes (one per line, optional)",efDd:"Drawdown / loss text (optional)",efLiqFull:"Liquidity terms (full, optional)",efNote:"Source note (admins only, optional)",
+  efErrRequired:"The fund name and the strategy label cannot be empty.",
+  efErrReturns:"Check the returns: one period per line, like  2024: 12.5 ,  2022 from 6: 15.62  or  2026 YTD 10: 4.78 , and each period only once.",
+  confirmDeleteBuiltIn:"Delete this fund from the site? You can bring it back later with \"Restore original funds\".",
+  restore:"Restore original funds",restoreConfirm:"Undo every edit and deletion of the original funds? Funds and strategies you added are kept."
+});
+Object.assign(UI.sc,{
+  edit:"编辑基金",del:"删除基金",efTitle:"编辑基金",efSave:"保存修改",
+  efInception:"成立月份",efInceptionText:"成立说明 (选填)",efAum:"基金规模 (十亿美元)",efAumText:"规模说明 (选填)",
+  efTarget:"目标回报 (选填)",efReturns:"各期间回报",
+  efReturnsHelp:"每行一个期间。完整年度：2024: 12.5    自6月起的部分年度：2022 from 6: 15.62    年初至10月：2026 YTD 10: 4.78",
+  efNotes:"业绩记录备注 (每行一条，选填)",efDd:"回撤 / 损失说明 (选填)",efLiqFull:"流动性条款 (完整，选填)",efNote:"来源备注 (仅管理员可见，选填)",
+  efErrRequired:"基金名称和策略标签不能为空。",
+  efErrReturns:"请检查回报：每行一个期间，例如  2024: 12.5 、 2022 from 6: 15.62  或  2026 YTD 10: 4.78 ，且每个期间只能出现一次。",
+  confirmDeleteBuiltIn:"确定从网站删除此基金？之后可通过“恢复原始基金”找回。",
+  restore:"恢复原始基金",restoreConfirm:"撤销对原始基金的所有修改和删除？您新增的基金和策略将保留。"
+});
+Object.assign(UI.tc,{
+  edit:"編輯基金",del:"刪除基金",efTitle:"編輯基金",efSave:"儲存修改",
+  efInception:"成立月份",efInceptionText:"成立說明 (選填)",efAum:"基金規模 (十億美元)",efAumText:"規模說明 (選填)",
+  efTarget:"目標回報 (選填)",efReturns:"各期間回報",
+  efReturnsHelp:"每行一個期間。完整年度：2024: 12.5    自6月起的部分年度：2022 from 6: 15.62    年初至10月：2026 YTD 10: 4.78",
+  efNotes:"業績記錄備註 (每行一條，選填)",efDd:"回撤 / 損失說明 (選填)",efLiqFull:"流動性條款 (完整，選填)",efNote:"來源備註 (僅管理員可見，選填)",
+  efErrRequired:"基金名稱和策略標籤不能為空。",
+  efErrReturns:"請檢查回報：每行一個期間，例如  2024: 12.5 、 2022 from 6: 15.62  或  2026 YTD 10: 4.78 ，且每個期間只能出現一次。",
+  confirmDeleteBuiltIn:"確定從網站刪除此基金？之後可透過「恢復原始基金」找回。",
+  restore:"恢復原始基金",restoreConfirm:"撤銷對原始基金的所有修改和刪除？您新增的基金和策略將保留。"
+});
+
+/* ---------- Translation with the Claude API ---------- */
+Object.assign(UI.en,{
+  keyTitle:"Automatic translation (Claude API key)",
+  keyHelp:"With a key saved, funds you add are translated into English, 简体 and 繁體 by Claude. The key is kept only in this browser and sent only to Anthropic. Use a key with a spend limit, and remove it on a shared computer.",
+  keyLabel:"Claude API key",keySave:"Save Key",keyRemove:"Remove Key",
+  keySaved:"A key is saved in this browser. New funds will be translated automatically.",
+  keyNone:"No key saved. New funds are added in the deck's own language only.",
+  translate:"Translate",retranslate:"Translate Again",
+  trNoKey:"Funds added in the deck's language. Save a Claude API key in the Add Fund window to translate them.",
+  trWorking:(d,n)=>`Translating funds with Claude… ${d} of ${n} done`,
+  trDone:n=>`${n} fund${n===1?"":"s"} translated into English, 简体 and 繁體.`,
+  trFailed:(k,n)=>`${k} of ${n} fund${n===1?"":"s"} could not be translated and stay in the deck's language.`,
+  trErr_key:"The API key was rejected. Check it in the Add Fund window.",
+  trErr_rate:"The API rate limit was reached. Try Translate again in a minute.",
+  trErr_network:"Could not reach the translation service. Check the internet connection.",
+  trErr_refused:"The request was declined by the model.",
+  trErr_cut:"The text was too long to translate in one go.",
+  trErr_api:"The API returned an error:"
+});
+Object.assign(UI.sc,{
+  keyTitle:"自动翻译 (Claude API 密钥)",
+  keyHelp:"保存密钥后，新增的基金将由 Claude 翻译为 English、简体和繁體。密钥仅保存在此浏览器中，且只发送给 Anthropic。请使用设有支出上限的密钥，并在共用电脑上将其移除。",
+  keyLabel:"Claude API 密钥",keySave:"保存密钥",keyRemove:"移除密钥",
+  keySaved:"此浏览器已保存密钥，新增基金将自动翻译。",
+  keyNone:"尚未保存密钥，新增基金仅以PPT原文语言显示。",
+  translate:"翻译",retranslate:"重新翻译",
+  trNoKey:"基金已按PPT原文语言添加。在“新增基金”窗口保存 Claude API 密钥后即可翻译。",
+  trWorking:(d,n)=>`正在使用 Claude 翻译基金… 已完成 ${d} / ${n}`,
+  trDone:n=>`已将 ${n} 只基金翻译为 English、简体和繁體。`,
+  trFailed:(k,n)=>`${n} 只基金中有 ${k} 只未能翻译，仍以PPT原文语言显示。`,
+  trErr_key:"API 密钥被拒绝，请在“新增基金”窗口检查。",
+  trErr_rate:"已达到 API 速率上限，请稍后再点“翻译”。",
+  trErr_network:"无法连接翻译服务，请检查网络连接。",
+  trErr_refused:"模型拒绝了该请求。",
+  trErr_cut:"文本过长，无法一次完成翻译。",
+  trErr_api:"API 返回错误："
+});
+Object.assign(UI.tc,{
+  keyTitle:"自動翻譯 (Claude API 金鑰)",
+  keyHelp:"儲存金鑰後，新增的基金將由 Claude 翻譯為 English、简体和繁體。金鑰僅儲存在此瀏覽器中，且只傳送給 Anthropic。請使用設有支出上限的金鑰，並在共用電腦上將其移除。",
+  keyLabel:"Claude API 金鑰",keySave:"儲存金鑰",keyRemove:"移除金鑰",
+  keySaved:"此瀏覽器已儲存金鑰，新增基金將自動翻譯。",
+  keyNone:"尚未儲存金鑰，新增基金僅以PPT原文語言顯示。",
+  translate:"翻譯",retranslate:"重新翻譯",
+  trNoKey:"基金已按PPT原文語言新增。在「新增基金」視窗儲存 Claude API 金鑰後即可翻譯。",
+  trWorking:(d,n)=>`正在使用 Claude 翻譯基金… 已完成 ${d} / ${n}`,
+  trDone:n=>`已將 ${n} 隻基金翻譯為 English、简体和繁體。`,
+  trFailed:(k,n)=>`${n} 隻基金中有 ${k} 隻未能翻譯，仍以PPT原文語言顯示。`,
+  trErr_key:"API 金鑰被拒絕，請在「新增基金」視窗檢查。",
+  trErr_rate:"已達到 API 速率上限，請稍後再點「翻譯」。",
+  trErr_network:"無法連接翻譯服務，請檢查網路連線。",
+  trErr_refused:"模型拒絕了該請求。",
+  trErr_cut:"文字過長，無法一次完成翻譯。",
+  trErr_api:"API 傳回錯誤："
+});
+
+/* ---------- Saving to GitHub (shared data + translation by workflow) ---------- */
+Object.assign(UI.en,{
+  ghTitle:"Save for everyone (GitHub token)",
+  ghHelp:"Changes are saved to the site's GitHub repository, so every visitor sees them, and new funds are translated there automatically. This needs a GitHub token.<br><br><b>To create one:</b> on GitHub open Settings → Developer settings → Personal access tokens → Fine-grained tokens → Generate new token. Under Repository access choose <b>Only select repositories → fund-pitch</b>. Under Permissions set <b>Contents: Read and write</b>. Paste the token below. It is kept only in this browser and sent only to GitHub.",
+  ghLabel:"GitHub token",ghSave:"Save Token",ghRemove:"Remove Token",
+  ghTokenSaved:"A token is saved in this browser. Your changes are saved for everyone.",
+  ghTokenNone:"No token saved. You can look around, but changes cannot be saved.",
+  ghTokenOk:"The token works. Your changes will be saved for everyone.",
+  ghNeedToken:"To change funds, first save a GitHub token: click + Add Fund and open \"Save for everyone\".",
+  ghNeedTokenHere:"Save a GitHub token first, under \"Save for everyone\" below.",
+  ghSaving:"Saving for everyone…",
+  ghSaved:"Saved. Other visitors will see it once the site republishes, usually within a couple of minutes.",
+  ghSavedTranslating:n=>`Saved. Translating ${n} fund${n===1?"":"s"} on GitHub. This page updates when it is done.`,
+  ghTranslated:"Translation finished. The funds are now in English, 简体 and 繁體.",
+  ghTranslateSlow:"The translation has not finished. Open the Actions tab of the GitHub repository to see why; the ANTHROPIC_API_KEY secret may be missing.",
+  ghNotSaved:"Not saved.",
+  ghErr_auth:"GitHub rejected the token. It needs Contents: Read and write on this repository.",
+  ghErr_network:"Could not reach GitHub. Check the internet connection.",
+  ghErr_conflict:"Someone else saved at the same moment. Make the change again.",
+  ghErr_api:"GitHub returned an error. Try again in a moment."
+});
+Object.assign(UI.sc,{
+  ghTitle:"为所有人保存 (GitHub 令牌)",
+  ghHelp:"修改会保存到网站的 GitHub 仓库，所有访客都能看到，新基金也会在那里自动翻译。这需要一个 GitHub 令牌。<br><br><b>创建方法：</b>在 GitHub 打开 Settings → Developer settings → Personal access tokens → Fine-grained tokens → Generate new token。Repository access 选择 <b>Only select repositories → fund-pitch</b>，Permissions 中将 <b>Contents 设为 Read and write</b>。将令牌粘贴到下方。令牌仅保存在此浏览器中，且只发送给 GitHub。",
+  ghLabel:"GitHub 令牌",ghSave:"保存令牌",ghRemove:"移除令牌",
+  ghTokenSaved:"此浏览器已保存令牌，您的修改将为所有人保存。",
+  ghTokenNone:"尚未保存令牌。可以浏览，但无法保存修改。",
+  ghTokenOk:"令牌有效，您的修改将为所有人保存。",
+  ghNeedToken:"修改基金前，请先保存 GitHub 令牌：点击“+ 新增基金”，展开“为所有人保存”。",
+  ghNeedTokenHere:"请先在下方“为所有人保存”中保存 GitHub 令牌。",
+  ghSaving:"正在为所有人保存…",
+  ghSaved:"已保存。网站重新发布后其他访客即可看到，通常在几分钟内。",
+  ghSavedTranslating:n=>`已保存。正在 GitHub 上翻译 ${n} 只基金，完成后本页会自动更新。`,
+  ghTranslated:"翻译完成，基金现已提供 English、简体和繁體。",
+  ghTranslateSlow:"翻译尚未完成。请打开 GitHub 仓库的 Actions 页面查看原因；可能缺少 ANTHROPIC_API_KEY 密钥。",
+  ghNotSaved:"未保存。",
+  ghErr_auth:"GitHub 拒绝了该令牌。它需要对本仓库具有 Contents: Read and write 权限。",
+  ghErr_network:"无法连接 GitHub，请检查网络连接。",
+  ghErr_conflict:"有人同时保存了修改，请重新操作一次。",
+  ghErr_api:"GitHub 返回错误，请稍后再试。"
+});
+Object.assign(UI.tc,{
+  ghTitle:"為所有人儲存 (GitHub 權杖)",
+  ghHelp:"修改會儲存到網站的 GitHub 儲存庫，所有訪客都能看到，新基金也會在那裡自動翻譯。這需要一個 GitHub 權杖。<br><br><b>建立方法：</b>在 GitHub 開啟 Settings → Developer settings → Personal access tokens → Fine-grained tokens → Generate new token。Repository access 選擇 <b>Only select repositories → fund-pitch</b>，Permissions 中將 <b>Contents 設為 Read and write</b>。將權杖貼到下方。權杖僅儲存在此瀏覽器中，且只傳送給 GitHub。",
+  ghLabel:"GitHub 權杖",ghSave:"儲存權杖",ghRemove:"移除權杖",
+  ghTokenSaved:"此瀏覽器已儲存權杖，您的修改將為所有人儲存。",
+  ghTokenNone:"尚未儲存權杖。可以瀏覽，但無法儲存修改。",
+  ghTokenOk:"權杖有效，您的修改將為所有人儲存。",
+  ghNeedToken:"修改基金前，請先儲存 GitHub 權杖：點擊「+ 新增基金」，展開「為所有人儲存」。",
+  ghNeedTokenHere:"請先在下方「為所有人儲存」中儲存 GitHub 權杖。",
+  ghSaving:"正在為所有人儲存…",
+  ghSaved:"已儲存。網站重新發布後其他訪客即可看到，通常在幾分鐘內。",
+  ghSavedTranslating:n=>`已儲存。正在 GitHub 上翻譯 ${n} 隻基金，完成後本頁會自動更新。`,
+  ghTranslated:"翻譯完成，基金現已提供 English、简体和繁體。",
+  ghTranslateSlow:"翻譯尚未完成。請開啟 GitHub 儲存庫的 Actions 頁面查看原因；可能缺少 ANTHROPIC_API_KEY 密鑰。",
+  ghNotSaved:"未儲存。",
+  ghErr_auth:"GitHub 拒絕了該權杖。它需要對本儲存庫具有 Contents: Read and write 權限。",
+  ghErr_network:"無法連接 GitHub，請檢查網路連線。",
+  ghErr_conflict:"有人同時儲存了修改，請重新操作一次。",
+  ghErr_api:"GitHub 傳回錯誤，請稍後再試。"
+});
 </script>
 <script>
 /* ===== js/funds-data.js ===== */
@@ -608,48 +954,134 @@ const FUNDS = {
 <script>
 /* ===== js/fund-store.js ===== */
 /* ---------- Fund store ----------
-   Built-in funds come from js/funds-data.js. Funds added through the "Add Fund" form are kept in this
-   browser's localStorage and merged into FUNDS here, before the page renders.
-   They are NOT shared with other people or browsers. To make a fund permanent for everyone,
-   copy it into js/funds-data.js (FundStore.exportJSON() in the browser console prints the saved funds). */
+   Built-in funds come from js/funds-data.js, under the two built-in strategy tabs "liquid" and "illiquid".
+   Everything admins change lives in ONE shared file in the repository, data/funds.json, so every visitor sees it:
+     strategies  [ { id, name } ]            strategy tabs admins added, in display order
+     funds       { strategyId: [fund, ...] } funds admins added
+     hidden      [ fundId, ... ]             built-in funds admins deleted (can be restored)
+     overrides   { fundId: { fund, strat } } edited built-in funds (js/funds-data.js itself is never changed)
+   This file only holds that state in memory and rebuilds the live FUNDS list from it.
+   Loading and saving the file is done by js/repo.js, which is told about every change through onChange(). */
 const FundStore = (() => {
-  const KEY = "jc-custom-funds";
+  const BUILT_IN = ["liquid", "illiquid"];
+  const clone = x => JSON.parse(JSON.stringify(x));
+  const isBuiltInFund = id => String(id).startsWith("b-");
 
-  function read() {
-    try {
-      const d = JSON.parse(localStorage.getItem(KEY));
-      return { liquid: (d && d.liquid) || [], illiquid: (d && d.illiquid) || [] };
-    } catch (e) { return { liquid: [], illiquid: [] }; }
-  }
-  function write(d) {
-    try { localStorage.setItem(KEY, JSON.stringify(d)); return true; } catch (e) { return false; }
-  }
+  BUILT_IN.forEach(s => FUNDS[s].forEach((f, i) => { f.id = `b-${s}-${i}`; f.builtIn = true; }));   // stable ids for built-ins
+  const ORIGINAL = clone({ liquid: FUNDS.liquid, illiquid: FUNDS.illiquid });                        // pristine copy to rebuild from
 
-  // merge saved funds into the live list once, at load
-  const saved = read();
-  FUNDS.liquid.push(...saved.liquid);
-  FUNDS.illiquid.push(...saved.illiquid);
+  const empty = () => ({ strategies: [], funds: {}, hidden: [], overrides: {} });
+  const normalise = s => ({
+    strategies: Array.isArray(s && s.strategies) ? s.strategies : [],
+    funds: s && s.funds && typeof s.funds === "object" ? s.funds : {},
+    hidden: Array.isArray(s && s.hidden) ? s.hidden : [],
+    overrides: s && s.overrides && typeof s.overrides === "object" ? s.overrides : {}
+  });
+  let state = empty();
+  let listener = () => {};
+
+  const locate = id => {                                              // where a fund currently sits in the live list
+    for (const strat of Object.keys(FUNDS)) {
+      const index = FUNDS[strat].findIndex(f => f.id === id);
+      if (index > -1) return { strat, index };
+    }
+    return null;
+  };
+
+  /** Rebuilds the live FUNDS list from the built-in funds plus the shared state. */
+  function rebuild() {
+    Object.keys(FUNDS).forEach(k => delete FUNDS[k]);
+    BUILT_IN.forEach(s => { FUNDS[s] = clone(ORIGINAL[s]).filter(f => !state.hidden.includes(f.id)); });
+    state.strategies.forEach(s => { FUNDS[s.id] = []; });
+    Object.entries(state.overrides).forEach(([id, o]) => {
+      const at = locate(id);
+      if (!at || !o || !o.fund) return;
+      if (o.strat === at.strat || !FUNDS[o.strat]) FUNDS[at.strat][at.index] = clone(o.fund);        // edited in place
+      else { FUNDS[at.strat].splice(at.index, 1); FUNDS[o.strat].push(clone(o.fund)); }              // edited and moved
+    });
+    Object.keys(state.funds).forEach(id => {
+      if (FUNDS[id] && Array.isArray(state.funds[id])) FUNDS[id].push(...clone(state.funds[id]));    // funds of a deleted strategy are ignored
+    });
+  }
+  const changed = () => { rebuild(); listener(); };
 
   return {
-    /** Adds a fund to "liquid" or "illiquid". Returns false if the browser refused to save it. */
-    add(tab, fund) {
-      const d = read();
-      d[tab].push(fund);
-      const ok = write(d);
-      FUNDS[tab].push(fund);
-      return ok;
+    /** The shared state as plain data (a copy). */
+    getState: () => clone(state),
+    /** Replaces the shared state, for example after loading data/funds.json. Does not trigger a save. */
+    setState(s) { state = normalise(clone(s || {})); rebuild(); },
+    /** Registers the function called after every change an admin makes (js/repo.js saves to GitHub there). */
+    onChange(fn) { listener = fn; },
+
+    /** All strategy tabs in display order: the two built-in ones, then the custom ones. */
+    strategies: () => [...BUILT_IN.map(id => ({ id, builtIn: true })), ...state.strategies],
+    isBuiltIn: id => BUILT_IN.includes(id),
+
+    /** Creates a strategy tab. `name` must already be safe to insert as HTML. Returns the new strategy. */
+    addStrategy(name) {
+      const s = { id: "s-" + Date.now(), name };
+      state.strategies.push(s);
+      changed();
+      return s;
     },
-    /** Removes a fund that was added through the form (built-in funds cannot be removed here). */
-    remove(id) {
-      const d = read();
-      for (const tab of ["liquid", "illiquid"]) {
-        d[tab] = d[tab].filter(f => f.id !== id);
-        const i = FUNDS[tab].findIndex(f => f.id === id);
-        if (i > -1) FUNDS[tab].splice(i, 1);
+    /** Removes a custom strategy tab together with the funds in it. Built-in tabs cannot be removed. */
+    removeStrategy(id) {
+      if (BUILT_IN.includes(id)) return;
+      Object.entries(state.overrides).forEach(([fid, o]) => {                                        // built-ins moved here go too
+        if (o && o.strat === id) { if (!state.hidden.includes(fid)) state.hidden.push(fid); delete state.overrides[fid]; }
+      });
+      state.strategies = state.strategies.filter(s => s.id !== id);
+      delete state.funds[id];
+      changed();
+    },
+
+    /** Finds a fund by id. Returns { fund, strat } or null. */
+    find(id) {
+      const at = locate(id);
+      return at ? { fund: FUNDS[at.strat][at.index], strat: at.strat } : null;
+    },
+
+    /** Adds a fund under a strategy id. */
+    add(strategyId, fund) {
+      (state.funds[strategyId] = state.funds[strategyId] || []).push(fund);
+      changed();
+      return true;
+    },
+
+    /** Replaces a fund with an edited copy, optionally moving it to another strategy. Works for built-in and added funds. */
+    update(id, fund, strategyId) {
+      const at = locate(id);
+      if (!at || !FUNDS[strategyId]) return false;
+      fund.id = id;
+      if (isBuiltInFund(id)) {
+        fund.builtIn = true;
+        state.overrides[id] = { fund, strat: strategyId };
+      } else {
+        const list = state.funds[at.strat] || [], i = list.findIndex(f => f.id === id);
+        if (strategyId === at.strat && i > -1) list[i] = fund;
+        else { if (i > -1) list.splice(i, 1); (state.funds[strategyId] = state.funds[strategyId] || []).push(fund); }
       }
-      write(d);
+      changed();
+      return true;
     },
-    exportJSON: () => JSON.stringify(read(), null, 2)
+
+    /** Deletes a fund. An added fund is removed for good; a built-in fund is hidden and can be restored. */
+    remove(id) {
+      if (isBuiltInFund(id)) {
+        if (!state.hidden.includes(id)) state.hidden.push(id);
+        delete state.overrides[id];
+      } else {
+        Object.keys(state.funds).forEach(s => { state.funds[s] = state.funds[s].filter(f => f.id !== id); });
+      }
+      changed();
+    },
+
+    /** True when an admin has edited or deleted any built-in fund. */
+    builtInsChanged: () => state.hidden.length > 0 || Object.keys(state.overrides).length > 0,
+    /** Forgets every edit and deletion of built-in funds. */
+    restoreBuiltIns() { state.hidden = []; state.overrides = {}; changed(); },
+
+    exportJSON: () => JSON.stringify(state, null, 2)
   };
 })();
 </script>
@@ -697,6 +1129,9 @@ try{ const s=localStorage.getItem("jc-lang"); if(UI[s]) lang=s }catch(e){}
 const t=k=>UI[lang][k];
 const L=o=>o?(o[lang]||o.en):"";
 const zh=()=>lang!=="en";
+// Free-text fields of added funds hold either one text (shown in every language) or, once translated, { en, sc, tc }.
+const LX=v=>v&&typeof v==="object"&&!Array.isArray(v)?(v[lang]||v.en||""):v||"";
+const notesOf=f=>Array.isArray(f.perfNotes)?f.perfNotes:(f.perfNotes&&(f.perfNotes[lang]||f.perfNotes.en))||[];
 const fmt=v=>(v>0?"+":v<0?"−":"")+Math.abs(v).toFixed(2)+"%";
 const ym=s=>{const [y,m]=s.split("-");return zh()?`${y}年${+m}月`:`${MON[m-1]} ${y}`};
 const money=bn=>zh()?`${+(bn*10).toFixed(1)}亿美元`.replace("亿",lang==="tc"?"億":"亿"):`US$${bn.toFixed(bn<10?2:1)}bn`;
@@ -704,10 +1139,16 @@ const perLabel=([y,,k,m])=>k==="ytd"?(zh()?`${y} YTD (至${m}月)`:`${y} YTD (to
 const ann=p=>{const f=p.filter(x=>!x[2]);if(!f.length)return null;return(Math.pow(f.reduce((a,x)=>a*(1+x[1]/100),1),1/f.length)-1)*100};
 const liqTxt=f=>f.liq?L(f.liq):t("daily");
 const veh=f=>f.vehicle==="private"?t("private"):f.vehicle;
+// text typed by an admin or read from a deck is inserted into the page as HTML, so neutralise any markup first
+const esc=s=>String(s==null?"":s).trim().replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 /* Investors (anyone who is not an admin) never see the real fund or manager name:
    the strategy label is shown as the fund's title instead. Admins see everything. */
 const anon=()=>!Auth.isAdmin();
 const title=f=>anon()?L(f.tag):f.name;
+/* Deck-imported text can mention the fund or manager by name. For investors, mask the words the admin typed as the
+   fund name and manager. This is best-effort: other names in the deck text (sister funds, vintages) are not caught. */
+const R=(f,s)=>anon()&&f.redact&&f.redact.length&&s?s.replace(new RegExp(f.redact.join("|"),"gi"),"●●●"):s;
+const trackHTML=f=>`<div class="trk"><div class="mini-label"><span>${t("trackRecord")}</span></div><ul>${notesOf(f).slice(0,6).map(x=>`<li>${R(f,x)}</li>`).join("")||"<li>—</li>"}</ul></div>`;
 
 function ddText(f){                                     // max drawdown as a plain sentence, same style as other drawer text
   const d=f.dd, z=zh(), c=z?"：":": ", sep=z?"；":". ", end=z?"。":".";
@@ -719,22 +1160,26 @@ function ddText(f){                                     // max drawdown as a pla
 const track=document.getElementById("track"), prog=document.getElementById("prog");
 
 function cardHTML(f,i){
-  const max=Math.max(...f.perf.map(x=>Math.abs(x[1])));
+  const has=f.perf.length>0;                               // deck-imported funds may have no yearly returns
+  const max=has?Math.max(...f.perf.map(x=>Math.abs(x[1])))||1:1;
   const bars=f.perf.map(p=>`<div class="bar ${p[2]==="ytd"?"ytd":""}" data-v="${perLabel(p)}: ${fmt(p[1])}"><i class="${p[1]>=0?"p":"n"}" style="height:0" data-h="${Math.abs(p[1])/max*50}%"></i><em>${p[2]==="ytd"?"YTD":"'"+p[0].slice(2)}</em></div>`).join("");
-  const a=ann(f.perf), last=f.perf.at(-1);
+  const a=has?ann(f.perf):null, last=f.perf.at(-1);
   return `<article class="card">
-    <div class="card-top">${anon()?"":`<span class="tag">${L(f.tag)}</span>`}<h3>${title(f)}</h3>${anon()?"":`<div class="mgr">${L(f.mgr)} · ${veh(f)}</div>`}</div>
+    <div class="card-top${Auth.isAdmin()?" has-tools":""}">${Auth.isAdmin()?`<div class="card-tools">
+        <button class="tool" data-edit="${f.id}" title="${t("edit")}" aria-label="${t("edit")}"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 20h4L19 9l-4-4L4 16v4zM13.5 6.5l4 4"/></svg></button>
+        <button class="tool del" data-delfund="${f.id}" title="${t("del")}" aria-label="${t("del")}"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13M10 11v6M14 11v6"/></svg></button>
+      </div>`:""}${anon()?"":`<span class="tag">${L(f.tag)}</span>`}<h3>${title(f)}</h3>${anon()?"":`<div class="mgr">${L(f.mgr)} · ${veh(f)}</div>`}</div>
     <div class="kpis">
-      <div><b>${money(f.aum)}</b><span>${t("aum")}</span></div>
-      <div><b>${f.inception.slice(0,4)}</b><span>${t("inception")}</span></div>
-      <div><b>${a!==null?fmt(a):"—"}</b><span>${t("ann")}</span></div>
+      <div>${f.aum!=null?`<b>${money(f.aum)}</b>`:`<b class="txt">${LX(f.aumText)||"—"}</b>`}<span>${t("aum")}</span></div>
+      <div><b>${f.inception?f.inception.slice(0,4):f.isNew?t("newFund"):"—"}</b><span>${t("inception")}</span></div>
+      <div><b>${a!==null?fmt(a):LX(f.target)||"—"}</b><span>${a===null&&LX(f.target)?t("target"):t("ann")}</span></div>
     </div>
     <div class="card-body">
-      <p class="strategy">${L(f.strategy)}</p>
-      <div class="mini-label"><span>${t("annual")}</span><span>${fmt(last[1])} ${perLabel(last)}</span></div>
+      <p class="strategy">${R(f,L(f.strategy))}</p>
+      ${has?`<div class="mini-label"><span>${t("annual")}</span><span>${fmt(last[1])} ${perLabel(last)}</span></div>
       <div class="bars">${bars}</div>
       <div class="mini-label"><span>${t("recent5")}</span></div>
-      <table class="recent"><tr><th>${t("period")}</th><th>${t("ret")}</th></tr>${f.perf.slice(-5).reverse().map(p=>`<tr><td>${perLabel(p)}</td><td class="${p[1]>=0?"pos":"neg"}">${fmt(p[1])}</td></tr>`).join("")}</table>
+      <table class="recent"><tr><th>${t("period")}</th><th>${t("ret")}</th></tr>${f.perf.slice(-5).reverse().map(p=>`<tr><td>${perLabel(p)}</td><td class="${p[1]>=0?"pos":"neg"}">${fmt(p[1])}</td></tr>`).join("")}</table>`:trackHTML(f)}
       <div class="card-foot"><span class="liq ${tab!=="liquid"?"semi":""}">${liqTxt(f)}</span>
         <button class="more" data-n="${i}">${t("view")} <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 7h10M8 3l4 4-4 4"/></svg></button></div>
     </div></article>`;
@@ -745,8 +1190,9 @@ const scroller=document.getElementById("scroller");
 function renderCards(keepPos){
   const x=scroller.scrollLeft;
   track.innerHTML=FUNDS[tab].map(cardHTML).join("");
-  document.getElementById("tabDesc").textContent=t(tab==="liquid"?(anon()?"descLiquidAnon":"descLiquid"):"descIlliquid");
+  document.getElementById("tabDesc").textContent=tab==="liquid"?t(anon()?"descLiquidAnon":"descLiquid"):tab==="illiquid"?t("descIlliquid"):"";   // custom strategies have no description line
   requestAnimationFrame(()=>setTimeout(()=>track.querySelectorAll(".bar i").forEach(b=>b.style.height=b.dataset.h),80));
+  document.getElementById("restoreBtn").hidden=!(Auth.isAdmin()&&FundStore.builtInsChanged());
   scroller.scrollLeft=keepPos?x:0;
   updateProg();
 }
@@ -763,8 +1209,7 @@ function applyLang(){
   document.querySelectorAll("[data-i]").forEach(el=>el.innerHTML=t(el.dataset.i));
   document.querySelectorAll(".lang-menu button").forEach(b=>{const on=b.dataset.lang===lang;b.classList.toggle("on",on);b.setAttribute("aria-checked",on)});
   document.getElementById("langCur").textContent={en:"EN",sc:"简体",tc:"繁體"}[lang];
-  document.getElementById("cLiquid").textContent=FUNDS.liquid.length;
-  document.getElementById("cIlliquid").textContent=FUNDS.illiquid.length;
+  renderTabs();
   renderCards(true);
   if(openFund) openD(openFund);
   if(window.onLangChange) onLangChange();                 // lets account.js refresh login / admin controls
@@ -776,10 +1221,51 @@ document.querySelectorAll(".lang-menu button").forEach(b=>b.onclick=()=>{lang=b.
 document.addEventListener("click",e=>{if(!langBox.contains(e.target))setMenu(false)});
 addEventListener("keydown",e=>{if(e.key==="Escape")setMenu(false)});
 
-document.querySelectorAll(".tab").forEach(b=>b.onclick=()=>{
-  document.querySelectorAll(".tab").forEach(x=>x.classList.toggle("active",x===b));
-  tab=b.dataset.tab; renderCards();
+/* ---------- strategy tabs ----------
+   Two built-in tabs (liquid, illiquid) plus any strategies an admin has added. `tab` holds the id of the open one.
+   Admins also get a small × on their own strategies and a "+ Add Strategy" button at the end. */
+const tabsEl=document.getElementById("tabs");
+const stratName=s=>s.builtIn?t(s.id==="liquid"?"tabLiquid":"tabIlliquid"):s.name;
+let addingStrat=false;
+function renderTabs(){
+  const list=FundStore.strategies(), admin=Auth.isAdmin();
+  if(!list.some(s=>s.id===tab)) tab="liquid";
+  if(!admin) addingStrat=false;
+  tabsEl.innerHTML=list.map(s=>`<button class="tab ${s.id===tab?"active":""}" data-tab="${s.id}" role="tab"><span>${stratName(s)}</span><span class="count">${(FUNDS[s.id]||[]).length}</span>${admin&&!s.builtIn?`<span class="tab-del" data-del="${s.id}" title="${t("stratDelete")}">×</span>`:""}</button>`).join("")
+    +(!admin?"":addingStrat
+      ?`<form class="strat-new" id="stratForm"><input id="stratName" maxlength="40" placeholder="${t("stratPh")}"><button class="btn sm solid" type="submit">${t("stratAdd")}</button><button class="strat-x" type="button" id="stratCancel" aria-label="${t("cancel")}">×</button></form>`
+      :`<button class="tab tab-add" id="stratAddBtn">${t("addStrategy")}</button>`);
+}
+function selectTab(id){tab=id;renderTabs();renderCards()}
+
+/** Creates a strategy tab from typed text. Returns the new strategy, or null if the name is empty or already used. */
+function createStrategy(raw){
+  if(!Auth.isAdmin()||needToken()) return null;
+  const name=esc(raw);
+  if(!name) return null;
+  if(FundStore.strategies().some(s=>stratName(s).toLowerCase()===name.toLowerCase())){alert(t("stratExists"));return null}
+  return FundStore.addStrategy(name);
+}
+tabsEl.addEventListener("click",e=>{
+  const del=e.target.closest("[data-del]");
+  if(del){
+    const id=del.dataset.del, s=FundStore.strategies().find(x=>x.id===id);
+    if(s&&Auth.isAdmin()&&!needToken()&&confirm(t("stratDelConfirm")(del.parentElement.firstChild.textContent,(FUNDS[id]||[]).length))){
+      FundStore.removeStrategy(id); closeD(); selectTab(tab===id?"liquid":tab);
+    }
+    return;
+  }
+  if(e.target.closest("#stratAddBtn")){addingStrat=true;renderTabs();document.getElementById("stratName").focus();return}
+  if(e.target.closest("#stratCancel")){addingStrat=false;renderTabs();return}
+  const b=e.target.closest(".tab[data-tab]");
+  if(b) selectTab(b.dataset.tab);
 });
+tabsEl.addEventListener("submit",e=>{
+  e.preventDefault();
+  const s=createStrategy(document.getElementById("stratName").value);
+  if(s){addingStrat=false;selectTab(s.id)}
+});
+tabsEl.addEventListener("keydown",e=>{if(e.key==="Escape"&&addingStrat){addingStrat=false;renderTabs()}});
 
 /* mouse drag with momentum (touch uses native scrolling) */
 let drag=null, glide=0, justDragged=false;
@@ -850,20 +1336,25 @@ let openFund=null;
 track.addEventListener("click",e=>{const b=e.target.closest(".more");if(b)openD(FUNDS[tab][b.dataset.n])});
 function openD(f){
   const keep=openFund===f?drawer.scrollTop:0; openFund=f;
+  const rows=[...(f.hist||[]),...f.perf];
+  const ddRaw=LX(f.ddRaw), notes=notesOf(f), incText=LX(f.inceptionText), aumText=LX(f.aumText);
+  const ddBlock=ddRaw||f.dd?`<h4>${LX(f.ddLabel)||t("maxdd")}</h4><p>${ddRaw?R(f,ddRaw):ddText(f)}</p>`:"";
+  const perfBlock=rows.length?`<h4>${t("perfTitle")}</h4>
+    <table class="perf"><tr><th>${t("period")}</th><th>${t("ret")}</th></tr>${rows.map(p=>`<tr><td>${perLabel(p)}</td><td class="${p[1]>=0?"pos":"neg"}">${fmt(p[1])}</td></tr>`).join("")}</table>`:"";
+  const notesBlock=notes.length?`<h4>${t("trackRecord")}</h4><p>${notes.map(x=>R(f,x)).join("<br>")}</p>`:"";
   drawer.innerHTML=`<div class="d-head"><button class="close" onclick="closeD()" aria-label="Close">✕</button>${anon()?"":`<span class="tag">${L(f.tag)}</span>`}<h3>${title(f)}</h3>${anon()?"":`<p>${L(f.mgr)} · ${veh(f)}</p>`}</div>
   <div class="d-body">
-    <h4>${t("overview")}</h4><p>${L(f.strategy)}</p>
+    <h4>${t("overview")}</h4><p>${R(f,L(f.strategy))}</p>
     <h4>${t("facts")}</h4>
     <div class="facts">
-      <div><span>${t("inception")}</span><b>${ym(f.inception)}</b></div><div><span>${t("aum")}</span><b>${money(f.aum)}</b></div>
+      <div><span>${t("inception")}</span><b>${incText?R(f,incText):f.inception?ym(f.inception):"—"}</b></div><div><span>${t("aum")}</span><b>${aumText?R(f,aumText):f.aum!=null?money(f.aum):"—"}</b></div>
       <div><span>${t("vehicle")}</span><b>${veh(f)}</b></div><div><span>${t("dealing")}</span><b>${liqTxt(f)}</b></div>
     </div>
-    <h4>${t("maxdd")}</h4><p>${ddText(f)}</p>
-    <h4>${t("liqTerms")}</h4><p>${f.liqFull?L(f.liqFull):t("dailyFull")}</p>
-    <h4>${t("perfTitle")}</h4>
-    <table class="perf"><tr><th>${t("period")}</th><th>${t("ret")}</th></tr>${[...(f.hist||[]),...f.perf].map(p=>`<tr><td>${perLabel(p)}</td><td class="${p[1]>=0?"pos":"neg"}">${fmt(p[1])}</td></tr>`).join("")}</table>
+    ${ddBlock}
+    <h4>${t("liqTerms")}</h4><p>${f.liqFull?R(f,L(f.liqFull)):t("dailyFull")}</p>
+    ${perfBlock}${notesBlock}
     <p class="note">${f.note&&!anon()?L(f.note)+" ":""}${t("past")}</p>
-    ${f.custom&&Auth.isAdmin()?`<button class="btn danger" onclick="deleteFund('${f.id}')">${t("del")}</button>`:""}
+    ${Auth.isAdmin()?`<div class="d-admin"><button class="btn ghost" onclick="openEdit('${f.id}')">${t("edit")}</button>${f.custom?`<button class="btn ghost" onclick="translateNow('${f.id}')">${t(f.translated?"retranslate":"translate")}</button>`:""}<button class="btn danger" onclick="deleteFund('${f.id}')">${t("del")}</button></div>`:""}
   </div>`;
   drawer.classList.add("on");scrim.classList.add("on");drawer.setAttribute("aria-hidden","false");drawer.scrollTop=keep;
 }
@@ -954,106 +1445,715 @@ window.onLangChange = () => {
 window.onLangChange();
 </script>
 <script>
-/* ===== js/add-fund.js ===== */
-/* ---------- "Add Fund" form (admin only) ----------
-   Builds a fund object in the same shape as the entries in js/funds-data.js and saves it through FundStore.
-   Depends on: Auth, FundStore, and t / tab / applyLang / closeD from app.js. */
-const fundModal = document.getElementById("fundModal"), fundForm = document.getElementById("fundForm");
-const fundErr = document.getElementById("fundErr");
+/* ===== js/pptx-reader.js ===== */
+/* ---------- PPTX reader ----------
+   Reads a fund screening deck (.pptx) in the browser, with no server and no library.
+   Expected layout, as in the "基金筛选汇报" decks: each slide has ONE comparison table,
+   one fund per column, and rows labelled 成立日期 / 基金规模 / 基金策略 / 表现 / 回撤·损失率 / 流动性.
+   The first row of the table holds each fund's strategy label.
 
-// typed text is inserted into the page as HTML, so neutralise any markup first
-const esc = s => String(s).trim().replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
-const txt = id => esc(document.getElementById(id).value);
-const num = id => { const v = document.getElementById(id).value.trim(); return v === "" ? null : Number(v); };
+   PptxReader.read(file) resolves to an array of plain "draft" objects (raw, unescaped text).
+   js/add-fund.js turns the drafts the admin accepts into fund cards. */
+const PptxReader = (() => {
+
+  /* ---- 1. unzip: a .pptx is a zip file; pull out the slide XML ---- */
+  async function inflate(bytes) {
+    const stream = new Blob([bytes]).stream().pipeThrough(new DecompressionStream("deflate-raw"));
+    return new Uint8Array(await new Response(stream).arrayBuffer());
+  }
+  async function slideXml(buf) {
+    const v = new DataView(buf), u8 = new Uint8Array(buf), dec = new TextDecoder("utf-8");
+    let end = -1;                                              // "end of central directory" record, searched from the back
+    for (let i = buf.byteLength - 22; i >= Math.max(0, buf.byteLength - 66000); i--) {
+      if (v.getUint32(i, true) === 0x06054b50) { end = i; break; }
+    }
+    if (end < 0) throw new Error("not a zip file");
+    const count = v.getUint16(end + 10, true);
+    let p = v.getUint32(end + 16, true);
+    const slides = [];
+    for (let n = 0; n < count; n++) {
+      if (v.getUint32(p, true) !== 0x02014b50) throw new Error("bad zip directory");
+      const method = v.getUint16(p + 10, true), size = v.getUint32(p + 20, true);
+      const nameLen = v.getUint16(p + 28, true), extraLen = v.getUint16(p + 30, true), commentLen = v.getUint16(p + 32, true);
+      const local = v.getUint32(p + 42, true);
+      const name = dec.decode(u8.subarray(p + 46, p + 46 + nameLen));
+      const m = name.match(/^ppt\/slides\/slide(\d+)\.xml$/);
+      if (m) {
+        const start = local + 30 + v.getUint16(local + 26, true) + v.getUint16(local + 28, true);
+        const data = u8.subarray(start, start + size);
+        const raw = method === 0 ? data : method === 8 ? await inflate(data) : null;
+        if (raw) slides.push({ no: +m[1], xml: dec.decode(raw) });
+      }
+      p += 46 + nameLen + extraLen + commentLen;
+    }
+    return slides.sort((a, b) => a.no - b.no);
+  }
+
+  /* ---- 2. slide XML -> table rows and text boxes ---- */
+  const kids = (el, tag) => [...el.getElementsByTagNameNS("*", tag)];
+  // one entry per visible line: paragraphs, and manual line breaks (<a:br>) inside a paragraph
+  const paraLines = el => kids(el, "p")
+    .flatMap(p => kids(p, "*")
+      .map(n => n.localName === "t" ? n.textContent : n.localName === "br" ? "\n" : "")
+      .join("").split("\n"))
+    .map(s => s.replace(/\s+/g, " ").trim())
+    .filter(Boolean);
+
+  function parseSlide(xml) {
+    const doc = new DOMParser().parseFromString(xml, "application/xml");
+    const tbl = kids(doc, "tbl")[0];
+    const rows = tbl ? kids(tbl, "tr").map(tr => kids(tr, "tc").map(paraLines)) : [];
+    const texts = kids(doc, "sp").map(sp => paraLines(sp).join(" ")).filter(Boolean);
+    return { rows, texts };
+  }
+
+  /* ---- 3. text -> numbers ---- */
+  const num = s => Number(String(s).replace("−", "-"));
+
+  /** "$1.5bn", "US$9.61bn", "NAV $3,211M" -> size in US$ bn, or null when no dollar figure is found. */
+  function parseMoney(s) {
+    const m = s.match(/(?:US)?\$\s*([\d,]+(?:\.\d+)?)\s*(bn|billion|b|mn|million|m)\b/i);
+    if (!m) return null;
+    const v = parseFloat(m[1].replace(/,/g, ""));
+    return /^b/i.test(m[2]) ? v : v / 1000;
+  }
+
+  /** Pulls yearly returns out of the performance cell. Everything it cannot read as a yearly return is kept as a note.
+      Understands   "2023: +25.04%"   "2022 (6月起): +15.62%"   "2026 YTD (至10月): +4.78%"
+      and inline    "净回报: 2023 +11.2%、2024 +10.7%、2025 +8.0%、Q1'26 +1.5%"                                   */
+  function parsePerf(lines) {
+    const byYear = new Map(), notes = [];
+    let target = null;
+    const add = (y, v, kind, month) => { if (isFinite(v)) byYear.set(y + (kind || ""), kind ? [y, v, kind, month] : [y, v]); };
+    for (const line of lines) {
+      const tm = line.match(/目标[^0-9%]{0,14}?(\d+(?:\.\d+)?\s*[-–~]\s*\d+(?:\.\d+)?\s*%|\d+(?:\.\d+)?\s*%)/);
+      if (tm && !target) target = tm[1].replace(/\s/g, "");
+
+      const one = line.match(/^((?:19|20)\d{2})\s*(?:\(\s*(\d{1,2})\s*月起\s*\)|YTD\s*\(\s*至\s*(\d{1,2})\s*月\s*\))?\s*[:：]\s*(.+)$/);
+      if (one) {
+        const v = one[4].trim().match(/^([+\-−]?\d+(?:\.\d+)?)\s*%$/);
+        if (v) { add(one[1], num(v[1]), one[2] ? "p" : one[3] ? "ytd" : "", +(one[2] || one[3]) || undefined); continue; }
+        if (/^(?:[—–\-]+|NA|N\/A)$/i.test(one[4].trim())) continue;          // "2019: —" means no data that year
+      }
+      const inline = [...line.matchAll(/((?:19|20)\d{2})\s*([+\-−]\d+(?:\.\d+)?)\s*%/g)];
+      if (inline.length >= 2) {
+        inline.forEach(x => add(x[1], num(x[2])));
+        const q = line.match(/Q([1-4])\s*[‘’'′`]\s*(\d{2})\s*([+\-−]\d+(?:\.\d+)?)\s*%/);   // "Q1'26 +1.5%" = year to date through March 2026
+        if (q) add("20" + q[2], num(q[3]), "ytd", q[1] * 3);
+        continue;
+      }
+      notes.push(line);
+    }
+    const all = [...byYear.values()].sort((a, b) => a[0] - b[0] || (a[2] === "ytd") - (b[2] === "ytd"));
+    return { all, notes, target };
+  }
+
+  /* ---- 4. one table -> one draft per column ---- */
+  const ROWS = [                                    // which table row feeds which field (matched on the first column)
+    ["inception", /成立|Inception/i],
+    ["aum",       /规模|規模|AUM|Size/i],
+    ["strategy",  /策略|Strategy/i],
+    ["perf",      /表现|表現|业绩|業績|回报|回報|Performance|Return/i],
+    ["dd",        /回撤|损失|損失|Drawdown|Loss/i],
+    ["liq",       /流动性|流動性|赎回|贖回|Liquidity|Redemption/i]
+  ];
+
+  function draftsFromSlide(slide) {
+    const { rows, texts } = parseSlide(slide.xml);
+    if (rows.length < 2 || rows[0].length < 2) return [];
+    const field = {};
+    rows.slice(1).forEach(r => {
+      const label = (r[0] || []).join(" ");
+      const hit = ROWS.find(([key, re]) => !field[key] && re.test(label));
+      if (hit) field[hit[0]] = { label, cells: r.slice(1) };
+    });
+    if (!field.strategy && !field.perf) return [];                // not a fund comparison table
+
+    const title = texts[0] || "";
+    const source = texts.find(x => /^(来源|來源|Source)/i.test(x)) || "";
+    // fund names are not in the table; the source line usually lists one "<name> deck" per column, in order
+    const names = [...source.matchAll(/(?:^(?:来源|來源|Source)\s*[:：]\s*|[；;]\s*)([A-Za-z][\w&.\- ]*?)\s+deck\b/gi)].map(m => m[1].trim());
+    const cols = rows[0].length - 1;
+    const cell = (key, c) => (field[key] && field[key].cells[c]) || [];
+
+    return Array.from({ length: cols }, (_, c) => {
+      const inc = cell("inception", c), aumLines = cell("aum", c), liq = cell("liq", c), dd = cell("dd", c);
+      const perf = parsePerf(cell("perf", c));
+      const incText = inc.join(" ");
+      const im = incText.match(/^\s*((?:19|20)\d{2})\s*[\/\-.年]\s*(\d{1,2})/);
+      const liqText = liq.join(" ");
+      const first = liqText.split(/[；;，,。]/)[0].trim();
+      // header cell: first line = fund name, remaining lines = strategy label. With a single line, it is the label
+      // and the name falls back to the source line.
+      const head = rows[0][c + 1] || [];
+      const name = head.length > 1 ? head[0] : names.length === cols ? names[c] : "";
+      const words = name.split(" ");
+      return {
+        slide: slide.no, slideTitle: title,
+        tag: (head.length > 1 ? head.slice(1) : head).join(" ") || `Fund ${c + 1}`,
+        name, mgr: /^group$/i.test(words[1] || "") ? words.slice(0, 2).join(" ") : words[0] || "",
+        vehicle: /UCITS/i.test(title) ? "UCITS" : "private",
+        liquid: /^(每日|Daily)/i.test(liqText),                   // daily dealing goes to the Liquid tab by default
+        inception: im ? `${im[1]}-${String(im[2]).padStart(2, "0")}` : null,
+        inceptionLines: inc, isNew: /新发|新發|new fund/i.test(incText),
+        aum: parseMoney(aumLines.join(" ")), aumText: aumLines.join(" "),
+        strategyLines: cell("strategy", c),
+        perf: perf.all, perfNotes: perf.notes, target: perf.target,
+        ddLabel: field.dd ? field.dd.label : "", ddLines: dd.filter(x => !/^(NA|N\/A|—|-)$/i.test(x)),
+        liqShort: first.length > 26 ? first.slice(0, 25) + "…" : first, liqLines: liq,
+        source
+      };
+    });
+  }
+
+  return {
+    /** Reads a File chosen by the user. Rejects if it is not a .pptx; resolves to [] if no fund table is found. */
+    async read(file) {
+      const slides = await slideXml(await file.arrayBuffer());
+      if (!slides.length) throw new Error("no slides");
+      return slides.flatMap(draftsFromSlide);
+    }
+  };
+})();
+</script>
+<script>
+/* ===== js/add-fund.js ===== */
+/* ---------- "Add Funds" from a PPTX deck (admin only) ----------
+   Step 1: the admin chooses a .pptx screening deck.  js/pptx-reader.js turns it into drafts, one per table column.
+   Step 2: the admin checks each draft (name, manager, tab) and adds the ones they want.
+   Depends on: Auth, FundStore, PptxReader, and t / applyLang / closeD from app.js. */
+const fundModal = document.getElementById("fundModal"), fundForm = document.getElementById("fundForm");
+const fundErr = document.getElementById("fundErr"), fundFile = document.getElementById("fundFile");
+const imStatus = document.getElementById("imStatus"), imList = document.getElementById("imList"), imSubmit = document.getElementById("imSubmit");
+let drafts = [];
+
+const imStratRow = document.getElementById("imStratRow"), imStratName = document.getElementById("imStratName");
+// esc() comes from app.js
+const escLines = a => (a || []).map(esc).filter(Boolean).join("<br>");
 
 function showFundModal(show) {
   fundModal.hidden = !show;
   document.body.classList.toggle("modal-open", show);
-  if (show) {
-    fundForm.reset(); fundErr.hidden = true;
-    document.getElementById("fTab").value = tab;             // default to the tab being viewed
-    fundModal.scrollTop = 0;
-    setTimeout(() => document.getElementById("fName").focus(), 50);
-  }
+  if (show) { resetImport(); refreshTokenBox(); fundModal.scrollTop = 0; }
 }
+function resetImport() {
+  drafts = []; fundForm.reset();
+  imList.innerHTML = ""; imStatus.textContent = ""; fundErr.hidden = true; imSubmit.hidden = true; imStratRow.hidden = true;
+}
+
+/** <option> list of every strategy tab, with one selected. */
+const stratOptions = selected => FundStore.strategies()
+  .map(s => `<option value="${s.id}"${s.id === selected ? " selected" : ""}>${stratName(s)}</option>`).join("");
+
+// "create a new strategy for these funds": makes the tab, then points every listed fund at it
+document.getElementById("imStratCreate").onclick = () => {
+  const s = createStrategy(imStratName.value);
+  if (!s) return;
+  imStratName.value = "";
+  imList.querySelectorAll(".im-tab").forEach(sel => { sel.innerHTML = stratOptions(s.id); });
+  renderTabs();
+};
+imStratName.addEventListener("keydown", e => { if (e.key === "Enter") { e.preventDefault(); document.getElementById("imStratCreate").click(); } });
 addFundBtn.onclick = () => { if (Auth.isAdmin()) showFundModal(true); };
 document.getElementById("fundCancel").onclick = () => showFundModal(false);
 document.getElementById("fundClose").onclick = () => showFundModal(false);
 fundModal.addEventListener("mousedown", e => { if (e.target === fundModal) showFundModal(false); });
 addEventListener("keydown", e => { if (e.key === "Escape" && !fundModal.hidden) showFundModal(false); });
 
-/** Reads "2023: 12.5" style lines. Returns [["2023", 12.5], ...] sorted by year, or null if a line is invalid. */
-function parseReturns(text) {
-  const rows = [];
-  for (const line of text.split(/\n/).map(l => l.trim()).filter(Boolean)) {
-    const m = line.match(/^(\d{4})\s*[:,\t ]\s*([+\-−]?\d+(?:\.\d+)?)\s*%?$/);
-    if (!m) return null;
-    rows.push([m[1], Number(m[2].replace("−", "-"))]);
+const fail = msg => { fundErr.textContent = msg; fundErr.hidden = false; };
+
+/** Reads the chosen deck and shows what was found. Also callable directly with a File (used in testing). */
+async function importDeck(file) {
+  imList.innerHTML = ""; fundErr.hidden = true; imSubmit.hidden = true; drafts = [];
+  if (!file) return;
+  imStatus.textContent = t("imReading");
+  try {
+    drafts = await PptxReader.read(file);
+  } catch (e) {
+    imStatus.textContent = "";
+    return fail(t("imBad"));
   }
-  if (new Set(rows.map(r => r[0])).size !== rows.length) return null;   // same year twice
-  return rows.sort((a, b) => a[0] - b[0]);
+  if (!drafts.length) { imStatus.textContent = ""; return fail(t("imNone")); }
+  imStatus.textContent = t("imFound")(drafts.length, file.name);
+  renderDrafts();
+  imSubmit.hidden = false; imStratRow.hidden = false;
+}
+fundFile.addEventListener("change", () => importDeck(fundFile.files[0]));
+
+/* drag and drop: a deck can be dropped anywhere on the Add Fund window */
+const dropZone = document.getElementById("dropZone");
+let dragDepth = 0;                                           // dragenter/dragleave fire for every child element, so count them
+const hasFiles = e => e.dataTransfer && [...e.dataTransfer.types].includes("Files");
+fundModal.addEventListener("dragenter", e => { if (!hasFiles(e)) return; e.preventDefault(); dragDepth++; dropZone.classList.add("drag"); });
+fundModal.addEventListener("dragover", e => { if (!hasFiles(e)) return; e.preventDefault(); e.dataTransfer.dropEffect = "copy"; });
+fundModal.addEventListener("dragleave", e => { if (!hasFiles(e)) return; if (--dragDepth <= 0) { dragDepth = 0; dropZone.classList.remove("drag"); } });
+fundModal.addEventListener("drop", e => {
+  if (!hasFiles(e)) return;
+  e.preventDefault();                                        // otherwise the browser would open or download the file
+  dragDepth = 0; dropZone.classList.remove("drag");
+  const file = e.dataTransfer.files[0];
+  fundFile.value = "";                                       // the picker no longer matches what is loaded
+  if (file && !/\.pptx$/i.test(file.name)) { imList.innerHTML = ""; imStatus.textContent = ""; imSubmit.hidden = true; drafts = []; return fail(t("imBad")); }
+  importDeck(file);
+});
+
+/** Suggests the words to hide from investors: the fund and manager names, plus other name-like words
+    (sister funds, vintages) found in the deck's track record, loss and inception text. The admin can edit the list. */
+function suggestHidden(d) {
+  const generic = /^(fund|funds|evergreen|abl|abf|deck|capital|credit|partners|global|income|opportunities|master|the|and|private|privates|strategy|liquid|core|value|multi|asset|assets|based|backed|finance|management|investment|investments|group|new|irr|dpi|moic|nav|ytd|covid|composite|legacy|drawdown|class|one|track|record|final|close|run|off|royalty|healthcare|absolute|return|high|yield|grade|dynamic|opportunistic|[ivx]+|q[1-4])$/i;
+  const text = [d.name, d.mgr, ...d.inceptionLines, ...d.perfNotes, ...d.ddLines].join(" ");
+  const words = text.match(/\b[A-Z][A-Za-z0-9&]{2,}\b/g) || [];
+  return [...new Set(words.filter(w => !generic.test(w)))];
+}
+
+function renderDrafts() {
+  imList.innerHTML = drafts.map((d, i) => {
+    const size = d.aum != null ? money(d.aum) : esc(d.aumText) || "—";
+    const inc = d.inception ? ym(d.inception) : d.isNew ? t("newFund") : esc(d.inceptionLines[0]) || "—";
+    const returns = d.perf.length
+      ? `${t("imReturns")(d.perf.length)}: ${d.perf.map(p => perLabel(p) + " " + fmt(p[1])).join(", ")}`
+      : t("imNoReturns");
+    return `<div class="im-item" data-n="${i}">
+      <input class="im-on" type="checkbox" checked aria-label="${t("imInclude")}">
+      <div class="im-main">
+        <div class="im-tag">${esc(d.tag)}<small>${t("imSlide")} ${d.slide}${d.slideTitle ? " · " + esc(d.slideTitle) : ""}</small></div>
+        <div class="im-fields">
+          <label><span>${t("imName")}</span><input class="im-name" maxlength="80" value="${esc(d.name)}"></label>
+          <label><span>${t("afMgr")}</span><input class="im-mgr" maxlength="60" value="${esc(d.mgr)}"></label>
+          <label><span>${t("afCategory")}</span><select class="im-tab">${stratOptions(d.liquid ? "liquid" : "illiquid")}</select></label>
+          <label class="wide"><span>${t("imHide")}</span><input class="im-hide" maxlength="300" value="${esc(suggestHidden(d).join(", "))}"></label>
+        </div>
+        <ul class="im-sum">
+          <li><b>${t("aum")}:</b> ${size} &nbsp;·&nbsp; <b>${t("inception")}:</b> ${inc}</li>
+          <li><b>${t("ret")}:</b> ${returns}</li>
+          <li><b>${t("dealing")}:</b> ${esc(d.liqShort) || "—"}</li>
+        </ul>
+      </div></div>`;
+  }).join("");
+}
+
+/** Turns an accepted draft into a fund object, in the shape used by js/funds-data.js plus a few free-text fields. */
+function fundFromDraft(d, i, name, mgr, hide) {
+  const one = s => ({ en: s });                               // deck text is shown as written, in every language
+  const fund = {
+    id: `custom-${Date.now()}-${i}`, custom: true,
+    name: esc(name), mgr: one(esc(mgr) || "—"), tag: one(esc(d.tag)),
+    vehicle: d.vehicle,
+    inception: d.inception, inceptionText: escLines(d.inceptionLines), isNew: d.isNew,
+    aum: d.aum, aumText: esc(d.aumText),
+    strategy: one(escLines(d.strategyLines)),
+    hist: d.perf.slice(0, -9),                                // the card shows the latest 9 periods; older years appear in View Fund only
+    perf: d.perf.slice(-9),
+    perfNotes: d.perfNotes.map(esc), target: d.target ? esc(d.target) : null,
+    ddLabel: esc(d.ddLabel), ddRaw: escLines(d.ddLines),
+    liq: one(esc(d.liqShort) || "—"), liqFull: one(escLines(d.liqLines))
+  };
+  if (d.source) fund.note = one(esc(d.source));
+  // words masked in the investor view (see R() in app.js); longest first so "HCRx" is matched before "HCR"
+  fund.redact = [...new Set(String(hide).split(/[,，、;；]/).map(w => esc(w)).filter(w => w.length > 1))]
+    .sort((x, y) => y.length - x.length)
+    .map(w => w.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"));
+  return fund;
 }
 
 fundForm.addEventListener("submit", e => {
   e.preventDefault();
-  const fail = key => { fundErr.textContent = t(key); fundErr.hidden = false; fundErr.scrollIntoView({ block: "nearest" }); };
-  if (!Auth.isAdmin()) return fail("errAdmin");
-  if ([...fundForm.querySelectorAll("[required]")].some(el => !el.value.trim())) return fail("errRequired");
+  if (!Auth.isAdmin()) return fail(t("errAdmin"));
+  if (!Repo.hasToken()) return fail(t("ghNeedTokenHere"));   // nothing can be saved for everyone without it
+  const picked = [...imList.querySelectorAll(".im-item")].filter(el => el.querySelector(".im-on").checked);
+  if (!picked.length || picked.some(el => !el.querySelector(".im-name").value.trim())) return fail(t("imNoneSel"));
 
-  const years = parseReturns(document.getElementById("fReturns").value);
-  if (!years || !years.length) return fail("errReturns");
-  const aum = num("fAum");
-  if (!(aum > 0)) return fail("errAum");
-
-  // optional year-to-date row: needs both the return and the month it runs to
-  const ytd = num("fYtd"), ytdTo = document.getElementById("fYtdTo").value;        // "YYYY-MM"
-  if ((ytd !== null) !== (ytdTo !== "")) return fail("errYtd");
-  const all = years.map(r => [...r]);
-  if (ytd !== null) {
-    if (years.some(r => r[0] >= ytdTo.slice(0, 4))) return fail("errYtd");
-    all.push([ytdTo.slice(0, 4), ytd, "ytd", Number(ytdTo.slice(5))]);
-  }
-
-  // optional worst month; the worst year is worked out from the yearly returns
-  const wm = num("fWm"), wmAt = document.getElementById("fWmAt").value;
-  if ((wm !== null) !== (wmAt !== "")) return fail("errWm");
-  const worst = years.reduce((a, r) => (r[1] < a[1] ? r : a), years[0]);
-  const dd = { wy: worst[1] < 0 ? [worst[1], worst[0]] : null };
-  if (wm !== null) dd.wm = [wm, wmAt];
-
-  const one = id => ({ en: txt(id) });                       // typed once, shown as typed in every language
-  const fund = {
-    id: "custom-" + Date.now(), custom: true,
-    name: txt("fName"), mgr: one("fMgr"), tag: one("fTag"),
-    vehicle: txt("fVehicle") || "—",
-    inception: document.getElementById("fInception").value,  // "YYYY-MM"
-    aum,
-    strategy: one("fStrategy"),
-    hist: all.slice(0, -9),                                  // the card shows the latest 9 periods; older years appear in View Fund only
-    perf: all.slice(-9),
-    dd,
-    liq: one("fLiq")
-  };
-  if (txt("fLiqFull")) fund.liqFull = one("fLiqFull");
-  if (txt("fNote")) fund.note = one("fNote");
-
-  const target = document.getElementById("fTab").value;
-  const saved = FundStore.add(target, fund);
+  let saved = true, lastTab = "illiquid";
+  const added = [];
+  picked.forEach(el => {
+    const i = +el.dataset.n;
+    lastTab = el.querySelector(".im-tab").value;
+    const fund = fundFromDraft(drafts[i], i, el.querySelector(".im-name").value, el.querySelector(".im-mgr").value, el.querySelector(".im-hide").value);
+    saved = FundStore.add(lastTab, fund) && saved;
+    added.push(fund.id);
+  });
   showFundModal(false);
-  document.querySelector(`.tab[data-tab="${target}"]`).click();                     // show the tab the fund went to
+  selectTab(lastTab);                                                               // show the strategy the funds went to
   applyLang();
   const sc = document.getElementById("scroller");
   sc.scrollTo({ left: sc.scrollWidth, behavior: "smooth" });                        // new funds are added at the end
   if (!saved) alert(t("errStorage"));
+  // Saving and translating happen in js/repo.js: FundStore reports the change, the file is committed to GitHub,
+  // and the "Translate funds" workflow fills in the other two languages.
 });
 
-/** Called from the Delete button inside a custom fund's detail panel. */
+/** Called from the Delete button inside an added fund's detail panel. */
 function deleteFund(id) {
-  if (!Auth.isAdmin() || !confirm(t("confirmDelete"))) return;
+  if (needToken()) return;
+  if (!Auth.isAdmin() || !confirm(t(String(id).startsWith("b-") ? "confirmDeleteBuiltIn" : "confirmDelete"))) return;
   FundStore.remove(id);
   closeD();
   applyLang();
 }
+</script>
+<script>
+/* ===== js/edit-fund.js ===== */
+/* ---------- Edit and delete a fund (admin only) ----------
+   Every card has Edit and Delete buttons for admins; View Fund has the same two buttons at the bottom.
+   Depends on: Auth, FundStore, escLines (add-fund.js), and esc / t / L / lang / veh / ddText / selectTab / applyLang / closeD from app.js. */
+const editModal = document.getElementById("editModal"), editForm = document.getElementById("editForm"), editErr = document.getElementById("editErr");
+const ef = id => document.getElementById(id);
+let editing = null;                                          // { fund, strat, ddShown } while the form is open
+
+/* stored text is HTML (escaped, with <br> between lines); turn it back into what a person would type */
+const plain = html => { const box = document.createElement("textarea"); box.innerHTML = String(html || "").replace(/<br\s*\/?>/gi, "\n"); return box.value; };
+const lines = text => String(text).split(/\n/).map(s => s.trim()).filter(Boolean);
+
+/* yearly returns as editable lines:   2023: 25.04   |   2022 from 6: 15.62   |   2026 YTD 10: 4.78 */
+const returnLine = p => `${p[0]}${p[2] === "p" ? ` from ${p[3]}` : p[2] === "ytd" ? ` YTD ${p[3]}` : ""}: ${p[1]}`;
+function parseReturnLines(text) {
+  const rows = [];
+  for (const line of lines(text)) {
+    const m = line.match(/^(\d{4})\s*(?:(from|ytd)\s*(\d{1,2}))?\s*[:：,]\s*([+\-−]?\d+(?:\.\d+)?)\s*%?$/i);
+    if (!m || (m[2] && !(+m[3] >= 1 && +m[3] <= 12))) return null;
+    const v = Number(m[4].replace("−", "-"));
+    rows.push(m[2] ? [m[1], v, m[2].toLowerCase() === "from" ? "p" : "ytd", +m[3]] : [m[1], v]);
+  }
+  const keys = rows.map(r => r[0] + (r[2] === "ytd" ? "y" : ""));
+  if (new Set(keys).size !== keys.length) return null;       // the same period twice
+  return rows.sort((a, b) => a[0] - b[0] || (a[2] === "ytd") - (b[2] === "ytd"));
+}
+
+function showEditModal(show) {
+  editModal.hidden = !show;
+  document.body.classList.toggle("modal-open", show);
+  if (!show) editing = null;
+}
+
+function openEdit(id) {
+  const hit = FundStore.find(id);
+  if (!hit || !Auth.isAdmin() || needToken()) return;
+  closeD();
+  const f = hit.fund;
+  const ddShown = LX(f.ddRaw) ? plain(LX(f.ddRaw)) : f.dd ? plain(ddText(f)) : "";
+  const liqShown = plain(liqTxt(f));                          // funds with daily dealing have no stored text; "Daily" is the default
+  editing = { fund: f, strat: hit.strat, ddShown, liqShown };
+  editErr.hidden = true;
+  ef("efStrat").innerHTML = FundStore.strategies().map(s => `<option value="${s.id}"${s.id === hit.strat ? " selected" : ""}>${stratName(s)}</option>`).join("");
+  ef("efName").value = plain(f.name);
+  ef("efMgr").value = plain(L(f.mgr));
+  ef("efTag").value = plain(L(f.tag));
+  ef("efVehicle").value = plain(veh(f));
+  ef("efInception").value = f.inception || "";
+  ef("efInceptionText").value = plain(LX(f.inceptionText));
+  ef("efAum").value = f.aum != null ? f.aum : "";
+  ef("efAumText").value = plain(LX(f.aumText));
+  ef("efTarget").value = plain(LX(f.target));
+  ef("efStrategy").value = plain(L(f.strategy));
+  ef("efLiq").value = liqShown;
+  ef("efLiqFull").value = f.liqFull ? plain(L(f.liqFull)) : "";
+  ef("efReturns").value = [...(f.hist || []), ...f.perf].map(returnLine).join("\n");
+  ef("efNotes").value = notesOf(f).map(plain).join("\n");
+  ef("efDd").value = ddShown;
+  ef("efNote").value = f.note ? plain(L(f.note)) : "";
+  ef("efHide").value = (f.redact || []).map(w => plain(w.replace(/\\(.)/g, "$1"))).join(", ");
+  showEditModal(true);
+  editModal.scrollTop = 0;
+}
+
+ef("editCancel").onclick = () => showEditModal(false);
+ef("editClose").onclick = () => showEditModal(false);
+editModal.addEventListener("mousedown", e => { if (e.target === editModal) showEditModal(false); });
+addEventListener("keydown", e => { if (e.key === "Escape" && !editModal.hidden) showEditModal(false); });
+
+editForm.addEventListener("submit", e => {
+  e.preventDefault();
+  if (!editing || !Auth.isAdmin()) return;
+  const fail = key => { editErr.textContent = t(key); editErr.hidden = false; };
+  const val = id => ef(id).value.trim();
+  if (!val("efName") || !val("efTag")) return fail("efErrRequired");
+  const all = parseReturnLines(ef("efReturns").value);
+  if (!all) return fail("efErrReturns");
+  const aum = val("efAum") === "" ? null : Number(val("efAum"));
+  if (aum !== null && !(aum > 0)) return fail("errAum");
+
+  const f = JSON.parse(JSON.stringify(editing.fund));        // work on a copy; nothing changes unless saving succeeds
+  // Built-in funds hold separate English / 简体 / 繁體 text: an edit changes the language being viewed.
+  // Added funds hold one text, shown in every language.
+  const setText = (key, html) => {
+    const o = f[key] && typeof f[key] === "object" ? f[key] : {};
+    if (Object.keys(o).length > 1) o[lang] = html; else o.en = html;
+    f[key] = o;
+  };
+  // true for a field that holds one text per language (built-in funds, and added funds after translation)
+  const perLang = key => f[key] && typeof f[key] === "object" && !Array.isArray(f[key]) && Object.keys(f[key]).length > 1;
+  const optional = (key, html, asText) => {
+    if (perLang(key)) f[key][lang] = html;                   // only the language being viewed changes
+    else if (!html) delete f[key];
+    else if (asText) setText(key, html);
+    else f[key] = html;
+  };
+
+  f.name = esc(val("efName"));
+  setText("mgr", esc(val("efMgr")) || "—");
+  setText("tag", esc(val("efTag")));
+  const vehicle = val("efVehicle");
+  f.vehicle = ["en", "sc", "tc"].some(k => UI[k].private.toLowerCase() === vehicle.toLowerCase()) ? "private" : esc(vehicle) || "—";
+  f.inception = val("efInception") || null;
+  optional("inceptionText", escLines(lines(ef("efInceptionText").value)));
+  f.isNew = !f.inception && /新发|新發|new/i.test(val("efInceptionText"));
+  f.aum = aum;
+  optional("aumText", esc(val("efAumText")));
+  if (perLang("target")) f.target[lang] = esc(val("efTarget")); else f.target = esc(val("efTarget")) || null;
+  setText("strategy", escLines(lines(ef("efStrategy").value)));
+  if (f.liq || val("efLiq") !== editing.liqShown) setText("liq", esc(val("efLiq")) || "—");   // keep the translated default unless it was changed
+  optional("liqFull", escLines(lines(ef("efLiqFull").value)), true);
+  f.hist = all.slice(0, -9);                                 // the card shows the latest 9 periods; older years appear in View Fund only
+  f.perf = all.slice(-9);
+  const noteLines = lines(ef("efNotes").value).map(esc);
+  if (perLang("perfNotes")) f.perfNotes[lang] = noteLines; else f.perfNotes = noteLines;
+  const dd = ef("efDd").value.trim();
+  if (dd !== editing.ddShown.trim()) {                       // only touched when the admin changed it
+    if (perLang("ddRaw")) f.ddRaw[lang] = escLines(lines(dd));
+    else if (dd) f.ddRaw = escLines(lines(dd));
+    else { delete f.ddRaw; delete f.dd; }
+  }
+  optional("note", escLines(lines(ef("efNote").value)), true);
+  f.redact = [...new Set(val("efHide").split(/[,，、;；]/).map(w => esc(w)).filter(w => w.length > 1))]
+    .sort((x, y) => y.length - x.length)
+    .map(w => w.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"));
+
+  const strat = ef("efStrat").value, id = f.id;
+  const saved = FundStore.update(id, f, strat);
+  showEditModal(false);
+  selectTab(strat);
+  applyLang();
+  if (!saved) alert(t("errStorage"));
+});
+
+/* Edit / Delete buttons on the cards */
+document.getElementById("track").addEventListener("click", e => {
+  const edit = e.target.closest("[data-edit]"), del = e.target.closest("[data-delfund]");
+  if (edit) openEdit(edit.dataset.edit);
+  if (del) deleteFund(del.dataset.delfund);
+});
+
+/* "Restore original funds": undo every edit and deletion of the built-in funds */
+document.getElementById("restoreBtn").onclick = () => {
+  if (!Auth.isAdmin() || needToken() || !confirm(t("restoreConfirm"))) return;
+  FundStore.restoreBuiltIns();
+  applyLang();
+};
+</script>
+<script>
+/* ===== js/repo.js ===== */
+/* ---------- Shared data on GitHub ----------
+   Admin changes are saved for everyone by committing data/funds.json to the repository through the GitHub API.
+   That commit also starts the "Translate funds" workflow (.github/workflows/translate-funds.yml), which fills in
+   English / 简体 / 繁體 for new funds using the ANTHROPIC_API_KEY repository secret. The Claude key never reaches
+   the browser.
+
+   What the browser does hold is a GitHub token the admin pastes in the Add Fund window. Create it as a
+   fine-grained personal access token limited to this one repository with "Contents: Read and write".
+   It is kept in this browser's localStorage and sent only to api.github.com.
+
+   Depends on: CONFIG.REPO (config.js), FundStore, Auth, and t / applyLang from app.js. */
+const Repo = (() => {
+  const TOKEN_KEY = "jc-github-token";
+  const R = CONFIG.REPO;
+  const API = `https://api.github.com/repos/${R.owner}/${R.name}/contents/${R.path}`;
+  const RAW = `https://raw.githubusercontent.com/${R.owner}/${R.name}/${R.branch}/${R.path}`;
+
+  const getToken = () => { try { return localStorage.getItem(TOKEN_KEY) || ""; } catch (e) { return ""; } };
+  const setToken = k => { try { k ? localStorage.setItem(TOKEN_KEY, k) : localStorage.removeItem(TOKEN_KEY); return true; } catch (e) { return false; } };
+
+  // base64 that is safe for Chinese text
+  const encode = str => { let bin = ""; new TextEncoder().encode(str).forEach(b => { bin += String.fromCharCode(b); }); return btoa(bin); };
+  const decode = b64 => new TextDecoder().decode(Uint8Array.from(atob(b64.replace(/\s/g, "")), c => c.charCodeAt(0)));
+
+  /** Thrown with a `code` the UI turns into a message: auth, network, conflict, api. */
+  class RepoError extends Error { constructor(code, detail) { super(detail || code); this.code = code; } }
+
+  async function call(method, body) {
+    let res;
+    try {
+      res = await fetch(method === "GET" ? `${API}?ref=${R.branch}` : API, {
+        method, cache: "no-store",
+        headers: { Accept: "application/vnd.github+json", Authorization: `Bearer ${getToken()}`, "X-GitHub-Api-Version": "2022-11-28" },
+        body: body ? JSON.stringify(body) : undefined
+      });
+    } catch (e) { throw new RepoError("network", String(e && e.message || e)); }
+    if (res.status === 401 || res.status === 403) throw new RepoError("auth", `GitHub answered ${res.status}`);
+    if (res.status === 409 || res.status === 422) throw new RepoError("conflict", `GitHub answered ${res.status}`);
+    if (res.status === 404 && method === "GET") return null;
+    if (!res.ok) throw new RepoError(res.status === 404 ? "auth" : "api", `GitHub answered ${res.status}`);
+    return res.json();
+  }
+
+  /** Latest shared state straight from the repository (needs the token). Returns { state, sha }. */
+  async function readRemote() {
+    const file = await call("GET");
+    if (!file) return { state: null, sha: null };
+    try { return { state: JSON.parse(decode(file.content)), sha: file.sha }; }
+    catch (e) { throw new RepoError("api", "data/funds.json is not valid JSON"); }
+  }
+  /** Shared state as every visitor gets it: the published file, no token needed. */
+  async function readPublic() {
+    for (const url of [`${R.path}?ts=${Date.now()}`, `${RAW}?ts=${Date.now()}`]) {
+      try { const res = await fetch(url, { cache: "no-store" }); if (res.ok) return await res.json(); } catch (e) {}
+    }
+    return null;
+  }
+
+  /* ---- merging, so two sources of change do not overwrite each other ----
+     `synced` remembers each added fund as it was when this page last loaded or saved. When saving:
+       - a fund this admin has not touched since then takes the repository's version (that is how translations arrive);
+       - funds and strategies that appeared in the repository meanwhile (another admin) are kept;
+       - everything else follows this admin's page. */
+  let synced = new Map(), syncedStrats = new Set();
+  const eachFund = (state, fn) => Object.entries(state.funds || {}).forEach(([strat, list]) => (list || []).forEach(f => fn(f, strat)));
+  function remember(state) {
+    synced = new Map(); syncedStrats = new Set((state.strategies || []).map(s => s.id));
+    eachFund(state, f => synced.set(f.id, JSON.stringify(f)));
+  }
+  function merge(local, remote) {
+    const out = JSON.parse(JSON.stringify(local));
+    const remoteById = new Map(); eachFund(remote, (f, strat) => remoteById.set(f.id, { f, strat }));
+    const localIds = new Set(); eachFund(out, f => localIds.add(f.id));
+    Object.keys(out.funds).forEach(strat => {
+      out.funds[strat] = out.funds[strat].map(f => (remoteById.has(f.id) && synced.get(f.id) === JSON.stringify(f) ? remoteById.get(f.id).f : f));
+    });
+    (remote.strategies || []).forEach(s => { if (!out.strategies.some(x => x.id === s.id) && !syncedStrats.has(s.id)) out.strategies.push(s); });
+    remoteById.forEach(({ f, strat }, id) => {
+      if (localIds.has(id) || synced.has(id)) return;
+      if (strat === "liquid" || strat === "illiquid" || out.strategies.some(s => s.id === strat)) (out.funds[strat] = out.funds[strat] || []).push(f);
+    });
+    return out;
+  }
+  const untranslated = state => { let n = 0; eachFund(state, f => { if (!f.translated) n++; }); return n; };
+
+  /** Commits the page's state to data/funds.json. Returns the state that was saved. */
+  async function saveNow() {
+    for (let attempt = 0; ; attempt++) {
+      const remote = await readRemote();
+      const merged = remote.state ? merge(FundStore.getState(), remote.state) : FundStore.getState();
+      try {
+        await call("PUT", {
+          message: "Update funds from the site",
+          content: encode(JSON.stringify(merged, null, 2) + "\n"),
+          branch: R.branch,
+          ...(remote.sha ? { sha: remote.sha } : {})
+        });
+        remember(merged);
+        FundStore.setState(merged);
+        return merged;
+      } catch (e) {
+        if (!(e instanceof RepoError) || e.code !== "conflict" || attempt >= 2) throw e;   // someone else saved in between: read again and retry
+      }
+    }
+  }
+
+  return { hasToken: () => !!getToken(), setToken, readRemote, readPublic, saveNow, merge, remember, untranslated, RepoError };
+})();
+
+/* ---------- small status banner ---------- */
+const toastEl = document.getElementById("toast");
+let toastTimer = 0;
+function toast(message, kind, sticky) {
+  clearTimeout(toastTimer);
+  toastEl.textContent = message;
+  toastEl.className = "toast" + (kind ? " " + kind : "");
+  toastEl.hidden = false;
+  if (!sticky) toastTimer = setTimeout(() => { toastEl.hidden = true; }, 7000);
+}
+toastEl.addEventListener("click", () => { toastEl.hidden = true; });
+
+/** Admin actions call this first. Without a GitHub token nothing can be saved for everyone, so the action is stopped. */
+function needToken() {
+  if (Repo.hasToken()) return false;
+  toast(t("ghNeedToken"), "warn", true);
+  return true;
+}
+
+/* ---------- saving: changes made close together go out as one commit, one save at a time ---------- */
+let saveTimer = 0, saveChain = Promise.resolve(), pollTimer = 0;
+function queueSave() {
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(() => { saveChain = saveChain.then(runSave); }, 400);
+}
+async function runSave() {
+  clearTimeout(pollTimer);
+  toast(t("ghSaving"), "", true);
+  try {
+    const saved = await Repo.saveNow();
+    applyLang();
+    const waiting = Repo.untranslated(saved);
+    if (waiting) { toast(t("ghSavedTranslating")(waiting), "", true); watchTranslation(0); }
+    else toast(t("ghSaved"), "ok");
+  } catch (e) {
+    toast(t("ghNotSaved") + " " + t("ghErr_" + ((e && e.code) || "api")), "err", true);
+  }
+}
+FundStore.onChange(queueSave);
+
+/** After a save with untranslated funds: look at the repository every 10 seconds until the workflow has filled them in. */
+function watchTranslation(tries) {
+  clearTimeout(pollTimer);
+  pollTimer = setTimeout(async () => {
+    try {
+      const remote = await Repo.readRemote();
+      if (remote.state) {
+        const merged = Repo.merge(FundStore.getState(), remote.state);
+        if (!Repo.untranslated(merged)) {
+          Repo.remember(merged); FundStore.setState(merged); applyLang();
+          return toast(t("ghTranslated"), "ok");
+        }
+      }
+    } catch (e) {}
+    if (tries >= 30) return toast(t("ghTranslateSlow"), "warn", true);      // about five minutes
+    watchTranslation(tries + 1);
+  }, 10000);
+}
+
+/** "Translate" / "Translate Again" in View Fund: marks the fund so the workflow translates it from the language on screen. */
+function translateNow(id) {
+  if (!Auth.isAdmin() || needToken()) return;
+  const hit = FundStore.find(id);
+  if (!hit) return;
+  closeD();
+  const copy = JSON.parse(JSON.stringify(hit.fund));
+  copy.translated = false;
+  copy.translateFrom = lang;
+  FundStore.update(id, copy, hit.strat);
+  applyLang();
+}
+
+/* ---------- GitHub token box in the Add Fund window ---------- */
+const ghInput = document.getElementById("ghInput"), ghStatus = document.getElementById("ghStatus");
+function refreshTokenBox() {
+  ghStatus.textContent = t(Repo.hasToken() ? "ghTokenSaved" : "ghTokenNone");
+  ghStatus.classList.toggle("ok", Repo.hasToken());
+  document.getElementById("ghRemove").hidden = !Repo.hasToken();
+  document.getElementById("ghBox").open = !Repo.hasToken();          // show the instructions until a token is saved
+  ghInput.value = "";
+}
+document.getElementById("ghSave").onclick = async () => {
+  const k = ghInput.value.trim();
+  if (!k) return;
+  if (!Repo.setToken(k)) return toast(t("errStorage"), "err");
+  refreshTokenBox();
+  try { await Repo.readRemote(); toast(t("ghTokenOk"), "ok"); }       // check it straight away
+  catch (e) { toast(t("ghErr_" + ((e && e.code) || "api")), "err", true); }
+};
+document.getElementById("ghRemove").onclick = () => { Repo.setToken(""); refreshTokenBox(); };
+ghInput.addEventListener("keydown", e => { if (e.key === "Enter") { e.preventDefault(); document.getElementById("ghSave").click(); } });
+
+/* ---------- first load: show the shared funds ---------- */
+(async () => {
+  let state = null;
+  if (Repo.hasToken()) { try { state = (await Repo.readRemote()).state; } catch (e) {} }   // an admin gets the very latest
+  if (!state) state = await Repo.readPublic();
+  if (!state) return;
+  FundStore.setState(state);
+  Repo.remember(FundStore.getState());
+  applyLang();
+  if (Auth.isAdmin() && Repo.hasToken() && Repo.untranslated(FundStore.getState())) watchTranslation(0);
+})();
 </script>
 </body>
 </html>
