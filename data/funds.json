@@ -1366,6 +1366,264 @@
           "HCR"
         ],
         "translated": true
+      },
+      {
+        "id": "custom-1795680000000-0",
+        "custom": true,
+        "name": "Partners Group Diversified Royalties Opportunities",
+        "mgr": {
+          "en": "Partners Group"
+        },
+        "tag": {
+          "en": "Cross-Sector Royalties (Royalty) · Evergreen",
+          "sc": "跨行业特许权收益 (Royalty) · Evergreen",
+          "tc": "跨行業特許權收益 (Royalty) · Evergreen"
+        },
+        "vehicle": "private",
+        "inception": "2020-12",
+        "inceptionText": {
+          "en": "2020/12 (seed portfolio and legacy share class, 5.5 years);<br>current fund formed 2025/1, open to outside investors since 2025/6",
+          "sc": "2020/12 (种子组合及 legacy 份额类别，5.5年)；<br>现基金 2025/1 成立，2025/6 起接受外部认购",
+          "tc": "2020/12 (種子組合及 legacy 份額類別，5.5年)；<br>現基金 2025/1 成立，2025/6 起接受外部認購"
+        },
+        "isNew": false,
+        "aum": 0.345,
+        "aumText": {
+          "en": "$345M fund (2026/6); royalties strategy $1.5bn",
+          "sc": "基金 $345M (2026/6)；Royalties 策略 $1.5bn",
+          "tc": "基金 $345M (2026/6)；Royalties 策略 $1.5bn"
+        },
+        "strategy": {
+          "en": "Cross-sector royalties: media 46%, music 17%, natural gas 16%, life sciences 15%, carbon reduction 4%; lends against, buys and creates royalties (directs 66%, primaries 25%, secondaries 9%);<br>53 investments, underwritten on a hold-for-life basis, 100% private-market royalties;",
+          "sc": "跨行业 royalty：媒体 46%、音乐 17%、天然气 16%、生命科学 15%、碳减排 4%；以 royalty 抵押贷款、收购 royalty 及创设 royalty (直投 66%、primary 25%、secondary 9%)；<br>53 笔投资，按 hold-for-life 口径承做，100% 私募市场 royalty；",
+          "tc": "跨行業 royalty：媒體 46%、音樂 17%、天然氣 16%、生命科學 15%、碳減排 4%；以 royalty 抵押貸款、收購 royalty 及創設 royalty (直投 66%、primary 25%、secondary 9%)；<br>53 筆投資，按 hold-for-life 口徑承做，100% 私募市場 royalty；"
+        },
+        "hist": [],
+        "perf": [
+          [
+            "2020",
+            2.2,
+            "p",
+            12
+          ],
+          [
+            "2021",
+            7.3
+          ],
+          [
+            "2022",
+            7.9
+          ],
+          [
+            "2023",
+            8.3
+          ],
+          [
+            "2024",
+            8.9
+          ],
+          [
+            "2025",
+            11.7
+          ],
+          [
+            "2026",
+            3.2,
+            "ytd",
+            6
+          ]
+        ],
+        "perfNotes": {
+          "en": [
+            "Net of fees, X2 share class (legacy share class since 2020/12): 8.9% annualised since inception, volatility 2.1%",
+            "Strategy model net return 12.1% p.a. unlevered, Q4 2020 to 2026/3 (PG3 seed portfolio, model fees)",
+            "H1 2026: royalty asset-level return about 7%; net 3.2% because new investments are held at cost (2026 vintage is 36% of the portfolio)",
+            "Largest positions: South Park 17.0%, Media Music Fund 10.8%, Media Fund 8.6%, Ultra Natural Gas Royalties 7.4%, The Weeknd 7.3%"
+          ],
+          "sc": [
+            "费后净回报，X2 份额类别 (legacy 份额类别自 2020/12)：成立以来年化 8.9%，波动率 2.1%",
+            "策略层面 model 净回报 12.1% p.a. (无杠杆)，2020 Q4 至 2026/3 (PG3 种子组合，model fees 口径)",
+            "2026 上半年：royalty 资产层面回报约 7%；净回报 3.2%，因新投资按成本计价 (2026 vintage 占组合 36%)",
+            "前五大持仓：South Park 17.0%、Media Music Fund 10.8%、Media Fund 8.6%、Ultra Natural Gas Royalties 7.4%、The Weeknd 7.3%"
+          ],
+          "tc": [
+            "費後淨回報，X2 份額類別 (legacy 份額類別自 2020/12)：成立以來年化 8.9%，波動率 2.1%",
+            "策略層面 model 淨回報 12.1% p.a. (無槓桿)，2020 Q4 至 2026/3 (PG3 種子組合，model fees 口徑)",
+            "2026 上半年：royalty 資產層面回報約 7%；淨回報 3.2%，因新投資按成本計價 (2026 vintage 佔組合 36%)",
+            "前五大持倉：South Park 17.0%、Media Music Fund 10.8%、Media Fund 8.6%、Ultra Natural Gas Royalties 7.4%、The Weeknd 7.3%"
+          ]
+        },
+        "target": {
+          "en": "10–12% net p.a.; 5–8% distribution",
+          "sc": "净回报 10–12% p.a.；分派 5–8%",
+          "tc": "淨回報 10–12% p.a.；分派 5–8%"
+        },
+        "ddLabel": {
+          "en": "Drawdown / Volatility",
+          "sc": "回撤 / 波动率",
+          "tc": "回撤 / 波動率"
+        },
+        "ddRaw": {
+          "en": "No negative year since inception; worst quarter −0.4% (Q3 2021), the only other negative quarter −0.1% (Q2 2022);<br>Annualised volatility 2.1% (MSCI World 14.5%, leveraged loans 3.4%)",
+          "sc": "成立以来无负年度；最差季度 −0.4% (2021 Q3)，另一负季度 −0.1% (2022 Q2)；<br>年化波动率 2.1% (MSCI World 14.5%，杠杆贷款 3.4%)",
+          "tc": "成立以來無負年度；最差季度 −0.4% (2021 Q3)，另一負季度 −0.1% (2022 Q2)；<br>年化波動率 2.1% (MSCI World 14.5%，槓桿貸款 3.4%)"
+        },
+        "liq": {
+          "en": "Quarterly, 120 business days' notice",
+          "sc": "季度，提前120个工作日",
+          "tc": "季度，提前120個工作日"
+        },
+        "liqFull": {
+          "en": "Monthly subscriptions (65 business days' notice; commitments may be drawn over several dealing days);<br>Quarterly redemptions with 120 business days' notice (may be extended to 180), paid on a best-efforts basis and possibly over several dealing days; no gate;<br>Early redemption payment of 10% / 7.5% / 5% of NAV in years 1 / 2 / 3",
+          "sc": "每月认购 (提前65个工作日；承诺出资可分多个交易日提取)；<br>季度赎回，提前120个工作日通知 (可延长至180个)，尽力支付，可能分多个交易日完成；无闸门；<br>提前赎回费：第 1 / 2 / 3 年分别为 NAV 的 10% / 7.5% / 5%",
+          "tc": "每月認購 (提前65個工作日；承諾出資可分多個交易日提取)；<br>季度贖回，提前120個工作日通知 (可延長至180個)，盡力支付，可能分多個交易日完成；無閘門；<br>提前贖回費：第 1 / 2 / 3 年分別為 NAV 的 10% / 7.5% / 5%"
+        },
+        "classes": {
+          "en": {
+            "head": [
+              "Class",
+              "Management Fee",
+              "Performance Fee",
+              "Early Redemption (Yr 1 / 2 / 3)",
+              "Gate",
+              "Minimum Size"
+            ],
+            "rows": [
+              [
+                "I1",
+                "1.00%",
+                "12.5% above HWM",
+                "10% / 7.5% / 5%",
+                "No",
+                "$1M"
+              ],
+              [
+                "I2",
+                "1.00%",
+                "12.5% above HWM",
+                "10% / 7.5% / 5%",
+                "No",
+                "$25M"
+              ],
+              [
+                "I3",
+                "1.25%",
+                "12.5% above HWM",
+                "10% / 7.5% / 5%",
+                "No",
+                "$5M"
+              ]
+            ]
+          },
+          "sc": {
+            "head": [
+              "类别",
+              "管理费",
+              "业绩报酬",
+              "提前赎回费 (第 1 / 2 / 3 年)",
+              "闸门",
+              "最低认购额"
+            ],
+            "rows": [
+              [
+                "I1",
+                "1.00%",
+                "超过 HWM 部分的 12.5%",
+                "10% / 7.5% / 5%",
+                "无",
+                "$1M"
+              ],
+              [
+                "I2",
+                "1.00%",
+                "超过 HWM 部分的 12.5%",
+                "10% / 7.5% / 5%",
+                "无",
+                "$25M"
+              ],
+              [
+                "I3",
+                "1.25%",
+                "超过 HWM 部分的 12.5%",
+                "10% / 7.5% / 5%",
+                "无",
+                "$5M"
+              ]
+            ]
+          },
+          "tc": {
+            "head": [
+              "類別",
+              "管理費",
+              "業績報酬",
+              "提前贖回費 (第 1 / 2 / 3 年)",
+              "閘門",
+              "最低認購額"
+            ],
+            "rows": [
+              [
+                "I1",
+                "1.00%",
+                "超過 HWM 部分的 12.5%",
+                "10% / 7.5% / 5%",
+                "無",
+                "$1M"
+              ],
+              [
+                "I2",
+                "1.00%",
+                "超過 HWM 部分的 12.5%",
+                "10% / 7.5% / 5%",
+                "無",
+                "$25M"
+              ],
+              [
+                "I3",
+                "1.25%",
+                "超過 HWM 部分的 12.5%",
+                "10% / 7.5% / 5%",
+                "無",
+                "$5M"
+              ]
+            ]
+          }
+        },
+        "monthly": [
+          {
+            "y": "2026",
+            "m": [
+              0.1,
+              0.4,
+              0.9,
+              0.2,
+              0.4,
+              1.1,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            "t": 3.2
+          }
+        ],
+        "note": {
+          "en": "Source: Partners Group Diversified Royalties Opportunities quarterly report Q2 2026 (as of 2026/6/30): NAV, fund size, quarterly and 2026 monthly net returns (X2 share class), portfolio mix, largest positions; Private Markets Royalties institutional deck Q2 2026: terms p45, targets p42, model net 12.1% p41/p43 (as of 2026/3/31); press release 2026/7/17: strategy AuM $1.5bn. The deck calls the vehicle Royalties Institutional Opportunities Fund (S.C.A., SICAV-RAIF). 2020 covers December only. I1 carries a 2% subscription fee for investors subscribing more than 12 months after the class launch.",
+          "sc": "来源: Partners Group Diversified Royalties Opportunities 2026 Q2 季报 (截至 2026/6/30)——NAV、基金规模、季度及 2026 年月度净回报 (X2 份额类别)、组合分布、前五大持仓；Private Markets Royalties 机构版 deck (2026 Q2)——条款 p45，目标 p42，model 净回报 12.1% 见 p41/p43 (截至 2026/3/31)；2026/7/17 新闻稿——策略规模 $1.5bn。Deck 中该载体名为 Royalties Institutional Opportunities Fund (S.C.A., SICAV-RAIF)。2020 年仅含 12 月。I1 类别在份额类别推出 12 个月后认购需另付 2% 认购费。",
+          "tc": "來源: Partners Group Diversified Royalties Opportunities 2026 Q2 季報 (截至 2026/6/30)——NAV、基金規模、季度及 2026 年月度淨回報 (X2 份額類別)、組合分佈、前五大持倉；Private Markets Royalties 機構版 deck (2026 Q2)——條款 p45，目標 p42，model 淨回報 12.1% 見 p41/p43 (截至 2026/3/31)；2026/7/17 新聞稿——策略規模 $1.5bn。Deck 中該載體名為 Royalties Institutional Opportunities Fund (S.C.A., SICAV-RAIF)。2020 年僅含 12 月。I1 類別在份額類別推出 12 個月後認購需另付 2% 認購費。"
+        },
+        "redact": [
+          "Ultra Natural Gas Royalties",
+          "Media Music Fund",
+          "Partners Group",
+          "South Park",
+          "The Weeknd",
+          "Media Fund",
+          "PG3"
+        ],
+        "redactAuto": false,
+        "translated": true
       }
     ]
   },
