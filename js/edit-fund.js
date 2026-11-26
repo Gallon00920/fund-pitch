@@ -61,6 +61,7 @@ function openEdit(id) {
   ef("efMonthly").value = "";
   editing.monthlyShown = ef("efMonthlyText").value = monthlyText(f.monthly);
   editing.classesShown = ef("efClassesText").value = classesText(classesOf(f));
+  ef("efClassesKeep").checked = !!f.classesKeepText;
   ef("efPicStatus").textContent = "";
   refreshMonthlyField();
   refreshClassesField();
@@ -176,6 +177,7 @@ editForm.addEventListener("submit", e => {
     else if (f.classes && !f.classes.head && Object.keys(f.classes).length > 1) f.classes[lang] = classes.table;
     else f.classes = classes.table;
   }
+  if (f.classes && ef("efClassesKeep").checked) f.classesKeepText = true; else delete f.classesKeepText;
 
   const strat = ef("efStrat").value, id = f.id;
   const saved = FundStore.update(id, f, strat);

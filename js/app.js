@@ -347,7 +347,7 @@ document.getElementById("moDownload").onclick=()=>{
 /* ---------- share classes ----------
    A fund can carry `classes`: { head:[column titles], rows:[[cells]] }, one row per share class with its fees and
    liquidity terms. A built-in fund may hold one table per language ({ en, sc, tc }). In View Fund the table replaces
-   the liquidity text. */
+   the liquidity text, unless `classesKeepText` is set: then the table holds fees only and the text stays under it. */
 const classesOf=f=>{const c=f.classes&&(f.classes.head?f.classes:L(f.classes));return c&&c.head&&c.rows&&c.rows.length?c:null};
 
 /* drawer */
@@ -366,9 +366,10 @@ function openD(f){
   const monthlyBlock=mo?`<button class="mo-thumb" type="button" onclick="openMonthly('${f.id}')">${monthlyThumb(mo)}<span><b>${t("monthlyTitle")}</b><small>${mo[0].y}${mo.length>1?" – "+mo.at(-1).y:""} · ${t("monthlyOpen")}</small></span>
       <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 7h10M8 3l4 4-4 4"/></svg></button>`:"";
   const cls=classesOf(f);
-  const liqBlock=cls?`<h4>${t("clHead")}</h4><div class="cls-scroll"><table class="cls"><tr>${cls.head.map(h=>`<th>${R(f,h)}</th>`).join("")}</tr>${
-      cls.rows.map(r=>`<tr>${r.map(c=>`<td>${R(f,c)||"—"}</td>`).join("")}</tr>`).join("")}</table></div>`
-    :`<h4>${t("liqTerms")}</h4><p>${f.liqFull?R(f,L(f.liqFull)):t("dailyFull")}</p>`;
+  const liqText=`<h4>${t("liqTerms")}</h4><p>${f.liqFull?R(f,L(f.liqFull)):t("dailyFull")}</p>`;
+  const liqBlock=cls?`<h4>${t(f.classesKeepText?"clHeadFees":"clHead")}</h4><div class="cls-scroll"><table class="cls"><tr>${cls.head.map(h=>`<th>${R(f,h)}</th>`).join("")}</tr>${
+      cls.rows.map(r=>`<tr>${r.map(c=>`<td>${R(f,c)||"—"}</td>`).join("")}</tr>`).join("")}</table></div>${f.classesKeepText?liqText:""}`
+    :liqText;
   const notesBlock=notes.length?`<h4>${t("trackRecord")}</h4><p>${notes.map(x=>R(f,x)).join("<br>")}</p>`:"";
   drawer.innerHTML=`<div class="d-head"><button class="close" onclick="closeD()" aria-label="Close">✕</button>${anon()?"":`<span class="tag">${L(f.tag)}</span>`}<h3>${title(f)}</h3>${anon()?"":`<p>${L(f.mgr)} · ${veh(f)}</p>`}</div>
   <div class="d-body">

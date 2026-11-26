@@ -462,3 +462,8 @@ Object.assign(UI.tc,{clHead:"份額類別：費用與流動性",picTitle:"從圖
 Object.assign(UI.en,{stratRename:"Rename strategy",stratSave:"Save"});
 Object.assign(UI.sc,{stratRename:"重命名策略",stratSave:"保存"});
 Object.assign(UI.tc,{stratRename:"重新命名策略",stratSave:"儲存"});
+
+/* a fee table that sits above the liquidity text instead of replacing it */
+Object.assign(UI.en,{clHeadFees:"Fee Schedule",clKeep:"This table holds fees only: keep the liquidity terms text under it"});
+Object.assign(UI.sc,{clHeadFees:"费用结构",clKeep:"此表仅含费用：在表格下方保留流动性条款文字"});
+Object.assign(UI.tc,{clHeadFees:"費用結構",clKeep:"此表僅含費用：在表格下方保留流動性條款文字"});

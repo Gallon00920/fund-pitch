@@ -171,5 +171,9 @@ Things to know:
   - Share classes: the column titles on the first line, then one class per line, with `|` between the cells.
 - Admins see a warning on any year whose twelve months do not compound to the printed year total. Check those years
   against the picture.
+- A table that holds fees only (for example fees by commitment size) should not replace the liquidity text: tick
+  **This table holds fees only** under the share-class box in Edit, and View Fund shows the table under "Fee Schedule"
+  with the liquidity terms text below it.
+- The monthly tables and fee tables of the original 7 funds are in a generated block at the end of `js/funds-data.js`.
 - Share-class text is shown as written in all three languages; it is not translated automatically. A built-in fund
   can hold one table per language in `js/funds-data.js` (see TPG AG MVP).

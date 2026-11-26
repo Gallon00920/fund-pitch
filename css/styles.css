@@ -425,3 +425,6 @@ table.cls tr:nth-child(odd) td{background:#fafbfd}
 .im-moedit small,.im-cledit small{display:block;font-size:12px;color:var(--muted);margin-top:6px}
 .im-moedit small.mo-status.err,.im-cledit small.mo-status.err{color:var(--neg)}
 .im-moedit small.mo-status.warn{color:#b7791f}
+.modal-body label.mo-keep{display:flex;align-items:center;gap:8px;margin-top:10px;font-size:13px;color:var(--ink);cursor:pointer}
+.modal-body .mo-keep input{width:auto;padding:0;flex:none}
+.mo-keep i{font-style:normal}
