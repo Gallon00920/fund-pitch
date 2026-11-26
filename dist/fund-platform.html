@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Alternative Investments | Fund Platform</title>
+<title>Fund Platform</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
@@ -307,6 +307,9 @@ html:not([lang="en"]) .wordmark{font-size:19px;letter-spacing:5px}
 .tab{display:inline-flex;align-items:center;white-space:nowrap}
 .tab-del{display:inline-grid;place-items:center;width:20px;height:20px;margin-left:8px;border-radius:50%;font-size:15px;line-height:1;color:var(--muted);transition:.2s}
 .tab-del:hover{background:var(--neg);color:#fff}
+.tab-edit{display:inline-grid;place-items:center;width:20px;height:20px;margin-left:8px;border-radius:50%;color:var(--muted);transition:.2s}
+.tab-edit:hover{background:var(--navy);color:#fff}
+.tab-edit+.tab-del{margin-left:2px}
 .tab-add{color:var(--navy);font-weight:600;letter-spacing:1.2px;font-size:12.5px;opacity:.75}
 .tab-add:hover{opacity:1;color:#8a6a2b}
 .strat-new{display:flex;align-items:center;gap:8px;padding:9px 0}
@@ -638,11 +641,11 @@ const CONFIG = {
 /* ===== js/i18n.js ===== */
 /* ---------- UI strings ---------- */
 const UI = {
-  en:{brandSub:"Alternative Investments",navAbout:"About",navFunds:"Funds",navContact:"Contact",
+  en:{brandSub:"",navAbout:"About",navFunds:"Funds",navContact:"Contact",
     heroEyebrow:"Curated Credit Platform",
     heroTitle:"<b>Institutional credit,</b><br>selected with discipline.",
     heroBody:"A focused shelf of liquid and semi-liquid strategies, chosen through our manager research process for durable income, drawdown control and transparent liquidity terms.",
-    stPipeline:"Funds in Pipeline",stGPs:"GPs Covered",stCategories:"Strategy Categories",stStrategies:"Featured Strategies",stAum:"Combined Fund AUM",stLiq:"Liquidity Profiles",stTrack:"Longest Track Record",
+    stPipeline:"Funds",stGPs:"GPs Covered",stCategories:"Strategy Categories",stStrategies:"Featured Strategies",stAum:"Combined Fund AUM",stLiq:"Liquidity Profiles",stTrack:"Longest Track Record",
     secEyebrow:"Our Fund Shelf",secTitle:"Featured Strategies",
     secBody:"Browse strategies by liquidity profile. Select any fund for its full profile, calendar-year performance, drawdowns and redemption terms.",
     tabLiquid:"Liquid",tabIlliquid:"Semi-Liquid / Private",
@@ -654,13 +657,13 @@ const UI = {
     perfTitle:"Calendar-Year Performance",period:"Period",ret:"Return",daily:"Daily",dailyFull:"Daily subscriptions and redemptions.",
     private:"Private fund",past:"Past performance is not indicative of future results. Source: manager factsheets and marketing materials.",
     
-    division:"Alternative Investments Division",yrs:n=>n+" yrs",
+    division:"",yrs:n=>n+" yrs",
     disclaimer:"For professional investors only. This material is for discussion purposes and does not constitute an offer to sell or a solicitation of an offer to buy any security. Past performance is not indicative of future results. Performance figures are sourced from manager factsheets and marketing materials and may be net or gross of fees as noted per fund. Investments in private funds are subject to lock-ups, gates and redemption restrictions."},
-  sc:{brandSub:"另类投资",navAbout:"关于我们",navFunds:"基金",navContact:"联系我们",
+  sc:{brandSub:"",navAbout:"关于我们",navFunds:"基金",navContact:"联系我们",
     heroEyebrow:"精选信贷平台",
     heroTitle:"<b>机构级信贷，</b><br>以严谨标准甄选。",
     heroBody:"一组精选的流动性与半流动性策略，经我们的管理人研究流程筛选，注重稳健收益、回撤控制与透明的流动性条款。",
-    stPipeline:"只基金项目储备",stGPs:"覆盖GP数量",stCategories:"大类投资策略",stStrategies:"精选策略",stAum:"基金规模合计",stLiq:"流动性类别",stTrack:"最长业绩记录",
+    stPipeline:"只基金",stGPs:"覆盖GP数量",stCategories:"大类投资策略",stStrategies:"精选策略",stAum:"基金规模合计",stLiq:"流动性类别",stTrack:"最长业绩记录",
     secEyebrow:"基金精选",secTitle:"精选策略",
     secBody:"按流动性类别浏览策略。点击任一基金，查看完整介绍、历年业绩、最大回撤及赎回条款。",
     tabLiquid:"流动性基金",tabIlliquid:"半流动性 / 私募",
@@ -672,13 +675,13 @@ const UI = {
     perfTitle:"历年业绩",period:"期间",ret:"回报",daily:"每日",dailyFull:"每日申购及赎回。",
     private:"私募基金",past:"过往业绩不代表未来表现。数据来源：基金管理人月报及推介材料。",
     
-    division:"另类投资部",yrs:n=>n+"年",
+    division:"",yrs:n=>n+"年",
     disclaimer:"仅供专业投资者参考。本材料仅作讨论用途，不构成任何证券的出售要约或购买要约邀请。过往业绩不代表未来表现。业绩数据来源于基金管理人月报及推介材料，是否扣费以各基金注明为准。私募基金投资受锁定期、赎回闸门及其他赎回限制约束。"},
-  tc:{brandSub:"另類投資",navAbout:"關於我們",navFunds:"基金",navContact:"聯絡我們",
+  tc:{brandSub:"",navAbout:"關於我們",navFunds:"基金",navContact:"聯絡我們",
     heroEyebrow:"精選信貸平台",
     heroTitle:"<b>機構級信貸，</b><br>以嚴謹標準甄選。",
     heroBody:"一組精選的流動性與半流動性策略，經我們的管理人研究流程篩選，注重穩健收益、回撤控制與透明的流動性條款。",
-    stPipeline:"隻基金項目儲備",stGPs:"覆蓋GP數量",stCategories:"大類投資策略",stStrategies:"精選策略",stAum:"基金規模合計",stLiq:"流動性類別",stTrack:"最長業績記錄",
+    stPipeline:"隻基金",stGPs:"覆蓋GP數量",stCategories:"大類投資策略",stStrategies:"精選策略",stAum:"基金規模合計",stLiq:"流動性類別",stTrack:"最長業績記錄",
     secEyebrow:"基金精選",secTitle:"精選策略",
     secBody:"按流動性類別瀏覽策略。點擊任一基金，查看完整介紹、歷年業績、最大回撤及贖回條款。",
     tabLiquid:"流動性基金",tabIlliquid:"半流動性 / 私募",
@@ -690,7 +693,7 @@ const UI = {
     perfTitle:"歷年業績",period:"期間",ret:"回報",daily:"每日",dailyFull:"每日申購及贖回。",
     private:"私募基金",past:"過往業績不代表未來表現。資料來源：基金管理人月報及推介材料。",
     
-    division:"另類投資部",yrs:n=>n+"年",
+    division:"",yrs:n=>n+"年",
     disclaimer:"僅供專業投資者參考。本材料僅作討論用途，不構成任何證券的出售要約或購買要約邀請。過往業績不代表未來表現。業績數據來源於基金管理人月報及推介材料，是否扣費以各基金註明為準。私募基金投資受鎖定期、贖回閘門及其他贖回限制約束。"}
 };
 
@@ -1101,6 +1104,11 @@ Object.assign(UI.tc,{clHead:"份額類別：費用與流動性",picTitle:"從圖
   clHelp:"第一行為欄標題，其後每行一個類別，儲存格之間用 | 分隔，也可直接貼上 Excel 列。在「查看基金」中，此表格將取代流動性條款文字。清空此框即可移除表格。",
   clDone:n=>`已讀取份額類別表：${n} 行，請在下方核對。`,clRows:(n,c)=>`表格：${n} 個類別，${c} 欄。`,clNone:"尚無份額類別表。",
   clErrLine:x=>`請檢查份額類別表中以「${x}」開頭的一行：需要標題行和至少一個類別，每行 2 至 10 個儲存格並以 | 分隔，且不能多於標題行的儲存格數。`});
+
+/* renaming a strategy tab */
+Object.assign(UI.en,{stratRename:"Rename strategy",stratSave:"Save"});
+Object.assign(UI.sc,{stratRename:"重命名策略",stratSave:"保存"});
+Object.assign(UI.tc,{stratRename:"重新命名策略",stratSave:"儲存"});
 </script>
 <script>
 /* ===== js/funds-data.js ===== */
@@ -1233,6 +1241,7 @@ const FUNDS = {
      overrides   { fundId: { fund, strat } } edited built-in funds (js/funds-data.js itself is never changed)
      order       { strategyId: [fundId, ...] } card order admins set by dragging; funds not listed come after
      removed     [ "liquid" | "illiquid" ]   built-in strategy tabs admins deleted (can be restored)
+     names       { liquid?: name, illiquid?: name }   built-in strategy tabs admins renamed (can be restored)
      stats       [ "130+", "40+", "9" ]      the three cover-page numbers, once an admin has edited them
    This file only holds that state in memory and rebuilds the live FUNDS list from it.
    Loading and saving the file is done by js/repo.js, which is told about every change through onChange(). */
@@ -1244,7 +1253,7 @@ const FundStore = (() => {
   BUILT_IN.forEach(s => FUNDS[s].forEach((f, i) => { f.id = `b-${s}-${i}`; f.builtIn = true; }));   // stable ids for built-ins
   const ORIGINAL = clone({ liquid: FUNDS.liquid, illiquid: FUNDS.illiquid });                        // pristine copy to rebuild from
 
-  const empty = () => ({ strategies: [], funds: {}, hidden: [], overrides: {}, order: {}, removed: [] });
+  const empty = () => ({ strategies: [], funds: {}, hidden: [], overrides: {}, order: {}, removed: [], names: {} });
   const normalise = s => ({
     strategies: Array.isArray(s && s.strategies) ? s.strategies : [],
     funds: s && s.funds && typeof s.funds === "object" ? s.funds : {},
@@ -1252,6 +1261,7 @@ const FundStore = (() => {
     overrides: s && s.overrides && typeof s.overrides === "object" ? s.overrides : {},
     order: s && s.order && typeof s.order === "object" ? s.order : {},
     removed: Array.isArray(s && s.removed) ? s.removed.filter(id => BUILT_IN.includes(id)) : [],
+    names: Object.fromEntries(BUILT_IN.filter(id => s && s.names && typeof s.names[id] === "string" && s.names[id]).map(id => [id, s.names[id].slice(0, 200)])),
     stats: Array.isArray(s && s.stats) && s.stats.length === 3 ? s.stats.map(x => String(x).slice(0, 12)) : null
   });
   let state = empty();
@@ -1297,7 +1307,7 @@ const FundStore = (() => {
     onChange(fn) { listener = fn; },
 
     /** All strategy tabs in display order: the two built-in ones, then the custom ones. */
-    strategies: () => [...BUILT_IN.filter(id => !state.removed.includes(id)).map(id => ({ id, builtIn: true })), ...state.strategies],
+    strategies: () => [...BUILT_IN.filter(id => !state.removed.includes(id)).map(id => ({ id, builtIn: true, name: state.names[id] || "" })), ...state.strategies],
     isBuiltIn: id => BUILT_IN.includes(id),
 
     /** Creates a strategy tab. `name` must already be safe to insert as HTML. Returns the new strategy. */
@@ -1306,6 +1316,18 @@ const FundStore = (() => {
       state.strategies.push(s);
       changed();
       return s;
+    },
+    /** Renames a strategy tab. `name` must already be safe to insert as HTML. A built-in tab given an empty name goes
+        back to its original name, which is the only one shown in three languages. Returns false for an unknown tab. */
+    renameStrategy(id, name) {
+      if (BUILT_IN.includes(id)) { if (name) state.names[id] = name; else delete state.names[id]; }
+      else {
+        const s = state.strategies.find(x => x.id === id);
+        if (!s || !name) return false;
+        s.name = name;
+      }
+      changed();
+      return true;
     },
     /** Removes a strategy tab together with the funds in it. A built-in tab comes back with restoreBuiltIns(). */
     removeStrategy(id) {
@@ -1377,9 +1399,9 @@ const FundStore = (() => {
     },
 
     /** True when an admin has edited or deleted any built-in fund or built-in tab. */
-    builtInsChanged: () => state.hidden.length > 0 || Object.keys(state.overrides).length > 0 || state.removed.length > 0,
+    builtInsChanged: () => state.hidden.length > 0 || Object.keys(state.overrides).length > 0 || state.removed.length > 0 || Object.keys(state.names).length > 0,
     /** Forgets every edit and deletion of built-in funds and brings back deleted built-in tabs. */
-    restoreBuiltIns() { state.hidden = []; state.overrides = {}; state.removed = []; changed(); },
+    restoreBuiltIns() { state.hidden = []; state.overrides = {}; state.removed = []; state.names = {}; changed(); },
 
     /** The three cover-page numbers as edited by an admin, or null when they are still the ones in index.html. */
     stats: () => (state.stats ? [...state.stats] : null),
@@ -1603,13 +1625,17 @@ addEventListener("keydown",e=>{if(e.key==="Escape")setMenu(false)});
    Admins also get a small × on every tab and a "+ Add Strategy" button at the end. Deleting one of the two built-in
    tabs can be undone with "Restore original funds". */
 const tabsEl=document.getElementById("tabs");
-const stratName=s=>s.builtIn?t(s.id==="liquid"?"tabLiquid":"tabIlliquid"):s.name;
-let addingStrat=false;
+const stratName=s=>s.builtIn&&!s.name?t(s.id==="liquid"?"tabLiquid":"tabIlliquid"):s.name;   // a renamed built-in tab shows the admin's name in every language
+let addingStrat=false, renamingStrat="";                        // renamingStrat: id of the tab whose name is being edited
 function renderTabs(){
   const list=FundStore.strategies(), admin=Auth.isAdmin();
   if(!list.some(s=>s.id===tab)) tab=list.length?list[0].id:"";       // the open tab was deleted: fall back to the first one
   if(!admin) addingStrat=false;
-  tabsEl.innerHTML=list.map(s=>`<button class="tab ${s.id===tab?"active":""}" data-tab="${s.id}" role="tab"><span>${stratName(s)}</span><span class="count">${(FUNDS[s.id]||[]).length}</span>${admin?`<span class="tab-del" data-del="${s.id}" title="${t("stratDelete")}">×</span>`:""}</button>`).join("")
+  if(!admin||!list.some(s=>s.id===renamingStrat)) renamingStrat="";
+  const pencil=`<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16v4zM13.5 6.5l4 4"/></svg>`;
+  tabsEl.innerHTML=list.map(s=>s.id===renamingStrat
+    ?`<form class="strat-new" id="stratRenameForm"><input id="stratRename" maxlength="40" value="${stratName(s)}" placeholder="${t("stratPh")}"><button class="btn sm solid" type="submit">${t("stratSave")}</button><button class="strat-x" type="button" id="stratRenameCancel" aria-label="${t("cancel")}">×</button></form>`
+    :`<button class="tab ${s.id===tab?"active":""}" data-tab="${s.id}" role="tab"><span>${stratName(s)}</span><span class="count">${(FUNDS[s.id]||[]).length}</span>${admin?`<span class="tab-edit" data-rename="${s.id}" title="${t("stratRename")}">${pencil}</span><span class="tab-del" data-del="${s.id}" title="${t("stratDelete")}">×</span>`:""}</button>`).join("")
     +(!admin?"":addingStrat
       ?`<form class="strat-new" id="stratForm"><input id="stratName" maxlength="40" placeholder="${t("stratPh")}"><button class="btn sm solid" type="submit">${t("stratAdd")}</button><button class="strat-x" type="button" id="stratCancel" aria-label="${t("cancel")}">×</button></form>`
       :`<button class="tab tab-add" id="stratAddBtn">${t("addStrategy")}</button>`);
@@ -1624,7 +1650,22 @@ function createStrategy(raw){
   if(FundStore.strategies().some(s=>stratName(s).toLowerCase()===name.toLowerCase())){alert(t("stratExists"));return null}
   return FundStore.addStrategy(name);
 }
+/** Saves a new name for a strategy tab. An empty name puts a built-in tab back to its original (translated) name. */
+function renameStrategy(id,raw){
+  if(!Auth.isAdmin()||needToken()) return false;
+  const name=esc(raw), s=FundStore.strategies().find(x=>x.id===id);
+  if(!s||(!name&&!s.builtIn)) return false;
+  if(name===stratName(s)) return true;                          // unchanged
+  if(name&&FundStore.strategies().some(x=>x.id!==id&&stratName(x).toLowerCase()===name.toLowerCase())){alert(t("stratExists"));return false}
+  return FundStore.renameStrategy(id,name);
+}
 tabsEl.addEventListener("click",e=>{
+  const ren=e.target.closest("[data-rename]");
+  if(ren){
+    if(Auth.isAdmin()&&!needToken()){addingStrat=false;renamingStrat=ren.dataset.rename;renderTabs();const box=document.getElementById("stratRename");box.focus();box.select()}
+    return;
+  }
+  if(e.target.closest("#stratRenameCancel")){renamingStrat="";renderTabs();return}
   const del=e.target.closest("[data-del]");
   if(del){
     const id=del.dataset.del, s=FundStore.strategies().find(x=>x.id===id);
@@ -1633,17 +1674,21 @@ tabsEl.addEventListener("click",e=>{
     }
     return;
   }
-  if(e.target.closest("#stratAddBtn")){addingStrat=true;renderTabs();document.getElementById("stratName").focus();return}
+  if(e.target.closest("#stratAddBtn")){addingStrat=true;renamingStrat="";renderTabs();document.getElementById("stratName").focus();return}
   if(e.target.closest("#stratCancel")){addingStrat=false;renderTabs();return}
   const b=e.target.closest(".tab[data-tab]");
   if(b) selectTab(b.dataset.tab);
 });
 tabsEl.addEventListener("submit",e=>{
   e.preventDefault();
+  if(e.target.id==="stratRenameForm"){
+    if(renameStrategy(renamingStrat,document.getElementById("stratRename").value)){renamingStrat="";applyLang()}
+    return;
+  }
   const s=createStrategy(document.getElementById("stratName").value);
   if(s){addingStrat=false;selectTab(s.id)}
 });
-tabsEl.addEventListener("keydown",e=>{if(e.key==="Escape"&&addingStrat){addingStrat=false;renderTabs()}});
+tabsEl.addEventListener("keydown",e=>{if(e.key==="Escape"&&(addingStrat||renamingStrat)){addingStrat=false;renamingStrat="";renderTabs()}});
 
 /* mouse drag with momentum (touch uses native scrolling) */
 let drag=null, glide=0, justDragged=false;

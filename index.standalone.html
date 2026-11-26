@@ -277,11 +277,11 @@ html:not([lang="en"]) .hero h1{line-height:1.25}
 <script>
 /* ---------- UI strings ---------- */
 const UI = {
-  en:{brandSub:"Alternative Investments",navAbout:"About",navFunds:"Funds",navContact:"Contact",
+  en:{brandSub:"",navAbout:"About",navFunds:"Funds",navContact:"Contact",
     heroEyebrow:"Curated Credit Platform · November 2026",
     heroTitle:"<b>Institutional credit,</b><br>selected with discipline.",brandName:"Junson Capital",
     heroBody:"A focused shelf of liquid and semi-liquid strategies, chosen through Junson Capital's manager research process for durable income, drawdown control and transparent liquidity terms.",
-    stPipeline:"Funds in Pipeline",stGPs:"GPs Covered",stCategories:"Strategy Categories",stStrategies:"Featured Strategies",stAum:"Combined Fund AUM",stLiq:"Liquidity Profiles",stTrack:"Longest Track Record",
+    stPipeline:"Funds",stGPs:"GPs Covered",stCategories:"Strategy Categories",stStrategies:"Featured Strategies",stAum:"Combined Fund AUM",stLiq:"Liquidity Profiles",stTrack:"Longest Track Record",
     secEyebrow:"Our Fund Shelf",secTitle:"Featured Strategies",
     secBody:"Browse strategies by liquidity profile. Select any fund for its full profile, calendar-year performance, drawdowns and redemption terms.",
     tabLiquid:"Liquid",tabIlliquid:"Semi-Liquid / Private",
@@ -293,13 +293,13 @@ const UI = {
     perfTitle:"Calendar-Year Performance",period:"Period",ret:"Return",daily:"Daily",dailyFull:"Daily subscriptions and redemptions.",
     private:"Private fund",past:"Past performance is not indicative of future results. Source: manager factsheets and marketing materials.",
     
-    division:"Alternative Investments Division",yrs:n=>n+" yrs",
+    division:"",yrs:n=>n+" yrs",
     disclaimer:"For professional investors only. This material is for discussion purposes and does not constitute an offer to sell or a solicitation of an offer to buy any security. Past performance is not indicative of future results. Performance figures are sourced from manager factsheets and marketing materials and may be net or gross of fees as noted per fund. Investments in private funds are subject to lock-ups, gates and redemption restrictions."},
-  sc:{brandSub:"另类投资",navAbout:"关于我们",navFunds:"基金",navContact:"联系我们",
+  sc:{brandSub:"",navAbout:"关于我们",navFunds:"基金",navContact:"联系我们",
     heroEyebrow:"精选信贷平台 · 2026年11月",
     heroTitle:"<b>机构级信贷，</b><br>以严谨标准甄选。",brandName:"佳辰资本",
     heroBody:"一组精选的流动性与半流动性策略，经 Junson Capital 管理人研究流程筛选，注重稳健收益、回撤控制与透明的流动性条款。",
-    stPipeline:"只基金项目储备",stGPs:"覆盖GP数量",stCategories:"大类投资策略",stStrategies:"精选策略",stAum:"基金规模合计",stLiq:"流动性类别",stTrack:"最长业绩记录",
+    stPipeline:"只基金",stGPs:"覆盖GP数量",stCategories:"大类投资策略",stStrategies:"精选策略",stAum:"基金规模合计",stLiq:"流动性类别",stTrack:"最长业绩记录",
     secEyebrow:"基金精选",secTitle:"精选策略",
     secBody:"按流动性类别浏览策略。点击任一基金，查看完整介绍、历年业绩、最大回撤及赎回条款。",
     tabLiquid:"流动性基金",tabIlliquid:"半流动性 / 私募",
@@ -311,13 +311,13 @@ const UI = {
     perfTitle:"历年业绩",period:"期间",ret:"回报",daily:"每日",dailyFull:"每日申购及赎回。",
     private:"私募基金",past:"过往业绩不代表未来表现。数据来源：基金管理人月报及推介材料。",
     
-    division:"另类投资部",yrs:n=>n+"年",
+    division:"",yrs:n=>n+"年",
     disclaimer:"仅供专业投资者参考。本材料仅作讨论用途，不构成任何证券的出售要约或购买要约邀请。过往业绩不代表未来表现。业绩数据来源于基金管理人月报及推介材料，是否扣费以各基金注明为准。私募基金投资受锁定期、赎回闸门及其他赎回限制约束。"},
-  tc:{brandSub:"另類投資",navAbout:"關於我們",navFunds:"基金",navContact:"聯絡我們",
+  tc:{brandSub:"",navAbout:"關於我們",navFunds:"基金",navContact:"聯絡我們",
     heroEyebrow:"精選信貸平台 · 2026年11月",
     heroTitle:"<b>機構級信貸，</b><br>以嚴謹標準甄選。",brandName:"佳辰資本",
     heroBody:"一組精選的流動性與半流動性策略，經 Junson Capital 管理人研究流程篩選，注重穩健收益、回撤控制與透明的流動性條款。",
-    stPipeline:"隻基金項目儲備",stGPs:"覆蓋GP數量",stCategories:"大類投資策略",stStrategies:"精選策略",stAum:"基金規模合計",stLiq:"流動性類別",stTrack:"最長業績記錄",
+    stPipeline:"隻基金",stGPs:"覆蓋GP數量",stCategories:"大類投資策略",stStrategies:"精選策略",stAum:"基金規模合計",stLiq:"流動性類別",stTrack:"最長業績記錄",
     secEyebrow:"基金精選",secTitle:"精選策略",
     secBody:"按流動性類別瀏覽策略。點擊任一基金，查看完整介紹、歷年業績、最大回撤及贖回條款。",
     tabLiquid:"流動性基金",tabIlliquid:"半流動性 / 私募",
@@ -329,7 +329,7 @@ const UI = {
     perfTitle:"歷年業績",period:"期間",ret:"回報",daily:"每日",dailyFull:"每日申購及贖回。",
     private:"私募基金",past:"過往業績不代表未來表現。資料來源：基金管理人月報及推介材料。",
     
-    division:"另類投資部",yrs:n=>n+"年",
+    division:"",yrs:n=>n+"年",
     disclaimer:"僅供專業投資者參考。本材料僅作討論用途，不構成任何證券的出售要約或購買要約邀請。過往業績不代表未來表現。業績數據來源於基金管理人月報及推介材料，是否扣費以各基金註明為準。私募基金投資受鎖定期、贖回閘門及其他贖回限制約束。"}
 };
 

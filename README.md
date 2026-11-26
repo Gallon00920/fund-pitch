@@ -73,6 +73,10 @@ The site starts with two strategy tabs, **Liquid** and **Semi-Liquid / Private**
 - Or create one inside the Add Fund window while uploading a deck (see below).
 - A strategy you added has a small **x** on its tab. Clicking it deletes the strategy and every fund in it, after a confirmation. The two starting tabs cannot be deleted.
 
+- **Rename:** each tab has a small pencil. Click it, type the new name and click Save (Esc cancels). A renamed
+  starting tab shows your name in all three languages; saving an empty name, or **Restore original funds**, brings
+  back its original translated name.
+
 Strategy names are shown as typed in all three languages. Investors see the tabs but cannot add or delete them.
 
 ## Editing and deleting funds

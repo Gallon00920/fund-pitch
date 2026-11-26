@@ -175,13 +175,17 @@ addEventListener("keydown",e=>{if(e.key==="Escape")setMenu(false)});
    Admins also get a small × on every tab and a "+ Add Strategy" button at the end. Deleting one of the two built-in
    tabs can be undone with "Restore original funds". */
 const tabsEl=document.getElementById("tabs");
-const stratName=s=>s.builtIn?t(s.id==="liquid"?"tabLiquid":"tabIlliquid"):s.name;
-let addingStrat=false;
+const stratName=s=>s.builtIn&&!s.name?t(s.id==="liquid"?"tabLiquid":"tabIlliquid"):s.name;   // a renamed built-in tab shows the admin's name in every language
+let addingStrat=false, renamingStrat="";                        // renamingStrat: id of the tab whose name is being edited
 function renderTabs(){
   const list=FundStore.strategies(), admin=Auth.isAdmin();
   if(!list.some(s=>s.id===tab)) tab=list.length?list[0].id:"";       // the open tab was deleted: fall back to the first one
   if(!admin) addingStrat=false;
-  tabsEl.innerHTML=list.map(s=>`<button class="tab ${s.id===tab?"active":""}" data-tab="${s.id}" role="tab"><span>${stratName(s)}</span><span class="count">${(FUNDS[s.id]||[]).length}</span>${admin?`<span class="tab-del" data-del="${s.id}" title="${t("stratDelete")}">×</span>`:""}</button>`).join("")
+  if(!admin||!list.some(s=>s.id===renamingStrat)) renamingStrat="";
+  const pencil=`<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16v4zM13.5 6.5l4 4"/></svg>`;
+  tabsEl.innerHTML=list.map(s=>s.id===renamingStrat
+    ?`<form class="strat-new" id="stratRenameForm"><input id="stratRename" maxlength="40" value="${stratName(s)}" placeholder="${t("stratPh")}"><button class="btn sm solid" type="submit">${t("stratSave")}</button><button class="strat-x" type="button" id="stratRenameCancel" aria-label="${t("cancel")}">×</button></form>`
+    :`<button class="tab ${s.id===tab?"active":""}" data-tab="${s.id}" role="tab"><span>${stratName(s)}</span><span class="count">${(FUNDS[s.id]||[]).length}</span>${admin?`<span class="tab-edit" data-rename="${s.id}" title="${t("stratRename")}">${pencil}</span><span class="tab-del" data-del="${s.id}" title="${t("stratDelete")}">×</span>`:""}</button>`).join("")
     +(!admin?"":addingStrat
       ?`<form class="strat-new" id="stratForm"><input id="stratName" maxlength="40" placeholder="${t("stratPh")}"><button class="btn sm solid" type="submit">${t("stratAdd")}</button><button class="strat-x" type="button" id="stratCancel" aria-label="${t("cancel")}">×</button></form>`
       :`<button class="tab tab-add" id="stratAddBtn">${t("addStrategy")}</button>`);
@@ -196,7 +200,22 @@ function createStrategy(raw){
   if(FundStore.strategies().some(s=>stratName(s).toLowerCase()===name.toLowerCase())){alert(t("stratExists"));return null}
   return FundStore.addStrategy(name);
 }
+/** Saves a new name for a strategy tab. An empty name puts a built-in tab back to its original (translated) name. */
+function renameStrategy(id,raw){
+  if(!Auth.isAdmin()||needToken()) return false;
+  const name=esc(raw), s=FundStore.strategies().find(x=>x.id===id);
+  if(!s||(!name&&!s.builtIn)) return false;
+  if(name===stratName(s)) return true;                          // unchanged
+  if(name&&FundStore.strategies().some(x=>x.id!==id&&stratName(x).toLowerCase()===name.toLowerCase())){alert(t("stratExists"));return false}
+  return FundStore.renameStrategy(id,name);
+}
 tabsEl.addEventListener("click",e=>{
+  const ren=e.target.closest("[data-rename]");
+  if(ren){
+    if(Auth.isAdmin()&&!needToken()){addingStrat=false;renamingStrat=ren.dataset.rename;renderTabs();const box=document.getElementById("stratRename");box.focus();box.select()}
+    return;
+  }
+  if(e.target.closest("#stratRenameCancel")){renamingStrat="";renderTabs();return}
   const del=e.target.closest("[data-del]");
   if(del){
     const id=del.dataset.del, s=FundStore.strategies().find(x=>x.id===id);
@@ -205,17 +224,21 @@ tabsEl.addEventListener("click",e=>{
     }
     return;
   }
-  if(e.target.closest("#stratAddBtn")){addingStrat=true;renderTabs();document.getElementById("stratName").focus();return}
+  if(e.target.closest("#stratAddBtn")){addingStrat=true;renamingStrat="";renderTabs();document.getElementById("stratName").focus();return}
   if(e.target.closest("#stratCancel")){addingStrat=false;renderTabs();return}
   const b=e.target.closest(".tab[data-tab]");
   if(b) selectTab(b.dataset.tab);
 });
 tabsEl.addEventListener("submit",e=>{
   e.preventDefault();
+  if(e.target.id==="stratRenameForm"){
+    if(renameStrategy(renamingStrat,document.getElementById("stratRename").value)){renamingStrat="";applyLang()}
+    return;
+  }
   const s=createStrategy(document.getElementById("stratName").value);
   if(s){addingStrat=false;selectTab(s.id)}
 });
-tabsEl.addEventListener("keydown",e=>{if(e.key==="Escape"&&addingStrat){addingStrat=false;renderTabs()}});
+tabsEl.addEventListener("keydown",e=>{if(e.key==="Escape"&&(addingStrat||renamingStrat)){addingStrat=false;renamingStrat="";renderTabs()}});
 
 /* mouse drag with momentum (touch uses native scrolling) */
 let drag=null, glide=0, justDragged=false;

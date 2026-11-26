@@ -1711,5 +1711,9 @@
     ]
   },
   "removed": [],
+  "names": {
+    "liquid": "Daily Liquid",
+    "illiquid": "Monthly/Quarterly Liquid"
+  },
   "stats": null
 }

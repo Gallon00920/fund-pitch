@@ -298,6 +298,9 @@ html:not([lang="en"]) .wordmark{font-size:19px;letter-spacing:5px}
 .tab{display:inline-flex;align-items:center;white-space:nowrap}
 .tab-del{display:inline-grid;place-items:center;width:20px;height:20px;margin-left:8px;border-radius:50%;font-size:15px;line-height:1;color:var(--muted);transition:.2s}
 .tab-del:hover{background:var(--neg);color:#fff}
+.tab-edit{display:inline-grid;place-items:center;width:20px;height:20px;margin-left:8px;border-radius:50%;color:var(--muted);transition:.2s}
+.tab-edit:hover{background:var(--navy);color:#fff}
+.tab-edit+.tab-del{margin-left:2px}
 .tab-add{color:var(--navy);font-weight:600;letter-spacing:1.2px;font-size:12.5px;opacity:.75}
 .tab-add:hover{opacity:1;color:#8a6a2b}
 .strat-new{display:flex;align-items:center;gap:8px;padding:9px 0}
