@@ -177,8 +177,8 @@ td.pos{color:var(--pos);font-weight:500} td.neg{color:var(--neg);font-weight:500
 .note{font-size:12px!important;color:var(--muted)!important;line-height:1.6!important;margin-top:28px;padding-top:18px;border-top:1px solid var(--line)}
 
 /* FOOTER */
-footer{background:#121C3A;color:#71839e;font-size:12px;line-height:1.8;padding:44px 0}
-footer .wrap{display:grid;grid-template-columns:1fr 2fr;gap:60px}
+footer{background:#121C3A;color:#71839e;font-size:12px;line-height:1.8;padding:30px 0}
+footer .wrap{text-align:center}   /* one centred line of disclosure; it wraps on narrow screens */
 
 .reveal{opacity:0;transform:translateY(24px);transition:1s cubic-bezier(.22,.8,.2,1)}
 .reveal.in{opacity:1;transform:none}
@@ -324,8 +324,6 @@ html:not([lang="en"]) .wordmark{font-size:19px;letter-spacing:5px}
 .tool.del:hover{background:var(--neg);border-color:var(--neg);color:#fff}
 .d-admin{display:flex;gap:12px;margin-top:26px;flex-wrap:wrap}
 .d-admin .btn.danger{margin-top:0}
-.restore{display:inline-block;margin-top:12px;background:none;border:none;padding:0;font:inherit;font-size:13px;color:var(--navy);text-decoration:underline;text-underline-offset:3px;cursor:pointer}
-.restore:hover{color:#8a6a2b}
 .has-tools .tag{max-width:calc(100% - 64px)}   /* keep the label clear of the Edit / Delete buttons */
 
 /* ---------- Translation: key box and status banner ---------- */

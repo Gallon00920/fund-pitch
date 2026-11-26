@@ -1,6 +1,6 @@
 /* ---------- UI strings ---------- */
 const UI = {
-  en:{brandSub:"",navAbout:"About",navFunds:"Funds",navContact:"Contact",
+  en:{brandSub:"",navAbout:"About",navFunds:"Funds",navDisclosure:"Disclosure",
     heroEyebrow:"Curated Credit Platform",
     heroTitle:"<b>Institutional credit,</b><br>selected with discipline.",
     heroBody:"A focused shelf of liquid and semi-liquid strategies, chosen through our manager research process for durable income, drawdown control and transparent liquidity terms.",
@@ -17,8 +17,8 @@ const UI = {
     private:"Private fund",past:"Past performance is not indicative of future results. Source: manager factsheets and marketing materials.",
     
     division:"",yrs:n=>n+" yrs",
-    disclaimer:"For professional investors only. This material is for discussion purposes and does not constitute an offer to sell or a solicitation of an offer to buy any security. Past performance is not indicative of future results. Performance figures are sourced from manager factsheets and marketing materials and may be net or gross of fees as noted per fund. Investments in private funds are subject to lock-ups, gates and redemption restrictions."},
-  sc:{brandSub:"",navAbout:"关于我们",navFunds:"基金",navContact:"联系我们",
+    disclaimer:"For professional investors only. Not an offer or solicitation. Past performance is not indicative of future results. Private funds are subject to lock-ups, gates and redemption restrictions."},
+  sc:{brandSub:"",navAbout:"关于我们",navFunds:"基金",navDisclosure:"重要声明",
     heroEyebrow:"精选信贷平台",
     heroTitle:"<b>机构级信贷，</b><br>以严谨标准甄选。",
     heroBody:"一组精选的流动性与半流动性策略，经我们的管理人研究流程筛选，注重稳健收益、回撤控制与透明的流动性条款。",
@@ -35,8 +35,8 @@ const UI = {
     private:"私募基金",past:"过往业绩不代表未来表现。数据来源：基金管理人月报及推介材料。",
     
     division:"",yrs:n=>n+"年",
-    disclaimer:"仅供专业投资者参考。本材料仅作讨论用途，不构成任何证券的出售要约或购买要约邀请。过往业绩不代表未来表现。业绩数据来源于基金管理人月报及推介材料，是否扣费以各基金注明为准。私募基金投资受锁定期、赎回闸门及其他赎回限制约束。"},
-  tc:{brandSub:"",navAbout:"關於我們",navFunds:"基金",navContact:"聯絡我們",
+    disclaimer:"仅供专业投资者参考，不构成任何要约或要约邀请。过往业绩不代表未来表现。私募基金投资受锁定期、赎回闸门及其他赎回限制约束。"},
+  tc:{brandSub:"",navAbout:"關於我們",navFunds:"基金",navDisclosure:"重要聲明",
     heroEyebrow:"精選信貸平台",
     heroTitle:"<b>機構級信貸，</b><br>以嚴謹標準甄選。",
     heroBody:"一組精選的流動性與半流動性策略，經我們的管理人研究流程篩選，注重穩健收益、回撤控制與透明的流動性條款。",
@@ -53,7 +53,7 @@ const UI = {
     private:"私募基金",past:"過往業績不代表未來表現。資料來源：基金管理人月報及推介材料。",
     
     division:"",yrs:n=>n+"年",
-    disclaimer:"僅供專業投資者參考。本材料僅作討論用途，不構成任何證券的出售要約或購買要約邀請。過往業績不代表未來表現。業績數據來源於基金管理人月報及推介材料，是否扣費以各基金註明為準。私募基金投資受鎖定期、贖回閘門及其他贖回限制約束。"}
+    disclaimer:"僅供專業投資者參考，不構成任何要約或要約邀請。過往業績不代表未來表現。私募基金投資受鎖定期、贖回閘門及其他贖回限制約束。"}
 };
 
 /* ---------- Login + Add Fund strings ---------- */
@@ -187,8 +187,7 @@ Object.assign(UI.en,{
   efNotes:"Track record notes (one per line, optional)",efDd:"Drawdown / loss text (optional)",efLiqFull:"Liquidity terms (full, optional)",efNote:"Source note (admins only, optional)",
   efErrRequired:"The fund name and the strategy label cannot be empty.",
   efErrReturns:"Check the returns: one period per line, like  2024: 12.5 ,  2022 from 6: 15.62  or  2026 YTD 10: 4.78 , and each period only once.",
-  confirmDeleteBuiltIn:"Delete this fund from the site? You can bring it back later with \"Restore original funds\".",
-  restore:"Restore original funds",restoreConfirm:"Undo every edit and deletion of the original funds? Funds and strategies you added are kept."
+  confirmDeleteBuiltIn:"Delete this fund from the site? This cannot be undone on the site."
 });
 Object.assign(UI.sc,{
   edit:"编辑基金",del:"删除基金",efTitle:"编辑基金",efSave:"保存修改",
@@ -198,8 +197,7 @@ Object.assign(UI.sc,{
   efNotes:"业绩记录备注 (每行一条，选填)",efDd:"回撤 / 损失说明 (选填)",efLiqFull:"流动性条款 (完整，选填)",efNote:"来源备注 (仅管理员可见，选填)",
   efErrRequired:"基金名称和策略标签不能为空。",
   efErrReturns:"请检查回报：每行一个期间，例如  2024: 12.5 、 2022 from 6: 15.62  或  2026 YTD 10: 4.78 ，且每个期间只能出现一次。",
-  confirmDeleteBuiltIn:"确定从网站删除此基金？之后可通过“恢复原始基金”找回。",
-  restore:"恢复原始基金",restoreConfirm:"撤销对原始基金的所有修改和删除？您新增的基金和策略将保留。"
+  confirmDeleteBuiltIn:"确定从网站删除此基金？此操作无法在网站上撤销。"
 });
 Object.assign(UI.tc,{
   edit:"編輯基金",del:"刪除基金",efTitle:"編輯基金",efSave:"儲存修改",
@@ -209,8 +207,7 @@ Object.assign(UI.tc,{
   efNotes:"業績記錄備註 (每行一條，選填)",efDd:"回撤 / 損失說明 (選填)",efLiqFull:"流動性條款 (完整，選填)",efNote:"來源備註 (僅管理員可見，選填)",
   efErrRequired:"基金名稱和策略標籤不能為空。",
   efErrReturns:"請檢查回報：每行一個期間，例如  2024: 12.5 、 2022 from 6: 15.62  或  2026 YTD 10: 4.78 ，且每個期間只能出現一次。",
-  confirmDeleteBuiltIn:"確定從網站刪除此基金？之後可透過「恢復原始基金」找回。",
-  restore:"恢復原始基金",restoreConfirm:"撤銷對原始基金的所有修改和刪除？您新增的基金和策略將保留。"
+  confirmDeleteBuiltIn:"確定從網站刪除此基金？此操作無法在網站上復原。"
 });
 
 /* ---------- Translation with the Claude API ---------- */
@@ -388,12 +385,9 @@ UI.sc.imHide="对投资者隐藏的词 (初步建议；翻译基金时由 Claude
 UI.tc.imHide="對投資者隱藏的詞 (初步建議；翻譯基金時由 Claude 決定最終列表)";
 
 /* the site opens as the investor view; signing in is for admins */
-Object.assign(UI.en,{loginBtn:"Admin Login",loginTitle:"Admin Login",loginSub:"Sign in to add, edit and arrange funds.",liqLabel:"Liquidity",
-  restoreConfirm:"Undo every edit and deletion of the original funds and strategies? Funds and strategies you added are kept."});
-Object.assign(UI.sc,{loginBtn:"管理员登录",loginTitle:"管理员登录",loginSub:"登录后可新增、编辑及排列基金。",liqLabel:"流动性",
-  restoreConfirm:"撤销对原始基金及策略的所有修改和删除？您新增的基金和策略将保留。"});
-Object.assign(UI.tc,{loginBtn:"管理員登入",loginTitle:"管理員登入",loginSub:"登入後可新增、編輯及排列基金。",liqLabel:"流動性",
-  restoreConfirm:"撤銷對原始基金及策略的所有修改和刪除？您新增的基金和策略將保留。"});
+Object.assign(UI.en,{loginBtn:"Admin Login",loginTitle:"Admin Login",loginSub:"Sign in to add, edit and arrange funds.",liqLabel:"Liquidity"});
+Object.assign(UI.sc,{loginBtn:"管理员登录",loginTitle:"管理员登录",loginSub:"登录后可新增、编辑及排列基金。",liqLabel:"流动性"});
+Object.assign(UI.tc,{loginBtn:"管理員登入",loginTitle:"管理員登入",loginSub:"登入後可新增、編輯及排列基金。",liqLabel:"流動性"});
 
 /* cover-page numbers can be edited by an admin */
 UI.en.statEdit="Click to edit. Enter saves, Esc cancels.";

@@ -43,7 +43,7 @@ python server.py
 | `js/account.js` | Login screen and the account button |
 | `js/pptx-reader.js` | Reads a `.pptx` deck in the browser and pulls out one draft fund per table column |
 | `js/add-fund.js` | The Add Fund screen (deck upload and review) and Delete Fund |
-| `js/edit-fund.js` | The Edit Fund form, the card Edit / Delete buttons and Restore original funds |
+| `js/edit-fund.js` | The Edit Fund form, and the card Edit / Delete buttons |
 | `js/reorder.js` | Drag a card by its grip to change the order of funds in a tab |
 | `js/repo.js` | Saves admin changes to `data/funds.json` on GitHub, the GitHub token box, and the status banner |
 | `server.py` | Local server: serves the site, translates uploads with Claude, reads table pictures and saves `data/funds.json` on this computer |
@@ -71,11 +71,11 @@ The site starts with two strategy tabs, **Liquid** and **Semi-Liquid / Private**
 
 - Click **+ Add Strategy** at the end of the tab row, type a name and click Add.
 - Or create one inside the Add Fund window while uploading a deck (see below).
-- A strategy you added has a small **x** on its tab. Clicking it deletes the strategy and every fund in it, after a confirmation. The two starting tabs cannot be deleted.
+- Every tab has a small **x**. Clicking it deletes the strategy and every fund in it, after a confirmation. This applies to the two starting tabs as well, and there is no undo on the site.
 
 - **Rename:** each tab has a small pencil. Click it, type the new name and click Save (Esc cancels). A renamed
-  starting tab shows your name in all three languages; saving an empty name, or **Restore original funds**, brings
-  back its original translated name.
+  starting tab shows your name in all three languages; saving an empty name brings back its
+  original translated name.
 
 Strategy names are shown as typed in all three languages. Investors see the tabs but cannot add or delete them.
 
@@ -87,7 +87,7 @@ Signed in as admin, every fund card has two small buttons in its top right corne
 - **Returns** are one period per line: `2024: 12.5` for a full year, `2022 from 6: 15.62` for a part year starting in June, `2026 YTD 10: 4.78` for year to date through October.
 - **Delete** removes the fund after a confirmation.
 - **Reorder:** each card also has a grip button (six dots) next to the pencil. Press it and drag the card left or right; the other cards slide aside and the row scrolls near its edges. Letting go saves the new order for that strategy tab, for everyone. Press Esc while dragging to cancel. A tab with one fund shows no grip.
-- The 7 original funds can be edited and deleted too. Their original versions are kept, and **Restore original funds** (shown under the cards once any original has been changed) brings them all back. Funds and strategies you added are not affected by a restore.
+- The 7 original funds can be edited and deleted too. There is no undo on the site: to bring back an original fund, an original tab, or its original text, remove its entry from `hidden`, `removed` or `overrides` in `data/funds.json`.
 - For an original fund, an edit changes the text in the language you are viewing; the other two languages keep their text. Numbers apply to all languages.
 
 ## Adding funds from a deck

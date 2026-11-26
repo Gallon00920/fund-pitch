@@ -3,11 +3,11 @@
    Everything admins change lives in ONE shared file in the repository, data/funds.json, so every visitor sees it:
      strategies  [ { id, name } ]            strategy tabs admins added, in display order
      funds       { strategyId: [fund, ...] } funds admins added
-     hidden      [ fundId, ... ]             built-in funds admins deleted (can be restored)
+     hidden      [ fundId, ... ]             built-in funds admins deleted
      overrides   { fundId: { fund, strat } } edited built-in funds (js/funds-data.js itself is never changed)
      order       { strategyId: [fundId, ...] } card order admins set by dragging; funds not listed come after
-     removed     [ "liquid" | "illiquid" ]   built-in strategy tabs admins deleted (can be restored)
-     names       { liquid?: name, illiquid?: name }   built-in strategy tabs admins renamed (can be restored)
+     removed     [ "liquid" | "illiquid" ]   built-in strategy tabs admins deleted
+     names       { liquid?: name, illiquid?: name }   built-in strategy tabs admins renamed
      stats       [ "130+", "40+", "9" ]      the three cover-page numbers, once an admin has edited them
    This file only holds that state in memory and rebuilds the live FUNDS list from it.
    Loading and saving the file is done by js/repo.js, which is told about every change through onChange(). */
@@ -95,7 +95,7 @@ const FundStore = (() => {
       changed();
       return true;
     },
-    /** Removes a strategy tab together with the funds in it. A built-in tab comes back with restoreBuiltIns(). */
+    /** Removes a strategy tab together with the funds in it. */
     removeStrategy(id) {
       if (BUILT_IN.includes(id)) {
         if (!state.removed.includes(id)) state.removed.push(id);
@@ -143,7 +143,7 @@ const FundStore = (() => {
       return true;
     },
 
-    /** Deletes a fund. An added fund is removed for good; a built-in fund is hidden and can be restored. */
+    /** Deletes a fund. An added fund is removed for good; a built-in fund is hidden. */
     remove(id) {
       if (isBuiltInFund(id)) {
         if (!state.hidden.includes(id)) state.hidden.push(id);
@@ -164,10 +164,6 @@ const FundStore = (() => {
       return true;
     },
 
-    /** True when an admin has edited or deleted any built-in fund or built-in tab. */
-    builtInsChanged: () => state.hidden.length > 0 || Object.keys(state.overrides).length > 0 || state.removed.length > 0 || Object.keys(state.names).length > 0,
-    /** Forgets every edit and deletion of built-in funds and brings back deleted built-in tabs. */
-    restoreBuiltIns() { state.hidden = []; state.overrides = {}; state.removed = []; state.names = {}; changed(); },
 
     /** The three cover-page numbers as edited by an admin, or null when they are still the ones in index.html. */
     stats: () => (state.stats ? [...state.stats] : null),

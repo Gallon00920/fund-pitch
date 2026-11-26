@@ -94,7 +94,6 @@ function renderCards(keepPos){
   track.innerHTML=(FUNDS[tab]||[]).map(cardHTML).join("");
   document.getElementById("tabDesc").textContent=tab==="liquid"?t(anon()?"descLiquidAnon":"descLiquid"):tab==="illiquid"?t("descIlliquid"):"";   // custom strategies have no description line
   requestAnimationFrame(()=>setTimeout(()=>track.querySelectorAll(".bar i").forEach(b=>b.style.height=b.dataset.h),80));
-  document.getElementById("restoreBtn").hidden=!(Auth.isAdmin()&&FundStore.builtInsChanged());
   scroller.scrollLeft=keepPos?x:0;
   updateProg();
 }
@@ -172,8 +171,7 @@ addEventListener("keydown",e=>{if(e.key==="Escape")setMenu(false)});
 
 /* ---------- strategy tabs ----------
    Two built-in tabs (liquid, illiquid) plus any strategies an admin has added. `tab` holds the id of the open one.
-   Admins also get a small × on every tab and a "+ Add Strategy" button at the end. Deleting one of the two built-in
-   tabs can be undone with "Restore original funds". */
+   Admins also get a small × on every tab and a "+ Add Strategy" button at the end. */
 const tabsEl=document.getElementById("tabs");
 const stratName=s=>s.builtIn&&!s.name?t(s.id==="liquid"?"tabLiquid":"tabIlliquid"):s.name;   // a renamed built-in tab shows the admin's name in every language
 let addingStrat=false, renamingStrat="";                        // renamingStrat: id of the tab whose name is being edited
@@ -397,7 +395,7 @@ function spy(){
   const line=innerHeight*0.4;
   let cur="about";
   for(const a of navLinks){const el=document.getElementById(a.dataset.sec); if(el&&el.getBoundingClientRect().top<=line) cur=a.dataset.sec}
-  if(innerHeight+scrollY>=document.documentElement.scrollHeight-4) cur="contact";
+  if(innerHeight+scrollY>=document.documentElement.scrollHeight-4) cur="disclosure";
   navLinks.forEach(a=>a.classList.toggle("on",a.dataset.sec===cur));
 }
 addEventListener("scroll",spy,{passive:true}); addEventListener("resize",spy);

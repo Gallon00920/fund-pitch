@@ -191,10 +191,3 @@ document.getElementById("track").addEventListener("click", e => {
   if (edit) openEdit(edit.dataset.edit);
   if (del) deleteFund(del.dataset.delfund);
 });
-
-/* "Restore original funds": undo every edit and deletion of the built-in funds */
-document.getElementById("restoreBtn").onclick = () => {
-  if (!Auth.isAdmin() || needToken() || !confirm(t("restoreConfirm"))) return;
-  FundStore.restoreBuiltIns();
-  applyLang();
-};

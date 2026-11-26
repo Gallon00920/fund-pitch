@@ -186,8 +186,8 @@ td.pos{color:var(--pos);font-weight:500} td.neg{color:var(--neg);font-weight:500
 .note{font-size:12px!important;color:var(--muted)!important;line-height:1.6!important;margin-top:28px;padding-top:18px;border-top:1px solid var(--line)}
 
 /* FOOTER */
-footer{background:#121C3A;color:#71839e;font-size:12px;line-height:1.8;padding:44px 0}
-footer .wrap{display:grid;grid-template-columns:1fr 2fr;gap:60px}
+footer{background:#121C3A;color:#71839e;font-size:12px;line-height:1.8;padding:30px 0}
+footer .wrap{text-align:center}   /* one centred line of disclosure; it wraps on narrow screens */
 
 .reveal{opacity:0;transform:translateY(24px);transition:1s cubic-bezier(.22,.8,.2,1)}
 .reveal.in{opacity:1;transform:none}
@@ -333,8 +333,6 @@ html:not([lang="en"]) .wordmark{font-size:19px;letter-spacing:5px}
 .tool.del:hover{background:var(--neg);border-color:var(--neg);color:#fff}
 .d-admin{display:flex;gap:12px;margin-top:26px;flex-wrap:wrap}
 .d-admin .btn.danger{margin-top:0}
-.restore{display:inline-block;margin-top:12px;background:none;border:none;padding:0;font:inherit;font-size:13px;color:var(--navy);text-decoration:underline;text-underline-offset:3px;cursor:pointer}
-.restore:hover{color:#8a6a2b}
 .has-tools .tag{max-width:calc(100% - 64px)}   /* keep the label clear of the Edit / Delete buttons */
 
 /* ---------- Translation: key box and status banner ---------- */
@@ -443,7 +441,7 @@ table.cls tr:nth-child(odd) td{background:#fafbfd}
 <nav id="nav">
   <div class="wrap">
     <a href="#" class="logo"><span class="wordmark" data-i="division"></span></a>
-    <div class="links"><a href="#about" class="on" data-sec="about" data-i="navAbout"></a><a href="#funds" data-sec="funds" data-i="navFunds"></a><a href="#contact" data-sec="contact" data-i="navContact"></a></div>
+    <div class="links"><a href="#about" class="on" data-sec="about" data-i="navAbout"></a><a href="#funds" data-sec="funds" data-i="navFunds"></a><a href="#disclosure" data-sec="disclosure" data-i="navDisclosure"></a></div>
     <div class="nav-right">
       <button class="btn sm" id="addFundBtn" data-i="addFund" hidden></button>
       <div class="lang" id="lang">
@@ -497,15 +495,11 @@ table.cls tr:nth-child(odd) td{background:#fafbfd}
     <div class="track-outer" id="scroller" tabindex="0" aria-label="Funds"><div class="track" id="track"></div></div>
     <div class="progress"><i id="prog"></i></div>
     <p class="tab-desc" id="tabDesc"></p>
-    <button class="restore" id="restoreBtn" type="button" data-i="restore" hidden></button>
   </div>
 </section>
 
-<footer id="contact">
-  <div class="wrap">
-    <div><span class="wordmark" data-i="division"></span></div>
-    <div data-i="disclaimer"></div>
-  </div>
+<footer id="disclosure">
+  <div class="wrap"><p data-i="disclaimer"></p></div>
 </footer>
 
 <div class="scrim" id="scrim"></div>
@@ -641,7 +635,7 @@ const CONFIG = {
 /* ===== js/i18n.js ===== */
 /* ---------- UI strings ---------- */
 const UI = {
-  en:{brandSub:"",navAbout:"About",navFunds:"Funds",navContact:"Contact",
+  en:{brandSub:"",navAbout:"About",navFunds:"Funds",navDisclosure:"Disclosure",
     heroEyebrow:"Curated Credit Platform",
     heroTitle:"<b>Institutional credit,</b><br>selected with discipline.",
     heroBody:"A focused shelf of liquid and semi-liquid strategies, chosen through our manager research process for durable income, drawdown control and transparent liquidity terms.",
@@ -658,8 +652,8 @@ const UI = {
     private:"Private fund",past:"Past performance is not indicative of future results. Source: manager factsheets and marketing materials.",
     
     division:"",yrs:n=>n+" yrs",
-    disclaimer:"For professional investors only. This material is for discussion purposes and does not constitute an offer to sell or a solicitation of an offer to buy any security. Past performance is not indicative of future results. Performance figures are sourced from manager factsheets and marketing materials and may be net or gross of fees as noted per fund. Investments in private funds are subject to lock-ups, gates and redemption restrictions."},
-  sc:{brandSub:"",navAbout:"关于我们",navFunds:"基金",navContact:"联系我们",
+    disclaimer:"For professional investors only. Not an offer or solicitation. Past performance is not indicative of future results. Private funds are subject to lock-ups, gates and redemption restrictions."},
+  sc:{brandSub:"",navAbout:"关于我们",navFunds:"基金",navDisclosure:"重要声明",
     heroEyebrow:"精选信贷平台",
     heroTitle:"<b>机构级信贷，</b><br>以严谨标准甄选。",
     heroBody:"一组精选的流动性与半流动性策略，经我们的管理人研究流程筛选，注重稳健收益、回撤控制与透明的流动性条款。",
@@ -676,8 +670,8 @@ const UI = {
     private:"私募基金",past:"过往业绩不代表未来表现。数据来源：基金管理人月报及推介材料。",
     
     division:"",yrs:n=>n+"年",
-    disclaimer:"仅供专业投资者参考。本材料仅作讨论用途，不构成任何证券的出售要约或购买要约邀请。过往业绩不代表未来表现。业绩数据来源于基金管理人月报及推介材料，是否扣费以各基金注明为准。私募基金投资受锁定期、赎回闸门及其他赎回限制约束。"},
-  tc:{brandSub:"",navAbout:"關於我們",navFunds:"基金",navContact:"聯絡我們",
+    disclaimer:"仅供专业投资者参考，不构成任何要约或要约邀请。过往业绩不代表未来表现。私募基金投资受锁定期、赎回闸门及其他赎回限制约束。"},
+  tc:{brandSub:"",navAbout:"關於我們",navFunds:"基金",navDisclosure:"重要聲明",
     heroEyebrow:"精選信貸平台",
     heroTitle:"<b>機構級信貸，</b><br>以嚴謹標準甄選。",
     heroBody:"一組精選的流動性與半流動性策略，經我們的管理人研究流程篩選，注重穩健收益、回撤控制與透明的流動性條款。",
@@ -694,7 +688,7 @@ const UI = {
     private:"私募基金",past:"過往業績不代表未來表現。資料來源：基金管理人月報及推介材料。",
     
     division:"",yrs:n=>n+"年",
-    disclaimer:"僅供專業投資者參考。本材料僅作討論用途，不構成任何證券的出售要約或購買要約邀請。過往業績不代表未來表現。業績數據來源於基金管理人月報及推介材料，是否扣費以各基金註明為準。私募基金投資受鎖定期、贖回閘門及其他贖回限制約束。"}
+    disclaimer:"僅供專業投資者參考，不構成任何要約或要約邀請。過往業績不代表未來表現。私募基金投資受鎖定期、贖回閘門及其他贖回限制約束。"}
 };
 
 /* ---------- Login + Add Fund strings ---------- */
@@ -828,8 +822,7 @@ Object.assign(UI.en,{
   efNotes:"Track record notes (one per line, optional)",efDd:"Drawdown / loss text (optional)",efLiqFull:"Liquidity terms (full, optional)",efNote:"Source note (admins only, optional)",
   efErrRequired:"The fund name and the strategy label cannot be empty.",
   efErrReturns:"Check the returns: one period per line, like  2024: 12.5 ,  2022 from 6: 15.62  or  2026 YTD 10: 4.78 , and each period only once.",
-  confirmDeleteBuiltIn:"Delete this fund from the site? You can bring it back later with \"Restore original funds\".",
-  restore:"Restore original funds",restoreConfirm:"Undo every edit and deletion of the original funds? Funds and strategies you added are kept."
+  confirmDeleteBuiltIn:"Delete this fund from the site? This cannot be undone on the site."
 });
 Object.assign(UI.sc,{
   edit:"编辑基金",del:"删除基金",efTitle:"编辑基金",efSave:"保存修改",
@@ -839,8 +832,7 @@ Object.assign(UI.sc,{
   efNotes:"业绩记录备注 (每行一条，选填)",efDd:"回撤 / 损失说明 (选填)",efLiqFull:"流动性条款 (完整，选填)",efNote:"来源备注 (仅管理员可见，选填)",
   efErrRequired:"基金名称和策略标签不能为空。",
   efErrReturns:"请检查回报：每行一个期间，例如  2024: 12.5 、 2022 from 6: 15.62  或  2026 YTD 10: 4.78 ，且每个期间只能出现一次。",
-  confirmDeleteBuiltIn:"确定从网站删除此基金？之后可通过“恢复原始基金”找回。",
-  restore:"恢复原始基金",restoreConfirm:"撤销对原始基金的所有修改和删除？您新增的基金和策略将保留。"
+  confirmDeleteBuiltIn:"确定从网站删除此基金？此操作无法在网站上撤销。"
 });
 Object.assign(UI.tc,{
   edit:"編輯基金",del:"刪除基金",efTitle:"編輯基金",efSave:"儲存修改",
@@ -850,8 +842,7 @@ Object.assign(UI.tc,{
   efNotes:"業績記錄備註 (每行一條，選填)",efDd:"回撤 / 損失說明 (選填)",efLiqFull:"流動性條款 (完整，選填)",efNote:"來源備註 (僅管理員可見，選填)",
   efErrRequired:"基金名稱和策略標籤不能為空。",
   efErrReturns:"請檢查回報：每行一個期間，例如  2024: 12.5 、 2022 from 6: 15.62  或  2026 YTD 10: 4.78 ，且每個期間只能出現一次。",
-  confirmDeleteBuiltIn:"確定從網站刪除此基金？之後可透過「恢復原始基金」找回。",
-  restore:"恢復原始基金",restoreConfirm:"撤銷對原始基金的所有修改和刪除？您新增的基金和策略將保留。"
+  confirmDeleteBuiltIn:"確定從網站刪除此基金？此操作無法在網站上復原。"
 });
 
 /* ---------- Translation with the Claude API ---------- */
@@ -1029,12 +1020,9 @@ UI.sc.imHide="对投资者隐藏的词 (初步建议；翻译基金时由 Claude
 UI.tc.imHide="對投資者隱藏的詞 (初步建議；翻譯基金時由 Claude 決定最終列表)";
 
 /* the site opens as the investor view; signing in is for admins */
-Object.assign(UI.en,{loginBtn:"Admin Login",loginTitle:"Admin Login",loginSub:"Sign in to add, edit and arrange funds.",liqLabel:"Liquidity",
-  restoreConfirm:"Undo every edit and deletion of the original funds and strategies? Funds and strategies you added are kept."});
-Object.assign(UI.sc,{loginBtn:"管理员登录",loginTitle:"管理员登录",loginSub:"登录后可新增、编辑及排列基金。",liqLabel:"流动性",
-  restoreConfirm:"撤销对原始基金及策略的所有修改和删除？您新增的基金和策略将保留。"});
-Object.assign(UI.tc,{loginBtn:"管理員登入",loginTitle:"管理員登入",loginSub:"登入後可新增、編輯及排列基金。",liqLabel:"流動性",
-  restoreConfirm:"撤銷對原始基金及策略的所有修改和刪除？您新增的基金和策略將保留。"});
+Object.assign(UI.en,{loginBtn:"Admin Login",loginTitle:"Admin Login",loginSub:"Sign in to add, edit and arrange funds.",liqLabel:"Liquidity"});
+Object.assign(UI.sc,{loginBtn:"管理员登录",loginTitle:"管理员登录",loginSub:"登录后可新增、编辑及排列基金。",liqLabel:"流动性"});
+Object.assign(UI.tc,{loginBtn:"管理員登入",loginTitle:"管理員登入",loginSub:"登入後可新增、編輯及排列基金。",liqLabel:"流動性"});
 
 /* cover-page numbers can be edited by an admin */
 UI.en.statEdit="Click to edit. Enter saves, Esc cancels.";
@@ -1237,11 +1225,11 @@ const FUNDS = {
    Everything admins change lives in ONE shared file in the repository, data/funds.json, so every visitor sees it:
      strategies  [ { id, name } ]            strategy tabs admins added, in display order
      funds       { strategyId: [fund, ...] } funds admins added
-     hidden      [ fundId, ... ]             built-in funds admins deleted (can be restored)
+     hidden      [ fundId, ... ]             built-in funds admins deleted
      overrides   { fundId: { fund, strat } } edited built-in funds (js/funds-data.js itself is never changed)
      order       { strategyId: [fundId, ...] } card order admins set by dragging; funds not listed come after
-     removed     [ "liquid" | "illiquid" ]   built-in strategy tabs admins deleted (can be restored)
-     names       { liquid?: name, illiquid?: name }   built-in strategy tabs admins renamed (can be restored)
+     removed     [ "liquid" | "illiquid" ]   built-in strategy tabs admins deleted
+     names       { liquid?: name, illiquid?: name }   built-in strategy tabs admins renamed
      stats       [ "130+", "40+", "9" ]      the three cover-page numbers, once an admin has edited them
    This file only holds that state in memory and rebuilds the live FUNDS list from it.
    Loading and saving the file is done by js/repo.js, which is told about every change through onChange(). */
@@ -1329,7 +1317,7 @@ const FundStore = (() => {
       changed();
       return true;
     },
-    /** Removes a strategy tab together with the funds in it. A built-in tab comes back with restoreBuiltIns(). */
+    /** Removes a strategy tab together with the funds in it. */
     removeStrategy(id) {
       if (BUILT_IN.includes(id)) {
         if (!state.removed.includes(id)) state.removed.push(id);
@@ -1377,7 +1365,7 @@ const FundStore = (() => {
       return true;
     },
 
-    /** Deletes a fund. An added fund is removed for good; a built-in fund is hidden and can be restored. */
+    /** Deletes a fund. An added fund is removed for good; a built-in fund is hidden. */
     remove(id) {
       if (isBuiltInFund(id)) {
         if (!state.hidden.includes(id)) state.hidden.push(id);
@@ -1398,10 +1386,6 @@ const FundStore = (() => {
       return true;
     },
 
-    /** True when an admin has edited or deleted any built-in fund or built-in tab. */
-    builtInsChanged: () => state.hidden.length > 0 || Object.keys(state.overrides).length > 0 || state.removed.length > 0 || Object.keys(state.names).length > 0,
-    /** Forgets every edit and deletion of built-in funds and brings back deleted built-in tabs. */
-    restoreBuiltIns() { state.hidden = []; state.overrides = {}; state.removed = []; state.names = {}; changed(); },
 
     /** The three cover-page numbers as edited by an admin, or null when they are still the ones in index.html. */
     stats: () => (state.stats ? [...state.stats] : null),
@@ -1544,7 +1528,6 @@ function renderCards(keepPos){
   track.innerHTML=(FUNDS[tab]||[]).map(cardHTML).join("");
   document.getElementById("tabDesc").textContent=tab==="liquid"?t(anon()?"descLiquidAnon":"descLiquid"):tab==="illiquid"?t("descIlliquid"):"";   // custom strategies have no description line
   requestAnimationFrame(()=>setTimeout(()=>track.querySelectorAll(".bar i").forEach(b=>b.style.height=b.dataset.h),80));
-  document.getElementById("restoreBtn").hidden=!(Auth.isAdmin()&&FundStore.builtInsChanged());
   scroller.scrollLeft=keepPos?x:0;
   updateProg();
 }
@@ -1622,8 +1605,7 @@ addEventListener("keydown",e=>{if(e.key==="Escape")setMenu(false)});
 
 /* ---------- strategy tabs ----------
    Two built-in tabs (liquid, illiquid) plus any strategies an admin has added. `tab` holds the id of the open one.
-   Admins also get a small × on every tab and a "+ Add Strategy" button at the end. Deleting one of the two built-in
-   tabs can be undone with "Restore original funds". */
+   Admins also get a small × on every tab and a "+ Add Strategy" button at the end. */
 const tabsEl=document.getElementById("tabs");
 const stratName=s=>s.builtIn&&!s.name?t(s.id==="liquid"?"tabLiquid":"tabIlliquid"):s.name;   // a renamed built-in tab shows the admin's name in every language
 let addingStrat=false, renamingStrat="";                        // renamingStrat: id of the tab whose name is being edited
@@ -1847,7 +1829,7 @@ function spy(){
   const line=innerHeight*0.4;
   let cur="about";
   for(const a of navLinks){const el=document.getElementById(a.dataset.sec); if(el&&el.getBoundingClientRect().top<=line) cur=a.dataset.sec}
-  if(innerHeight+scrollY>=document.documentElement.scrollHeight-4) cur="contact";
+  if(innerHeight+scrollY>=document.documentElement.scrollHeight-4) cur="disclosure";
   navLinks.forEach(a=>a.classList.toggle("on",a.dataset.sec===cur));
 }
 addEventListener("scroll",spy,{passive:true}); addEventListener("resize",spy);
@@ -2635,13 +2617,6 @@ document.getElementById("track").addEventListener("click", e => {
   if (edit) openEdit(edit.dataset.edit);
   if (del) deleteFund(del.dataset.delfund);
 });
-
-/* "Restore original funds": undo every edit and deletion of the built-in funds */
-document.getElementById("restoreBtn").onclick = () => {
-  if (!Auth.isAdmin() || needToken() || !confirm(t("restoreConfirm"))) return;
-  FundStore.restoreBuiltIns();
-  applyLang();
-};
 </script>
 <script>
 /* ===== js/repo.js ===== */

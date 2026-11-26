@@ -137,7 +137,7 @@ class Handler(SimpleHTTPRequestHandler):
         return self.send_json(200, {"saved": True})
 
     def log_message(self, fmt, *args):                        # keep the terminal readable: only show the API calls
-        if "/api/" in (args[0] if args else ""):
+        if "/api/" in str(args[0] if args else ""):       # on an error reply args[0] is a status code, not text
             super().log_message(fmt, *args)
 
 
