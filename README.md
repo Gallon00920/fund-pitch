@@ -60,7 +60,7 @@ The demo accounts are in `js/config.js` (`DEMO_USERS`). There are two roles:
 - **admin** can view the site, add funds and delete funds they added.
 - **viewer** can only view the site.
 
-Set `REQUIRE_LOGIN` in `js/config.js` to `false` to make the site public, with login used only to unlock Add Fund.
+`REQUIRE_LOGIN` in `js/config.js` is `false`: the site opens straight into the investor view, and "Admin Login" in the top-right corner unlocks the admin tools. Logging out returns to the investor view. Set it to `true` to make every visitor sign in first.
 
 The session ends when the browser tab is closed.
 

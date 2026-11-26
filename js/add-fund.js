@@ -124,8 +124,8 @@ function fundFromDraft(d, i, name, mgr, hide, hideUntouched) {
     inception: d.inception, inceptionText: escLines(d.inceptionLines), isNew: d.isNew,
     aum: d.aum, aumText: esc(d.aumText),
     strategy: one(escLines(d.strategyLines)),
-    hist: d.perf.slice(0, -9),                                // the card shows the latest 9 periods; older years appear in View Fund only
-    perf: d.perf.slice(-9),
+    hist: d.perf.slice(0, -15),                               // the card shows the latest 15 periods; older years appear in View Fund only
+    perf: d.perf.slice(-15),
     perfNotes: d.perfNotes.map(esc), target: d.target ? esc(d.target) : null,
     ddLabel: esc(d.ddLabel), ddRaw: escLines(d.ddLines),
     liq: one(esc(d.liqShort) || "—"), liqFull: one(escLines(d.liqLines))
@@ -148,7 +148,7 @@ fundForm.addEventListener("submit", e => {
   const picked = [...imList.querySelectorAll(".im-item")].filter(el => el.querySelector(".im-on").checked);
   if (!picked.length || picked.some(el => !el.querySelector(".im-name").value.trim())) return fail(t("imNoneSel"));
 
-  let saved = true, lastTab = "illiquid";
+  let saved = true, lastTab = "";
   const added = [];
   picked.forEach(el => {
     const i = +el.dataset.n;

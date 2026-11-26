@@ -5,7 +5,7 @@
 const CONFIG = {
   // true  = visitors must sign in before they can see the site
   // false = the site is public; signing in only unlocks admin tools (Add Fund)
-  REQUIRE_LOGIN: true,
+  REQUIRE_LOGIN: false,
 
   // The GitHub repository that holds the shared fund data. Admin changes are committed to `path` on `branch`.
   REPO: { owner: "Gallon00920", name: "fund-pitch", branch: "main", path: "data/funds.json" },

@@ -6,6 +6,8 @@
      hidden      [ fundId, ... ]             built-in funds admins deleted (can be restored)
      overrides   { fundId: { fund, strat } } edited built-in funds (js/funds-data.js itself is never changed)
      order       { strategyId: [fundId, ...] } card order admins set by dragging; funds not listed come after
+     removed     [ "liquid" | "illiquid" ]   built-in strategy tabs admins deleted (can be restored)
+     stats       [ "130+", "40+", "9" ]      the three cover-page numbers, once an admin has edited them
    This file only holds that state in memory and rebuilds the live FUNDS list from it.
    Loading and saving the file is done by js/repo.js, which is told about every change through onChange(). */
 const FundStore = (() => {
@@ -16,13 +18,15 @@ const FundStore = (() => {
   BUILT_IN.forEach(s => FUNDS[s].forEach((f, i) => { f.id = `b-${s}-${i}`; f.builtIn = true; }));   // stable ids for built-ins
   const ORIGINAL = clone({ liquid: FUNDS.liquid, illiquid: FUNDS.illiquid });                        // pristine copy to rebuild from
 
-  const empty = () => ({ strategies: [], funds: {}, hidden: [], overrides: {}, order: {} });
+  const empty = () => ({ strategies: [], funds: {}, hidden: [], overrides: {}, order: {}, removed: [] });
   const normalise = s => ({
     strategies: Array.isArray(s && s.strategies) ? s.strategies : [],
     funds: s && s.funds && typeof s.funds === "object" ? s.funds : {},
     hidden: Array.isArray(s && s.hidden) ? s.hidden : [],
     overrides: s && s.overrides && typeof s.overrides === "object" ? s.overrides : {},
-    order: s && s.order && typeof s.order === "object" ? s.order : {}
+    order: s && s.order && typeof s.order === "object" ? s.order : {},
+    removed: Array.isArray(s && s.removed) ? s.removed.filter(id => BUILT_IN.includes(id)) : [],
+    stats: Array.isArray(s && s.stats) && s.stats.length === 3 ? s.stats.map(x => String(x).slice(0, 12)) : null
   });
   let state = empty();
   let listener = () => {};
@@ -46,6 +50,7 @@ const FundStore = (() => {
       if (o.strat === at.strat || !FUNDS[o.strat]) FUNDS[at.strat][at.index] = clone(o.fund);        // edited in place
       else { FUNDS[at.strat].splice(at.index, 1); FUNDS[o.strat].push(clone(o.fund)); }              // edited and moved
     });
+    state.removed.forEach(id => { delete FUNDS[id]; });                                              // deleted built-in tabs, after funds edited out of them have moved
     Object.keys(state.funds).forEach(id => {
       if (FUNDS[id] && Array.isArray(state.funds[id])) FUNDS[id].push(...clone(state.funds[id]));    // funds of a deleted strategy are ignored
     });
@@ -66,7 +71,7 @@ const FundStore = (() => {
     onChange(fn) { listener = fn; },
 
     /** All strategy tabs in display order: the two built-in ones, then the custom ones. */
-    strategies: () => [...BUILT_IN.map(id => ({ id, builtIn: true })), ...state.strategies],
+    strategies: () => [...BUILT_IN.filter(id => !state.removed.includes(id)).map(id => ({ id, builtIn: true })), ...state.strategies],
     isBuiltIn: id => BUILT_IN.includes(id),
 
     /** Creates a strategy tab. `name` must already be safe to insert as HTML. Returns the new strategy. */
@@ -76,9 +81,15 @@ const FundStore = (() => {
       changed();
       return s;
     },
-    /** Removes a custom strategy tab together with the funds in it. Built-in tabs cannot be removed. */
+    /** Removes a strategy tab together with the funds in it. A built-in tab comes back with restoreBuiltIns(). */
     removeStrategy(id) {
-      if (BUILT_IN.includes(id)) return;
+      if (BUILT_IN.includes(id)) {
+        if (!state.removed.includes(id)) state.removed.push(id);
+        delete state.funds[id];                                                                      // funds admins added to it
+        delete state.order[id];
+        changed();
+        return;
+      }
       Object.entries(state.overrides).forEach(([fid, o]) => {                                        // built-ins moved here go too
         if (o && o.strat === id) { if (!state.hidden.includes(fid)) state.hidden.push(fid); delete state.overrides[fid]; }
       });
@@ -139,10 +150,14 @@ const FundStore = (() => {
       return true;
     },
 
-    /** True when an admin has edited or deleted any built-in fund. */
-    builtInsChanged: () => state.hidden.length > 0 || Object.keys(state.overrides).length > 0,
-    /** Forgets every edit and deletion of built-in funds. */
-    restoreBuiltIns() { state.hidden = []; state.overrides = {}; changed(); },
+    /** True when an admin has edited or deleted any built-in fund or built-in tab. */
+    builtInsChanged: () => state.hidden.length > 0 || Object.keys(state.overrides).length > 0 || state.removed.length > 0,
+    /** Forgets every edit and deletion of built-in funds and brings back deleted built-in tabs. */
+    restoreBuiltIns() { state.hidden = []; state.overrides = {}; state.removed = []; changed(); },
+
+    /** The three cover-page numbers as edited by an admin, or null when they are still the ones in index.html. */
+    stats: () => (state.stats ? [...state.stats] : null),
+    setStats(list) { state.stats = list.map(x => String(x).slice(0, 12)); changed(); },
 
     exportJSON: () => JSON.stringify(state, null, 2)
   };

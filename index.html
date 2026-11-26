@@ -6,7 +6,7 @@
 <title>Alternative Investments | Fund Platform</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/styles.css?v=202611251444">
+<link rel="stylesheet" href="css/styles.css?v=202611251450">
 </head>
 <body>
 
@@ -44,9 +44,9 @@
     <h1 data-i="heroTitle"></h1>
     <p data-i="heroBody"></p>
     <div class="hero-stats">
-      <div><b>130+</b><span data-i="stPipeline"></span></div>
-      <div><b>40+</b><span data-i="stGPs"></span></div>
-      <div><b>9</b><span data-i="stCategories"></span></div>
+      <div><b data-stat="0">130+</b><span data-i="stPipeline"></span></div>
+      <div><b data-stat="1">40+</b><span data-i="stGPs"></span></div>
+      <div><b data-stat="2">9</b><span data-i="stCategories"></span></div>
     </div>
   </div>
 </header>
@@ -59,6 +59,10 @@
     </div>
     <div class="tabbar reveal">
       <div class="tabs" id="tabs" role="tablist"></div>   <!-- filled by renderTabs() in js/app.js -->
+      <div class="pager" id="pager">
+        <button type="button" id="prevBtn" aria-label="Previous fund"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3 5 8l5 5"/></svg></button>
+        <button type="button" id="nextBtn" aria-label="Next fund"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3l5 5-5 5"/></svg></button>
+      </div>
     </div>
     <div class="track-outer" id="scroller" tabindex="0" aria-label="Funds"><div class="track" id="track"></div></div>
     <div class="progress"><i id="prog"></i></div>
@@ -165,17 +169,17 @@
 <!-- Scripts load in this order on purpose: settings, wording, data, storage, auth, then the page logic.
      The ?v= number makes browsers fetch fresh copies. Change it (all at once) whenever these files change,
      otherwise a browser can mix an old script with a new page and the funds will not show. -->
-<script src="js/config.js?v=202611251444"></script>
-<script src="js/i18n.js?v=202611251444"></script>
-<script src="js/funds-data.js?v=202611251444"></script>
-<script src="js/fund-store.js?v=202611251444"></script>
-<script src="js/auth.js?v=202611251444"></script>
-<script src="js/app.js?v=202611251444"></script>
-<script src="js/account.js?v=202611251444"></script>
-<script src="js/pptx-reader.js?v=202611251444"></script>
-<script src="js/add-fund.js?v=202611251444"></script>
-<script src="js/edit-fund.js?v=202611251444"></script>
-<script src="js/repo.js?v=202611251444"></script>
-<script src="js/reorder.js?v=202611251444"></script>
+<script src="js/config.js?v=202611251450"></script>
+<script src="js/i18n.js?v=202611251450"></script>
+<script src="js/funds-data.js?v=202611251450"></script>
+<script src="js/fund-store.js?v=202611251450"></script>
+<script src="js/auth.js?v=202611251450"></script>
+<script src="js/app.js?v=202611251450"></script>
+<script src="js/account.js?v=202611251450"></script>
+<script src="js/pptx-reader.js?v=202611251450"></script>
+<script src="js/add-fund.js?v=202611251450"></script>
+<script src="js/edit-fund.js?v=202611251450"></script>
+<script src="js/repo.js?v=202611251450"></script>
+<script src="js/reorder.js?v=202611251450"></script>
 </body>
 </html>

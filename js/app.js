@@ -30,6 +30,10 @@ const ym=s=>{const [y,m]=s.split("-");return zh()?`${y}年${+m}月`:`${MON[m-1]}
 const money=bn=>zh()?`${+(bn*10).toFixed(1)}亿美元`.replace("亿",lang==="tc"?"億":"亿"):`US$${bn.toFixed(bn<10?2:1)}bn`;
 const perLabel=([y,,k,m])=>k==="ytd"?(zh()?`${y} YTD (至${m}月)`:`${y} YTD (to ${MON[m-1]})`):k==="p"?(zh()?`${y} (${m}月起)`:`${y} (from ${MON[m-1]})`):y;
 const ann=p=>{const f=p.filter(x=>!x[2]);if(!f.length)return null;return(Math.pow(f.reduce((a,x)=>a*(1+x[1]/100),1),1/f.length)-1)*100};
+/* Yearly returns shown on the card: the latest 15 periods. A fund with `cardFrom` (a year) keeps everything before that
+   year off the card, because those rows are a predecessor or composite record and not the fund's own. */
+const CARD_BARS=15;
+const cardPerf=f=>{const all=[...(f.hist||[]),...f.perf];return(f.cardFrom?all.filter(p=>p[0]>=f.cardFrom):all).slice(-CARD_BARS)};
 const liqTxt=f=>f.liq?L(f.liq):t("daily");
 const veh=f=>f.vehicle==="private"?t("private"):f.vehicle;
 // text typed by an admin or read from a deck is inserted into the page as HTML, so neutralise any markup first
@@ -53,10 +57,10 @@ function ddText(f){                                     // max drawdown as a pla
 const track=document.getElementById("track"), prog=document.getElementById("prog");
 
 function cardHTML(f,i){
-  const has=f.perf.length>0;                               // deck-imported funds may have no yearly returns
-  const max=has?Math.max(...f.perf.map(x=>Math.abs(x[1])))||1:1;
-  const bars=f.perf.map(p=>`<div class="bar ${p[2]==="ytd"?"ytd":""}" data-v="${perLabel(p)}: ${fmt(p[1])}"><i class="${p[1]>=0?"p":"n"}" style="height:0" data-h="${Math.abs(p[1])/max*50}%"></i><em>${p[2]==="ytd"?"YTD":"'"+p[0].slice(2)}</em></div>`).join("");
-  const a=has?ann(f.perf):null, last=f.perf.at(-1);
+  const P=cardPerf(f), has=P.length>0;                               // deck-imported funds may have no yearly returns
+  const max=has?Math.max(...P.map(x=>Math.abs(x[1])))||1:1;
+  const bars=P.map(p=>`<div class="bar ${p[2]==="ytd"?"ytd":""}" data-v="${perLabel(p)}: ${fmt(p[1])}"><i class="${p[1]>=0?"p":"n"}" style="height:0" data-h="${Math.abs(p[1])/max*50}%"></i><em>${p[2]==="ytd"?"YTD":"'"+p[0].slice(2)}</em></div>`).join("");
+  const a=has?ann(P):null, last=P.at(-1);
   return `<article class="card">
     <div class="card-top${Auth.isAdmin()?" has-tools":""}">${Auth.isAdmin()?`<div class="card-tools">
         ${FUNDS[tab].length>1?`<button class="tool grip" data-grip title="${t("reorder")}" aria-label="${t("reorder")}"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><circle cx="8" cy="5" r="1.9"/><circle cx="16" cy="5" r="1.9"/><circle cx="8" cy="12" r="1.9"/><circle cx="16" cy="12" r="1.9"/><circle cx="8" cy="19" r="1.9"/><circle cx="16" cy="19" r="1.9"/></svg></button>`:""}
@@ -68,13 +72,17 @@ function cardHTML(f,i){
       <div><b>${incYear(f)||(f.isNew?t("newFund"):"—")}</b><span>${t("inception")}</span></div>
       <div><b>${a!==null?fmt(a):LX(f.target)||"—"}</b><span>${a===null&&LX(f.target)?t("target"):t("ann")}</span></div>
     </div>
+    <div class="liq-row${/^(daily|每日)$/i.test(liqTxt(f))?"":" semi"}">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 11a8 8 0 0 0-14.6-3.5M4 4v4h4M4 13a8 8 0 0 0 14.6 3.5M20 20v-4h-4"/></svg>
+      <div><span>${t("liqLabel")}</span><b>${liqTxt(f)}</b></div>
+    </div>
     <div class="card-body">
       <p class="strategy">${R(f,L(f.strategy))}</p>
       ${has?`<div class="mini-label"><span>${t("annual")}</span><span>${fmt(last[1])} ${perLabel(last)}</span></div>
       <div class="bars">${bars}</div>
       <div class="mini-label"><span>${t("recent5")}</span></div>
-      <table class="recent"><tr><th>${t("period")}</th><th>${t("ret")}</th></tr>${f.perf.slice(-5).reverse().map(p=>`<tr><td>${perLabel(p)}</td><td class="${p[1]>=0?"pos":"neg"}">${fmt(p[1])}</td></tr>`).join("")}</table>`:trackHTML(f)}
-      <div class="card-foot"><span class="liq ${tab!=="liquid"?"semi":""}">${liqTxt(f)}</span>
+      <table class="recent"><tr><th>${t("period")}</th><th>${t("ret")}</th></tr>${P.slice(-5).reverse().map(p=>`<tr><td>${perLabel(p)}</td><td class="${p[1]>=0?"pos":"neg"}">${fmt(p[1])}</td></tr>`).join("")}</table>`:trackHTML(f)}
+      <div class="card-foot">
         <button class="more" data-n="${i}">${t("view")} <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 7h10M8 3l4 4-4 4"/></svg></button></div>
     </div></article>`;
 }
@@ -83,7 +91,7 @@ const scroller=document.getElementById("scroller");
 
 function renderCards(keepPos){
   const x=scroller.scrollLeft;
-  track.innerHTML=FUNDS[tab].map(cardHTML).join("");
+  track.innerHTML=(FUNDS[tab]||[]).map(cardHTML).join("");
   document.getElementById("tabDesc").textContent=tab==="liquid"?t(anon()?"descLiquidAnon":"descLiquid"):tab==="illiquid"?t("descIlliquid"):"";   // custom strategies have no description line
   requestAnimationFrame(()=>setTimeout(()=>track.querySelectorAll(".bar i").forEach(b=>b.style.height=b.dataset.h),80));
   document.getElementById("restoreBtn").hidden=!(Auth.isAdmin()&&FundStore.builtInsChanged());
@@ -94,15 +102,62 @@ function updateProg(){
   const w=scroller.scrollWidth||1;
   prog.style.width=Math.min(100,scroller.clientWidth/w*100)+"%";
   prog.style.left=(scroller.scrollLeft/w*100)+"%";
+  const max=scroller.scrollWidth-scroller.clientWidth, pager=document.getElementById("pager");
+  pager.hidden=max<=1;                                                     // every card already fits: no buttons needed
+  document.getElementById("prevBtn").disabled=scroller.scrollLeft<=1;
+  document.getElementById("nextBtn").disabled=scroller.scrollLeft>=max-1;
 }
 scroller.addEventListener("scroll",updateProg,{passive:true});
+
+/* previous / next buttons: each click moves the row by exactly one card */
+const prevBtn=document.getElementById("prevBtn"), nextBtn=document.getElementById("nextBtn");
+let pageTo=0, pageAt=0;
+function page(dir){
+  const first=track.firstElementChild; if(!first) return;
+  const step=first.offsetWidth+(parseFloat(getComputedStyle(track).columnGap)||0);
+  const max=scroller.scrollWidth-scroller.clientWidth;
+  const from=performance.now()-pageAt<700?pageTo:scroller.scrollLeft;      // quick clicks add up instead of restarting mid-slide
+  pageTo=Math.max(0,Math.min(max,(Math.round(from/step)+dir)*step));
+  pageAt=performance.now();
+  cancelAnimationFrame(glide); scroller.classList.remove("dragging");
+  scroller.scrollTo({left:pageTo,behavior:"smooth"});
+}
+prevBtn.onclick=()=>page(-1);
+nextBtn.onclick=()=>page(1);
 addEventListener("resize",updateProg);
+
+/* ---------- cover-page numbers ----------
+   The three figures on the cover come from index.html until an admin edits them; after that they are part of the
+   shared data. An admin clicks a number, types, and presses Enter (or clicks away) to save; Esc cancels. */
+const statEls=[...document.querySelectorAll(".hero-stats b[data-stat]")];
+const STAT_DEFAULT=statEls.map(b=>b.textContent);
+function renderStats(){
+  const list=FundStore.stats()||STAT_DEFAULT, admin=Auth.isAdmin();
+  statEls.forEach((b,i)=>{
+    if(document.activeElement!==b) b.textContent=list[i];           // never overwrite a number while it is being typed
+    if(admin){b.contentEditable="plaintext-only";b.title=t("statEdit");b.spellcheck=false}
+    else{b.removeAttribute("contenteditable");b.removeAttribute("title")}
+  });
+}
+statEls.forEach((b,i)=>{
+  b.addEventListener("keydown",e=>{
+    if(e.key==="Enter"){e.preventDefault();b.blur()}
+    if(e.key==="Escape"){b.textContent=(FundStore.stats()||STAT_DEFAULT)[i];b.blur()}
+  });
+  b.addEventListener("blur",()=>{
+    const list=FundStore.stats()||[...STAT_DEFAULT], value=b.textContent.replace(/\s+/g," ").trim().slice(0,12);
+    if(!value||value===list[i]||!Auth.isAdmin()||needToken()){b.textContent=list[i];return}
+    list[i]=value; b.textContent=value;
+    FundStore.setStats(list);
+  });
+});
 
 function applyLang(){
   document.documentElement.lang={en:"en",sc:"zh-Hans",tc:"zh-Hant"}[lang];
   document.querySelectorAll("[data-i]").forEach(el=>el.innerHTML=t(el.dataset.i));
   document.querySelectorAll(".lang-menu button").forEach(b=>{const on=b.dataset.lang===lang;b.classList.toggle("on",on);b.setAttribute("aria-checked",on)});
   document.getElementById("langCur").textContent={en:"EN",sc:"简体",tc:"繁體"}[lang];
+  renderStats();
   renderTabs();
   renderCards(true);
   if(openFund) openD(openFund);
@@ -117,15 +172,16 @@ addEventListener("keydown",e=>{if(e.key==="Escape")setMenu(false)});
 
 /* ---------- strategy tabs ----------
    Two built-in tabs (liquid, illiquid) plus any strategies an admin has added. `tab` holds the id of the open one.
-   Admins also get a small × on their own strategies and a "+ Add Strategy" button at the end. */
+   Admins also get a small × on every tab and a "+ Add Strategy" button at the end. Deleting one of the two built-in
+   tabs can be undone with "Restore original funds". */
 const tabsEl=document.getElementById("tabs");
 const stratName=s=>s.builtIn?t(s.id==="liquid"?"tabLiquid":"tabIlliquid"):s.name;
 let addingStrat=false;
 function renderTabs(){
   const list=FundStore.strategies(), admin=Auth.isAdmin();
-  if(!list.some(s=>s.id===tab)) tab="liquid";
+  if(!list.some(s=>s.id===tab)) tab=list.length?list[0].id:"";       // the open tab was deleted: fall back to the first one
   if(!admin) addingStrat=false;
-  tabsEl.innerHTML=list.map(s=>`<button class="tab ${s.id===tab?"active":""}" data-tab="${s.id}" role="tab"><span>${stratName(s)}</span><span class="count">${(FUNDS[s.id]||[]).length}</span>${admin&&!s.builtIn?`<span class="tab-del" data-del="${s.id}" title="${t("stratDelete")}">×</span>`:""}</button>`).join("")
+  tabsEl.innerHTML=list.map(s=>`<button class="tab ${s.id===tab?"active":""}" data-tab="${s.id}" role="tab"><span>${stratName(s)}</span><span class="count">${(FUNDS[s.id]||[]).length}</span>${admin?`<span class="tab-del" data-del="${s.id}" title="${t("stratDelete")}">×</span>`:""}</button>`).join("")
     +(!admin?"":addingStrat
       ?`<form class="strat-new" id="stratForm"><input id="stratName" maxlength="40" placeholder="${t("stratPh")}"><button class="btn sm solid" type="submit">${t("stratAdd")}</button><button class="strat-x" type="button" id="stratCancel" aria-label="${t("cancel")}">×</button></form>`
       :`<button class="tab tab-add" id="stratAddBtn">${t("addStrategy")}</button>`);
@@ -145,7 +201,7 @@ tabsEl.addEventListener("click",e=>{
   if(del){
     const id=del.dataset.del, s=FundStore.strategies().find(x=>x.id===id);
     if(s&&Auth.isAdmin()&&!needToken()&&confirm(t("stratDelConfirm")(del.parentElement.firstChild.textContent,(FUNDS[id]||[]).length))){
-      FundStore.removeStrategy(id); closeD(); selectTab(tab===id?"liquid":tab);
+      FundStore.removeStrategy(id); closeD(); selectTab(tab);
     }
     return;
   }
@@ -212,7 +268,7 @@ function keySlide(){                                    // held: steady speed; r
 }
 addEventListener("keydown",e=>{
   if(e.key==="Escape"){closeD();return}
-  if(drawer.classList.contains("on")||document.body.classList.contains("modal-open")||/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName))return;
+  if(drawer.classList.contains("on")||document.body.classList.contains("modal-open")||/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName)||document.activeElement.isContentEditable)return;
   if(e.key==="ArrowRight"||e.key==="ArrowLeft"){
     e.preventDefault();
     const d=e.key==="ArrowRight"?1:-1;

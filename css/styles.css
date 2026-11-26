@@ -89,9 +89,9 @@ section.funds{padding:110px 0 120px}
 .track-outer:focus-visible{box-shadow:inset 0 0 0 2px rgba(218,181,110,.5)}
 /* Shared row grid: every card spans the same 10 rows (tag, name, manager, KPIs, strategy, returns label,
    chart, drawdown label, drawdown, footer) via subgrid, so matching content lines up across cards. */
-.track{display:grid;grid-auto-flow:column;grid-auto-columns:calc((100% - 48px)/3);grid-template-rows:repeat(10,auto);column-gap:24px;row-gap:0;user-select:none}
+.track{display:grid;grid-auto-flow:column;grid-auto-columns:calc((100% - 48px)/3);grid-template-rows:repeat(11,auto);column-gap:24px;row-gap:0;user-select:none}
 .card{scroll-snap-align:start}
-.card{grid-row:span 10;display:grid;grid-template-rows:subgrid;row-gap:0;background:var(--card);border:1px solid var(--line);transition:transform .35s,box-shadow .35s}
+.card{grid-row:span 11;display:grid;grid-template-rows:subgrid;row-gap:0;background:var(--card);border:1px solid var(--line);transition:transform .35s,box-shadow .35s}
 .card:hover{transform:translateY(-6px);box-shadow:0 24px 50px -24px rgba(26,36,69,.35)}
 .card-top{grid-row:span 3;display:grid;grid-template-rows:subgrid;row-gap:0;align-items:start;padding:30px 30px 24px;background:linear-gradient(150deg,var(--navy) 0%,var(--navy-2) 100%);color:#fff;position:relative;overflow:hidden}
 .card-top::after{content:"";position:absolute;right:-40px;top:-40px;width:160px;height:160px;border:1px solid rgba(218,181,110,.35);border-radius:50%}
@@ -348,3 +348,27 @@ html:not([lang="en"]) .wordmark{font-size:19px;letter-spacing:5px}
 
 /* note above the yearly table in View Fund */
 .d-body .perf-cap{font-size:13px;line-height:1.65;color:var(--muted);margin:-4px 0 14px}
+
+/* ---- liquidity band on every card (its own row, so it lines up across cards) ---- */
+.liq-row{display:flex;align-items:center;gap:9px;padding:13px 30px;border-bottom:1px solid var(--line);color:var(--muted)}
+.liq-row svg{flex:none;width:15px;height:15px}
+.liq-row div{flex:1;display:flex;justify-content:space-between;align-items:baseline;gap:14px}
+.liq-row span{flex:none;font-size:10.5px;letter-spacing:1.2px;text-transform:uppercase}
+.liq-row b{font-size:14px;font-weight:600;line-height:1.35;color:var(--navy);text-align:right}
+.card-foot{justify-content:flex-end}
+.bars{gap:4px}
+.bar em{font-size:9px}
+
+/* ---- previous / next buttons beside the tabs ---- */
+.pager{display:flex;gap:10px;flex:none;margin-left:24px}
+.pager[hidden]{display:none}
+.pager button{display:grid;place-items:center;width:42px;height:42px;border-radius:50%;border:1px solid #c9cede;background:#fff;color:var(--navy);cursor:pointer;transition:.2s}
+.pager button:hover:not(:disabled){background:var(--navy);border-color:var(--navy);color:#fff}
+.pager button:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.pager button:disabled{opacity:.35;cursor:default}
+@media (max-width:680px){.pager{margin-left:0;align-self:flex-end}}
+
+/* ---- cover-page numbers an admin can edit in place ---- */
+.hero-stats b[contenteditable]{outline:none;cursor:text;width:fit-content;min-width:1.2ch;border-bottom:1px dashed rgba(218,181,110,.55);transition:border-color .2s}
+.hero-stats b[contenteditable]:hover{border-bottom-color:var(--gold)}
+.hero-stats b[contenteditable]:focus{border-bottom:1px solid var(--gold)}

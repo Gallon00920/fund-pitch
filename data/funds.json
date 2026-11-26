@@ -7,6 +7,10 @@
     {
       "id": "s-1795591188122",
       "name": "Mortgage credit"
+    },
+    {
+      "id": "s-1795664256764",
+      "name": "Royalty"
     }
   ],
   "funds": {
@@ -115,125 +119,6 @@
         },
         "redact": [
           "Marathon"
-        ],
-        "translated": true
-      },
-      {
-        "id": "custom-1795591079441-1",
-        "custom": true,
-        "name": "KKR HCRx Healthcare Royalty Evergreen Fund",
-        "mgr": {
-          "en": "KKR"
-        },
-        "tag": {
-          "en": "Pharmaceutical Royalties (Royalty) · Evergreen",
-          "sc": "医药特许权收益 (Royalty) · Evergreen",
-          "tc": "醫藥特許權收益 (Royalty) · Evergreen"
-        },
-        "vehicle": "private",
-        "inception": "2022-10",
-        "inceptionText": {
-          "en": "2022/10 (Evergreen launched, 4 years);<br>HCRx founded 2006 (20 years)",
-          "sc": "2022/10 (Evergreen 成立，4年)；<br>HCRx 2006 年创立 (20年)",
-          "tc": "2022/10 (Evergreen 成立，4年)；<br>HCRx 2006 年創立 (20年)"
-        },
-        "isNew": false,
-        "aum": 1.8,
-        "aumText": {
-          "en": "$1.8bn",
-          "sc": "$1.8bn",
-          "tc": "$1.8bn"
-        },
-        "strategy": {
-          "en": "Royalties on approved, commercialized biopharma products (royalty acquisitions / synthetic royalties / royalty notes / senior debt);<br>40+ therapeutic areas, orphan/rare diseases 43%, average remaining duration 9 years;",
-          "sc": "已获批商业化 biopharma 产品 royalty (royalty 收购 / 合成 royalty / royalty note / senior debt)；<br>40+ 治疗领域，孤儿/罕见病 43%，平均剩余久期 9 年；",
-          "tc": "已獲批商業化 biopharma 產品 royalty (royalty 收購 / 合成 royalty / royalty note / senior debt)；<br>40+ 治療領域，孤兒/罕見病 43%，平均剩餘存續期 9 年；"
-        },
-        "hist": [],
-        "perf": [
-          [
-            "2022",
-            3.1,
-            "p",
-            10
-          ],
-          [
-            "2023",
-            6.9
-          ],
-          [
-            "2024",
-            10
-          ],
-          [
-            "2025",
-            12.6
-          ],
-          [
-            "2026",
-            4.8,
-            "ytd",
-            3
-          ]
-        ],
-        "perfNotes": {
-          "en": [
-            "Legacy drawdown fund net IRR:",
-            "HCR III 2013: 8.8% / 1.3x; HCR IV 2019: 15.4% / 1.4x",
-            "MOLAG 2013: 11.2%; Overflow A/B/C: 13.3% / 15.6% / 14.5%",
-            "Stafford A/B: 9.5% / 14.6%; Potomac 2020: 17.4%; Canary 2020: 14.1%",
-            "Stafford II 2024: 13.5%; Potomac II 2024: 15.9%"
-          ],
-          "sc": [
-            "Legacy drawdown 基金净IRR:",
-            "HCR III 2013: 8.8% / 1.3x；HCR IV 2019: 15.4% / 1.4x",
-            "MOLAG 2013: 11.2%；Overflow A/B/C: 13.3% / 15.6% / 14.5%",
-            "Stafford A/B: 9.5% / 14.6%；Potomac 2020: 17.4%；Canary 2020: 14.1%",
-            "Stafford II 2024: 13.5%；Potomac II 2024: 15.9%"
-          ],
-          "tc": [
-            "Legacy drawdown 基金淨IRR:",
-            "HCR III 2013: 8.8% / 1.3x；HCR IV 2019: 15.4% / 1.4x",
-            "MOLAG 2013: 11.2%；Overflow A/B/C: 13.3% / 15.6% / 14.5%",
-            "Stafford A/B: 9.5% / 14.6%；Potomac 2020: 17.4%；Canary 2020: 14.1%",
-            "Stafford II 2024: 13.5%；Potomac II 2024: 15.9%"
-          ]
-        },
-        "target": null,
-        "ddLabel": {
-          "en": "Drawdown / Loss Rate",
-          "sc": "回撤 / 损失率",
-          "tc": "回撤 / 損失率"
-        },
-        "ddRaw": {
-          "en": "No negative year since Evergreen inception;<br>Realized loss rate &lt;1.5% (since 2006 founding)",
-          "sc": "Evergreen 成立以来无负年度；<br>实现损失率 &lt;1.5% (2006 年成立以来)",
-          "tc": "Evergreen 成立以來無負年度；<br>實現損失率 &lt;1.5% (2006 年成立以來)"
-        },
-        "liq": {
-          "en": "Run-off option every 4 years",
-          "sc": "每 4 年一次 run-off 选择权",
-          "tc": "每 4 年一次 run-off 選擇權"
-        },
-        "liqFull": {
-          "en": "Run-off option every 4 years;",
-          "sc": "每 4 年一次 run-off 选择权；",
-          "tc": "每 4 年一次 run-off 選擇權；"
-        },
-        "note": {
-          "en": "Source: Marathon ABL Evergreen Fund deck (CVC Marathon, Q3 2026): terms/strategy/AUM p19-20; vintage performance and DPI p8 (DPI as of 2026/8, called as of 2026/6); ABL program net IRR of 11.4% is on a 2005–2025/9/30 model-fees basis; loss rate covers 2014–2024/12/31 (p10). KKR HCRx Evergreen deck (Aug 2026): data as of 2026/3/31; Evergreen net return is for a Class A since-inception model investor (p12); net IRR by fund and legacy aggregate of ~12% on p13 (excluding Fund I/II from the prior management era); loss rate/strategy p10-16; terms p24 (fee structure updated effective 2026/1/1).",
-          "sc": "来源: Marathon ABL Evergreen Fund deck (CVC Marathon, Q3 2026)——条款/策略/规模 p19-20，vintage 表现与 DPI p8 (DPI 截至 2026/8，called 截至 2026/6)，ABL program 净IRR 11.4% 为 2005–2025/9/30 model fees 口径，损失率为 2014–2024/12/31 (p10)；KKR HCRx Evergreen deck (Aug 2026)——数据截至 2026/3/31，Evergreen 净回报为 Class A 自成立模型投资者 (p12)，分基金净IRR 及 legacy 合计 ~12% 见 p13 (不含前管理层时期 Fund I/II)，损失率/策略 p10-16，条款 p24 (费用结构 2026/1/1 起更新)。",
-          "tc": "來源: Marathon ABL Evergreen Fund deck (CVC Marathon, Q3 2026)——條款/策略/基金規模 p19-20，vintage 表現與 DPI p8 (DPI 截至 2026/8，called 截至 2026/6)，ABL program 淨IRR 11.4% 為 2005–2025/9/30 model fees 口徑，損失率為 2014–2024/12/31 (p10)；KKR HCRx Evergreen deck (Aug 2026)——數據截至 2026/3/31，Evergreen 淨回報為 Class A 自成立模型投資者 (p12)，分基金淨IRR 及 legacy 合計 ~12% 見 p13 (不含前管理層時期 Fund I/II)，損失率/策略 p10-16，條款 p24 (費用結構 2026/1/1 起更新)。"
-        },
-        "redact": [
-          "Overflow",
-          "Stafford",
-          "Potomac",
-          "Canary",
-          "MOLAG",
-          "HCRx",
-          "KKR",
-          "HCR"
         ],
         "translated": true
       },
@@ -1014,6 +899,127 @@
         "redact": [
           "Balbec",
           "IGCF"
+        ],
+        "translated": true
+      }
+    ],
+    "s-1795664256764": [
+      {
+        "id": "custom-1795591079441-1",
+        "custom": true,
+        "name": "KKR HCRx Healthcare Royalty Evergreen Fund",
+        "mgr": {
+          "en": "KKR"
+        },
+        "tag": {
+          "en": "Pharmaceutical Royalties (Royalty) · Evergreen",
+          "sc": "医药特许权收益 (Royalty) · Evergreen",
+          "tc": "醫藥特許權收益 (Royalty) · Evergreen"
+        },
+        "vehicle": "private",
+        "inception": "2022-10",
+        "inceptionText": {
+          "en": "2022/10 (Evergreen launched, 4 years);HCRx founded 2006 (20 years)",
+          "sc": "2022/10 (Evergreen 成立，4年)；<br>HCRx 2006 年创立 (20年)",
+          "tc": "2022/10 (Evergreen 成立，4年)；<br>HCRx 2006 年創立 (20年)"
+        },
+        "isNew": false,
+        "aum": 1.8,
+        "aumText": {
+          "en": "$1.8bn",
+          "sc": "$1.8bn",
+          "tc": "$1.8bn"
+        },
+        "strategy": {
+          "en": "Royalties on approved, commercialized biopharma products (royalty acquisitions / synthetic royalties / royalty notes / senior debt);<br>40+ therapeutic areas, orphan/rare diseases 43%, average remaining duration 9 years;",
+          "sc": "已获批商业化 biopharma 产品 royalty (royalty 收购 / 合成 royalty / royalty note / senior debt)；<br>40+ 治疗领域，孤儿/罕见病 43%，平均剩余久期 9 年；",
+          "tc": "已獲批商業化 biopharma 產品 royalty (royalty 收購 / 合成 royalty / royalty note / senior debt)；<br>40+ 治療領域，孤兒/罕見病 43%，平均剩餘存續期 9 年；"
+        },
+        "hist": [],
+        "perf": [
+          [
+            "2022",
+            3.1,
+            "p",
+            10
+          ],
+          [
+            "2023",
+            6.9
+          ],
+          [
+            "2024",
+            10
+          ],
+          [
+            "2025",
+            12.6
+          ],
+          [
+            "2026",
+            4.8,
+            "ytd",
+            3
+          ]
+        ],
+        "perfNotes": {
+          "en": [
+            "Legacy drawdown fund net IRR:",
+            "HCR III 2013: 8.8% / 1.3x; HCR IV 2019: 15.4% / 1.4x",
+            "MOLAG 2013: 11.2%; Overflow A/B/C: 13.3% / 15.6% / 14.5%",
+            "Stafford A/B: 9.5% / 14.6%; Potomac 2020: 17.4%; Canary 2020: 14.1%",
+            "Stafford II 2024: 13.5%; Potomac II 2024: 15.9%"
+          ],
+          "sc": [
+            "Legacy drawdown 基金净IRR:",
+            "HCR III 2013: 8.8% / 1.3x；HCR IV 2019: 15.4% / 1.4x",
+            "MOLAG 2013: 11.2%；Overflow A/B/C: 13.3% / 15.6% / 14.5%",
+            "Stafford A/B: 9.5% / 14.6%；Potomac 2020: 17.4%；Canary 2020: 14.1%",
+            "Stafford II 2024: 13.5%；Potomac II 2024: 15.9%"
+          ],
+          "tc": [
+            "Legacy drawdown 基金淨IRR:",
+            "HCR III 2013: 8.8% / 1.3x；HCR IV 2019: 15.4% / 1.4x",
+            "MOLAG 2013: 11.2%；Overflow A/B/C: 13.3% / 15.6% / 14.5%",
+            "Stafford A/B: 9.5% / 14.6%；Potomac 2020: 17.4%；Canary 2020: 14.1%",
+            "Stafford II 2024: 13.5%；Potomac II 2024: 15.9%"
+          ]
+        },
+        "target": null,
+        "ddLabel": {
+          "en": "Drawdown / Loss Rate",
+          "sc": "回撤 / 损失率",
+          "tc": "回撤 / 損失率"
+        },
+        "ddRaw": {
+          "en": "No negative year since Evergreen inception;<br>Realized loss rate &lt;1.5% (since 2006 founding)",
+          "sc": "Evergreen 成立以来无负年度；<br>实现损失率 &lt;1.5% (2006 年成立以来)",
+          "tc": "Evergreen 成立以來無負年度；<br>實現損失率 &lt;1.5% (2006 年成立以來)"
+        },
+        "liq": {
+          "en": "Run-off option every 4 years",
+          "sc": "每 4 年一次 run-off 选择权",
+          "tc": "每 4 年一次 run-off 選擇權"
+        },
+        "liqFull": {
+          "en": "Run-off option every 4 years;",
+          "sc": "每 4 年一次 run-off 选择权；",
+          "tc": "每 4 年一次 run-off 選擇權；"
+        },
+        "note": {
+          "en": "Source: Marathon ABL Evergreen Fund deck (CVC Marathon, Q3 2026): terms/strategy/AUM p19-20; vintage performance and DPI p8 (DPI as of 2026/8, called as of 2026/6); ABL program net IRR of 11.4% is on a 2005–2025/9/30 model-fees basis; loss rate covers 2014–2024/12/31 (p10). KKR HCRx Evergreen deck (Aug 2026): data as of 2026/3/31; Evergreen net return is for a Class A since-inception model investor (p12); net IRR by fund and legacy aggregate of ~12% on p13 (excluding Fund I/II from the prior management era); loss rate/strategy p10-16; terms p24 (fee structure updated effective 2026/1/1).",
+          "sc": "来源: Marathon ABL Evergreen Fund deck (CVC Marathon, Q3 2026)——条款/策略/规模 p19-20，vintage 表现与 DPI p8 (DPI 截至 2026/8，called 截至 2026/6)，ABL program 净IRR 11.4% 为 2005–2025/9/30 model fees 口径，损失率为 2014–2024/12/31 (p10)；KKR HCRx Evergreen deck (Aug 2026)——数据截至 2026/3/31，Evergreen 净回报为 Class A 自成立模型投资者 (p12)，分基金净IRR 及 legacy 合计 ~12% 见 p13 (不含前管理层时期 Fund I/II)，损失率/策略 p10-16，条款 p24 (费用结构 2026/1/1 起更新)。",
+          "tc": "來源: Marathon ABL Evergreen Fund deck (CVC Marathon, Q3 2026)——條款/策略/基金規模 p19-20，vintage 表現與 DPI p8 (DPI 截至 2026/8，called 截至 2026/6)，ABL program 淨IRR 11.4% 為 2005–2025/9/30 model fees 口徑，損失率為 2014–2024/12/31 (p10)；KKR HCRx Evergreen deck (Aug 2026)——數據截至 2026/3/31，Evergreen 淨回報為 Class A 自成立模型投資者 (p12)，分基金淨IRR 及 legacy 合計 ~12% 見 p13 (不含前管理層時期 Fund I/II)，損失率/策略 p10-16，條款 p24 (費用結構 2026/1/1 起更新)。"
+        },
+        "redact": [
+          "Overflow",
+          "Stafford",
+          "Potomac",
+          "Canary",
+          "MOLAG",
+          "HCRx",
+          "KKR",
+          "HCR"
         ],
         "translated": true
       }

@@ -386,3 +386,16 @@ UI.tc.efInception="成立月份 (決定卡片上的年份)";                    
 UI.en.imHide="Words hidden from investors (a first guess; Claude decides the final list when the fund is translated)";
 UI.sc.imHide="对投资者隐藏的词 (初步建议；翻译基金时由 Claude 决定最终列表)";
 UI.tc.imHide="對投資者隱藏的詞 (初步建議；翻譯基金時由 Claude 決定最終列表)";
+
+/* the site opens as the investor view; signing in is for admins */
+Object.assign(UI.en,{loginBtn:"Admin Login",loginTitle:"Admin Login",loginSub:"Sign in to add, edit and arrange funds.",liqLabel:"Liquidity",
+  restoreConfirm:"Undo every edit and deletion of the original funds and strategies? Funds and strategies you added are kept."});
+Object.assign(UI.sc,{loginBtn:"管理员登录",loginTitle:"管理员登录",loginSub:"登录后可新增、编辑及排列基金。",liqLabel:"流动性",
+  restoreConfirm:"撤销对原始基金及策略的所有修改和删除？您新增的基金和策略将保留。"});
+Object.assign(UI.tc,{loginBtn:"管理員登入",loginTitle:"管理員登入",loginSub:"登入後可新增、編輯及排列基金。",liqLabel:"流動性",
+  restoreConfirm:"撤銷對原始基金及策略的所有修改和刪除？您新增的基金和策略將保留。"});
+
+/* cover-page numbers can be edited by an admin */
+UI.en.statEdit="Click to edit. Enter saves, Esc cancels.";
+UI.sc.statEdit="点击即可编辑。按 Enter 保存，按 Esc 取消。";
+UI.tc.statEdit="點擊即可編輯。按 Enter 儲存，按 Esc 取消。";
