@@ -2,6 +2,9 @@
 
 A static website: plain HTML, CSS and JavaScript. There is no build step and nothing to install.
 
+## Public Link
+https://Gallon00920.github.io/fund-pitch
+
 ## Run it locally
 
 Open this folder in your IDE, then start the local server from the folder and open http://localhost:5173
