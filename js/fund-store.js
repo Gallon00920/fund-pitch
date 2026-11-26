@@ -11,6 +11,7 @@
      removed     [ built-in strategy id ]    built-in strategies admins deleted
      names       { built-in strategy id: name }      built-in strategies admins renamed
      stats       [ "130+", "40+", "9" ]      the three cover-page numbers, once an admin has edited them
+     featured    [ fundId, ... ]             funds admins highlighted, in the order shown on the Focus List tab
    This file only holds that state in memory and rebuilds the live FUNDS list from it.
    Loading and saving the file is done by js/repo.js, which is told about every change through onChange(). */
 const FundStore = (() => {
@@ -26,7 +27,7 @@ const FundStore = (() => {
   LISTED.forEach(s => { FUNDS[s] = FUNDS[s].filter(f => !(f.home && f.home !== s && FUNDS[f.home] && FUNDS[f.home].push(f))); });
   const ORIGINAL = clone(Object.fromEntries(BUILT_IN.map(s => [s, FUNDS[s]])));                      // pristine copy to rebuild from
 
-  const empty = () => ({ strategies: [], funds: {}, hidden: [], overrides: {}, order: {}, removed: [], names: {} });
+  const empty = () => ({ strategies: [], funds: {}, hidden: [], overrides: {}, order: {}, removed: [], names: {}, featured: [] });
   const normalise = s => ({
     strategies: Array.isArray(s && s.strategies) ? s.strategies : [],
     funds: s && s.funds && typeof s.funds === "object" ? s.funds : {},
@@ -35,7 +36,8 @@ const FundStore = (() => {
     order: s && s.order && typeof s.order === "object" ? s.order : {},
     removed: Array.isArray(s && s.removed) ? s.removed.filter(id => BUILT_IN.includes(id)) : [],
     names: Object.fromEntries(BUILT_IN.filter(id => s && s.names && typeof s.names[id] === "string" && s.names[id]).map(id => [id, s.names[id].slice(0, 200)])),
-    stats: Array.isArray(s && s.stats) && s.stats.length === 3 ? s.stats.map(x => String(x).slice(0, 12)) : null
+    stats: Array.isArray(s && s.stats) && s.stats.length === 3 ? s.stats.map(x => String(x).slice(0, 12)) : null,
+    featured: Array.isArray(s && s.featured) ? [...new Set(s.featured.map(String))] : []
   });
   let state = empty();
   let listener = () => {};
@@ -152,8 +154,27 @@ const FundStore = (() => {
       return true;
     },
 
+    /** Ids of the highlighted funds that are on the site, in Focus List order. */
+    featured: () => state.featured.filter(id => locate(id)),
+    isFeatured: id => state.featured.includes(id),
+    /** Adds a fund to the Focus List (at the end) or takes it off. */
+    toggleFeatured(id) {
+      state.featured = state.featured.includes(id) ? state.featured.filter(x => x !== id) : [...state.featured.filter(x => locate(x)), id];
+      changed();
+    },
+    /** Moves the Focus List card at position `from` to position `to`. */
+    reorderFeatured(from, to) {
+      const ids = state.featured.filter(id => locate(id));
+      if (from < 0 || from >= ids.length || to < 0 || to >= ids.length || from === to) return false;
+      ids.splice(to, 0, ids.splice(from, 1)[0]);
+      state.featured = ids;
+      changed();
+      return true;
+    },
+
     /** Deletes a fund. An added fund is removed for good; a built-in fund is hidden. */
     remove(id) {
+      state.featured = state.featured.filter(x => x !== id);
       if (isBuiltInFund(id)) {
         if (!state.hidden.includes(id)) state.hidden.push(id);
         delete state.overrides[id];

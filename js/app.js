@@ -56,6 +56,17 @@ function ddText(f){                                     // max drawdown as a pla
 
 const track=document.getElementById("track"), prog=document.getElementById("prog");
 
+/* The Focus List: funds an admin has highlighted (a star on each card, or the button in View Fund). It is the first
+   tab, shown only while at least one fund is on it, and its cards come from every strategy. */
+const FOCUS="focus";
+const tabFunds=()=>tab===FOCUS?FundStore.featured().map(id=>FundStore.find(id).fund):(FUNDS[tab]||[]);   // the funds on screen
+function toggleFocus(id){
+  if(!Auth.isAdmin()||needToken()) return;
+  pickedTab=true;                                              // stay on the tab the admin is working in
+  FundStore.toggleFeatured(id);
+  renderTabs(); renderCards(true);
+  if(openFund&&openFund.id===id){const hit=FundStore.find(id); if(hit) openD(openFund=hit.fund)}       // refresh the button in View Fund
+}
 function cardHTML(f,i){
   const P=cardPerf(f), has=P.length>0;                               // deck-imported funds may have no yearly returns
   const max=has?Math.max(...P.map(x=>Math.abs(x[1])))||1:1;
@@ -63,7 +74,8 @@ function cardHTML(f,i){
   const a=has?ann(P):null, last=P.at(-1);
   return `<article class="card">
     <div class="card-top${Auth.isAdmin()?" has-tools":""}">${Auth.isAdmin()?`<div class="card-tools">
-        ${FUNDS[tab].length>1?`<button class="tool grip" data-grip title="${t("reorder")}" aria-label="${t("reorder")}"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><circle cx="8" cy="5" r="1.9"/><circle cx="16" cy="5" r="1.9"/><circle cx="8" cy="12" r="1.9"/><circle cx="16" cy="12" r="1.9"/><circle cx="8" cy="19" r="1.9"/><circle cx="16" cy="19" r="1.9"/></svg></button>`:""}
+        <button class="tool star${FundStore.isFeatured(f.id)?" on":""}" data-star="${f.id}" title="${t(FundStore.isFeatured(f.id)?"focusRemove":"focusAdd")}" aria-label="${t(FundStore.isFeatured(f.id)?"focusRemove":"focusAdd")}" aria-pressed="${FundStore.isFeatured(f.id)}"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M12 3.5l2.6 5.4 5.9.8-4.3 4.1 1 5.8L12 16.9 6.8 19.6l1-5.8L3.5 9.7l5.9-.8z"/></svg></button>
+        ${tabFunds().length>1?`<button class="tool grip" data-grip title="${t("reorder")}" aria-label="${t("reorder")}"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><circle cx="8" cy="5" r="1.9"/><circle cx="16" cy="5" r="1.9"/><circle cx="8" cy="12" r="1.9"/><circle cx="16" cy="12" r="1.9"/><circle cx="8" cy="19" r="1.9"/><circle cx="16" cy="19" r="1.9"/></svg></button>`:""}
         <button class="tool" data-edit="${f.id}" title="${t("edit")}" aria-label="${t("edit")}"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 20h4L19 9l-4-4L4 16v4zM13.5 6.5l4 4"/></svg></button>
         <button class="tool del" data-delfund="${f.id}" title="${t("del")}" aria-label="${t("del")}"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13M10 11v6M14 11v6"/></svg></button>
       </div>`:""}${anon()?"":`<span class="tag">${L(f.tag)}</span>`}<h3>${title(f)}</h3>${anon()?"":`<div class="mgr">${L(f.mgr)} · ${veh(f)}</div>`}</div>
@@ -91,8 +103,8 @@ const scroller=document.getElementById("scroller");
 
 function renderCards(keepPos){
   const x=scroller.scrollLeft;
-  track.innerHTML=(FUNDS[tab]||[]).map(cardHTML).join("")||`<p class="track-empty">${t("noFunds")}</p>`;   // a strategy with no funds yet
-  document.getElementById("tabDesc").textContent=tab==="liquid"?t(anon()?"descLiquidAnon":"descLiquid"):tab==="illiquid"||tab==="monthly"?t("descIlliquid"):"";   // custom strategies have no description line
+  track.innerHTML=tabFunds().map(cardHTML).join("")||`<p class="track-empty">${t("noFunds")}</p>`;   // a strategy with no funds yet
+  document.getElementById("tabDesc").textContent=tab===FOCUS?t("descFocus"):tab==="liquid"?t(anon()?"descLiquidAnon":"descLiquid"):tab==="illiquid"||tab==="monthly"?t("descIlliquid"):"";   // custom strategies have no description line
   requestAnimationFrame(()=>setTimeout(()=>track.querySelectorAll(".bar i").forEach(b=>b.style.height=b.dataset.h),80));
   scroller.scrollLeft=keepPos?x:0;
   updateProg();
@@ -181,17 +193,22 @@ const stratName=s=>s.builtIn&&!s.name?t(BUILT_IN_NAME[s.id]):s.name;   // a rena
 const stratLabel=s=>`${t(GROUPS.find(g=>g.id===s.group).key)} › ${stratName(s)}`;   // for the strategy pickers in Add Fund and Edit
 let addingStrat="", renamingStrat="";                          // category a new strategy is being typed into; id of the strategy being renamed
 let shownGroup="liquid", shownTab="liquid";                    // what the tab row showed last time it was drawn
+let pickedTab=false;                                           // true once the visitor (or an admin action) has chosen a tab
 let openGroup="", shutGroup="";                                // category whose list was opened by a click; category whose list stays closed until the mouse leaves
 function renderTabs(){
   const list=FundStore.strategies(), admin=Auth.isAdmin();
-  if(!list.some(s=>s.id===tab)) tab=list.length?list[0].id:"";       // the strategy on screen was deleted: fall back to the first one
+  const focus=FundStore.featured();
+  if(!pickedTab) tab=focus.length?FOCUS:tab===FOCUS?"liquid":tab;    // until the visitor picks a tab, the site opens on the Focus List when there is one
+  if(tab===FOCUS?!focus.length:!list.some(s=>s.id===tab)) tab=list.length?list[0].id:"";   // the tab on screen is gone: fall back to the first strategy
   if(!admin) addingStrat="";
   if(!admin||!list.some(s=>s.id===renamingStrat)) renamingStrat="";
   const cur=list.find(s=>s.id===tab);
-  const newGroup=!!cur&&cur.group!==shownGroup, newTab=tab!==shownTab;   // animate the underline / the strategy name only when they change
-  shownGroup=cur?cur.group:""; shownTab=tab;
+  const curGroup=tab===FOCUS?FOCUS:cur?cur.group:"";
+  const newGroup=!!curGroup&&curGroup!==shownGroup, newTab=tab!==shownTab;   // animate the underline / the strategy name only when they change
+  shownGroup=curGroup; shownTab=tab;
   const pencil=`<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16v4zM13.5 6.5l4 4"/></svg>`;
-  tabsEl.innerHTML=GROUPS.map(g=>{
+  tabsEl.innerHTML=(focus.length?`<div class="tab-group"><button class="tab ${tab===FOCUS?"active":""}${tab===FOCUS&&newGroup?" moved":""}" data-focustab role="tab"><span>${t("focusTab")}</span><span class="count">${focus.length}</span></button></div>`:"")
+   +GROUPS.map(g=>{
     const subs=list.filter(s=>s.group===g.id), on=!!cur&&cur.group===g.id;
     const total=subs.reduce((n,s)=>n+(FUNDS[s.id]||[]).length,0);
     const busy=addingStrat===g.id||subs.some(s=>s.id===renamingStrat);          // a form is open inside this list
@@ -212,6 +229,7 @@ const calmMotion=matchMedia("(prefers-reduced-motion: reduce)");
 let swapTimer=0;
 function selectTab(id){
   const changed=id!==tab;
+  pickedTab=true;
   tab=id; renderTabs();
   clearTimeout(swapTimer);
   if(!changed||calmMotion.matches){track.classList.remove("swap-out","swap-in");renderCards();return}
@@ -263,6 +281,7 @@ tabsEl.addEventListener("click",e=>{
   if(e.target.closest("#stratCancel")){addingStrat="";renderTabs();return}
   const b=e.target.closest("[data-tab]");
   if(b){shutGroup=b.closest(".tab-group").dataset.group;openGroup="";selectTab(b.dataset.tab);return}   // the list closes once a strategy is picked
+  if(e.target.closest("[data-focustab]")){openGroup="";selectTab(FOCUS);return}
   const g=e.target.closest("[data-grouptab]");
   if(g){openGroup=openGroup===g.dataset.grouptab?"":g.dataset.grouptab;shutGroup="";renderTabs()}       // a click (or a tap on a touch screen) keeps the list open
 });
@@ -399,7 +418,7 @@ const classesOf=f=>{const c=f.classes&&(f.classes.head?f.classes:L(f.classes));r
 /* drawer */
 const drawer=document.getElementById("drawer"), scrim=document.getElementById("scrim");
 let openFund=null;
-track.addEventListener("click",e=>{const b=e.target.closest(".more");if(b)openD(FUNDS[tab][b.dataset.n])});
+track.addEventListener("click",e=>{const b=e.target.closest(".more");if(b)openD(tabFunds()[b.dataset.n]);const s=e.target.closest("[data-star]");if(s)toggleFocus(s.dataset.star)});
 function openD(f){
   const keep=openFund===f?drawer.scrollTop:0; openFund=f;
   const rows=[...(f.hist||[]),...f.perf];
@@ -429,7 +448,7 @@ function openD(f){
     ${liqBlock}
     ${perfBlock}${monthlyBlock}${notesBlock}
     <p class="note">${f.note&&!anon()?L(f.note)+" ":""}${t("past")}</p>
-    ${Auth.isAdmin()?`<div class="d-admin"><button class="btn ghost" onclick="openEdit('${f.id}')">${t("edit")}</button>${f.custom?`<button class="btn ghost" onclick="translateNow('${f.id}')">${t(f.translated?"retranslate":"translate")}</button>`:""}<button class="btn danger" onclick="deleteFund('${f.id}')">${t("del")}</button></div>`:""}
+    ${Auth.isAdmin()?`<div class="d-admin"><button class="btn ghost" onclick="openEdit('${f.id}')">${t("edit")}</button><button class="btn ghost" onclick="toggleFocus('${f.id}')">${t(FundStore.isFeatured(f.id)?"focusRemove":"focusAdd")}</button>${f.custom?`<button class="btn ghost" onclick="translateNow('${f.id}')">${t(f.translated?"retranslate":"translate")}</button>`:""}<button class="btn danger" onclick="deleteFund('${f.id}')">${t("del")}</button></div>`:""}
   </div>`;
   drawer.classList.add("on");scrim.classList.add("on");drawer.setAttribute("aria-hidden","false");drawer.scrollTop=keep;
 }

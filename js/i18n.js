@@ -473,3 +473,8 @@ Object.assign(UI.en,{grpLiquid:"Liquid",grpClosed:"Closed-End / Semi-Liquid",sub
 Object.assign(UI.sc,{grpLiquid:"流动性基金",grpClosed:"封闭式 / 半流动性",subDaily:"每日",subMonthly:"每月",subQuarterly:"每季度",grpEmpty:"暂无策略"});
 Object.assign(UI.tc,{grpLiquid:"流動性基金",grpClosed:"封閉式 / 半流動性",subDaily:"每日",subMonthly:"每月",subQuarterly:"每季度",grpEmpty:"暫無策略"});
 UI.en.noFunds="No funds in this strategy yet.";UI.sc.noFunds="此策略暂无基金。";UI.tc.noFunds="此策略暫無基金。";
+
+/* the Focus List: highlighted funds, shown as the first tab */
+Object.assign(UI.en,{focusTab:"Focus List",focusAdd:"Add to Focus List",focusRemove:"Remove from Focus List",descFocus:"Funds we are highlighting at the moment, drawn from the strategies alongside."});
+Object.assign(UI.sc,{focusTab:"重点推荐",focusAdd:"加入重点推荐",focusRemove:"移出重点推荐",descFocus:"当前重点推荐的基金，选自各策略。"});
+Object.assign(UI.tc,{focusTab:"重點推薦",focusAdd:"加入重點推薦",focusRemove:"移出重點推薦",descFocus:"當前重點推薦的基金，選自各策略。"});

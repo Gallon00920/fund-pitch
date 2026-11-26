@@ -86,6 +86,17 @@ Signed in as admin, the list also has:
 Names of added strategies are shown as typed in all three languages. Investors see the categories and lists but
 cannot add, rename or delete.
 
+## Focus List (highlighted funds)
+
+Signed in as admin, every card has a star next to the pencil, and View Fund has an **Add to Focus List** button.
+Starring a fund puts it on the **Focus List**, a tab that appears in front of Liquid.
+
+- The tab is shown only while at least one fund is starred. With no starred funds it disappears.
+- While a Focus List exists, the site opens on it; otherwise it opens on Liquid, Daily.
+- The list can hold funds from any strategy. A fund stays in its own strategy as well.
+- Drag the cards on the Focus List tab to set their order there. It does not change the order inside a strategy.
+- Click the star again, or **Remove from Focus List**, to take a fund off. Deleting a fund takes it off too.
+
 ## Editing and deleting funds
 
 Signed in as admin, every fund card has two small buttons in its top right corner: a pencil (edit) and a bin (delete). The same two buttons are at the bottom of View Fund.

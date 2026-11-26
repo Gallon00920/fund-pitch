@@ -464,3 +464,7 @@ table.cls tr:nth-child(odd) td{background:#fafbfd}
 html:not([lang="en"]) .tab-menu .sub{letter-spacing:2px}
 @media (max-width:680px){.tab-sub{display:none}.tab-menu{left:0}}
 .track-empty{grid-column:1/-1;grid-row:1/-1;padding:44px 0 60px;font-size:15px;color:var(--muted)}
+
+/* ---- Focus List: the star on each card (admins) ---- */
+.tool.star.on{background:var(--gold);border-color:var(--gold);color:var(--navy)}
+.tool.star.on svg{fill:currentColor}
