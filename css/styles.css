@@ -468,3 +468,8 @@ html:not([lang="en"]) .tab-menu .sub{letter-spacing:2px}
 /* ---- Focus List: the star on each card (admins) ---- */
 .tool.star.on{background:var(--gold);border-color:var(--gold);color:var(--navy)}
 .tool.star.on svg{fill:currentColor}
+.tags{display:flex;flex-wrap:wrap;gap:8px;justify-self:start;align-self:start;margin-bottom:18px}
+.tags .tag{margin-bottom:0}
+.has-tools .tags{max-width:calc(100% - 136px)}             /* four buttons now: star, grip, edit, delete */
+.has-tools .tags .tag{max-width:100%}
+.has-tools .tag{max-width:calc(100% - 136px)}

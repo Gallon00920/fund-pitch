@@ -477,6 +477,11 @@ html:not([lang="en"]) .tab-menu .sub{letter-spacing:2px}
 /* ---- Focus List: the star on each card (admins) ---- */
 .tool.star.on{background:var(--gold);border-color:var(--gold);color:var(--navy)}
 .tool.star.on svg{fill:currentColor}
+.tags{display:flex;flex-wrap:wrap;gap:8px;justify-self:start;align-self:start;margin-bottom:18px}
+.tags .tag{margin-bottom:0}
+.has-tools .tags{max-width:calc(100% - 136px)}             /* four buttons now: star, grip, edit, delete */
+.has-tools .tags .tag{max-width:100%}
+.has-tools .tag{max-width:calc(100% - 136px)}
 </style>
 </head>
 <body>
@@ -1796,6 +1801,12 @@ const track=document.getElementById("track"), prog=document.getElementById("prog
    tab, shown only while at least one fund is on it, and its cards come from every strategy. */
 const FOCUS="focus";
 const tabFunds=()=>tab===FOCUS?FundStore.featured().map(id=>FundStore.find(id).fund):(FUNDS[tab]||[]);   // the funds on screen
+/** On the Focus List, each card carries a tag naming the strategy the fund belongs to: "Liquid · Daily", "Royalty". */
+function stratTag(f){
+  if(tab!==FOCUS) return "";
+  const hit=FundStore.find(f.id), s=hit&&FundStore.strategies().find(x=>x.id===hit.strat);
+  return s?(s.group==="liquid"?t("grpLiquid")+" · ":"")+stratName(s):"";
+}
 function toggleFocus(id){
   if(!Auth.isAdmin()||needToken()) return;
   pickedTab=true;                                              // stay on the tab the admin is working in
@@ -1814,7 +1825,7 @@ function cardHTML(f,i){
         ${tabFunds().length>1?`<button class="tool grip" data-grip title="${t("reorder")}" aria-label="${t("reorder")}"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><circle cx="8" cy="5" r="1.9"/><circle cx="16" cy="5" r="1.9"/><circle cx="8" cy="12" r="1.9"/><circle cx="16" cy="12" r="1.9"/><circle cx="8" cy="19" r="1.9"/><circle cx="16" cy="19" r="1.9"/></svg></button>`:""}
         <button class="tool" data-edit="${f.id}" title="${t("edit")}" aria-label="${t("edit")}"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 20h4L19 9l-4-4L4 16v4zM13.5 6.5l4 4"/></svg></button>
         <button class="tool del" data-delfund="${f.id}" title="${t("del")}" aria-label="${t("del")}"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13M10 11v6M14 11v6"/></svg></button>
-      </div>`:""}${anon()?"":`<span class="tag">${L(f.tag)}</span>`}<h3>${title(f)}</h3>${anon()?"":`<div class="mgr">${L(f.mgr)} · ${veh(f)}</div>`}</div>
+      </div>`:""}${stratTag(f)||anon()?"":`<span class="tag">${L(f.tag)}</span>`}${stratTag(f)?`<div class="tags"><span class="tag strat">${stratTag(f)}</span>${anon()?"":`<span class="tag">${L(f.tag)}</span>`}</div>`:""}<h3>${title(f)}</h3>${anon()?"":`<div class="mgr">${L(f.mgr)} · ${veh(f)}</div>`}</div>
     <div class="kpis">
       <div>${f.aum!=null?`<b>${money(f.aum)}</b>`:`<b class="txt">${LX(f.aumText)||"—"}</b>`}<span>${t("aum")}</span></div>
       <div><b>${incYear(f)||(f.isNew?t("newFund"):"—")}</b><span>${t("inception")}</span></div>
