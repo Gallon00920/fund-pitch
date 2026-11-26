@@ -27,7 +27,8 @@ const FUNDS = {
      note:{en:"AUM of €5,281M converted at EUR/USD ≈ 1.16.",sc:"规模 €5,281M，按 EUR/USD≈1.16 折算。",tc:"規模 €5,281M，按 EUR/USD≈1.16 折算。"}}
   ],
   illiquid:[
-    {name:"PARS IV", mgr:{en:"Global Macro",sc:"全球宏观",tc:"全球宏觀"}, vehicle:"private", inception:"2004-09", aum:4.932,
+    {name:"PARS IV", home:"monthly",   // shown under Liquid > Monthly (js/fund-store.js); its id stays b-illiquid-0
+      mgr:{en:"Global Macro",sc:"全球宏观",tc:"全球宏觀"}, vehicle:"private", inception:"2004-09", aum:4.932,
      tag:{en:"Global Macro · Absolute Return",sc:"全球宏观 · 绝对收益",tc:"全球宏觀 · 絕對收益"},
      strategy:{en:"Multi-asset macro positions; underlying exposures are not credit-based.",
                sc:"多资产宏观头寸，底层资产非信用类。",
@@ -324,5 +325,5 @@ const EXTRA={
         ["三年檔","1.25%","20%，超過 3 個月美國國庫券 hurdle，全額 catch-up，高水位","每三年","90天"]]}},
     classesKeepText:true}
 };
-[...FUNDS.liquid,...FUNDS.illiquid].forEach(f=>{ if(EXTRA[f.name]) Object.assign(f,EXTRA[f.name]) });
+Object.values(FUNDS).flat().forEach(f=>{ if(EXTRA[f.name]) Object.assign(f,EXTRA[f.name]) });
 })();

@@ -467,3 +467,9 @@ Object.assign(UI.tc,{stratRename:"重新命名策略",stratSave:"儲存"});
 Object.assign(UI.en,{clHeadFees:"Fee Schedule",clKeep:"This table holds fees only: keep the liquidity terms text under it"});
 Object.assign(UI.sc,{clHeadFees:"费用结构",clKeep:"此表仅含费用：在表格下方保留流动性条款文字"});
 Object.assign(UI.tc,{clHeadFees:"費用結構",clKeep:"此表僅含費用：在表格下方保留流動性條款文字"});
+
+/* two categories, each listing its strategies */
+Object.assign(UI.en,{grpLiquid:"Liquid",grpClosed:"Closed-End / Semi-Liquid",subDaily:"Daily",subMonthly:"Monthly",subQuarterly:"Quarterly",grpEmpty:"No strategies yet"});
+Object.assign(UI.sc,{grpLiquid:"流动性基金",grpClosed:"封闭式 / 半流动性",subDaily:"每日",subMonthly:"每月",subQuarterly:"每季度",grpEmpty:"暂无策略"});
+Object.assign(UI.tc,{grpLiquid:"流動性基金",grpClosed:"封閉式 / 半流動性",subDaily:"每日",subMonthly:"每月",subQuarterly:"每季度",grpEmpty:"暫無策略"});
+UI.en.noFunds="No funds in this strategy yet.";UI.sc.noFunds="此策略暂无基金。";UI.tc.noFunds="此策略暫無基金。";

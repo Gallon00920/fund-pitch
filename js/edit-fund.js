@@ -39,7 +39,7 @@ function openEdit(id) {
   const liqShown = plain(liqTxt(f));                          // funds with daily dealing have no stored text; "Daily" is the default
   editing = { fund: f, strat: hit.strat, ddShown, liqShown };
   editErr.hidden = true;
-  ef("efStrat").innerHTML = FundStore.strategies().map(s => `<option value="${s.id}"${s.id === hit.strat ? " selected" : ""}>${stratName(s)}</option>`).join("");
+  ef("efStrat").innerHTML = FundStore.strategies().map(s => `<option value="${s.id}"${s.id === hit.strat ? " selected" : ""}>${stratLabel(s)}</option>`).join("");
   ef("efName").value = plain(f.name);
   ef("efMgr").value = plain(L(f.mgr));
   ef("efTag").value = plain(L(f.tag));

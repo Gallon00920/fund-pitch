@@ -91,8 +91,8 @@ const scroller=document.getElementById("scroller");
 
 function renderCards(keepPos){
   const x=scroller.scrollLeft;
-  track.innerHTML=(FUNDS[tab]||[]).map(cardHTML).join("");
-  document.getElementById("tabDesc").textContent=tab==="liquid"?t(anon()?"descLiquidAnon":"descLiquid"):tab==="illiquid"?t("descIlliquid"):"";   // custom strategies have no description line
+  track.innerHTML=(FUNDS[tab]||[]).map(cardHTML).join("")||`<p class="track-empty">${t("noFunds")}</p>`;   // a strategy with no funds yet
+  document.getElementById("tabDesc").textContent=tab==="liquid"?t(anon()?"descLiquidAnon":"descLiquid"):tab==="illiquid"||tab==="monthly"?t("descIlliquid"):"";   // custom strategies have no description line
   requestAnimationFrame(()=>setTimeout(()=>track.querySelectorAll(".bar i").forEach(b=>b.style.height=b.dataset.h),80));
   scroller.scrollLeft=keepPos?x:0;
   updateProg();
@@ -170,33 +170,68 @@ document.addEventListener("click",e=>{if(!langBox.contains(e.target))setMenu(fal
 addEventListener("keydown",e=>{if(e.key==="Escape")setMenu(false)});
 
 /* ---------- strategy tabs ----------
-   Two built-in tabs (liquid, illiquid) plus any strategies an admin has added. `tab` holds the id of the open one.
-   Admins also get a small × on every tab and a "+ Add Strategy" button at the end. */
+   The tab row shows two fixed categories, Liquid and Closed-End / Semi-Liquid. Each strategy belongs to one of them:
+   Daily, Monthly and Quarterly are built in (Liquid); the ones admins add say which category they are in. Moving the
+   mouse over a category lists its strategies under the tab; clicking one shows that strategy's fund cards. `tab`
+   holds the id of the strategy on screen. Admins get rename, delete and "+ Add Strategy" inside each list. */
 const tabsEl=document.getElementById("tabs");
-const stratName=s=>s.builtIn&&!s.name?t(s.id==="liquid"?"tabLiquid":"tabIlliquid"):s.name;   // a renamed built-in tab shows the admin's name in every language
-let addingStrat=false, renamingStrat="";                        // renamingStrat: id of the tab whose name is being edited
+const GROUPS=[{id:"liquid",key:"grpLiquid"},{id:"closed",key:"grpClosed"}];
+const BUILT_IN_NAME={liquid:"subDaily",monthly:"subMonthly",illiquid:"subQuarterly"};
+const stratName=s=>s.builtIn&&!s.name?t(BUILT_IN_NAME[s.id]):s.name;   // a renamed built-in strategy shows the admin's name in every language
+const stratLabel=s=>`${t(GROUPS.find(g=>g.id===s.group).key)} › ${stratName(s)}`;   // for the strategy pickers in Add Fund and Edit
+let addingStrat="", renamingStrat="";                          // category a new strategy is being typed into; id of the strategy being renamed
+let shownGroup="liquid", shownTab="liquid";                    // what the tab row showed last time it was drawn
+let openGroup="", shutGroup="";                                // category whose list was opened by a click; category whose list stays closed until the mouse leaves
 function renderTabs(){
   const list=FundStore.strategies(), admin=Auth.isAdmin();
-  if(!list.some(s=>s.id===tab)) tab=list.length?list[0].id:"";       // the open tab was deleted: fall back to the first one
-  if(!admin) addingStrat=false;
+  if(!list.some(s=>s.id===tab)) tab=list.length?list[0].id:"";       // the strategy on screen was deleted: fall back to the first one
+  if(!admin) addingStrat="";
   if(!admin||!list.some(s=>s.id===renamingStrat)) renamingStrat="";
+  const cur=list.find(s=>s.id===tab);
+  const newGroup=!!cur&&cur.group!==shownGroup, newTab=tab!==shownTab;   // animate the underline / the strategy name only when they change
+  shownGroup=cur?cur.group:""; shownTab=tab;
   const pencil=`<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16v4zM13.5 6.5l4 4"/></svg>`;
-  tabsEl.innerHTML=list.map(s=>s.id===renamingStrat
-    ?`<form class="strat-new" id="stratRenameForm"><input id="stratRename" maxlength="40" value="${stratName(s)}" placeholder="${t("stratPh")}"><button class="btn sm solid" type="submit">${t("stratSave")}</button><button class="strat-x" type="button" id="stratRenameCancel" aria-label="${t("cancel")}">×</button></form>`
-    :`<button class="tab ${s.id===tab?"active":""}" data-tab="${s.id}" role="tab"><span>${stratName(s)}</span><span class="count">${(FUNDS[s.id]||[]).length}</span>${admin?`<span class="tab-edit" data-rename="${s.id}" title="${t("stratRename")}">${pencil}</span><span class="tab-del" data-del="${s.id}" title="${t("stratDelete")}">×</span>`:""}</button>`).join("")
-    +(!admin?"":addingStrat
-      ?`<form class="strat-new" id="stratForm"><input id="stratName" maxlength="40" placeholder="${t("stratPh")}"><button class="btn sm solid" type="submit">${t("stratAdd")}</button><button class="strat-x" type="button" id="stratCancel" aria-label="${t("cancel")}">×</button></form>`
-      :`<button class="tab tab-add" id="stratAddBtn">${t("addStrategy")}</button>`);
+  tabsEl.innerHTML=GROUPS.map(g=>{
+    const subs=list.filter(s=>s.group===g.id), on=!!cur&&cur.group===g.id;
+    const total=subs.reduce((n,s)=>n+(FUNDS[s.id]||[]).length,0);
+    const busy=addingStrat===g.id||subs.some(s=>s.id===renamingStrat);          // a form is open inside this list
+    const items=subs.map(s=>s.id===renamingStrat
+      ?`<form class="strat-new" id="stratRenameForm"><input id="stratRename" maxlength="40" value="${stratName(s)}" placeholder="${t("stratPh")}"><button class="btn sm solid" type="submit">${t("stratSave")}</button><button class="strat-x" type="button" id="stratRenameCancel" aria-label="${t("cancel")}">×</button></form>`
+      :`<button class="sub ${s.id===tab?"active":""}" data-tab="${s.id}" role="menuitem"><span>${stratName(s)}</span><span class="count">${(FUNDS[s.id]||[]).length}</span>${admin?`<span class="tab-edit" data-rename="${s.id}" title="${t("stratRename")}">${pencil}</span><span class="tab-del" data-del="${s.id}" title="${t("stratDelete")}">×</span>`:""}</button>`).join("")
+      +(!admin?"":addingStrat===g.id
+        ?`<form class="strat-new" id="stratForm"><input id="stratName" maxlength="40" placeholder="${t("stratPh")}"><button class="btn sm solid" type="submit">${t("stratAdd")}</button><button class="strat-x" type="button" id="stratCancel" aria-label="${t("cancel")}">×</button></form>`
+        :`<button class="tab-add" data-addstrat="${g.id}">${t("addStrategy")}</button>`);
+    return `<div class="tab-group${busy||openGroup===g.id?" open":""}${shutGroup===g.id&&!busy?" shut":""}" data-group="${g.id}">
+      <button class="tab ${on?"active":""}${on&&newGroup?" moved":""}${on&&newTab?" renamed":""}" data-grouptab="${g.id}" role="tab" aria-haspopup="true"><span>${t(g.key)}</span><span class="count">${total}</span>${on?`<span class="tab-sub">${stratName(cur)}</span>`:""}</button>
+      <div class="tab-menu" role="menu">${items||`<p class="tab-empty">${t("grpEmpty")}</p>`}</div></div>`;
+  }).join("");
 }
-function selectTab(id){tab=id;renderTabs();renderCards()}
+/* Switching strategy: the cards on screen fade out and sink a little, the new ones are drawn, then they fade in and
+   rise one after another. Skipped when the strategy does not change or the visitor asked for reduced motion. */
+const calmMotion=matchMedia("(prefers-reduced-motion: reduce)");
+let swapTimer=0;
+function selectTab(id){
+  const changed=id!==tab;
+  tab=id; renderTabs();
+  clearTimeout(swapTimer);
+  if(!changed||calmMotion.matches){track.classList.remove("swap-out","swap-in");renderCards();return}
+  track.classList.remove("swap-in"); track.classList.add("swap-out");
+  swapTimer=setTimeout(()=>{
+    renderCards();                                             // while invisible
+    track.classList.remove("swap-out"); track.classList.add("swap-in");
+    [...track.children].forEach((c,i)=>c.style.setProperty("--rise",Math.min(i,5)*55+"ms"));   // each card starts a touch after the one before
+    swapTimer=setTimeout(()=>track.classList.remove("swap-in"),700);
+  },170);
+}
 
-/** Creates a strategy tab from typed text. Returns the new strategy, or null if the name is empty or already used. */
-function createStrategy(raw){
+/** Creates a strategy from typed text, in a category ("liquid" or "closed"; funds from a deck default to "closed").
+    Returns the new strategy, or null if the name is empty or already used. */
+function createStrategy(raw,group){
   if(!Auth.isAdmin()||needToken()) return null;
   const name=esc(raw);
   if(!name) return null;
   if(FundStore.strategies().some(s=>stratName(s).toLowerCase()===name.toLowerCase())){alert(t("stratExists"));return null}
-  return FundStore.addStrategy(name);
+  return FundStore.addStrategy(name,group);
 }
 /** Saves a new name for a strategy tab. An empty name puts a built-in tab back to its original (translated) name. */
 function renameStrategy(id,raw){
@@ -208,9 +243,10 @@ function renameStrategy(id,raw){
   return FundStore.renameStrategy(id,name);
 }
 tabsEl.addEventListener("click",e=>{
+  e.inTabs=true;                                               // for the outside-click handler: the clicked element may be redrawn before it runs
   const ren=e.target.closest("[data-rename]");
   if(ren){
-    if(Auth.isAdmin()&&!needToken()){addingStrat=false;renamingStrat=ren.dataset.rename;renderTabs();const box=document.getElementById("stratRename");box.focus();box.select()}
+    if(Auth.isAdmin()&&!needToken()){addingStrat="";renamingStrat=ren.dataset.rename;renderTabs();const box=document.getElementById("stratRename");box.focus();box.select()}
     return;
   }
   if(e.target.closest("#stratRenameCancel")){renamingStrat="";renderTabs();return}
@@ -222,21 +258,31 @@ tabsEl.addEventListener("click",e=>{
     }
     return;
   }
-  if(e.target.closest("#stratAddBtn")){addingStrat=true;renamingStrat="";renderTabs();document.getElementById("stratName").focus();return}
-  if(e.target.closest("#stratCancel")){addingStrat=false;renderTabs();return}
-  const b=e.target.closest(".tab[data-tab]");
-  if(b) selectTab(b.dataset.tab);
+  const add=e.target.closest("[data-addstrat]");
+  if(add){addingStrat=add.dataset.addstrat;renamingStrat="";renderTabs();document.getElementById("stratName").focus();return}
+  if(e.target.closest("#stratCancel")){addingStrat="";renderTabs();return}
+  const b=e.target.closest("[data-tab]");
+  if(b){shutGroup=b.closest(".tab-group").dataset.group;openGroup="";selectTab(b.dataset.tab);return}   // the list closes once a strategy is picked
+  const g=e.target.closest("[data-grouptab]");
+  if(g){openGroup=openGroup===g.dataset.grouptab?"":g.dataset.grouptab;shutGroup="";renderTabs()}       // a click (or a tap on a touch screen) keeps the list open
 });
+/* the list disappears when the mouse leaves the category (mouseleave does not bubble, so it is caught on the way down) */
+tabsEl.addEventListener("mouseleave",e=>{
+  if(!e.target.classList||!e.target.classList.contains("tab-group")) return;
+  shutGroup="";e.target.classList.remove("shut");
+  if(openGroup===e.target.dataset.group){openGroup="";if(!addingStrat&&!renamingStrat)e.target.classList.remove("open")}
+},true);
+document.addEventListener("click",e=>{if(openGroup&&!e.inTabs){openGroup="";renderTabs()}});
 tabsEl.addEventListener("submit",e=>{
   e.preventDefault();
   if(e.target.id==="stratRenameForm"){
     if(renameStrategy(renamingStrat,document.getElementById("stratRename").value)){renamingStrat="";applyLang()}
     return;
   }
-  const s=createStrategy(document.getElementById("stratName").value);
-  if(s){addingStrat=false;selectTab(s.id)}
+  const s=createStrategy(document.getElementById("stratName").value,addingStrat);
+  if(s){addingStrat="";selectTab(s.id)}
 });
-tabsEl.addEventListener("keydown",e=>{if(e.key==="Escape"&&(addingStrat||renamingStrat)){addingStrat=false;renamingStrat="";renderTabs()}});
+tabsEl.addEventListener("keydown",e=>{if(e.key==="Escape"&&(addingStrat||renamingStrat||openGroup)){addingStrat="";renamingStrat="";openGroup="";renderTabs()}});
 
 /* mouse drag with momentum (touch uses native scrolling) */
 let drag=null, glide=0, justDragged=false;

@@ -67,17 +67,24 @@ The session ends when the browser tab is closed.
 
 ## Strategies (tabs)
 
-The site starts with two strategy tabs, **Liquid** and **Semi-Liquid / Private**. An admin can add more:
+The tab row has two fixed categories, **Liquid** and **Closed-End / Semi-Liquid**. Each category holds strategies:
 
-- Click **+ Add Strategy** at the end of the tab row, type a name and click Add.
-- Or create one inside the Add Fund window while uploading a deck (see below).
-- Every tab has a small **x**. Clicking it deletes the strategy and every fund in it, after a confirmation. This applies to the two starting tabs as well, and there is no undo on the site.
+- **Liquid:** Daily, Monthly and Quarterly (built in, with the original 7 funds).
+- **Closed-End / Semi-Liquid:** the strategies admins added, for example ABL, Mortgage credit, Royalty and Corp credit.
 
-- **Rename:** each tab has a small pencil. Click it, type the new name and click Save (Esc cancels). A renamed
-  starting tab shows your name in all three languages; saving an empty name brings back its
-  original translated name.
+Moving the mouse over a category lists its strategies under the tab; the list disappears when the mouse leaves.
+Clicking a strategy shows its fund cards, and the tab then reads, for example, "Liquid | Daily". On a touch screen, tap
+the category to open the list.
 
-Strategy names are shown as typed in all three languages. Investors see the tabs but cannot add or delete them.
+Signed in as admin, the list also has:
+
+- **+ Add Strategy** at the bottom: type a name and click Add. The strategy is created in that category.
+- A small pencil on each strategy to **rename** it (Esc cancels). A renamed built-in strategy shows your name in all
+  three languages; saving an empty name brings back its original translated name.
+- A small **x** to delete the strategy and every fund in it, after a confirmation. There is no undo on the site.
+
+Names of added strategies are shown as typed in all three languages. Investors see the categories and lists but
+cannot add, rename or delete.
 
 ## Editing and deleting funds
 

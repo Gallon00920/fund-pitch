@@ -23,7 +23,7 @@ function resetImport() {
 
 /** <option> list of every strategy tab, with one selected. */
 const stratOptions = selected => FundStore.strategies()
-  .map(s => `<option value="${s.id}"${s.id === selected ? " selected" : ""}>${stratName(s)}</option>`).join("");
+  .map(s => `<option value="${s.id}"${s.id === selected ? " selected" : ""}>${stratLabel(s)}</option>`).join("");
 
 // "create a new strategy for these funds": makes the tab, then points every listed fund at it
 document.getElementById("imStratCreate").onclick = () => {

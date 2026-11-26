@@ -2,15 +2,23 @@
   "strategies": [
     {
       "id": "s-1795591058962",
-      "name": "ABL"
+      "name": "ABL",
+      "group": "closed"
     },
     {
       "id": "s-1795591188122",
-      "name": "Mortgage credit"
+      "name": "Mortgage credit",
+      "group": "closed"
     },
     {
       "id": "s-1795664256764",
-      "name": "Royalty"
+      "name": "Royalty",
+      "group": "closed"
+    },
+    {
+      "id": "s-1795700000000",
+      "name": "Corp credit",
+      "group": "closed"
     }
   ],
   "funds": {
@@ -541,7 +549,7 @@
               -1.12,
               -0.21
             ],
-            "t": 7.0
+            "t": 7
           },
           {
             "y": "2019",
@@ -559,7 +567,7 @@
               0.35,
               1.03
             ],
-            "t": 7.0
+            "t": 7
           },
           {
             "y": "2020",
@@ -577,7 +585,7 @@
               0.54,
               0.54
             ],
-            "t": 7.0
+            "t": 7
           },
           {
             "y": "2021",
@@ -2321,6 +2329,163 @@
         "redactAuto": false,
         "translated": true
       }
+    ],
+    "s-1795700000000": [],
+    "monthly": [
+      {
+        "id": "custom-1795710000000-0",
+        "custom": true,
+        "name": "LibreMax Core Fund (Liquid Long Only)",
+        "mgr": {
+          "en": "LibreMax"
+        },
+        "tag": {
+          "en": "Securitized Products · Liquid Long Only",
+          "sc": "证券化产品 · 流动性纯多头",
+          "tc": "證券化產品 · 流動性純多頭"
+        },
+        "vehicle": "private",
+        "inception": "2023-01",
+        "inceptionText": {
+          "en": "2023/1 (Core Fund launched, 3 years);<br>Liquid Long Only strategy since 2017",
+          "sc": "2023/1 (Core Fund 成立，3年)；<br>Liquid Long Only 策略始于 2017 年",
+          "tc": "2023/1 (Core Fund 成立，3年)；<br>Liquid Long Only 策略始於 2017 年"
+        },
+        "isNew": false,
+        "aum": 2.4,
+        "aumText": {
+          "en": "$2.4bn (Liquid Long Only strategy, 2026/1)",
+          "sc": "$2.4bn (Liquid Long Only 策略，2026/1)",
+          "tc": "$2.4bn (Liquid Long Only 策略，2026/1)"
+        },
+        "strategy": {
+          "en": "Long-only securitized credit with no financial leverage: CLOs 34%, residential 27%, commercial 21%, ABS 18%; about 75% investment grade;<br>Liquid, shorter-duration securities: 56% floating / 44% fixed, interest-rate duration 0.55, spread duration 1.42;",
+          "sc": "不使用财务杠杆的纯多头证券化信用：CLO 34%、住宅 27%、商业地产 21%、ABS 18%；约 75% 为投资级；<br>流动性高、久期较短的证券：浮动 56% / 固定 44%，利率久期 0.55，利差久期 1.42；",
+          "tc": "不使用財務槓桿的純多頭證券化信用：CLO 34%、住宅 27%、商業地產 21%、ABS 18%；約 75% 為投資級；<br>流動性高、存續期較短的證券：浮動 56% / 固定 44%，利率存續期 0.55，利差存續期 1.42；"
+        },
+        "hist": [],
+        "perf": [
+          [
+            "2023",
+            8.21
+          ],
+          [
+            "2024",
+            8.82
+          ],
+          [
+            "2025",
+            6.87
+          ]
+        ],
+        "perfNotes": {
+          "en": [
+            "Net of a 0.7% management fee; annualised 8.0% since launch (2023/1 to 2025/12)",
+            "Manager's target: 7–9% net a year (SOFR + 250–350 bps)"
+          ],
+          "sc": [
+            "已扣除 0.7% 管理费；成立以来年化 8.0% (2023/1 至 2025/12)",
+            "管理人目标：年化净回报 7–9% (SOFR + 250–350 bps)"
+          ],
+          "tc": [
+            "已扣除 0.7% 管理費；成立以來年化 8.0% (2023/1 至 2025/12)",
+            "管理人目標：年化淨回報 7–9% (SOFR + 250–350 bps)"
+          ]
+        },
+        "target": {
+          "en": "7–9% net (SOFR + 250–350 bps)",
+          "sc": "净回报 7–9% (SOFR + 250–350 bps)",
+          "tc": "淨回報 7–9% (SOFR + 250–350 bps)"
+        },
+        "ddLabel": {
+          "en": "Drawdown",
+          "sc": "回撤",
+          "tc": "回撤"
+        },
+        "ddRaw": {
+          "en": "No negative month since launch (2023/1 to 2025/12); weakest month +0.07% (2025/4)",
+          "sc": "成立以来无负月度 (2023/1 至 2025/12)；最弱月份 +0.07% (2025/4)",
+          "tc": "成立以來無負月度 (2023/1 至 2025/12)；最弱月份 +0.07% (2025/4)"
+        },
+        "liq": {
+          "en": "Monthly",
+          "sc": "每月",
+          "tc": "每月"
+        },
+        "liqFull": {
+          "en": "Monthly liquidity; the deck does not state the notice period or any lock-up;<br>Management fee 0.7% a year; no incentive fee is mentioned",
+          "sc": "每月流动性；deck 未注明通知期及锁定期；<br>管理费 0.7% / 年；未提及业绩报酬",
+          "tc": "每月流動性；deck 未註明通知期及鎖定期；<br>管理費 0.7% / 年；未提及業績報酬"
+        },
+        "monthly": [
+          {
+            "y": "2023",
+            "m": [
+              0.34,
+              0.35,
+              0.32,
+              0.77,
+              0.52,
+              1.02,
+              0.81,
+              0.66,
+              0.64,
+              0.5,
+              1.01,
+              0.94
+            ],
+            "t": 8.21
+          },
+          {
+            "y": "2024",
+            "m": [
+              1.03,
+              0.54,
+              0.75,
+              0.66,
+              0.82,
+              0.67,
+              0.79,
+              0.62,
+              0.77,
+              0.58,
+              0.71,
+              0.57
+            ],
+            "t": 8.82
+          },
+          {
+            "y": "2025",
+            "m": [
+              0.82,
+              0.65,
+              0.23,
+              0.07,
+              0.91,
+              0.71,
+              0.55,
+              0.78,
+              0.44,
+              0.55,
+              0.48,
+              0.5
+            ],
+            "t": 6.87
+          }
+        ],
+        "note": {
+          "en": "Source: LibreMax Firm Overview Presentation Q1 2026 (as of 2026/1/1): strategy and portfolio statistics p16, target return and strategy AUM p4, monthly net returns p23, fee basis p31. The fund launched on 2023/1/10.",
+          "sc": "来源: LibreMax Firm Overview Presentation 2026 Q1 (截至 2026/1/1)——策略及组合数据 p16，目标回报及策略规模 p4，月度净回报 p23，费用口径 p31。基金于 2023/1/10 成立。",
+          "tc": "來源: LibreMax Firm Overview Presentation 2026 Q1 (截至 2026/1/1)——策略及組合數據 p16，目標回報及策略規模 p4，月度淨回報 p23，費用口徑 p31。基金於 2023/1/10 成立。"
+        },
+        "redact": [
+          "LibreMax",
+          "Trimaran",
+          "Core Fund"
+        ],
+        "redactAuto": false,
+        "translated": true
+      }
     ]
   },
   "hidden": [],
@@ -2787,7 +2952,7 @@
               1.47,
               0.61,
               0.92,
-              1.0,
+              1,
               0.42,
               0.76,
               0.51,
@@ -2822,7 +2987,7 @@
               -31.42,
               5.72,
               6.52,
-              9.0,
+              9,
               1.8,
               2.77,
               2.21,
@@ -2959,9 +3124,6 @@
     ]
   },
   "removed": [],
-  "names": {
-    "liquid": "Daily Liquid",
-    "illiquid": "Monthly/Quarterly Liquid"
-  },
+  "names": {},
   "stats": null
 }

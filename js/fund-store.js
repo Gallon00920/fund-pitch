@@ -1,23 +1,30 @@
 /* ---------- Fund store ----------
-   Built-in funds come from js/funds-data.js, under the two built-in strategy tabs "liquid" and "illiquid".
+   Strategies sit in two fixed categories: "liquid" (Liquid) and "closed" (Closed-End / Semi-Liquid).
+   Built-in funds come from js/funds-data.js and fill the three built-in strategies of the Liquid category:
+   "liquid" (Daily), "monthly" (Monthly) and "illiquid" (Quarterly).
    Everything admins change lives in ONE shared file in the repository, data/funds.json, so every visitor sees it:
-     strategies  [ { id, name } ]            strategy tabs admins added, in display order
+     strategies  [ { id, name, group } ]     strategies admins added, in display order; group is "liquid" or "closed"
      funds       { strategyId: [fund, ...] } funds admins added
      hidden      [ fundId, ... ]             built-in funds admins deleted
      overrides   { fundId: { fund, strat } } edited built-in funds (js/funds-data.js itself is never changed)
      order       { strategyId: [fundId, ...] } card order admins set by dragging; funds not listed come after
-     removed     [ "liquid" | "illiquid" ]   built-in strategy tabs admins deleted
-     names       { liquid?: name, illiquid?: name }   built-in strategy tabs admins renamed
+     removed     [ built-in strategy id ]    built-in strategies admins deleted
+     names       { built-in strategy id: name }      built-in strategies admins renamed
      stats       [ "130+", "40+", "9" ]      the three cover-page numbers, once an admin has edited them
    This file only holds that state in memory and rebuilds the live FUNDS list from it.
    Loading and saving the file is done by js/repo.js, which is told about every change through onChange(). */
 const FundStore = (() => {
-  const BUILT_IN = ["liquid", "illiquid"];
+  const BUILT_IN = ["liquid", "monthly", "illiquid"];
   const clone = x => JSON.parse(JSON.stringify(x));
   const isBuiltInFund = id => String(id).startsWith("b-");
 
-  BUILT_IN.forEach(s => FUNDS[s].forEach((f, i) => { f.id = `b-${s}-${i}`; f.builtIn = true; }));   // stable ids for built-ins
-  const ORIGINAL = clone({ liquid: FUNDS.liquid, illiquid: FUNDS.illiquid });                        // pristine copy to rebuild from
+  // js/funds-data.js lists the built-in funds under "liquid" and "illiquid"; a fund's id comes from its place there and
+  // never changes. A fund marked `home` then moves to that built-in strategy (PARS IV: monthly dealing) with its id.
+  const LISTED = ["liquid", "illiquid"];
+  LISTED.forEach(s => FUNDS[s].forEach((f, i) => { f.id = `b-${s}-${i}`; f.builtIn = true; }));       // stable ids for built-ins
+  BUILT_IN.forEach(s => { FUNDS[s] = FUNDS[s] || []; });
+  LISTED.forEach(s => { FUNDS[s] = FUNDS[s].filter(f => !(f.home && f.home !== s && FUNDS[f.home] && FUNDS[f.home].push(f))); });
+  const ORIGINAL = clone(Object.fromEntries(BUILT_IN.map(s => [s, FUNDS[s]])));                      // pristine copy to rebuild from
 
   const empty = () => ({ strategies: [], funds: {}, hidden: [], overrides: {}, order: {}, removed: [], names: {} });
   const normalise = s => ({
@@ -72,13 +79,15 @@ const FundStore = (() => {
     /** Registers the function called after every change an admin makes (js/repo.js saves to GitHub there). */
     onChange(fn) { listener = fn; },
 
-    /** All strategy tabs in display order: the two built-in ones, then the custom ones. */
-    strategies: () => [...BUILT_IN.filter(id => !state.removed.includes(id)).map(id => ({ id, builtIn: true, name: state.names[id] || "" })), ...state.strategies],
+    /** All strategies in display order: the built-in ones (Liquid category), then the added ones. Each has `group`. */
+    strategies: () => [
+      ...BUILT_IN.filter(id => !state.removed.includes(id)).map(id => ({ id, builtIn: true, group: "liquid", name: state.names[id] || "" })),
+      ...state.strategies.map(s => ({ ...s, group: s.group === "liquid" ? "liquid" : "closed" }))],
     isBuiltIn: id => BUILT_IN.includes(id),
 
-    /** Creates a strategy tab. `name` must already be safe to insert as HTML. Returns the new strategy. */
-    addStrategy(name) {
-      const s = { id: "s-" + Date.now(), name };
+    /** Creates a strategy in a category ("liquid" or "closed"). `name` must already be safe to insert as HTML. Returns it. */
+    addStrategy(name, group) {
+      const s = { id: "s-" + Date.now(), name, group: group === "liquid" ? "liquid" : "closed" };
       state.strategies.push(s);
       changed();
       return s;

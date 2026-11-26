@@ -437,6 +437,42 @@ table.cls tr:nth-child(odd) td{background:#fafbfd}
 .modal-body label.mo-keep{display:flex;align-items:center;gap:8px;margin-top:10px;font-size:13px;color:var(--ink);cursor:pointer}
 .modal-body .mo-keep input{width:auto;padding:0;flex:none}
 .mo-keep i{font-style:normal}
+
+/* ---- category tabs: the strategies of a category drop down as a list while the mouse is over it ---- */
+.tab-group{position:relative}
+.tab-sub{margin-left:12px;padding-left:12px;border-left:1px solid #cfd3df;font-weight:400;letter-spacing:1px;color:var(--muted)}
+.tab-menu{display:none;position:absolute;top:100%;left:-18px;z-index:40;min-width:250px;padding:8px 0;background:#fff;border:1px solid var(--line);box-shadow:0 18px 40px -18px rgba(26,36,69,.4)}
+/* the list fades and slides in under the tab, and fades out a moment after the mouse leaves */
+.tab-menu{display:block;visibility:hidden;opacity:0;transform:translateY(-8px);pointer-events:none;transition:opacity .2s ease .06s,transform .2s ease .06s,visibility 0s linear .26s}
+.tab-group:hover .tab-menu,.tab-group.open .tab-menu{visibility:visible;opacity:1;transform:none;pointer-events:auto;transition:opacity .22s ease,transform .26s cubic-bezier(.22,.8,.2,1),visibility 0s}
+.tab-group.shut .tab-menu{visibility:hidden;opacity:0;transform:translateY(-8px);pointer-events:none;transition:none}
+.tab-menu .sub{transition:background .18s ease,color .18s ease,padding-left .18s ease}
+.tab-menu .sub:not(.active):hover{padding-left:24px}
+.tab{transition:color .25s ease}
+.tab .count{transition:background .25s ease,color .25s ease}
+.tab.moved.active::after{animation:tabline .35s cubic-bezier(.22,.8,.2,1)}
+.tab.renamed .tab-sub{animation:subin .35s ease}
+@keyframes tabline{from{transform:scaleX(0)}to{transform:none}}
+@keyframes subin{from{opacity:0;transform:translateX(-6px)}to{opacity:1;transform:none}}
+.tab.active::after{transform-origin:left}
+/* switching strategy: old cards fade out, new cards rise in one after another */
+.track.swap-out{opacity:0;transform:translateY(10px);transition:opacity .17s ease,transform .17s ease}
+.track.swap-in>*{animation:cardin .5s cubic-bezier(.22,.8,.2,1) both;animation-delay:var(--rise,0ms)}
+@keyframes cardin{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.tab-menu,.tab-group:hover .tab-menu,.tab-group.open .tab-menu{transition:none}.tab.moved.active::after,.tab.renamed .tab-sub,.track.swap-in>*{animation:none}}
+.tab-menu .sub{display:flex;align-items:center;width:100%;padding:12px 18px;background:none;border:none;font-family:var(--sans);font-size:13px;font-weight:500;letter-spacing:1.3px;text-transform:uppercase;color:var(--muted);text-align:left;white-space:nowrap;cursor:pointer}
+.tab-menu .sub>span:first-child{flex:1}
+.tab-menu .sub:hover{background:#f6f6f9;color:var(--navy)}
+.tab-menu .sub.active{color:var(--navy)}
+.tab-menu .sub.active>span:first-child{box-shadow:inset 2px 0 0 var(--gold);margin-left:-18px;padding-left:16px}
+.tab-menu .count{display:inline-grid;place-items:center;min-width:22px;height:22px;margin-left:14px;border-radius:11px;background:var(--line);font-size:11px;color:var(--navy)}
+.tab-menu .sub.active .count{background:var(--navy);color:#fff}
+.tab-menu .tab-add{display:block;width:100%;margin-top:6px;padding:12px 18px;background:none;border:none;border-top:1px solid var(--line);font-family:var(--sans);text-transform:uppercase;text-align:left;cursor:pointer}
+.tab-menu .strat-new{padding:8px 14px}
+.tab-empty{padding:10px 18px;font-size:13px;color:var(--muted);white-space:nowrap}
+html:not([lang="en"]) .tab-menu .sub{letter-spacing:2px}
+@media (max-width:680px){.tab-sub{display:none}.tab-menu{left:0}}
+.track-empty{grid-column:1/-1;grid-row:1/-1;padding:44px 0 60px;font-size:15px;color:var(--muted)}
 </style>
 </head>
 <body>
@@ -1106,6 +1142,12 @@ Object.assign(UI.tc,{stratRename:"重新命名策略",stratSave:"儲存"});
 Object.assign(UI.en,{clHeadFees:"Fee Schedule",clKeep:"This table holds fees only: keep the liquidity terms text under it"});
 Object.assign(UI.sc,{clHeadFees:"费用结构",clKeep:"此表仅含费用：在表格下方保留流动性条款文字"});
 Object.assign(UI.tc,{clHeadFees:"費用結構",clKeep:"此表僅含費用：在表格下方保留流動性條款文字"});
+
+/* two categories, each listing its strategies */
+Object.assign(UI.en,{grpLiquid:"Liquid",grpClosed:"Closed-End / Semi-Liquid",subDaily:"Daily",subMonthly:"Monthly",subQuarterly:"Quarterly",grpEmpty:"No strategies yet"});
+Object.assign(UI.sc,{grpLiquid:"流动性基金",grpClosed:"封闭式 / 半流动性",subDaily:"每日",subMonthly:"每月",subQuarterly:"每季度",grpEmpty:"暂无策略"});
+Object.assign(UI.tc,{grpLiquid:"流動性基金",grpClosed:"封閉式 / 半流動性",subDaily:"每日",subMonthly:"每月",subQuarterly:"每季度",grpEmpty:"暫無策略"});
+UI.en.noFunds="No funds in this strategy yet.";UI.sc.noFunds="此策略暂无基金。";UI.tc.noFunds="此策略暫無基金。";
 </script>
 <script>
 /* ===== js/funds-data.js ===== */
@@ -1138,7 +1180,8 @@ const FUNDS = {
      note:{en:"AUM of €5,281M converted at EUR/USD ≈ 1.16.",sc:"规模 €5,281M，按 EUR/USD≈1.16 折算。",tc:"規模 €5,281M，按 EUR/USD≈1.16 折算。"}}
   ],
   illiquid:[
-    {name:"PARS IV", mgr:{en:"Global Macro",sc:"全球宏观",tc:"全球宏觀"}, vehicle:"private", inception:"2004-09", aum:4.932,
+    {name:"PARS IV", home:"monthly",   // shown under Liquid > Monthly (js/fund-store.js); its id stays b-illiquid-0
+      mgr:{en:"Global Macro",sc:"全球宏观",tc:"全球宏觀"}, vehicle:"private", inception:"2004-09", aum:4.932,
      tag:{en:"Global Macro · Absolute Return",sc:"全球宏观 · 绝对收益",tc:"全球宏觀 · 絕對收益"},
      strategy:{en:"Multi-asset macro positions; underlying exposures are not credit-based.",
                sc:"多资产宏观头寸，底层资产非信用类。",
@@ -1435,31 +1478,38 @@ const EXTRA={
         ["三年檔","1.25%","20%，超過 3 個月美國國庫券 hurdle，全額 catch-up，高水位","每三年","90天"]]}},
     classesKeepText:true}
 };
-[...FUNDS.liquid,...FUNDS.illiquid].forEach(f=>{ if(EXTRA[f.name]) Object.assign(f,EXTRA[f.name]) });
+Object.values(FUNDS).flat().forEach(f=>{ if(EXTRA[f.name]) Object.assign(f,EXTRA[f.name]) });
 })();
 </script>
 <script>
 /* ===== js/fund-store.js ===== */
 /* ---------- Fund store ----------
-   Built-in funds come from js/funds-data.js, under the two built-in strategy tabs "liquid" and "illiquid".
+   Strategies sit in two fixed categories: "liquid" (Liquid) and "closed" (Closed-End / Semi-Liquid).
+   Built-in funds come from js/funds-data.js and fill the three built-in strategies of the Liquid category:
+   "liquid" (Daily), "monthly" (Monthly) and "illiquid" (Quarterly).
    Everything admins change lives in ONE shared file in the repository, data/funds.json, so every visitor sees it:
-     strategies  [ { id, name } ]            strategy tabs admins added, in display order
+     strategies  [ { id, name, group } ]     strategies admins added, in display order; group is "liquid" or "closed"
      funds       { strategyId: [fund, ...] } funds admins added
      hidden      [ fundId, ... ]             built-in funds admins deleted
      overrides   { fundId: { fund, strat } } edited built-in funds (js/funds-data.js itself is never changed)
      order       { strategyId: [fundId, ...] } card order admins set by dragging; funds not listed come after
-     removed     [ "liquid" | "illiquid" ]   built-in strategy tabs admins deleted
-     names       { liquid?: name, illiquid?: name }   built-in strategy tabs admins renamed
+     removed     [ built-in strategy id ]    built-in strategies admins deleted
+     names       { built-in strategy id: name }      built-in strategies admins renamed
      stats       [ "130+", "40+", "9" ]      the three cover-page numbers, once an admin has edited them
    This file only holds that state in memory and rebuilds the live FUNDS list from it.
    Loading and saving the file is done by js/repo.js, which is told about every change through onChange(). */
 const FundStore = (() => {
-  const BUILT_IN = ["liquid", "illiquid"];
+  const BUILT_IN = ["liquid", "monthly", "illiquid"];
   const clone = x => JSON.parse(JSON.stringify(x));
   const isBuiltInFund = id => String(id).startsWith("b-");
 
-  BUILT_IN.forEach(s => FUNDS[s].forEach((f, i) => { f.id = `b-${s}-${i}`; f.builtIn = true; }));   // stable ids for built-ins
-  const ORIGINAL = clone({ liquid: FUNDS.liquid, illiquid: FUNDS.illiquid });                        // pristine copy to rebuild from
+  // js/funds-data.js lists the built-in funds under "liquid" and "illiquid"; a fund's id comes from its place there and
+  // never changes. A fund marked `home` then moves to that built-in strategy (PARS IV: monthly dealing) with its id.
+  const LISTED = ["liquid", "illiquid"];
+  LISTED.forEach(s => FUNDS[s].forEach((f, i) => { f.id = `b-${s}-${i}`; f.builtIn = true; }));       // stable ids for built-ins
+  BUILT_IN.forEach(s => { FUNDS[s] = FUNDS[s] || []; });
+  LISTED.forEach(s => { FUNDS[s] = FUNDS[s].filter(f => !(f.home && f.home !== s && FUNDS[f.home] && FUNDS[f.home].push(f))); });
+  const ORIGINAL = clone(Object.fromEntries(BUILT_IN.map(s => [s, FUNDS[s]])));                      // pristine copy to rebuild from
 
   const empty = () => ({ strategies: [], funds: {}, hidden: [], overrides: {}, order: {}, removed: [], names: {} });
   const normalise = s => ({
@@ -1514,13 +1564,15 @@ const FundStore = (() => {
     /** Registers the function called after every change an admin makes (js/repo.js saves to GitHub there). */
     onChange(fn) { listener = fn; },
 
-    /** All strategy tabs in display order: the two built-in ones, then the custom ones. */
-    strategies: () => [...BUILT_IN.filter(id => !state.removed.includes(id)).map(id => ({ id, builtIn: true, name: state.names[id] || "" })), ...state.strategies],
+    /** All strategies in display order: the built-in ones (Liquid category), then the added ones. Each has `group`. */
+    strategies: () => [
+      ...BUILT_IN.filter(id => !state.removed.includes(id)).map(id => ({ id, builtIn: true, group: "liquid", name: state.names[id] || "" })),
+      ...state.strategies.map(s => ({ ...s, group: s.group === "liquid" ? "liquid" : "closed" }))],
     isBuiltIn: id => BUILT_IN.includes(id),
 
-    /** Creates a strategy tab. `name` must already be safe to insert as HTML. Returns the new strategy. */
-    addStrategy(name) {
-      const s = { id: "s-" + Date.now(), name };
+    /** Creates a strategy in a category ("liquid" or "closed"). `name` must already be safe to insert as HTML. Returns it. */
+    addStrategy(name, group) {
+      const s = { id: "s-" + Date.now(), name, group: group === "liquid" ? "liquid" : "closed" };
       state.strategies.push(s);
       changed();
       return s;
@@ -1745,8 +1797,8 @@ const scroller=document.getElementById("scroller");
 
 function renderCards(keepPos){
   const x=scroller.scrollLeft;
-  track.innerHTML=(FUNDS[tab]||[]).map(cardHTML).join("");
-  document.getElementById("tabDesc").textContent=tab==="liquid"?t(anon()?"descLiquidAnon":"descLiquid"):tab==="illiquid"?t("descIlliquid"):"";   // custom strategies have no description line
+  track.innerHTML=(FUNDS[tab]||[]).map(cardHTML).join("")||`<p class="track-empty">${t("noFunds")}</p>`;   // a strategy with no funds yet
+  document.getElementById("tabDesc").textContent=tab==="liquid"?t(anon()?"descLiquidAnon":"descLiquid"):tab==="illiquid"||tab==="monthly"?t("descIlliquid"):"";   // custom strategies have no description line
   requestAnimationFrame(()=>setTimeout(()=>track.querySelectorAll(".bar i").forEach(b=>b.style.height=b.dataset.h),80));
   scroller.scrollLeft=keepPos?x:0;
   updateProg();
@@ -1824,33 +1876,68 @@ document.addEventListener("click",e=>{if(!langBox.contains(e.target))setMenu(fal
 addEventListener("keydown",e=>{if(e.key==="Escape")setMenu(false)});
 
 /* ---------- strategy tabs ----------
-   Two built-in tabs (liquid, illiquid) plus any strategies an admin has added. `tab` holds the id of the open one.
-   Admins also get a small × on every tab and a "+ Add Strategy" button at the end. */
+   The tab row shows two fixed categories, Liquid and Closed-End / Semi-Liquid. Each strategy belongs to one of them:
+   Daily, Monthly and Quarterly are built in (Liquid); the ones admins add say which category they are in. Moving the
+   mouse over a category lists its strategies under the tab; clicking one shows that strategy's fund cards. `tab`
+   holds the id of the strategy on screen. Admins get rename, delete and "+ Add Strategy" inside each list. */
 const tabsEl=document.getElementById("tabs");
-const stratName=s=>s.builtIn&&!s.name?t(s.id==="liquid"?"tabLiquid":"tabIlliquid"):s.name;   // a renamed built-in tab shows the admin's name in every language
-let addingStrat=false, renamingStrat="";                        // renamingStrat: id of the tab whose name is being edited
+const GROUPS=[{id:"liquid",key:"grpLiquid"},{id:"closed",key:"grpClosed"}];
+const BUILT_IN_NAME={liquid:"subDaily",monthly:"subMonthly",illiquid:"subQuarterly"};
+const stratName=s=>s.builtIn&&!s.name?t(BUILT_IN_NAME[s.id]):s.name;   // a renamed built-in strategy shows the admin's name in every language
+const stratLabel=s=>`${t(GROUPS.find(g=>g.id===s.group).key)} › ${stratName(s)}`;   // for the strategy pickers in Add Fund and Edit
+let addingStrat="", renamingStrat="";                          // category a new strategy is being typed into; id of the strategy being renamed
+let shownGroup="liquid", shownTab="liquid";                    // what the tab row showed last time it was drawn
+let openGroup="", shutGroup="";                                // category whose list was opened by a click; category whose list stays closed until the mouse leaves
 function renderTabs(){
   const list=FundStore.strategies(), admin=Auth.isAdmin();
-  if(!list.some(s=>s.id===tab)) tab=list.length?list[0].id:"";       // the open tab was deleted: fall back to the first one
-  if(!admin) addingStrat=false;
+  if(!list.some(s=>s.id===tab)) tab=list.length?list[0].id:"";       // the strategy on screen was deleted: fall back to the first one
+  if(!admin) addingStrat="";
   if(!admin||!list.some(s=>s.id===renamingStrat)) renamingStrat="";
+  const cur=list.find(s=>s.id===tab);
+  const newGroup=!!cur&&cur.group!==shownGroup, newTab=tab!==shownTab;   // animate the underline / the strategy name only when they change
+  shownGroup=cur?cur.group:""; shownTab=tab;
   const pencil=`<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16v4zM13.5 6.5l4 4"/></svg>`;
-  tabsEl.innerHTML=list.map(s=>s.id===renamingStrat
-    ?`<form class="strat-new" id="stratRenameForm"><input id="stratRename" maxlength="40" value="${stratName(s)}" placeholder="${t("stratPh")}"><button class="btn sm solid" type="submit">${t("stratSave")}</button><button class="strat-x" type="button" id="stratRenameCancel" aria-label="${t("cancel")}">×</button></form>`
-    :`<button class="tab ${s.id===tab?"active":""}" data-tab="${s.id}" role="tab"><span>${stratName(s)}</span><span class="count">${(FUNDS[s.id]||[]).length}</span>${admin?`<span class="tab-edit" data-rename="${s.id}" title="${t("stratRename")}">${pencil}</span><span class="tab-del" data-del="${s.id}" title="${t("stratDelete")}">×</span>`:""}</button>`).join("")
-    +(!admin?"":addingStrat
-      ?`<form class="strat-new" id="stratForm"><input id="stratName" maxlength="40" placeholder="${t("stratPh")}"><button class="btn sm solid" type="submit">${t("stratAdd")}</button><button class="strat-x" type="button" id="stratCancel" aria-label="${t("cancel")}">×</button></form>`
-      :`<button class="tab tab-add" id="stratAddBtn">${t("addStrategy")}</button>`);
+  tabsEl.innerHTML=GROUPS.map(g=>{
+    const subs=list.filter(s=>s.group===g.id), on=!!cur&&cur.group===g.id;
+    const total=subs.reduce((n,s)=>n+(FUNDS[s.id]||[]).length,0);
+    const busy=addingStrat===g.id||subs.some(s=>s.id===renamingStrat);          // a form is open inside this list
+    const items=subs.map(s=>s.id===renamingStrat
+      ?`<form class="strat-new" id="stratRenameForm"><input id="stratRename" maxlength="40" value="${stratName(s)}" placeholder="${t("stratPh")}"><button class="btn sm solid" type="submit">${t("stratSave")}</button><button class="strat-x" type="button" id="stratRenameCancel" aria-label="${t("cancel")}">×</button></form>`
+      :`<button class="sub ${s.id===tab?"active":""}" data-tab="${s.id}" role="menuitem"><span>${stratName(s)}</span><span class="count">${(FUNDS[s.id]||[]).length}</span>${admin?`<span class="tab-edit" data-rename="${s.id}" title="${t("stratRename")}">${pencil}</span><span class="tab-del" data-del="${s.id}" title="${t("stratDelete")}">×</span>`:""}</button>`).join("")
+      +(!admin?"":addingStrat===g.id
+        ?`<form class="strat-new" id="stratForm"><input id="stratName" maxlength="40" placeholder="${t("stratPh")}"><button class="btn sm solid" type="submit">${t("stratAdd")}</button><button class="strat-x" type="button" id="stratCancel" aria-label="${t("cancel")}">×</button></form>`
+        :`<button class="tab-add" data-addstrat="${g.id}">${t("addStrategy")}</button>`);
+    return `<div class="tab-group${busy||openGroup===g.id?" open":""}${shutGroup===g.id&&!busy?" shut":""}" data-group="${g.id}">
+      <button class="tab ${on?"active":""}${on&&newGroup?" moved":""}${on&&newTab?" renamed":""}" data-grouptab="${g.id}" role="tab" aria-haspopup="true"><span>${t(g.key)}</span><span class="count">${total}</span>${on?`<span class="tab-sub">${stratName(cur)}</span>`:""}</button>
+      <div class="tab-menu" role="menu">${items||`<p class="tab-empty">${t("grpEmpty")}</p>`}</div></div>`;
+  }).join("");
 }
-function selectTab(id){tab=id;renderTabs();renderCards()}
+/* Switching strategy: the cards on screen fade out and sink a little, the new ones are drawn, then they fade in and
+   rise one after another. Skipped when the strategy does not change or the visitor asked for reduced motion. */
+const calmMotion=matchMedia("(prefers-reduced-motion: reduce)");
+let swapTimer=0;
+function selectTab(id){
+  const changed=id!==tab;
+  tab=id; renderTabs();
+  clearTimeout(swapTimer);
+  if(!changed||calmMotion.matches){track.classList.remove("swap-out","swap-in");renderCards();return}
+  track.classList.remove("swap-in"); track.classList.add("swap-out");
+  swapTimer=setTimeout(()=>{
+    renderCards();                                             // while invisible
+    track.classList.remove("swap-out"); track.classList.add("swap-in");
+    [...track.children].forEach((c,i)=>c.style.setProperty("--rise",Math.min(i,5)*55+"ms"));   // each card starts a touch after the one before
+    swapTimer=setTimeout(()=>track.classList.remove("swap-in"),700);
+  },170);
+}
 
-/** Creates a strategy tab from typed text. Returns the new strategy, or null if the name is empty or already used. */
-function createStrategy(raw){
+/** Creates a strategy from typed text, in a category ("liquid" or "closed"; funds from a deck default to "closed").
+    Returns the new strategy, or null if the name is empty or already used. */
+function createStrategy(raw,group){
   if(!Auth.isAdmin()||needToken()) return null;
   const name=esc(raw);
   if(!name) return null;
   if(FundStore.strategies().some(s=>stratName(s).toLowerCase()===name.toLowerCase())){alert(t("stratExists"));return null}
-  return FundStore.addStrategy(name);
+  return FundStore.addStrategy(name,group);
 }
 /** Saves a new name for a strategy tab. An empty name puts a built-in tab back to its original (translated) name. */
 function renameStrategy(id,raw){
@@ -1862,9 +1949,10 @@ function renameStrategy(id,raw){
   return FundStore.renameStrategy(id,name);
 }
 tabsEl.addEventListener("click",e=>{
+  e.inTabs=true;                                               // for the outside-click handler: the clicked element may be redrawn before it runs
   const ren=e.target.closest("[data-rename]");
   if(ren){
-    if(Auth.isAdmin()&&!needToken()){addingStrat=false;renamingStrat=ren.dataset.rename;renderTabs();const box=document.getElementById("stratRename");box.focus();box.select()}
+    if(Auth.isAdmin()&&!needToken()){addingStrat="";renamingStrat=ren.dataset.rename;renderTabs();const box=document.getElementById("stratRename");box.focus();box.select()}
     return;
   }
   if(e.target.closest("#stratRenameCancel")){renamingStrat="";renderTabs();return}
@@ -1876,21 +1964,31 @@ tabsEl.addEventListener("click",e=>{
     }
     return;
   }
-  if(e.target.closest("#stratAddBtn")){addingStrat=true;renamingStrat="";renderTabs();document.getElementById("stratName").focus();return}
-  if(e.target.closest("#stratCancel")){addingStrat=false;renderTabs();return}
-  const b=e.target.closest(".tab[data-tab]");
-  if(b) selectTab(b.dataset.tab);
+  const add=e.target.closest("[data-addstrat]");
+  if(add){addingStrat=add.dataset.addstrat;renamingStrat="";renderTabs();document.getElementById("stratName").focus();return}
+  if(e.target.closest("#stratCancel")){addingStrat="";renderTabs();return}
+  const b=e.target.closest("[data-tab]");
+  if(b){shutGroup=b.closest(".tab-group").dataset.group;openGroup="";selectTab(b.dataset.tab);return}   // the list closes once a strategy is picked
+  const g=e.target.closest("[data-grouptab]");
+  if(g){openGroup=openGroup===g.dataset.grouptab?"":g.dataset.grouptab;shutGroup="";renderTabs()}       // a click (or a tap on a touch screen) keeps the list open
 });
+/* the list disappears when the mouse leaves the category (mouseleave does not bubble, so it is caught on the way down) */
+tabsEl.addEventListener("mouseleave",e=>{
+  if(!e.target.classList||!e.target.classList.contains("tab-group")) return;
+  shutGroup="";e.target.classList.remove("shut");
+  if(openGroup===e.target.dataset.group){openGroup="";if(!addingStrat&&!renamingStrat)e.target.classList.remove("open")}
+},true);
+document.addEventListener("click",e=>{if(openGroup&&!e.inTabs){openGroup="";renderTabs()}});
 tabsEl.addEventListener("submit",e=>{
   e.preventDefault();
   if(e.target.id==="stratRenameForm"){
     if(renameStrategy(renamingStrat,document.getElementById("stratRename").value)){renamingStrat="";applyLang()}
     return;
   }
-  const s=createStrategy(document.getElementById("stratName").value);
-  if(s){addingStrat=false;selectTab(s.id)}
+  const s=createStrategy(document.getElementById("stratName").value,addingStrat);
+  if(s){addingStrat="";selectTab(s.id)}
 });
-tabsEl.addEventListener("keydown",e=>{if(e.key==="Escape"&&(addingStrat||renamingStrat)){addingStrat=false;renamingStrat="";renderTabs()}});
+tabsEl.addEventListener("keydown",e=>{if(e.key==="Escape"&&(addingStrat||renamingStrat||openGroup)){addingStrat="";renamingStrat="";openGroup="";renderTabs()}});
 
 /* mouse drag with momentum (touch uses native scrolling) */
 let drag=null, glide=0, justDragged=false;
@@ -2326,7 +2424,7 @@ function resetImport() {
 
 /** <option> list of every strategy tab, with one selected. */
 const stratOptions = selected => FundStore.strategies()
-  .map(s => `<option value="${s.id}"${s.id === selected ? " selected" : ""}>${stratName(s)}</option>`).join("");
+  .map(s => `<option value="${s.id}"${s.id === selected ? " selected" : ""}>${stratLabel(s)}</option>`).join("");
 
 // "create a new strategy for these funds": makes the tab, then points every listed fund at it
 document.getElementById("imStratCreate").onclick = () => {
@@ -2686,7 +2784,7 @@ function openEdit(id) {
   const liqShown = plain(liqTxt(f));                          // funds with daily dealing have no stored text; "Daily" is the default
   editing = { fund: f, strat: hit.strat, ddShown, liqShown };
   editErr.hidden = true;
-  ef("efStrat").innerHTML = FundStore.strategies().map(s => `<option value="${s.id}"${s.id === hit.strat ? " selected" : ""}>${stratName(s)}</option>`).join("");
+  ef("efStrat").innerHTML = FundStore.strategies().map(s => `<option value="${s.id}"${s.id === hit.strat ? " selected" : ""}>${stratLabel(s)}</option>`).join("");
   ef("efName").value = plain(f.name);
   ef("efMgr").value = plain(L(f.mgr));
   ef("efTag").value = plain(L(f.tag));
@@ -2922,7 +3020,7 @@ const Repo = (() => {
     (remote.strategies || []).forEach(s => { if (!out.strategies.some(x => x.id === s.id) && !syncedStrats.has(s.id)) out.strategies.push(s); });
     remoteById.forEach(({ f, strat }, id) => {
       if (localIds.has(id) || synced.has(id)) return;
-      if (strat === "liquid" || strat === "illiquid" || out.strategies.some(s => s.id === strat)) (out.funds[strat] = out.funds[strat] || []).push(f);
+      if (FundStore.isBuiltIn(strat) || out.strategies.some(s => s.id === strat)) (out.funds[strat] = out.funds[strat] || []).push(f);
     });
     return out;
   }

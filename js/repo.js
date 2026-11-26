@@ -77,7 +77,7 @@ const Repo = (() => {
     (remote.strategies || []).forEach(s => { if (!out.strategies.some(x => x.id === s.id) && !syncedStrats.has(s.id)) out.strategies.push(s); });
     remoteById.forEach(({ f, strat }, id) => {
       if (localIds.has(id) || synced.has(id)) return;
-      if (strat === "liquid" || strat === "illiquid" || out.strategies.some(s => s.id === strat)) (out.funds[strat] = out.funds[strat] || []).push(f);
+      if (FundStore.isBuiltIn(strat) || out.strategies.some(s => s.id === strat)) (out.funds[strat] = out.funds[strat] || []).push(f);
     });
     return out;
   }
