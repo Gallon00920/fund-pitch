@@ -280,6 +280,55 @@ addEventListener("keydown",e=>{
 addEventListener("keyup",e=>{if(e.key==="ArrowRight"||e.key==="ArrowLeft")keyDir=0});
 addEventListener("blur",()=>keyDir=0);
 
+/* ---------- monthly returns ----------
+   A fund can carry `monthly`: [{ y:"2008", m:[12 numbers or null], t: year total or null }], read from a picture the
+   admin attached (scripts/picture_tables.py). It holds numbers only, so it is safe to show and download for investors. */
+const moNum=(v,d)=>v==null?"":(v<0?"−":"")+Math.abs(v).toFixed(d)+"%";
+const moDecimals=v=>(String(v).split(".")[1]||"").length>1?2:1;
+/** Years whose twelve months do not compound to the printed year total: a hint that a figure was misread. */
+function monthlySuspects(rows){
+  return rows.filter(r=>r.t!=null&&r.m.every(v=>v!=null)&&Math.abs((r.m.reduce((a,v)=>a*(1+v/100),1)-1)*100-r.t)>0.15).map(r=>r.y);
+}
+/** A small picture of the table: one tiny cell per month, navy for gains and red for losses. */
+function monthlyThumb(rows){
+  const show=rows.slice(-14), peak=Math.max(1,...show.flatMap(r=>r.m.filter(v=>v!=null).map(Math.abs)).map(v=>Math.min(v,5)));
+  const cells=show.map((r,y)=>r.m.map((v,x)=>v==null?"":`<rect x="${x*7}" y="${y*5}" width="6" height="4" fill="${v<0?"#b4443a":"#1A2445"}" opacity="${(0.25+0.75*Math.min(Math.abs(v),5)/peak).toFixed(2)}"/>`).join("")).join("");
+  return `<svg class="mo-pic" viewBox="0 0 83 ${show.length*5-1}" width="83" height="${show.length*5-1}" aria-hidden="true">${cells}</svg>`;
+}
+const monthNames=()=>zh()?MON.map((_,i)=>`${i+1}月`):MON;
+const moModal=document.getElementById("monthlyModal");
+let moFund=null;
+function openMonthly(id){
+  const hit=FundStore.find(id); if(!hit||!hit.fund.monthly) return;
+  const f=moFund=hit.fund, rows=f.monthly, bad=Auth.isAdmin()?monthlySuspects(rows):[];
+  document.getElementById("moTitle").innerHTML=`${t("monthlyTitle")}<small>${title(f)}</small>`;
+  document.getElementById("moTable").innerHTML=`<table class="mo"><tr><th>${t("moYear")}</th>${monthNames().map(m=>`<th>${m}</th>`).join("")}<th>${t("moTotal")}</th></tr>${
+    rows.map(r=>`<tr${bad.includes(r.y)?' class="check"':""}><td>${r.y}</td>${r.m.map(v=>`<td class="${v<0?"neg":""}">${moNum(v,2)}</td>`).join("")}<td class="${r.t<0?"neg":""}">${moNum(r.t,r.t==null?1:moDecimals(r.t))}</td></tr>`).join("")}</table>`;
+  document.getElementById("moNote").textContent=(bad.length?t("moCheck")(bad.join(", "))+" ":"")+t("past");
+  moModal.hidden=false; document.body.classList.add("modal-open"); moModal.scrollTop=0;
+}
+function closeMonthly(){ if(moModal.hidden) return; moModal.hidden=true; moFund=null; document.body.classList.remove("modal-open") }
+document.getElementById("moClose").onclick=closeMonthly;
+moModal.addEventListener("mousedown",e=>{if(e.target===moModal)closeMonthly()});
+addEventListener("keydown",e=>{if(e.key==="Escape"&&!moModal.hidden){e.stopImmediatePropagation();closeMonthly()}},true);
+/** Downloads the table as a CSV file that opens in Excel. Figures are percentages; the file never names the fund for investors. */
+document.getElementById("moDownload").onclick=()=>{
+  if(!moFund) return;
+  const cell=v=>v==null?"":String(v);
+  const csv=[["Year",...MON,"Total"].join(","),...moFund.monthly.map(r=>[r.y,...r.m.map(cell),cell(r.t)].join(","))].join("\r\n");
+  const slug=document.getElementById("moTitle").querySelector("small").textContent.toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
+  const a=document.createElement("a");
+  a.href=URL.createObjectURL(new Blob(["﻿"+csv],{type:"text/csv;charset=utf-8"}));
+  a.download=`monthly-returns${slug?"-"+slug:""}.csv`;
+  document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(a.href),1000);
+};
+
+/* ---------- share classes ----------
+   A fund can carry `classes`: { head:[column titles], rows:[[cells]] }, one row per share class with its fees and
+   liquidity terms. A built-in fund may hold one table per language ({ en, sc, tc }). In View Fund the table replaces
+   the liquidity text. */
+const classesOf=f=>{const c=f.classes&&(f.classes.head?f.classes:L(f.classes));return c&&c.head&&c.rows&&c.rows.length?c:null};
+
 /* drawer */
 const drawer=document.getElementById("drawer"), scrim=document.getElementById("scrim");
 let openFund=null;
@@ -292,6 +341,13 @@ function openD(f){
   // perfCaption explains rows that are not this fund's own record (a predecessor or composite series)
   const perfBlock=rows.length?`<h4>${t("perfTitle")}</h4>${LX(f.perfCaption)?`<p class="perf-cap">${R(f,LX(f.perfCaption))}</p>`:""}
     <table class="perf"><tr><th>${t("period")}</th><th>${t("ret")}</th></tr>${rows.map(p=>`<tr><td>${perLabel(p)}</td><td class="${p[1]>=0?"pos":"neg"}">${fmt(p[1])}</td></tr>`).join("")}</table>`:"";
+  const mo=f.monthly&&f.monthly.length?f.monthly:null;
+  const monthlyBlock=mo?`<button class="mo-thumb" type="button" onclick="openMonthly('${f.id}')">${monthlyThumb(mo)}<span><b>${t("monthlyTitle")}</b><small>${mo[0].y}${mo.length>1?" – "+mo.at(-1).y:""} · ${t("monthlyOpen")}</small></span>
+      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 7h10M8 3l4 4-4 4"/></svg></button>`:"";
+  const cls=classesOf(f);
+  const liqBlock=cls?`<h4>${t("clHead")}</h4><div class="cls-scroll"><table class="cls"><tr>${cls.head.map(h=>`<th>${R(f,h)}</th>`).join("")}</tr>${
+      cls.rows.map(r=>`<tr>${r.map(c=>`<td>${R(f,c)||"—"}</td>`).join("")}</tr>`).join("")}</table></div>`
+    :`<h4>${t("liqTerms")}</h4><p>${f.liqFull?R(f,L(f.liqFull)):t("dailyFull")}</p>`;
   const notesBlock=notes.length?`<h4>${t("trackRecord")}</h4><p>${notes.map(x=>R(f,x)).join("<br>")}</p>`:"";
   drawer.innerHTML=`<div class="d-head"><button class="close" onclick="closeD()" aria-label="Close">✕</button>${anon()?"":`<span class="tag">${L(f.tag)}</span>`}<h3>${title(f)}</h3>${anon()?"":`<p>${L(f.mgr)} · ${veh(f)}</p>`}</div>
   <div class="d-body">
@@ -302,14 +358,14 @@ function openD(f){
       <div><span>${t("vehicle")}</span><b>${veh(f)}</b></div><div><span>${t("dealing")}</span><b>${liqTxt(f)}</b></div>
     </div>
     ${ddBlock}
-    <h4>${t("liqTerms")}</h4><p>${f.liqFull?R(f,L(f.liqFull)):t("dailyFull")}</p>
-    ${perfBlock}${notesBlock}
+    ${liqBlock}
+    ${perfBlock}${monthlyBlock}${notesBlock}
     <p class="note">${f.note&&!anon()?L(f.note)+" ":""}${t("past")}</p>
     ${Auth.isAdmin()?`<div class="d-admin"><button class="btn ghost" onclick="openEdit('${f.id}')">${t("edit")}</button>${f.custom?`<button class="btn ghost" onclick="translateNow('${f.id}')">${t(f.translated?"retranslate":"translate")}</button>`:""}<button class="btn danger" onclick="deleteFund('${f.id}')">${t("del")}</button></div>`:""}
   </div>`;
   drawer.classList.add("on");scrim.classList.add("on");drawer.setAttribute("aria-hidden","false");drawer.scrollTop=keep;
 }
-function closeD(){openFund=null;drawer.classList.remove("on");scrim.classList.remove("on");drawer.setAttribute("aria-hidden","true")}
+function closeD(){closeMonthly();openFund=null;drawer.classList.remove("on");scrim.classList.remove("on");drawer.setAttribute("aria-hidden","true")}
 scrim.onclick=closeD;
 
 /* nav: highlight the link for the section currently in view */

@@ -64,17 +64,165 @@ fundFile.addEventListener("change", () => importDeck(fundFile.files[0]));
 const dropZone = document.getElementById("dropZone");
 let dragDepth = 0;                                           // dragenter/dragleave fire for every child element, so count them
 const hasFiles = e => e.dataTransfer && [...e.dataTransfer.types].includes("Files");
-fundModal.addEventListener("dragenter", e => { if (!hasFiles(e)) return; e.preventDefault(); dragDepth++; dropZone.classList.add("drag"); });
-fundModal.addEventListener("dragover", e => { if (!hasFiles(e)) return; e.preventDefault(); e.dataTransfer.dropEffect = "copy"; });
-fundModal.addEventListener("dragleave", e => { if (!hasFiles(e)) return; if (--dragDepth <= 0) { dragDepth = 0; dropZone.classList.remove("drag"); } });
+/* A picture being dragged is a table (monthly returns or share classes) for one fund in the list, not a deck: it lights up that fund's
+   picture box instead of the deck zone. (The file's type is readable while dragging; its name is not.) */
+const isPicture = file => !!file && (/^image\//.test(file.type) || /\.(png|jpe?g|webp|gif)$/i.test(file.name || ""));
+const draggingPicture = e => [...(e.dataTransfer.items || [])].some(i => i.kind === "file" && /^image\//.test(i.type));
+const pictureFrom = list => [...(list || [])].find(isPicture);             // from a drop or from the clipboard
+function lightDrop(el) {                                     // highlights one picture box (or none)
+  document.querySelectorAll(".mo-drop.drag").forEach(z => { if (z !== el) z.classList.remove("drag"); });
+  if (el) el.classList.add("drag");
+}
+const draftItemAt = target => target.closest(".im-item") || (imList.children.length === 1 ? imList.firstElementChild : null);
+fundModal.addEventListener("dragenter", e => { if (!hasFiles(e)) return; e.preventDefault(); dragDepth++; if (!draggingPicture(e)) dropZone.classList.add("drag"); });
+fundModal.addEventListener("dragover", e => {
+  if (!hasFiles(e)) return;
+  e.preventDefault(); e.dataTransfer.dropEffect = "copy";
+  if (draggingPicture(e)) { const item = draftItemAt(e.target); lightDrop(item && item.querySelector(".mo-drop")); }
+});
+fundModal.addEventListener("dragleave", e => { if (!hasFiles(e)) return; if (--dragDepth <= 0) { dragDepth = 0; dropZone.classList.remove("drag"); lightDrop(null); } });
 fundModal.addEventListener("drop", e => {
   if (!hasFiles(e)) return;
   e.preventDefault();                                        // otherwise the browser would open or download the file
-  dragDepth = 0; dropZone.classList.remove("drag");
+  dragDepth = 0; dropZone.classList.remove("drag"); lightDrop(null);
   const file = e.dataTransfer.files[0];
+  if (isPicture(file)) {                                     // a picture of a table, for the fund it was dropped on
+    const item = draftItemAt(e.target);
+    return item ? loadDraftPicture(item, file) : fail(t(imList.children.length ? "moDropWhere" : "imBad"));
+  }
   fundFile.value = "";                                       // the picker no longer matches what is loaded
   if (file && !/\.pptx$/i.test(file.name)) { imList.innerHTML = ""; imStatus.textContent = ""; imSubmit.hidden = true; drafts = []; return fail(t("imBad")); }
   importDeck(file);
+});
+
+/* ---------- tables from a picture ----------
+   The admin gives a fund a picture of a monthly-returns table or of a share-class table (fees and liquidity terms per
+   class). The local server has Claude read it and say which of the two it is. Only the table is kept: the picture
+   itself is never saved or uploaded anywhere else. */
+let monthlyBusy = 0;                                         // pictures still being read; the forms wait for them
+const MONTHLY_ACCEPT = "image/png,image/jpeg,image/webp,image/gif";
+/** Resolves to { kind: "monthly", rows } or { kind: "classes", table }, or null when the picture could not be read. */
+async function readFundPicture(file, statusEl) {
+  statusEl.className = "mo-status"; statusEl.textContent = t("moReading");
+  monthlyBusy++;
+  try {
+    const found = await Local.parsePicture(file);
+    if (found.kind === "classes") {
+      found.table = { head: found.table.head.map(c => esc(c)), rows: found.table.rows.map(r => r.map(c => esc(c))) };
+      statusEl.textContent = t("clDone")(found.table.rows.length);
+      statusEl.classList.add("ok");
+      return found;
+    }
+    const rows = found.rows, bad = monthlySuspects(rows);
+    statusEl.textContent = t("moDone")(rows.length, rows[0].y, rows.at(-1).y) + (bad.length ? " " + t("moCheck")(bad.join(", ")) : "");
+    statusEl.classList.add(bad.length ? "warn" : "ok");
+    return found;
+  } catch (e) {
+    statusEl.textContent = UI[lang]["moErr_" + e.message] || t("moErr_api");
+    statusEl.classList.add("err");
+    return null;
+  } finally { monthlyBusy--; }
+}
+/* The table is edited as text, one year per line (the same idea as "Returns by period" in Edit):
+     2020    0.84   -0.37  -21.80   ...   -12.9
+   year, twelve months (Jan first), then the year total; "-" stands for an empty cell. Rows pasted from Excel work too. */
+const moCellText = (v, d) => v == null ? "-" : v.toFixed(Math.max(d, (String(v).split(".")[1] || "").length));
+function monthlyText(rows) {
+  if (!rows || !rows.length) return "";
+  const line = cells => cells.map((c, i) => i ? String(c).padStart(6) : String(c).padEnd(4)).join(" ");   // always a space between figures
+  return [line(["Year", ...MON, "Total"]), ...rows.map(r => line([r.y, ...r.m.map(v => moCellText(v, 2)), moCellText(r.t, 1)]))].join("\n");
+}
+/** Text -> { rows } (empty list for no table), or { bad: "2020" } naming the first line that cannot be read. */
+function parseMonthlyText(text) {
+  const rows = {};
+  for (const raw of String(text).split(/\n/)) {
+    const line = raw.replace(/\s+$/, "");
+    if (!/^\s*\d/.test(line)) continue;                       // blank lines and the "Year Jan Feb ..." heading
+    const head = line.match(/^\s*(\d+) *[:：]?(?: *[,;，；\t]| +|$)(.*)$/), bad = { bad: line.trim().split(/[\s,;:：]/)[0].slice(0, 12) };
+    if (!head) return bad;
+    const year = head[1], rest = head[2];                     // the year, then the cells: tab, comma or space separated
+    const cells = (rest.includes("\t") ? rest.split("\t") : /[,;，；]/.test(rest) ? rest.split(/[,;，；]/) : rest.trim().split(/\s+/)).map(c => c.trim());
+    if (!/^(19|20)\d{2}$/.test(year) || rows[year] || cells.length < 12 || cells.length > 13) return bad;
+    const nums = [];
+    for (const c of cells) {
+      const neg = /^\(.*\)$/.test(c), s = c.replace(/[()%\s]/g, "").replace(/[−–]/g, "-");
+      if (s === "" || s === "-" || s === "—" || /^n\/?a$/i.test(s)) { nums.push(null); continue; }
+      if (!/^[+-]?(\d+(\.\d+)?|\.\d+)$/.test(s)) return bad;
+      nums.push(neg ? -Math.abs(+s) : +s);
+    }
+    if (nums.some(v => v != null)) rows[year] = { y: year, m: nums.slice(0, 12), t: nums.length > 12 ? nums[12] : null };
+  }
+  return { rows: Object.keys(rows).sort().map(y => rows[y]) };
+}
+/** Shows what the text holds (or the line that is wrong) under the box, and returns the parse result. */
+function checkMonthlyText(text, statusEl) {
+  const p = parseMonthlyText(text);
+  statusEl.className = "mo-status";
+  if (p.bad != null) { statusEl.textContent = t("moErrLine")(p.bad); statusEl.classList.add("err"); return p; }
+  const suspect = monthlySuspects(p.rows);
+  statusEl.textContent = p.rows.length ? t("moRows")(p.rows.length, p.rows[0].y, p.rows.at(-1).y) + (suspect.length ? " " + t("moCheck")(suspect.join(", ")) : "") : t("moNone");
+  if (suspect.length) statusEl.classList.add("warn");
+  return p;
+}
+
+/* The share-class table is edited as text too: the column titles on the first line, then one class per line, with
+   " | " between the cells:
+     Class    | Management Fee | Lock-Up
+     Class CS | 1.50%          | 1 Year Hard
+   Rows pasted from Excel (tab separated) work too. Stored as { head: [titles], rows: [[cells]] }, cells as escaped text. */
+function classesText(table) {
+  if (!table || !table.rows || !table.rows.length) return "";
+  const grid = [table.head, ...table.rows].map(r => r.map(c => plain(c)));
+  const width = table.head.map((_, i) => Math.max(...grid.map(r => (r[i] || "").length)));
+  return grid.map(r => r.map((c, i) => i < r.length - 1 ? c.padEnd(width[i]) : c).join(" | ")).join("\n");
+}
+/** Text -> { table } (null for no table), or { bad: "Series M" } naming the first line that cannot be read. */
+function parseClassesText(text) {
+  const lines = String(text).split(/\n/).filter(l => l.trim());
+  if (!lines.length) return { table: null };
+  const cellsOf = l => (l.includes("\t") ? l.split("\t") : l.split(/[|｜]/)).map(c => esc(c.slice(0, 120)));
+  const name = l => l.trim().split(/\s*[|｜\t]/)[0].slice(0, 24);
+  const head = cellsOf(lines[0]);
+  if (head.length < 2 || head.length > 10 || lines.length < 2 || lines.length > 41) return { bad: name(lines[0]) };
+  const rows = [];
+  for (const l of lines.slice(1)) {
+    const cells = cellsOf(l);
+    if (cells.length > head.length || !cells[0]) return { bad: name(l) };
+    rows.push([...cells, ...Array(head.length - cells.length).fill("")]);
+  }
+  return { table: { head, rows } };
+}
+function checkClassesText(text, statusEl) {
+  const p = parseClassesText(text);
+  statusEl.className = "mo-status";
+  if (p.bad != null) { statusEl.textContent = t("clErrLine")(p.bad); statusEl.classList.add("err"); }
+  else statusEl.textContent = p.table ? t("clRows")(p.table.rows.length, p.table.head.length) : t("clNone");
+  return p;
+}
+
+/* the picture box: click to choose, drop a picture on it, or paste a screenshot */
+const moDropHTML = inputAttrs => `<label class="mo-drop"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><rect x="3.5" y="5" width="17" height="14" rx="1.5"/><circle cx="9" cy="10" r="1.6"/><path d="m4 17 5-4.5 3.5 3 3-2.5 4.5 4"/></svg><div><b>${t("moDrop")}</b><small>${t("moDropHint")}</small></div><input ${inputAttrs} type="file" accept="${MONTHLY_ACCEPT}"></label>`;
+imList.addEventListener("change", e => {
+  if (e.target.matches(".im-monthly") && e.target.files[0]) loadDraftPicture(e.target.closest(".im-item"), e.target.files[0]);
+});
+imList.addEventListener("paste", e => {
+  const item = e.target.closest(".im-item"), file = pictureFrom(e.clipboardData && e.clipboardData.files);
+  if (item && file) { e.preventDefault(); loadDraftPicture(item, file); }
+});
+async function loadDraftPicture(item, file) {
+  fundErr.hidden = true;
+  item.querySelector(".im-monthly").value = "";              // the picker no longer matches what was read
+  const found = await readFundPicture(file, item.querySelector(".im-mo .mo-status"));
+  if (!found || !item.isConnected) return;
+  // the table goes into its text box, where the admin can correct anything before adding the fund
+  const box = item.querySelector(found.kind === "classes" ? ".im-cledit" : ".im-moedit"), area = box.querySelector("textarea");
+  area.value = found.kind === "classes" ? classesText(found.table) : monthlyText(found.rows);
+  box.hidden = false;
+  area.dispatchEvent(new Event("input", { bubbles: true }));
+}
+imList.addEventListener("input", e => {
+  if (e.target.matches(".im-motext")) checkMonthlyText(e.target.value, e.target.closest(".im-moedit").querySelector(".mo-status"));
+  if (e.target.matches(".im-cltext")) checkClassesText(e.target.value, e.target.closest(".im-cledit").querySelector(".mo-status"));
 });
 
 /** Suggests the words to hide from investors: the fund and manager names, plus other name-like words
@@ -110,6 +258,9 @@ function renderDrafts() {
           <li><b>${t("ret")}:</b> ${returns}</li>
           <li><b>${t("dealing")}:</b> ${esc(d.liqShort) || "—"}</li>
         </ul>
+        <div class="im-mo"><span>${t("picTitle")}</span>${moDropHTML('class="im-monthly"')}<small class="mo-status"></small></div>
+        <div class="im-moedit" hidden><span class="im-sub">${t("moBoxTitle")}</span><textarea class="im-motext mo-text" rows="8" wrap="off" spellcheck="false" aria-label="${t("moBoxTitle")}"></textarea><small class="mo-status"></small><small>${t("moHelp")}</small></div>
+        <div class="im-cledit" hidden><span class="im-sub">${t("clTitle")}</span><textarea class="im-cltext mo-text" rows="6" wrap="off" spellcheck="false" aria-label="${t("clTitle")}"></textarea><small class="mo-status"></small><small>${t("clHelp")}</small></div>
       </div></div>`;
   }).join("");
 }
@@ -131,6 +282,8 @@ function fundFromDraft(d, i, name, mgr, hide, hideUntouched) {
     liq: one(esc(d.liqShort) || "—"), liqFull: one(escLines(d.liqLines))
   };
   if (d.source) fund.note = one(esc(d.source));
+  if (d.classes) fund.classes = d.classes;                  // share classes: fees and liquidity terms per class
+  if (d.monthly && d.monthly.length) fund.monthly = d.monthly;   // numbers read from the monthly-returns picture, as corrected by the admin
   // words masked in the investor view (see R() in app.js); longest first so "HCRx" is matched before "HCR"
   fund.redact = [...new Set(String(hide).split(/[,，、;；]/).map(w => esc(w)).filter(w => w.length > 1))]
     .sort((x, y) => y.length - x.length)
@@ -145,8 +298,18 @@ fundForm.addEventListener("submit", e => {
   e.preventDefault();
   if (!Auth.isAdmin()) return fail(t("errAdmin"));
   if (!Repo.hasToken() && !Local.on) return fail(t("ghNeedTokenHere"));   // nothing can be saved for everyone without it
+  if (monthlyBusy) return fail(t("moWait"));
   const picked = [...imList.querySelectorAll(".im-item")].filter(el => el.querySelector(".im-on").checked);
   if (!picked.length || picked.some(el => !el.querySelector(".im-name").value.trim())) return fail(t("imNoneSel"));
+
+  for (const el of picked) {                                   // the monthly tables as they stand in the text boxes
+    const p = parseMonthlyText(el.querySelector(".im-motext").value);
+    if (p.bad != null) return fail(t("moErrLine")(p.bad));
+    drafts[+el.dataset.n].monthly = p.rows;
+    const c = parseClassesText(el.querySelector(".im-cltext").value);
+    if (c.bad != null) return fail(t("clErrLine")(c.bad));
+    drafts[+el.dataset.n].classes = c.table;
+  }
 
   let saved = true, lastTab = "";
   const added = [];

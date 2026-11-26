@@ -6,7 +6,7 @@
 <title>Alternative Investments | Fund Platform</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/styles.css?v=202611251450">
+<link rel="stylesheet" href="css/styles.css?v=202611261400">
 </head>
 <body>
 
@@ -157,6 +157,15 @@
       <label class="wide"><span data-i="efDd"></span><textarea id="efDd" rows="3"></textarea></label>
       <label class="wide"><span data-i="efLiqFull"></span><textarea id="efLiqFull" rows="3"></textarea></label>
       <label class="wide"><span data-i="efNote"></span><textarea id="efNote" rows="3"></textarea></label>
+      <div class="wide mo-field"><span data-i="picTitle"></span>
+        <div class="mo-row"><label class="mo-drop" id="efMonthlyDrop"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><rect x="3.5" y="5" width="17" height="14" rx="1.5"/><circle cx="9" cy="10" r="1.6"/><path d="m4 17 5-4.5 3.5 3 3-2.5 4.5 4"/></svg><div><b data-i="moDrop"></b><small data-i="moDropHint"></small></div><input id="efMonthly" type="file" accept="image/png,image/jpeg,image/webp,image/gif"></label></div>
+        <small class="mo-status" id="efPicStatus"></small></div>
+      <div class="wide mo-field"><span data-i="moBoxTitle"></span>
+        <textarea class="mo-text" id="efMonthlyText" rows="9" wrap="off" spellcheck="false"></textarea>
+        <small class="mo-status" id="efMonthlyStatus"></small><small data-i="moHelp"></small></div>
+      <div class="wide mo-field"><span data-i="clTitle"></span>
+        <textarea class="mo-text" id="efClassesText" rows="7" wrap="off" spellcheck="false"></textarea>
+        <small class="mo-status" id="efClassesStatus"></small><small data-i="clHelp"></small></div>
     </div>
     <div class="modal-foot">
       <p class="form-err" id="editErr" hidden></p>
@@ -166,20 +175,29 @@
   </form>
 </div>
 
+<!-- Monthly returns table (opened from View Fund) -->
+<div class="modal" id="monthlyModal" hidden>
+  <div class="modal-card wide">
+    <div class="modal-head"><h3 id="moTitle"></h3><button class="close" type="button" id="moClose" aria-label="Close">✕</button></div>
+    <div class="mo-body"><div class="mo-scroll" id="moTable"></div><p class="mo-note" id="moNote"></p></div>
+    <div class="modal-foot"><button class="btn solid" type="button" id="moDownload" data-i="monthlyDownload"></button></div>
+  </div>
+</div>
+
 <!-- Scripts load in this order on purpose: settings, wording, data, storage, auth, then the page logic.
      The ?v= number makes browsers fetch fresh copies. Change it (all at once) whenever these files change,
      otherwise a browser can mix an old script with a new page and the funds will not show. -->
-<script src="js/config.js?v=202611251450"></script>
-<script src="js/i18n.js?v=202611251450"></script>
-<script src="js/funds-data.js?v=202611251450"></script>
-<script src="js/fund-store.js?v=202611251450"></script>
-<script src="js/auth.js?v=202611251450"></script>
-<script src="js/app.js?v=202611251450"></script>
-<script src="js/account.js?v=202611251450"></script>
-<script src="js/pptx-reader.js?v=202611251450"></script>
-<script src="js/add-fund.js?v=202611251450"></script>
-<script src="js/edit-fund.js?v=202611251450"></script>
-<script src="js/repo.js?v=202611251450"></script>
-<script src="js/reorder.js?v=202611251450"></script>
+<script src="js/config.js?v=202611261400"></script>
+<script src="js/i18n.js?v=202611261400"></script>
+<script src="js/funds-data.js?v=202611261400"></script>
+<script src="js/fund-store.js?v=202611261400"></script>
+<script src="js/auth.js?v=202611261400"></script>
+<script src="js/app.js?v=202611261400"></script>
+<script src="js/account.js?v=202611261400"></script>
+<script src="js/pptx-reader.js?v=202611261400"></script>
+<script src="js/add-fund.js?v=202611261400"></script>
+<script src="js/edit-fund.js?v=202611261400"></script>
+<script src="js/repo.js?v=202611261400"></script>
+<script src="js/reorder.js?v=202611261400"></script>
 </body>
 </html>

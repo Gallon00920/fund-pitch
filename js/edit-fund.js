@@ -57,9 +57,46 @@ function openEdit(id) {
   ef("efDd").value = ddShown;
   ef("efNote").value = f.note ? plain(L(f.note)) : "";
   ef("efHide").defaultValue = ef("efHide").value = (f.redact || []).map(w => plain(w.replace(/\\(.)/g, "$1"))).join(", ");
+  // The monthly table is edited as text, one year per line. A picture fills the box; any figure can then be corrected.
+  ef("efMonthly").value = "";
+  editing.monthlyShown = ef("efMonthlyText").value = monthlyText(f.monthly);
+  editing.classesShown = ef("efClassesText").value = classesText(classesOf(f));
+  ef("efPicStatus").textContent = "";
+  refreshMonthlyField();
+  refreshClassesField();
   showEditModal(true);
   editModal.scrollTop = 0;
 }
+
+const refreshMonthlyField = () => checkMonthlyText(ef("efMonthlyText").value, ef("efMonthlyStatus"));
+const refreshClassesField = () => checkClassesText(ef("efClassesText").value, ef("efClassesStatus"));
+/* Claude reads the picture and says whether it is a monthly-returns table or a share-class table; it fills that box. */
+async function loadEditPicture(file) {
+  const session = editing;
+  if (!file || !session) return;
+  ef("efMonthly").value = "";
+  const found = await readFundPicture(file, ef("efPicStatus"));
+  if (!found || editing !== session) return;
+  if (found.kind === "classes") { ef("efClassesText").value = classesText(found.table); refreshClassesField(); }
+  else { ef("efMonthlyText").value = monthlyText(found.rows); refreshMonthlyField(); }
+}
+ef("efMonthly").addEventListener("change", () => loadEditPicture(ef("efMonthly").files[0]));
+/* a picture can also be dropped anywhere on the Edit window, or pasted from the clipboard (a screenshot) */
+editModal.addEventListener("dragover", e => { if (!hasFiles(e)) return; e.preventDefault(); e.dataTransfer.dropEffect = "copy"; lightDrop(ef("efMonthlyDrop")); });
+editModal.addEventListener("dragleave", e => { if (!editModal.contains(e.relatedTarget)) lightDrop(null); });
+editModal.addEventListener("drop", e => {
+  if (!hasFiles(e)) return;
+  e.preventDefault();                                        // otherwise the browser would open the file
+  lightDrop(null);
+  ef("efMonthlyDrop").scrollIntoView({ block: "nearest" });  // the result is reported under the box
+  loadEditPicture(e.dataTransfer.files[0]);
+});
+editModal.addEventListener("paste", e => {
+  const file = pictureFrom(e.clipboardData && e.clipboardData.files);
+  if (file) { e.preventDefault(); ef("efMonthlyDrop").scrollIntoView({ block: "nearest" }); loadEditPicture(file); }
+});
+ef("efMonthlyText").addEventListener("input", refreshMonthlyField);
+ef("efClassesText").addEventListener("input", refreshClassesField);
 
 ef("editCancel").onclick = () => showEditModal(false);
 ef("editClose").onclick = () => showEditModal(false);
@@ -69,7 +106,12 @@ addEventListener("keydown", e => { if (e.key === "Escape" && !editModal.hidden) 
 editForm.addEventListener("submit", e => {
   e.preventDefault();
   if (!editing || !Auth.isAdmin()) return;
-  const fail = key => { editErr.textContent = t(key); editErr.hidden = false; };
+  const fail = (key, arg) => { const msg = t(key); editErr.textContent = typeof msg === "function" ? msg(arg) : msg; editErr.hidden = false; };
+  if (monthlyBusy) return fail("moWait");                    // a picture is still being read
+  const monthlyChanged = ef("efMonthlyText").value !== editing.monthlyShown, monthly = parseMonthlyText(ef("efMonthlyText").value);
+  if (monthlyChanged && monthly.bad != null) return fail("moErrLine", monthly.bad);
+  const classesChanged = ef("efClassesText").value !== editing.classesShown, classes = parseClassesText(ef("efClassesText").value);
+  if (classesChanged && classes.bad != null) return fail("clErrLine", classes.bad);
   const val = id => ef(id).value.trim();
   if (!val("efName") || !val("efTag")) return fail("efErrRequired");
   const all = parseReturnLines(ef("efReturns").value);
@@ -126,6 +168,14 @@ editForm.addEventListener("submit", e => {
   f.redact = [...new Set(val("efHide").split(/[,，、;；]/).map(w => esc(w)).filter(w => w.length > 1))]
     .sort((x, y) => y.length - x.length)
     .map(w => w.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"));
+
+  if (monthlyChanged) { if (monthly.rows.length) f.monthly = monthly.rows; else delete f.monthly; }   // untouched text leaves the table as it is
+
+  if (classesChanged) {                                      // a built-in fund can hold one table per language: only the one on screen changes
+    if (!classes.table) delete f.classes;
+    else if (f.classes && !f.classes.head && Object.keys(f.classes).length > 1) f.classes[lang] = classes.table;
+    else f.classes = classes.table;
+  }
 
   const strat = ef("efStrat").value, id = f.id;
   const saved = FundStore.update(id, f, strat);

@@ -46,7 +46,8 @@ python server.py
 | `js/edit-fund.js` | The Edit Fund form, the card Edit / Delete buttons and Restore original funds |
 | `js/reorder.js` | Drag a card by its grip to change the order of funds in a tab |
 | `js/repo.js` | Saves admin changes to `data/funds.json` on GitHub, the GitHub token box, and the status banner |
-| `server.py` | Local server: serves the site, translates uploads with Claude and saves `data/funds.json` on this computer |
+| `server.py` | Local server: serves the site, translates uploads with Claude, reads table pictures and saves `data/funds.json` on this computer |
+| `scripts/picture_tables.py` | Reads a picture of a monthly-returns or share-class table with Claude; used by `server.py` |
 | `data/funds.json` | The shared data: added strategies and funds, edits and deletions |
 | `scripts/translate_funds.py` | Translates new funds with Claude; run by the workflow |
 | `.github/workflows/translate-funds.yml` | The GitHub Actions workflow that runs the translation |
@@ -138,3 +139,33 @@ The admin's own page shows the change at once, then updates by itself when the t
 - **The login is a demo, not security.** The accounts sit in a file that every visitor's browser downloads, and all fund data is in public files. Do not rely on it to keep anything private. What actually protects the data from being changed is the GitHub token: only someone with a token can save.
 - **Two admins at once.** If two admins save at the same moment, the site retries and keeps both admins' new funds, but two edits to the same fund follow whoever saved last.
 - **Funds saved in a browser by earlier versions** of this site are no longer shown. Upload them again to share them.
+
+## Tables from a picture: monthly returns and share classes
+
+A fund can carry two extra tables. Both are filled the same way, in **Add Fund** or **Edit**: give the picture box a
+picture from the manager's document (PNG, JPEG, WebP or GIF, under 4.5 MB). Click the box to choose a file, drag a
+picture onto it, or paste a copied screenshot with Ctrl+V. In Edit the picture can be dropped anywhere on the window;
+in Add Fund, drop it on the fund it belongs to.
+
+The local server sends the picture to Claude (`scripts/picture_tables.py`). Claude decides which table it is and
+returns the table only: no fund name, manager name or footnotes. The picture itself is never saved.
+
+- **Monthly returns** (a row per year, Jan to Dec and the year total). In **View Fund**, a small preview under
+  Calendar-Year Performance opens the full table, with **Download CSV**.
+- **Share classes** (a row per class or series: management fee, performance fee, lock-up, gate, minimum size and so
+  on). In **View Fund** this table is shown under "Share Classes: Fees & Liquidity" and replaces the liquidity terms
+  text. A fund without the table keeps the text.
+
+Things to know:
+
+- Reading a picture needs `python server.py` with `ANTHROPIC_API_KEY` set. The published site cannot read pictures,
+  because it has no server holding the key; add the picture locally, then commit and push `data/funds.json`.
+- **Both tables can be edited by hand.** After a picture is read, the table appears in a text box. In **Edit** both
+  boxes are always shown, so a table can also be typed or pasted from Excel without a picture; that needs no Claude
+  key and works on the published site too. Emptying a box removes that table.
+  - Monthly returns: one year per line, the year, Jan to Dec, then the year total, with `-` for an empty cell.
+  - Share classes: the column titles on the first line, then one class per line, with `|` between the cells.
+- Admins see a warning on any year whose twelve months do not compound to the printed year total. Check those years
+  against the picture.
+- Share-class text is shown as written in all three languages; it is not translated automatically. A built-in fund
+  can hold one table per language in `js/funds-data.js` (see TPG AG MVP).

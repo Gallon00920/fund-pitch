@@ -372,3 +372,55 @@ html:not([lang="en"]) .wordmark{font-size:19px;letter-spacing:5px}
 .hero-stats b[contenteditable]{outline:none;cursor:text;width:fit-content;min-width:1.2ch;border-bottom:1px dashed rgba(218,181,110,.55);transition:border-color .2s}
 .hero-stats b[contenteditable]:hover{border-bottom-color:var(--gold)}
 .hero-stats b[contenteditable]:focus{border-bottom:1px solid var(--gold)}
+
+/* ---- monthly returns: thumbnail in View Fund, table window, picture upload ---- */
+.mo-thumb{display:flex;align-items:center;gap:16px;width:100%;margin-top:20px;padding:14px 16px;border:1px solid var(--line);background:#fff;color:var(--navy);font:inherit;text-align:left;cursor:pointer;transition:border-color .2s,box-shadow .2s}
+.mo-thumb:hover,.mo-thumb:focus-visible{border-color:var(--navy);box-shadow:0 10px 24px -16px rgba(26,36,69,.5);outline:none}
+.mo-thumb .mo-pic{flex:none;padding:6px;border:1px solid var(--line);background:#fafbfd;box-sizing:content-box}
+.mo-thumb span{flex:1;min-width:0}
+.mo-thumb b{display:block;font-size:14px;font-weight:600}
+.mo-thumb small{display:block;font-size:12px;color:var(--muted);margin-top:3px}
+.mo-thumb>svg:last-child{flex:none;transition:transform .2s}
+.mo-thumb:hover>svg:last-child{transform:translateX(3px)}
+.modal-card.wide{width:min(1080px,100%)}
+#moTitle small{display:block;font-family:var(--sans);font-size:12px;font-weight:400;letter-spacing:1.2px;text-transform:uppercase;color:#aab1c6;margin-top:6px}
+.mo-body{padding:26px 36px 4px}
+.mo-scroll{overflow-x:auto}
+table.mo{width:100%;border-collapse:collapse;font-size:12.5px;font-variant-numeric:tabular-nums;white-space:nowrap}
+table.mo th{font-weight:500;font-size:10.5px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);text-align:right;padding:8px 8px;border-bottom:1px solid var(--navy)}
+table.mo td{text-align:right;padding:7px 8px;border-bottom:1px solid var(--line);color:var(--ink)}
+table.mo th:first-child,table.mo td:first-child{text-align:left;font-weight:600;color:var(--navy);padding-left:0}
+table.mo th:last-child,table.mo td:last-child{font-weight:600;background:#f6f6f9;padding-right:10px}
+table.mo td.neg{color:var(--neg)}
+table.mo tr.check td:first-child::after{content:" ⚠";color:#b7791f}
+.mo-note{font-size:12px;line-height:1.6;color:var(--muted);margin-top:14px}
+.mo-field>span,.im-mo>span{display:block;font-size:10.5px;letter-spacing:1.3px;text-transform:uppercase;color:var(--muted);margin-bottom:7px}
+.mo-row{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.mo-drop,.modal-body label.mo-drop{position:relative;flex:1;min-width:220px;display:flex;align-items:center;gap:14px;padding:14px 16px;border:1.5px dashed #c3c8d6;background:#fafbfd;color:var(--navy);cursor:pointer;transition:border-color .2s,background .2s}
+.mo-drop svg{flex:none;color:var(--gold)}
+.mo-drop b{display:block;font-size:13.5px;font-weight:600}
+.mo-drop small,.modal-body .mo-drop small{display:block;font-size:12px;color:var(--muted);margin-top:2px}
+.mo-drop input,.modal-body .mo-drop input{position:absolute;width:1px;height:1px;min-width:0;padding:0;border:0;opacity:0;pointer-events:none}   /* the whole box is the click target */
+.mo-drop:hover,.mo-drop:focus-within{border-color:var(--navy)}
+.mo-drop.drag{border-color:var(--gold);border-style:solid;background:#fbf6ea}
+textarea.mo-text,.modal-body textarea.mo-text{display:block;width:100%;margin-top:10px;padding:10px 12px;border:1px solid #cfd3df;background:#fff;color:var(--ink);outline:none;resize:vertical;font:12px/1.7 ui-monospace,Consolas,"Courier New",monospace;white-space:pre;overflow:auto;min-height:120px;tab-size:8}
+.modal-body .mo-field{grid-column:1/-1;min-width:0}
+.im-moedit small{display:block;font-size:12px;color:var(--muted);margin-top:6px}
+.im-mo{display:block;margin-top:14px}
+.mo-status{display:block;font-size:12px;color:var(--muted);margin-top:6px}
+.mo-status.ok{color:var(--pos)}.mo-status.warn{color:#b7791f}.mo-status.err{color:var(--neg)}
+@media (max-width:680px){.mo-body{padding:20px 20px 4px}}
+textarea.mo-text:focus{border-color:var(--navy)}
+
+/* ---- share classes: fees and liquidity terms per class, in View Fund ---- */
+.cls-scroll{overflow-x:auto}
+table.cls{width:100%;border-collapse:collapse;font-size:12.5px;line-height:1.4}
+table.cls th{font-weight:500;font-size:10px;letter-spacing:.8px;text-transform:uppercase;color:var(--muted);text-align:center;vertical-align:bottom;padding:8px 7px;border-bottom:1px solid var(--navy)}
+table.cls td{text-align:center;padding:10px 7px;border-bottom:1px solid var(--line);color:var(--ink)}
+table.cls th:first-child,table.cls td:first-child{text-align:left;padding-left:0;white-space:nowrap;font-weight:600;color:var(--navy)}
+table.cls tr:nth-child(odd) td{background:#fafbfd}
+.im-moedit,.im-cledit{margin-top:14px}
+.im-sub{display:block;font-size:10.5px;letter-spacing:1.3px;text-transform:uppercase;color:var(--muted)}
+.im-moedit small,.im-cledit small{display:block;font-size:12px;color:var(--muted);margin-top:6px}
+.im-moedit small.mo-status.err,.im-cledit small.mo-status.err{color:var(--neg)}
+.im-moedit small.mo-status.warn{color:#b7791f}

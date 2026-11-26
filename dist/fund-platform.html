@@ -381,6 +381,58 @@ html:not([lang="en"]) .wordmark{font-size:19px;letter-spacing:5px}
 .hero-stats b[contenteditable]{outline:none;cursor:text;width:fit-content;min-width:1.2ch;border-bottom:1px dashed rgba(218,181,110,.55);transition:border-color .2s}
 .hero-stats b[contenteditable]:hover{border-bottom-color:var(--gold)}
 .hero-stats b[contenteditable]:focus{border-bottom:1px solid var(--gold)}
+
+/* ---- monthly returns: thumbnail in View Fund, table window, picture upload ---- */
+.mo-thumb{display:flex;align-items:center;gap:16px;width:100%;margin-top:20px;padding:14px 16px;border:1px solid var(--line);background:#fff;color:var(--navy);font:inherit;text-align:left;cursor:pointer;transition:border-color .2s,box-shadow .2s}
+.mo-thumb:hover,.mo-thumb:focus-visible{border-color:var(--navy);box-shadow:0 10px 24px -16px rgba(26,36,69,.5);outline:none}
+.mo-thumb .mo-pic{flex:none;padding:6px;border:1px solid var(--line);background:#fafbfd;box-sizing:content-box}
+.mo-thumb span{flex:1;min-width:0}
+.mo-thumb b{display:block;font-size:14px;font-weight:600}
+.mo-thumb small{display:block;font-size:12px;color:var(--muted);margin-top:3px}
+.mo-thumb>svg:last-child{flex:none;transition:transform .2s}
+.mo-thumb:hover>svg:last-child{transform:translateX(3px)}
+.modal-card.wide{width:min(1080px,100%)}
+#moTitle small{display:block;font-family:var(--sans);font-size:12px;font-weight:400;letter-spacing:1.2px;text-transform:uppercase;color:#aab1c6;margin-top:6px}
+.mo-body{padding:26px 36px 4px}
+.mo-scroll{overflow-x:auto}
+table.mo{width:100%;border-collapse:collapse;font-size:12.5px;font-variant-numeric:tabular-nums;white-space:nowrap}
+table.mo th{font-weight:500;font-size:10.5px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);text-align:right;padding:8px 8px;border-bottom:1px solid var(--navy)}
+table.mo td{text-align:right;padding:7px 8px;border-bottom:1px solid var(--line);color:var(--ink)}
+table.mo th:first-child,table.mo td:first-child{text-align:left;font-weight:600;color:var(--navy);padding-left:0}
+table.mo th:last-child,table.mo td:last-child{font-weight:600;background:#f6f6f9;padding-right:10px}
+table.mo td.neg{color:var(--neg)}
+table.mo tr.check td:first-child::after{content:" ⚠";color:#b7791f}
+.mo-note{font-size:12px;line-height:1.6;color:var(--muted);margin-top:14px}
+.mo-field>span,.im-mo>span{display:block;font-size:10.5px;letter-spacing:1.3px;text-transform:uppercase;color:var(--muted);margin-bottom:7px}
+.mo-row{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.mo-drop,.modal-body label.mo-drop{position:relative;flex:1;min-width:220px;display:flex;align-items:center;gap:14px;padding:14px 16px;border:1.5px dashed #c3c8d6;background:#fafbfd;color:var(--navy);cursor:pointer;transition:border-color .2s,background .2s}
+.mo-drop svg{flex:none;color:var(--gold)}
+.mo-drop b{display:block;font-size:13.5px;font-weight:600}
+.mo-drop small,.modal-body .mo-drop small{display:block;font-size:12px;color:var(--muted);margin-top:2px}
+.mo-drop input,.modal-body .mo-drop input{position:absolute;width:1px;height:1px;min-width:0;padding:0;border:0;opacity:0;pointer-events:none}   /* the whole box is the click target */
+.mo-drop:hover,.mo-drop:focus-within{border-color:var(--navy)}
+.mo-drop.drag{border-color:var(--gold);border-style:solid;background:#fbf6ea}
+textarea.mo-text,.modal-body textarea.mo-text{display:block;width:100%;margin-top:10px;padding:10px 12px;border:1px solid #cfd3df;background:#fff;color:var(--ink);outline:none;resize:vertical;font:12px/1.7 ui-monospace,Consolas,"Courier New",monospace;white-space:pre;overflow:auto;min-height:120px;tab-size:8}
+.modal-body .mo-field{grid-column:1/-1;min-width:0}
+.im-moedit small{display:block;font-size:12px;color:var(--muted);margin-top:6px}
+.im-mo{display:block;margin-top:14px}
+.mo-status{display:block;font-size:12px;color:var(--muted);margin-top:6px}
+.mo-status.ok{color:var(--pos)}.mo-status.warn{color:#b7791f}.mo-status.err{color:var(--neg)}
+@media (max-width:680px){.mo-body{padding:20px 20px 4px}}
+textarea.mo-text:focus{border-color:var(--navy)}
+
+/* ---- share classes: fees and liquidity terms per class, in View Fund ---- */
+.cls-scroll{overflow-x:auto}
+table.cls{width:100%;border-collapse:collapse;font-size:12.5px;line-height:1.4}
+table.cls th{font-weight:500;font-size:10px;letter-spacing:.8px;text-transform:uppercase;color:var(--muted);text-align:center;vertical-align:bottom;padding:8px 7px;border-bottom:1px solid var(--navy)}
+table.cls td{text-align:center;padding:10px 7px;border-bottom:1px solid var(--line);color:var(--ink)}
+table.cls th:first-child,table.cls td:first-child{text-align:left;padding-left:0;white-space:nowrap;font-weight:600;color:var(--navy)}
+table.cls tr:nth-child(odd) td{background:#fafbfd}
+.im-moedit,.im-cledit{margin-top:14px}
+.im-sub{display:block;font-size:10.5px;letter-spacing:1.3px;text-transform:uppercase;color:var(--muted)}
+.im-moedit small,.im-cledit small{display:block;font-size:12px;color:var(--muted);margin-top:6px}
+.im-moedit small.mo-status.err,.im-cledit small.mo-status.err{color:var(--neg)}
+.im-moedit small.mo-status.warn{color:#b7791f}
 </style>
 </head>
 <body>
@@ -532,6 +584,15 @@ html:not([lang="en"]) .wordmark{font-size:19px;letter-spacing:5px}
       <label class="wide"><span data-i="efDd"></span><textarea id="efDd" rows="3"></textarea></label>
       <label class="wide"><span data-i="efLiqFull"></span><textarea id="efLiqFull" rows="3"></textarea></label>
       <label class="wide"><span data-i="efNote"></span><textarea id="efNote" rows="3"></textarea></label>
+      <div class="wide mo-field"><span data-i="picTitle"></span>
+        <div class="mo-row"><label class="mo-drop" id="efMonthlyDrop"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><rect x="3.5" y="5" width="17" height="14" rx="1.5"/><circle cx="9" cy="10" r="1.6"/><path d="m4 17 5-4.5 3.5 3 3-2.5 4.5 4"/></svg><div><b data-i="moDrop"></b><small data-i="moDropHint"></small></div><input id="efMonthly" type="file" accept="image/png,image/jpeg,image/webp,image/gif"></label></div>
+        <small class="mo-status" id="efPicStatus"></small></div>
+      <div class="wide mo-field"><span data-i="moBoxTitle"></span>
+        <textarea class="mo-text" id="efMonthlyText" rows="9" wrap="off" spellcheck="false"></textarea>
+        <small class="mo-status" id="efMonthlyStatus"></small><small data-i="moHelp"></small></div>
+      <div class="wide mo-field"><span data-i="clTitle"></span>
+        <textarea class="mo-text" id="efClassesText" rows="7" wrap="off" spellcheck="false"></textarea>
+        <small class="mo-status" id="efClassesStatus"></small><small data-i="clHelp"></small></div>
     </div>
     <div class="modal-foot">
       <p class="form-err" id="editErr" hidden></p>
@@ -539,6 +600,15 @@ html:not([lang="en"]) .wordmark{font-size:19px;letter-spacing:5px}
       <button class="btn solid" type="submit" data-i="efSave"></button>
     </div>
   </form>
+</div>
+
+<!-- Monthly returns table (opened from View Fund) -->
+<div class="modal" id="monthlyModal" hidden>
+  <div class="modal-card wide">
+    <div class="modal-head"><h3 id="moTitle"></h3><button class="close" type="button" id="moClose" aria-label="Close">✕</button></div>
+    <div class="mo-body"><div class="mo-scroll" id="moTable"></div><p class="mo-note" id="moNote"></p></div>
+    <div class="modal-foot"><button class="btn solid" type="button" id="moDownload" data-i="monthlyDownload"></button></div>
+  </div>
 </div>
 
 <!-- Scripts load in this order on purpose: settings, wording, data, storage, auth, then the page logic.
@@ -967,6 +1037,70 @@ Object.assign(UI.tc,{loginBtn:"管理員登入",loginTitle:"管理員登入",log
 UI.en.statEdit="Click to edit. Enter saves, Esc cancels.";
 UI.sc.statEdit="点击即可编辑。按 Enter 保存，按 Esc 取消。";
 UI.tc.statEdit="點擊即可編輯。按 Enter 儲存，按 Esc 取消。";
+
+/* monthly returns table read from a picture */
+Object.assign(UI.en,{monthlyTitle:"Monthly Returns",monthlyOpen:"View table",monthlyDownload:"Download CSV",moYear:"Year",moTotal:"Total",
+  imMonthly:"Monthly returns picture (optional)",moReading:"Claude is reading the table…",moWait:"A picture is still being read. Please wait a moment.",
+  moDone:(n,a,b)=>`Table read: ${n} year${n===1?"":"s"}, ${a}${a===b?"":" to "+b}. Only the numbers are kept.`,
+  moCheck:y=>`Check ${y} against the picture: the months do not add up to the year total.`,
+  moRows:(n,a,b)=>`Table: ${n} year${n===1?"":"s"}, ${a}${a===b?"":" to "+b}.`,
+  moHelp:"One year per line: the year, Jan to Dec, then the year total. Write - for an empty cell. Choose a picture to fill this box, then correct any figure here. Rows pasted from Excel work too.",
+  moErrLine:y=>`Check the monthly table line starting with "${y}": it needs a year, 12 monthly figures and the year total, with - for an empty cell, and each year only once.`,moNone:"No monthly table yet.",moRemove:"Remove table",
+  moDrop:"Drop a picture here, or click to choose",moDropHint:"A monthly returns table, or a share class table (fees and liquidity). Claude reads it and fills the matching box. PNG, JPEG, WebP or GIF under 4.5 MB; Ctrl+V pastes a screenshot.",moDropWhere:"Drop the picture on the fund it belongs to.",
+  moErr_noserver:"Reading a picture needs the local server. Start server.py on your computer, add the picture there, then push.",
+  moErr_nokey:"The local server has no Claude key. Set ANTHROPIC_API_KEY in its terminal and start it again.",
+  moErr_nosdk:"The local server is missing the Anthropic SDK. Run: pip install anthropic",
+  moErr_key:"Claude rejected the API key. Check the key in the server's terminal.",moErr_rate:"Claude is busy right now. Try again in a minute.",
+  moErr_notable:"No monthly returns table or share class table was found in this picture.",moErr_big:"The picture is too large. Use one under 4.5 MB.",
+  moErr_type:"Use a PNG, JPEG, WebP or GIF picture.",moErr_network:"The local server did not answer. Check that server.py is still running.",
+  moErr_api:"The picture could not be read. Try again."});
+Object.assign(UI.sc,{monthlyTitle:"月度回报",monthlyOpen:"查看表格",monthlyDownload:"下载 CSV",moYear:"年份",moTotal:"全年",
+  imMonthly:"月度回报图片 (可选)",moReading:"Claude 正在读取表格…",moWait:"图片仍在读取中，请稍候。",
+  moDone:(n,a,b)=>`已读取表格：${n} 个年度，${a}${a===b?"":" 至 "+b}。仅保留数字。`,
+  moCheck:y=>`请对照图片核对 ${y}：各月回报与全年数字不一致。`,
+  moRows:(n,a,b)=>`表格：${n} 个年度，${a}${a===b?"":" 至 "+b}。`,
+  moHelp:"每行一个年度：年份、1月至12月、全年回报。空白单元格请写 - 。选择图片可自动填入，之后可在此修改任何数字，也可直接粘贴 Excel 行。",
+  moErrLine:y=>`请检查月度表中以“${y}”开头的一行：需要年份、12 个月度数字和全年数字，空白单元格写 - ，且每个年份只能出现一次。`,moNone:"尚无月度回报表。",moRemove:"移除表格",
+  moDrop:"将图片拖到此处，或点击选择",moDropHint:"月度回报表或份额类别表 (费用与流动性)。Claude 读取后填入对应的框。PNG、JPEG、WebP 或 GIF，4.5 MB 以下；可用 Ctrl+V 粘贴截图。",moDropWhere:"请将图片拖到对应的基金上。",
+  moErr_noserver:"读取图片需要本地服务器。请在电脑上启动 server.py，在本地添加图片后再推送。",
+  moErr_nokey:"本地服务器没有 Claude 密钥。请在其终端设置 ANTHROPIC_API_KEY 后重新启动。",
+  moErr_nosdk:"本地服务器缺少 Anthropic SDK。请运行：pip install anthropic",
+  moErr_key:"Claude 拒绝了该 API 密钥，请检查服务器终端中的密钥。",moErr_rate:"Claude 当前繁忙，请稍后再试。",
+  moErr_notable:"图片中未找到月度回报表或份额类别表。",moErr_big:"图片过大，请使用 4.5 MB 以下的图片。",
+  moErr_type:"请使用 PNG、JPEG、WebP 或 GIF 图片。",moErr_network:"本地服务器没有响应，请确认 server.py 仍在运行。",
+  moErr_api:"无法读取图片，请重试。"});
+Object.assign(UI.tc,{monthlyTitle:"月度回報",monthlyOpen:"查看表格",monthlyDownload:"下載 CSV",moYear:"年份",moTotal:"全年",
+  imMonthly:"月度回報圖片 (可選)",moReading:"Claude 正在讀取表格…",moWait:"圖片仍在讀取中，請稍候。",
+  moDone:(n,a,b)=>`已讀取表格：${n} 個年度，${a}${a===b?"":" 至 "+b}。僅保留數字。`,
+  moCheck:y=>`請對照圖片核對 ${y}：各月回報與全年數字不一致。`,
+  moRows:(n,a,b)=>`表格：${n} 個年度，${a}${a===b?"":" 至 "+b}。`,
+  moHelp:"每行一個年度：年份、1月至12月、全年回報。空白儲存格請寫 - 。選擇圖片可自動填入，之後可在此修改任何數字，也可直接貼上 Excel 列。",
+  moErrLine:y=>`請檢查月度表中以「${y}」開頭的一行：需要年份、12 個月度數字和全年數字，空白儲存格寫 - ，且每個年份只能出現一次。`,moNone:"尚無月度回報表。",moRemove:"移除表格",
+  moDrop:"將圖片拖到此處，或點擊選擇",moDropHint:"月度回報表或份額類別表 (費用與流動性)。Claude 讀取後填入對應的框。PNG、JPEG、WebP 或 GIF，4.5 MB 以下；可用 Ctrl+V 貼上截圖。",moDropWhere:"請將圖片拖到對應的基金上。",
+  moErr_noserver:"讀取圖片需要本機伺服器。請在電腦上啟動 server.py，在本機新增圖片後再推送。",
+  moErr_nokey:"本機伺服器沒有 Claude 金鑰。請在其終端機設定 ANTHROPIC_API_KEY 後重新啟動。",
+  moErr_nosdk:"本機伺服器缺少 Anthropic SDK。請執行：pip install anthropic",
+  moErr_key:"Claude 拒絕了該 API 金鑰，請檢查伺服器終端機中的金鑰。",moErr_rate:"Claude 目前繁忙，請稍後再試。",
+  moErr_notable:"圖片中未找到月度回報表或份額類別表。",moErr_big:"圖片過大，請使用 4.5 MB 以下的圖片。",
+  moErr_type:"請使用 PNG、JPEG、WebP 或 GIF 圖片。",moErr_network:"本機伺服器沒有回應，請確認 server.py 仍在執行。",
+  moErr_api:"無法讀取圖片，請重試。"});
+
+/* share classes (fees and liquidity terms per class), and the shared picture box */
+Object.assign(UI.en,{clHead:"Share Classes: Fees & Liquidity",picTitle:"Tables from a picture (optional)",moBoxTitle:"Monthly returns table (optional)",
+  clTitle:"Share classes: fees and liquidity (optional)",
+  clHelp:"Column titles on the first line, then one class per line, with | between the cells. Rows pasted from Excel work too. In View Fund this table replaces the liquidity terms text. Empty the box to remove the table.",
+  clDone:n=>`Share class table read: ${n} row${n===1?"":"s"}. Check it below.`,clRows:(n,c)=>`Table: ${n} class${n===1?"":"es"}, ${c} columns.`,clNone:"No share class table yet.",
+  clErrLine:x=>`Check the share class table line starting with "${x}": it needs a title line and at least one class, 2 to 10 cells per line separated by |, and no more cells than the title line.`});
+Object.assign(UI.sc,{clHead:"份额类别：费用与流动性",picTitle:"从图片读取表格 (可选)",moBoxTitle:"月度回报表 (可选)",
+  clTitle:"份额类别：费用与流动性 (可选)",
+  clHelp:"第一行为列标题，其后每行一个类别，单元格之间用 | 分隔，也可直接粘贴 Excel 行。在“查看基金”中，此表格将取代流动性条款文字。清空此框即可移除表格。",
+  clDone:n=>`已读取份额类别表：${n} 行，请在下方核对。`,clRows:(n,c)=>`表格：${n} 个类别，${c} 列。`,clNone:"尚无份额类别表。",
+  clErrLine:x=>`请检查份额类别表中以“${x}”开头的一行：需要标题行和至少一个类别，每行 2 至 10 个单元格并以 | 分隔，且不能多于标题行的单元格数。`});
+Object.assign(UI.tc,{clHead:"份額類別：費用與流動性",picTitle:"從圖片讀取表格 (可選)",moBoxTitle:"月度回報表 (可選)",
+  clTitle:"份額類別：費用與流動性 (可選)",
+  clHelp:"第一行為欄標題，其後每行一個類別，儲存格之間用 | 分隔，也可直接貼上 Excel 列。在「查看基金」中，此表格將取代流動性條款文字。清空此框即可移除表格。",
+  clDone:n=>`已讀取份額類別表：${n} 行，請在下方核對。`,clRows:(n,c)=>`表格：${n} 個類別，${c} 欄。`,clNone:"尚無份額類別表。",
+  clErrLine:x=>`請檢查份額類別表中以「${x}」開頭的一行：需要標題行和至少一個類別，每行 2 至 10 個儲存格並以 | 分隔，且不能多於標題行的儲存格數。`});
 </script>
 <script>
 /* ===== js/funds-data.js ===== */
@@ -1040,6 +1174,34 @@ const FUNDS = {
      liqFull:{en:"Quarterly redemption after a 1-year lock-up; gates of 12.5–25% depending on share class.",
               sc:"1年锁定期后季度赎回；不同份额类别闸门 12.5–25%。",
               tc:"1年鎖定期後季度贖回；不同份額類別閘門 12.5–25%。"},
+     // share classes (manager's Summary of Share Classes): shown in View Fund in place of the liquidity text
+     classes:{en:{head:["Class","Management Fee","Performance Fee","Lock-Up","Quarterly Gate","Minimum Size"],
+              rows:[
+                    ["Class CS","1.50%","20%","1 Year Hard","No","$5M"],
+                    ["Series I","1.00%","17.5%","1 Year Hard","25%","$100M"],
+                    ["Series M","0.85%","15%","1 Year Soft, 5% Penalty","25%","$300M"],
+                    ["Series L","1.00%","20%","1 Year Soft, 2% Penalty","12.5%","$5M"],
+                    ["Series A","1.25%","20%","3 Year Hard","25%","$50M"],
+                    ["Series F","1.50%","17.5%","1 Year Hard","25%","$50M"],
+                    ["Class B","2.00%","20%","1 Year Soft, 2% Penalty","No","$5M"]]},
+              sc:{head:["类别","管理费","业绩报酬","锁定期","季度闸门","最低认购额"],
+              rows:[
+                    ["Class CS","1.50%","20%","1年硬锁定","无","$5M"],
+                    ["Series I","1.00%","17.5%","1年硬锁定","25%","$100M"],
+                    ["Series M","0.85%","15%","1年软锁定，5% 罚金","25%","$300M"],
+                    ["Series L","1.00%","20%","1年软锁定，2% 罚金","12.5%","$5M"],
+                    ["Series A","1.25%","20%","3年硬锁定","25%","$50M"],
+                    ["Series F","1.50%","17.5%","1年硬锁定","25%","$50M"],
+                    ["Class B","2.00%","20%","1年软锁定，2% 罚金","无","$5M"]]},
+              tc:{head:["類別","管理費","業績報酬","鎖定期","季度閘門","最低認購額"],
+              rows:[
+                    ["Class CS","1.50%","20%","1年硬鎖定","無","$5M"],
+                    ["Series I","1.00%","17.5%","1年硬鎖定","25%","$100M"],
+                    ["Series M","0.85%","15%","1年軟鎖定，5% 罰金","25%","$300M"],
+                    ["Series L","1.00%","20%","1年軟鎖定，2% 罰金","12.5%","$5M"],
+                    ["Series A","1.25%","20%","3年硬鎖定","25%","$50M"],
+                    ["Series F","1.50%","17.5%","1年硬鎖定","25%","$50M"],
+                    ["Class B","2.00%","20%","1年軟鎖定，2% 罰金","無","$5M"]]}},
      note:{en:"Size shown is NAV. Net returns as of 31 Mar 2026.",sc:"规模为 NAV。净回报，截至2026年3月31日。",tc:"規模為 NAV。淨回報，截至2026年3月31日。"}},
     {name:"SCMF", mgr:{en:"Multi-Strategy",sc:"多策略",tc:"多策略"}, vehicle:"private", inception:"1998-01", aum:8.9,
      tag:{en:"Multi-Strategy Hedge Fund",sc:"多策略对冲基金",tc:"多策略對沖基金"},
@@ -1546,6 +1708,55 @@ addEventListener("keydown",e=>{
 addEventListener("keyup",e=>{if(e.key==="ArrowRight"||e.key==="ArrowLeft")keyDir=0});
 addEventListener("blur",()=>keyDir=0);
 
+/* ---------- monthly returns ----------
+   A fund can carry `monthly`: [{ y:"2008", m:[12 numbers or null], t: year total or null }], read from a picture the
+   admin attached (scripts/picture_tables.py). It holds numbers only, so it is safe to show and download for investors. */
+const moNum=(v,d)=>v==null?"":(v<0?"−":"")+Math.abs(v).toFixed(d)+"%";
+const moDecimals=v=>(String(v).split(".")[1]||"").length>1?2:1;
+/** Years whose twelve months do not compound to the printed year total: a hint that a figure was misread. */
+function monthlySuspects(rows){
+  return rows.filter(r=>r.t!=null&&r.m.every(v=>v!=null)&&Math.abs((r.m.reduce((a,v)=>a*(1+v/100),1)-1)*100-r.t)>0.15).map(r=>r.y);
+}
+/** A small picture of the table: one tiny cell per month, navy for gains and red for losses. */
+function monthlyThumb(rows){
+  const show=rows.slice(-14), peak=Math.max(1,...show.flatMap(r=>r.m.filter(v=>v!=null).map(Math.abs)).map(v=>Math.min(v,5)));
+  const cells=show.map((r,y)=>r.m.map((v,x)=>v==null?"":`<rect x="${x*7}" y="${y*5}" width="6" height="4" fill="${v<0?"#b4443a":"#1A2445"}" opacity="${(0.25+0.75*Math.min(Math.abs(v),5)/peak).toFixed(2)}"/>`).join("")).join("");
+  return `<svg class="mo-pic" viewBox="0 0 83 ${show.length*5-1}" width="83" height="${show.length*5-1}" aria-hidden="true">${cells}</svg>`;
+}
+const monthNames=()=>zh()?MON.map((_,i)=>`${i+1}月`):MON;
+const moModal=document.getElementById("monthlyModal");
+let moFund=null;
+function openMonthly(id){
+  const hit=FundStore.find(id); if(!hit||!hit.fund.monthly) return;
+  const f=moFund=hit.fund, rows=f.monthly, bad=Auth.isAdmin()?monthlySuspects(rows):[];
+  document.getElementById("moTitle").innerHTML=`${t("monthlyTitle")}<small>${title(f)}</small>`;
+  document.getElementById("moTable").innerHTML=`<table class="mo"><tr><th>${t("moYear")}</th>${monthNames().map(m=>`<th>${m}</th>`).join("")}<th>${t("moTotal")}</th></tr>${
+    rows.map(r=>`<tr${bad.includes(r.y)?' class="check"':""}><td>${r.y}</td>${r.m.map(v=>`<td class="${v<0?"neg":""}">${moNum(v,2)}</td>`).join("")}<td class="${r.t<0?"neg":""}">${moNum(r.t,r.t==null?1:moDecimals(r.t))}</td></tr>`).join("")}</table>`;
+  document.getElementById("moNote").textContent=(bad.length?t("moCheck")(bad.join(", "))+" ":"")+t("past");
+  moModal.hidden=false; document.body.classList.add("modal-open"); moModal.scrollTop=0;
+}
+function closeMonthly(){ if(moModal.hidden) return; moModal.hidden=true; moFund=null; document.body.classList.remove("modal-open") }
+document.getElementById("moClose").onclick=closeMonthly;
+moModal.addEventListener("mousedown",e=>{if(e.target===moModal)closeMonthly()});
+addEventListener("keydown",e=>{if(e.key==="Escape"&&!moModal.hidden){e.stopImmediatePropagation();closeMonthly()}},true);
+/** Downloads the table as a CSV file that opens in Excel. Figures are percentages; the file never names the fund for investors. */
+document.getElementById("moDownload").onclick=()=>{
+  if(!moFund) return;
+  const cell=v=>v==null?"":String(v);
+  const csv=[["Year",...MON,"Total"].join(","),...moFund.monthly.map(r=>[r.y,...r.m.map(cell),cell(r.t)].join(","))].join("\r\n");
+  const slug=document.getElementById("moTitle").querySelector("small").textContent.toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
+  const a=document.createElement("a");
+  a.href=URL.createObjectURL(new Blob(["﻿"+csv],{type:"text/csv;charset=utf-8"}));
+  a.download=`monthly-returns${slug?"-"+slug:""}.csv`;
+  document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(a.href),1000);
+};
+
+/* ---------- share classes ----------
+   A fund can carry `classes`: { head:[column titles], rows:[[cells]] }, one row per share class with its fees and
+   liquidity terms. A built-in fund may hold one table per language ({ en, sc, tc }). In View Fund the table replaces
+   the liquidity text. */
+const classesOf=f=>{const c=f.classes&&(f.classes.head?f.classes:L(f.classes));return c&&c.head&&c.rows&&c.rows.length?c:null};
+
 /* drawer */
 const drawer=document.getElementById("drawer"), scrim=document.getElementById("scrim");
 let openFund=null;
@@ -1558,6 +1769,13 @@ function openD(f){
   // perfCaption explains rows that are not this fund's own record (a predecessor or composite series)
   const perfBlock=rows.length?`<h4>${t("perfTitle")}</h4>${LX(f.perfCaption)?`<p class="perf-cap">${R(f,LX(f.perfCaption))}</p>`:""}
     <table class="perf"><tr><th>${t("period")}</th><th>${t("ret")}</th></tr>${rows.map(p=>`<tr><td>${perLabel(p)}</td><td class="${p[1]>=0?"pos":"neg"}">${fmt(p[1])}</td></tr>`).join("")}</table>`:"";
+  const mo=f.monthly&&f.monthly.length?f.monthly:null;
+  const monthlyBlock=mo?`<button class="mo-thumb" type="button" onclick="openMonthly('${f.id}')">${monthlyThumb(mo)}<span><b>${t("monthlyTitle")}</b><small>${mo[0].y}${mo.length>1?" – "+mo.at(-1).y:""} · ${t("monthlyOpen")}</small></span>
+      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 7h10M8 3l4 4-4 4"/></svg></button>`:"";
+  const cls=classesOf(f);
+  const liqBlock=cls?`<h4>${t("clHead")}</h4><div class="cls-scroll"><table class="cls"><tr>${cls.head.map(h=>`<th>${R(f,h)}</th>`).join("")}</tr>${
+      cls.rows.map(r=>`<tr>${r.map(c=>`<td>${R(f,c)||"—"}</td>`).join("")}</tr>`).join("")}</table></div>`
+    :`<h4>${t("liqTerms")}</h4><p>${f.liqFull?R(f,L(f.liqFull)):t("dailyFull")}</p>`;
   const notesBlock=notes.length?`<h4>${t("trackRecord")}</h4><p>${notes.map(x=>R(f,x)).join("<br>")}</p>`:"";
   drawer.innerHTML=`<div class="d-head"><button class="close" onclick="closeD()" aria-label="Close">✕</button>${anon()?"":`<span class="tag">${L(f.tag)}</span>`}<h3>${title(f)}</h3>${anon()?"":`<p>${L(f.mgr)} · ${veh(f)}</p>`}</div>
   <div class="d-body">
@@ -1568,14 +1786,14 @@ function openD(f){
       <div><span>${t("vehicle")}</span><b>${veh(f)}</b></div><div><span>${t("dealing")}</span><b>${liqTxt(f)}</b></div>
     </div>
     ${ddBlock}
-    <h4>${t("liqTerms")}</h4><p>${f.liqFull?R(f,L(f.liqFull)):t("dailyFull")}</p>
-    ${perfBlock}${notesBlock}
+    ${liqBlock}
+    ${perfBlock}${monthlyBlock}${notesBlock}
     <p class="note">${f.note&&!anon()?L(f.note)+" ":""}${t("past")}</p>
     ${Auth.isAdmin()?`<div class="d-admin"><button class="btn ghost" onclick="openEdit('${f.id}')">${t("edit")}</button>${f.custom?`<button class="btn ghost" onclick="translateNow('${f.id}')">${t(f.translated?"retranslate":"translate")}</button>`:""}<button class="btn danger" onclick="deleteFund('${f.id}')">${t("del")}</button></div>`:""}
   </div>`;
   drawer.classList.add("on");scrim.classList.add("on");drawer.setAttribute("aria-hidden","false");drawer.scrollTop=keep;
 }
-function closeD(){openFund=null;drawer.classList.remove("on");scrim.classList.remove("on");drawer.setAttribute("aria-hidden","true")}
+function closeD(){closeMonthly();openFund=null;drawer.classList.remove("on");scrim.classList.remove("on");drawer.setAttribute("aria-hidden","true")}
 scrim.onclick=closeD;
 
 /* nav: highlight the link for the section currently in view */
@@ -1901,17 +2119,165 @@ fundFile.addEventListener("change", () => importDeck(fundFile.files[0]));
 const dropZone = document.getElementById("dropZone");
 let dragDepth = 0;                                           // dragenter/dragleave fire for every child element, so count them
 const hasFiles = e => e.dataTransfer && [...e.dataTransfer.types].includes("Files");
-fundModal.addEventListener("dragenter", e => { if (!hasFiles(e)) return; e.preventDefault(); dragDepth++; dropZone.classList.add("drag"); });
-fundModal.addEventListener("dragover", e => { if (!hasFiles(e)) return; e.preventDefault(); e.dataTransfer.dropEffect = "copy"; });
-fundModal.addEventListener("dragleave", e => { if (!hasFiles(e)) return; if (--dragDepth <= 0) { dragDepth = 0; dropZone.classList.remove("drag"); } });
+/* A picture being dragged is a table (monthly returns or share classes) for one fund in the list, not a deck: it lights up that fund's
+   picture box instead of the deck zone. (The file's type is readable while dragging; its name is not.) */
+const isPicture = file => !!file && (/^image\//.test(file.type) || /\.(png|jpe?g|webp|gif)$/i.test(file.name || ""));
+const draggingPicture = e => [...(e.dataTransfer.items || [])].some(i => i.kind === "file" && /^image\//.test(i.type));
+const pictureFrom = list => [...(list || [])].find(isPicture);             // from a drop or from the clipboard
+function lightDrop(el) {                                     // highlights one picture box (or none)
+  document.querySelectorAll(".mo-drop.drag").forEach(z => { if (z !== el) z.classList.remove("drag"); });
+  if (el) el.classList.add("drag");
+}
+const draftItemAt = target => target.closest(".im-item") || (imList.children.length === 1 ? imList.firstElementChild : null);
+fundModal.addEventListener("dragenter", e => { if (!hasFiles(e)) return; e.preventDefault(); dragDepth++; if (!draggingPicture(e)) dropZone.classList.add("drag"); });
+fundModal.addEventListener("dragover", e => {
+  if (!hasFiles(e)) return;
+  e.preventDefault(); e.dataTransfer.dropEffect = "copy";
+  if (draggingPicture(e)) { const item = draftItemAt(e.target); lightDrop(item && item.querySelector(".mo-drop")); }
+});
+fundModal.addEventListener("dragleave", e => { if (!hasFiles(e)) return; if (--dragDepth <= 0) { dragDepth = 0; dropZone.classList.remove("drag"); lightDrop(null); } });
 fundModal.addEventListener("drop", e => {
   if (!hasFiles(e)) return;
   e.preventDefault();                                        // otherwise the browser would open or download the file
-  dragDepth = 0; dropZone.classList.remove("drag");
+  dragDepth = 0; dropZone.classList.remove("drag"); lightDrop(null);
   const file = e.dataTransfer.files[0];
+  if (isPicture(file)) {                                     // a picture of a table, for the fund it was dropped on
+    const item = draftItemAt(e.target);
+    return item ? loadDraftPicture(item, file) : fail(t(imList.children.length ? "moDropWhere" : "imBad"));
+  }
   fundFile.value = "";                                       // the picker no longer matches what is loaded
   if (file && !/\.pptx$/i.test(file.name)) { imList.innerHTML = ""; imStatus.textContent = ""; imSubmit.hidden = true; drafts = []; return fail(t("imBad")); }
   importDeck(file);
+});
+
+/* ---------- tables from a picture ----------
+   The admin gives a fund a picture of a monthly-returns table or of a share-class table (fees and liquidity terms per
+   class). The local server has Claude read it and say which of the two it is. Only the table is kept: the picture
+   itself is never saved or uploaded anywhere else. */
+let monthlyBusy = 0;                                         // pictures still being read; the forms wait for them
+const MONTHLY_ACCEPT = "image/png,image/jpeg,image/webp,image/gif";
+/** Resolves to { kind: "monthly", rows } or { kind: "classes", table }, or null when the picture could not be read. */
+async function readFundPicture(file, statusEl) {
+  statusEl.className = "mo-status"; statusEl.textContent = t("moReading");
+  monthlyBusy++;
+  try {
+    const found = await Local.parsePicture(file);
+    if (found.kind === "classes") {
+      found.table = { head: found.table.head.map(c => esc(c)), rows: found.table.rows.map(r => r.map(c => esc(c))) };
+      statusEl.textContent = t("clDone")(found.table.rows.length);
+      statusEl.classList.add("ok");
+      return found;
+    }
+    const rows = found.rows, bad = monthlySuspects(rows);
+    statusEl.textContent = t("moDone")(rows.length, rows[0].y, rows.at(-1).y) + (bad.length ? " " + t("moCheck")(bad.join(", ")) : "");
+    statusEl.classList.add(bad.length ? "warn" : "ok");
+    return found;
+  } catch (e) {
+    statusEl.textContent = UI[lang]["moErr_" + e.message] || t("moErr_api");
+    statusEl.classList.add("err");
+    return null;
+  } finally { monthlyBusy--; }
+}
+/* The table is edited as text, one year per line (the same idea as "Returns by period" in Edit):
+     2020    0.84   -0.37  -21.80   ...   -12.9
+   year, twelve months (Jan first), then the year total; "-" stands for an empty cell. Rows pasted from Excel work too. */
+const moCellText = (v, d) => v == null ? "-" : v.toFixed(Math.max(d, (String(v).split(".")[1] || "").length));
+function monthlyText(rows) {
+  if (!rows || !rows.length) return "";
+  const line = cells => cells.map((c, i) => i ? String(c).padStart(6) : String(c).padEnd(4)).join(" ");   // always a space between figures
+  return [line(["Year", ...MON, "Total"]), ...rows.map(r => line([r.y, ...r.m.map(v => moCellText(v, 2)), moCellText(r.t, 1)]))].join("\n");
+}
+/** Text -> { rows } (empty list for no table), or { bad: "2020" } naming the first line that cannot be read. */
+function parseMonthlyText(text) {
+  const rows = {};
+  for (const raw of String(text).split(/\n/)) {
+    const line = raw.replace(/\s+$/, "");
+    if (!/^\s*\d/.test(line)) continue;                       // blank lines and the "Year Jan Feb ..." heading
+    const head = line.match(/^\s*(\d+) *[:：]?(?: *[,;，；\t]| +|$)(.*)$/), bad = { bad: line.trim().split(/[\s,;:：]/)[0].slice(0, 12) };
+    if (!head) return bad;
+    const year = head[1], rest = head[2];                     // the year, then the cells: tab, comma or space separated
+    const cells = (rest.includes("\t") ? rest.split("\t") : /[,;，；]/.test(rest) ? rest.split(/[,;，；]/) : rest.trim().split(/\s+/)).map(c => c.trim());
+    if (!/^(19|20)\d{2}$/.test(year) || rows[year] || cells.length < 12 || cells.length > 13) return bad;
+    const nums = [];
+    for (const c of cells) {
+      const neg = /^\(.*\)$/.test(c), s = c.replace(/[()%\s]/g, "").replace(/[−–]/g, "-");
+      if (s === "" || s === "-" || s === "—" || /^n\/?a$/i.test(s)) { nums.push(null); continue; }
+      if (!/^[+-]?(\d+(\.\d+)?|\.\d+)$/.test(s)) return bad;
+      nums.push(neg ? -Math.abs(+s) : +s);
+    }
+    if (nums.some(v => v != null)) rows[year] = { y: year, m: nums.slice(0, 12), t: nums.length > 12 ? nums[12] : null };
+  }
+  return { rows: Object.keys(rows).sort().map(y => rows[y]) };
+}
+/** Shows what the text holds (or the line that is wrong) under the box, and returns the parse result. */
+function checkMonthlyText(text, statusEl) {
+  const p = parseMonthlyText(text);
+  statusEl.className = "mo-status";
+  if (p.bad != null) { statusEl.textContent = t("moErrLine")(p.bad); statusEl.classList.add("err"); return p; }
+  const suspect = monthlySuspects(p.rows);
+  statusEl.textContent = p.rows.length ? t("moRows")(p.rows.length, p.rows[0].y, p.rows.at(-1).y) + (suspect.length ? " " + t("moCheck")(suspect.join(", ")) : "") : t("moNone");
+  if (suspect.length) statusEl.classList.add("warn");
+  return p;
+}
+
+/* The share-class table is edited as text too: the column titles on the first line, then one class per line, with
+   " | " between the cells:
+     Class    | Management Fee | Lock-Up
+     Class CS | 1.50%          | 1 Year Hard
+   Rows pasted from Excel (tab separated) work too. Stored as { head: [titles], rows: [[cells]] }, cells as escaped text. */
+function classesText(table) {
+  if (!table || !table.rows || !table.rows.length) return "";
+  const grid = [table.head, ...table.rows].map(r => r.map(c => plain(c)));
+  const width = table.head.map((_, i) => Math.max(...grid.map(r => (r[i] || "").length)));
+  return grid.map(r => r.map((c, i) => i < r.length - 1 ? c.padEnd(width[i]) : c).join(" | ")).join("\n");
+}
+/** Text -> { table } (null for no table), or { bad: "Series M" } naming the first line that cannot be read. */
+function parseClassesText(text) {
+  const lines = String(text).split(/\n/).filter(l => l.trim());
+  if (!lines.length) return { table: null };
+  const cellsOf = l => (l.includes("\t") ? l.split("\t") : l.split(/[|｜]/)).map(c => esc(c.slice(0, 120)));
+  const name = l => l.trim().split(/\s*[|｜\t]/)[0].slice(0, 24);
+  const head = cellsOf(lines[0]);
+  if (head.length < 2 || head.length > 10 || lines.length < 2 || lines.length > 41) return { bad: name(lines[0]) };
+  const rows = [];
+  for (const l of lines.slice(1)) {
+    const cells = cellsOf(l);
+    if (cells.length > head.length || !cells[0]) return { bad: name(l) };
+    rows.push([...cells, ...Array(head.length - cells.length).fill("")]);
+  }
+  return { table: { head, rows } };
+}
+function checkClassesText(text, statusEl) {
+  const p = parseClassesText(text);
+  statusEl.className = "mo-status";
+  if (p.bad != null) { statusEl.textContent = t("clErrLine")(p.bad); statusEl.classList.add("err"); }
+  else statusEl.textContent = p.table ? t("clRows")(p.table.rows.length, p.table.head.length) : t("clNone");
+  return p;
+}
+
+/* the picture box: click to choose, drop a picture on it, or paste a screenshot */
+const moDropHTML = inputAttrs => `<label class="mo-drop"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><rect x="3.5" y="5" width="17" height="14" rx="1.5"/><circle cx="9" cy="10" r="1.6"/><path d="m4 17 5-4.5 3.5 3 3-2.5 4.5 4"/></svg><div><b>${t("moDrop")}</b><small>${t("moDropHint")}</small></div><input ${inputAttrs} type="file" accept="${MONTHLY_ACCEPT}"></label>`;
+imList.addEventListener("change", e => {
+  if (e.target.matches(".im-monthly") && e.target.files[0]) loadDraftPicture(e.target.closest(".im-item"), e.target.files[0]);
+});
+imList.addEventListener("paste", e => {
+  const item = e.target.closest(".im-item"), file = pictureFrom(e.clipboardData && e.clipboardData.files);
+  if (item && file) { e.preventDefault(); loadDraftPicture(item, file); }
+});
+async function loadDraftPicture(item, file) {
+  fundErr.hidden = true;
+  item.querySelector(".im-monthly").value = "";              // the picker no longer matches what was read
+  const found = await readFundPicture(file, item.querySelector(".im-mo .mo-status"));
+  if (!found || !item.isConnected) return;
+  // the table goes into its text box, where the admin can correct anything before adding the fund
+  const box = item.querySelector(found.kind === "classes" ? ".im-cledit" : ".im-moedit"), area = box.querySelector("textarea");
+  area.value = found.kind === "classes" ? classesText(found.table) : monthlyText(found.rows);
+  box.hidden = false;
+  area.dispatchEvent(new Event("input", { bubbles: true }));
+}
+imList.addEventListener("input", e => {
+  if (e.target.matches(".im-motext")) checkMonthlyText(e.target.value, e.target.closest(".im-moedit").querySelector(".mo-status"));
+  if (e.target.matches(".im-cltext")) checkClassesText(e.target.value, e.target.closest(".im-cledit").querySelector(".mo-status"));
 });
 
 /** Suggests the words to hide from investors: the fund and manager names, plus other name-like words
@@ -1947,6 +2313,9 @@ function renderDrafts() {
           <li><b>${t("ret")}:</b> ${returns}</li>
           <li><b>${t("dealing")}:</b> ${esc(d.liqShort) || "—"}</li>
         </ul>
+        <div class="im-mo"><span>${t("picTitle")}</span>${moDropHTML('class="im-monthly"')}<small class="mo-status"></small></div>
+        <div class="im-moedit" hidden><span class="im-sub">${t("moBoxTitle")}</span><textarea class="im-motext mo-text" rows="8" wrap="off" spellcheck="false" aria-label="${t("moBoxTitle")}"></textarea><small class="mo-status"></small><small>${t("moHelp")}</small></div>
+        <div class="im-cledit" hidden><span class="im-sub">${t("clTitle")}</span><textarea class="im-cltext mo-text" rows="6" wrap="off" spellcheck="false" aria-label="${t("clTitle")}"></textarea><small class="mo-status"></small><small>${t("clHelp")}</small></div>
       </div></div>`;
   }).join("");
 }
@@ -1968,6 +2337,8 @@ function fundFromDraft(d, i, name, mgr, hide, hideUntouched) {
     liq: one(esc(d.liqShort) || "—"), liqFull: one(escLines(d.liqLines))
   };
   if (d.source) fund.note = one(esc(d.source));
+  if (d.classes) fund.classes = d.classes;                  // share classes: fees and liquidity terms per class
+  if (d.monthly && d.monthly.length) fund.monthly = d.monthly;   // numbers read from the monthly-returns picture, as corrected by the admin
   // words masked in the investor view (see R() in app.js); longest first so "HCRx" is matched before "HCR"
   fund.redact = [...new Set(String(hide).split(/[,，、;；]/).map(w => esc(w)).filter(w => w.length > 1))]
     .sort((x, y) => y.length - x.length)
@@ -1982,8 +2353,18 @@ fundForm.addEventListener("submit", e => {
   e.preventDefault();
   if (!Auth.isAdmin()) return fail(t("errAdmin"));
   if (!Repo.hasToken() && !Local.on) return fail(t("ghNeedTokenHere"));   // nothing can be saved for everyone without it
+  if (monthlyBusy) return fail(t("moWait"));
   const picked = [...imList.querySelectorAll(".im-item")].filter(el => el.querySelector(".im-on").checked);
   if (!picked.length || picked.some(el => !el.querySelector(".im-name").value.trim())) return fail(t("imNoneSel"));
+
+  for (const el of picked) {                                   // the monthly tables as they stand in the text boxes
+    const p = parseMonthlyText(el.querySelector(".im-motext").value);
+    if (p.bad != null) return fail(t("moErrLine")(p.bad));
+    drafts[+el.dataset.n].monthly = p.rows;
+    const c = parseClassesText(el.querySelector(".im-cltext").value);
+    if (c.bad != null) return fail(t("clErrLine")(c.bad));
+    drafts[+el.dataset.n].classes = c.table;
+  }
 
   let saved = true, lastTab = "";
   const added = [];
@@ -2075,9 +2456,46 @@ function openEdit(id) {
   ef("efDd").value = ddShown;
   ef("efNote").value = f.note ? plain(L(f.note)) : "";
   ef("efHide").defaultValue = ef("efHide").value = (f.redact || []).map(w => plain(w.replace(/\\(.)/g, "$1"))).join(", ");
+  // The monthly table is edited as text, one year per line. A picture fills the box; any figure can then be corrected.
+  ef("efMonthly").value = "";
+  editing.monthlyShown = ef("efMonthlyText").value = monthlyText(f.monthly);
+  editing.classesShown = ef("efClassesText").value = classesText(classesOf(f));
+  ef("efPicStatus").textContent = "";
+  refreshMonthlyField();
+  refreshClassesField();
   showEditModal(true);
   editModal.scrollTop = 0;
 }
+
+const refreshMonthlyField = () => checkMonthlyText(ef("efMonthlyText").value, ef("efMonthlyStatus"));
+const refreshClassesField = () => checkClassesText(ef("efClassesText").value, ef("efClassesStatus"));
+/* Claude reads the picture and says whether it is a monthly-returns table or a share-class table; it fills that box. */
+async function loadEditPicture(file) {
+  const session = editing;
+  if (!file || !session) return;
+  ef("efMonthly").value = "";
+  const found = await readFundPicture(file, ef("efPicStatus"));
+  if (!found || editing !== session) return;
+  if (found.kind === "classes") { ef("efClassesText").value = classesText(found.table); refreshClassesField(); }
+  else { ef("efMonthlyText").value = monthlyText(found.rows); refreshMonthlyField(); }
+}
+ef("efMonthly").addEventListener("change", () => loadEditPicture(ef("efMonthly").files[0]));
+/* a picture can also be dropped anywhere on the Edit window, or pasted from the clipboard (a screenshot) */
+editModal.addEventListener("dragover", e => { if (!hasFiles(e)) return; e.preventDefault(); e.dataTransfer.dropEffect = "copy"; lightDrop(ef("efMonthlyDrop")); });
+editModal.addEventListener("dragleave", e => { if (!editModal.contains(e.relatedTarget)) lightDrop(null); });
+editModal.addEventListener("drop", e => {
+  if (!hasFiles(e)) return;
+  e.preventDefault();                                        // otherwise the browser would open the file
+  lightDrop(null);
+  ef("efMonthlyDrop").scrollIntoView({ block: "nearest" });  // the result is reported under the box
+  loadEditPicture(e.dataTransfer.files[0]);
+});
+editModal.addEventListener("paste", e => {
+  const file = pictureFrom(e.clipboardData && e.clipboardData.files);
+  if (file) { e.preventDefault(); ef("efMonthlyDrop").scrollIntoView({ block: "nearest" }); loadEditPicture(file); }
+});
+ef("efMonthlyText").addEventListener("input", refreshMonthlyField);
+ef("efClassesText").addEventListener("input", refreshClassesField);
 
 ef("editCancel").onclick = () => showEditModal(false);
 ef("editClose").onclick = () => showEditModal(false);
@@ -2087,7 +2505,12 @@ addEventListener("keydown", e => { if (e.key === "Escape" && !editModal.hidden) 
 editForm.addEventListener("submit", e => {
   e.preventDefault();
   if (!editing || !Auth.isAdmin()) return;
-  const fail = key => { editErr.textContent = t(key); editErr.hidden = false; };
+  const fail = (key, arg) => { const msg = t(key); editErr.textContent = typeof msg === "function" ? msg(arg) : msg; editErr.hidden = false; };
+  if (monthlyBusy) return fail("moWait");                    // a picture is still being read
+  const monthlyChanged = ef("efMonthlyText").value !== editing.monthlyShown, monthly = parseMonthlyText(ef("efMonthlyText").value);
+  if (monthlyChanged && monthly.bad != null) return fail("moErrLine", monthly.bad);
+  const classesChanged = ef("efClassesText").value !== editing.classesShown, classes = parseClassesText(ef("efClassesText").value);
+  if (classesChanged && classes.bad != null) return fail("clErrLine", classes.bad);
   const val = id => ef(id).value.trim();
   if (!val("efName") || !val("efTag")) return fail("efErrRequired");
   const all = parseReturnLines(ef("efReturns").value);
@@ -2144,6 +2567,14 @@ editForm.addEventListener("submit", e => {
   f.redact = [...new Set(val("efHide").split(/[,，、;；]/).map(w => esc(w)).filter(w => w.length > 1))]
     .sort((x, y) => y.length - x.length)
     .map(w => w.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"));
+
+  if (monthlyChanged) { if (monthly.rows.length) f.monthly = monthly.rows; else delete f.monthly; }   // untouched text leaves the table as it is
+
+  if (classesChanged) {                                      // a built-in fund can hold one table per language: only the one on screen changes
+    if (!classes.table) delete f.classes;
+    else if (f.classes && !f.classes.head && Object.keys(f.classes).length > 1) f.classes[lang] = classes.table;
+    else f.classes = classes.table;
+  }
 
   const strat = ef("efStrat").value, id = f.id;
   const saved = FundStore.update(id, f, strat);
@@ -2295,6 +2726,30 @@ const Local = {
   async save(state) {
     const res = await fetch("api/funds", { method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify(state) });
     if (!res.ok) throw new Error("local save failed");
+  },
+  /** Sends a picture of a table to the local server, which has Claude read it. Resolves to
+      { kind: "monthly", rows } or { kind: "classes", table: { head, rows } }; rejects with an Error whose message
+      is a code (noserver, nokey, notable, big, ...). */
+  async parsePicture(file) {
+    if (!Local.on) throw new Error("noserver");
+    if (!Local.canTranslate) throw new Error(Local.reason);
+    if (!/^image\/(png|jpeg|webp|gif)$/.test(file.type)) throw new Error("type");
+    if (file.size > 4500000) throw new Error("big");
+    const dataUrl = await new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result); reader.onerror = () => reject(new Error("api"));
+      reader.readAsDataURL(file);
+    });
+    let res, reply;
+    try {
+      res = await fetch("api/picture", { method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ image: String(dataUrl).split(",")[1], mediaType: file.type }) });
+      reply = await res.json();
+    } catch (e) { throw new Error("network"); }
+    const good = reply.kind === "monthly" ? Array.isArray(reply.rows) && reply.rows.length
+      : reply.kind === "classes" && reply.table && Array.isArray(reply.table.head) && Array.isArray(reply.table.rows) && reply.table.rows.length;
+    if (!res.ok || !good) throw new Error(reply.error || "api");
+    return reply;
   },
   /** Translates every fund that is not translated yet. Resolves to { done, failed, code }. */
   async translatePending() {

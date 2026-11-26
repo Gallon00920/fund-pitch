@@ -399,3 +399,67 @@ Object.assign(UI.tc,{loginBtn:"管理員登入",loginTitle:"管理員登入",log
 UI.en.statEdit="Click to edit. Enter saves, Esc cancels.";
 UI.sc.statEdit="点击即可编辑。按 Enter 保存，按 Esc 取消。";
 UI.tc.statEdit="點擊即可編輯。按 Enter 儲存，按 Esc 取消。";
+
+/* monthly returns table read from a picture */
+Object.assign(UI.en,{monthlyTitle:"Monthly Returns",monthlyOpen:"View table",monthlyDownload:"Download CSV",moYear:"Year",moTotal:"Total",
+  imMonthly:"Monthly returns picture (optional)",moReading:"Claude is reading the table…",moWait:"A picture is still being read. Please wait a moment.",
+  moDone:(n,a,b)=>`Table read: ${n} year${n===1?"":"s"}, ${a}${a===b?"":" to "+b}. Only the numbers are kept.`,
+  moCheck:y=>`Check ${y} against the picture: the months do not add up to the year total.`,
+  moRows:(n,a,b)=>`Table: ${n} year${n===1?"":"s"}, ${a}${a===b?"":" to "+b}.`,
+  moHelp:"One year per line: the year, Jan to Dec, then the year total. Write - for an empty cell. Choose a picture to fill this box, then correct any figure here. Rows pasted from Excel work too.",
+  moErrLine:y=>`Check the monthly table line starting with "${y}": it needs a year, 12 monthly figures and the year total, with - for an empty cell, and each year only once.`,moNone:"No monthly table yet.",moRemove:"Remove table",
+  moDrop:"Drop a picture here, or click to choose",moDropHint:"A monthly returns table, or a share class table (fees and liquidity). Claude reads it and fills the matching box. PNG, JPEG, WebP or GIF under 4.5 MB; Ctrl+V pastes a screenshot.",moDropWhere:"Drop the picture on the fund it belongs to.",
+  moErr_noserver:"Reading a picture needs the local server. Start server.py on your computer, add the picture there, then push.",
+  moErr_nokey:"The local server has no Claude key. Set ANTHROPIC_API_KEY in its terminal and start it again.",
+  moErr_nosdk:"The local server is missing the Anthropic SDK. Run: pip install anthropic",
+  moErr_key:"Claude rejected the API key. Check the key in the server's terminal.",moErr_rate:"Claude is busy right now. Try again in a minute.",
+  moErr_notable:"No monthly returns table or share class table was found in this picture.",moErr_big:"The picture is too large. Use one under 4.5 MB.",
+  moErr_type:"Use a PNG, JPEG, WebP or GIF picture.",moErr_network:"The local server did not answer. Check that server.py is still running.",
+  moErr_api:"The picture could not be read. Try again."});
+Object.assign(UI.sc,{monthlyTitle:"月度回报",monthlyOpen:"查看表格",monthlyDownload:"下载 CSV",moYear:"年份",moTotal:"全年",
+  imMonthly:"月度回报图片 (可选)",moReading:"Claude 正在读取表格…",moWait:"图片仍在读取中，请稍候。",
+  moDone:(n,a,b)=>`已读取表格：${n} 个年度，${a}${a===b?"":" 至 "+b}。仅保留数字。`,
+  moCheck:y=>`请对照图片核对 ${y}：各月回报与全年数字不一致。`,
+  moRows:(n,a,b)=>`表格：${n} 个年度，${a}${a===b?"":" 至 "+b}。`,
+  moHelp:"每行一个年度：年份、1月至12月、全年回报。空白单元格请写 - 。选择图片可自动填入，之后可在此修改任何数字，也可直接粘贴 Excel 行。",
+  moErrLine:y=>`请检查月度表中以“${y}”开头的一行：需要年份、12 个月度数字和全年数字，空白单元格写 - ，且每个年份只能出现一次。`,moNone:"尚无月度回报表。",moRemove:"移除表格",
+  moDrop:"将图片拖到此处，或点击选择",moDropHint:"月度回报表或份额类别表 (费用与流动性)。Claude 读取后填入对应的框。PNG、JPEG、WebP 或 GIF，4.5 MB 以下；可用 Ctrl+V 粘贴截图。",moDropWhere:"请将图片拖到对应的基金上。",
+  moErr_noserver:"读取图片需要本地服务器。请在电脑上启动 server.py，在本地添加图片后再推送。",
+  moErr_nokey:"本地服务器没有 Claude 密钥。请在其终端设置 ANTHROPIC_API_KEY 后重新启动。",
+  moErr_nosdk:"本地服务器缺少 Anthropic SDK。请运行：pip install anthropic",
+  moErr_key:"Claude 拒绝了该 API 密钥，请检查服务器终端中的密钥。",moErr_rate:"Claude 当前繁忙，请稍后再试。",
+  moErr_notable:"图片中未找到月度回报表或份额类别表。",moErr_big:"图片过大，请使用 4.5 MB 以下的图片。",
+  moErr_type:"请使用 PNG、JPEG、WebP 或 GIF 图片。",moErr_network:"本地服务器没有响应，请确认 server.py 仍在运行。",
+  moErr_api:"无法读取图片，请重试。"});
+Object.assign(UI.tc,{monthlyTitle:"月度回報",monthlyOpen:"查看表格",monthlyDownload:"下載 CSV",moYear:"年份",moTotal:"全年",
+  imMonthly:"月度回報圖片 (可選)",moReading:"Claude 正在讀取表格…",moWait:"圖片仍在讀取中，請稍候。",
+  moDone:(n,a,b)=>`已讀取表格：${n} 個年度，${a}${a===b?"":" 至 "+b}。僅保留數字。`,
+  moCheck:y=>`請對照圖片核對 ${y}：各月回報與全年數字不一致。`,
+  moRows:(n,a,b)=>`表格：${n} 個年度，${a}${a===b?"":" 至 "+b}。`,
+  moHelp:"每行一個年度：年份、1月至12月、全年回報。空白儲存格請寫 - 。選擇圖片可自動填入，之後可在此修改任何數字，也可直接貼上 Excel 列。",
+  moErrLine:y=>`請檢查月度表中以「${y}」開頭的一行：需要年份、12 個月度數字和全年數字，空白儲存格寫 - ，且每個年份只能出現一次。`,moNone:"尚無月度回報表。",moRemove:"移除表格",
+  moDrop:"將圖片拖到此處，或點擊選擇",moDropHint:"月度回報表或份額類別表 (費用與流動性)。Claude 讀取後填入對應的框。PNG、JPEG、WebP 或 GIF，4.5 MB 以下；可用 Ctrl+V 貼上截圖。",moDropWhere:"請將圖片拖到對應的基金上。",
+  moErr_noserver:"讀取圖片需要本機伺服器。請在電腦上啟動 server.py，在本機新增圖片後再推送。",
+  moErr_nokey:"本機伺服器沒有 Claude 金鑰。請在其終端機設定 ANTHROPIC_API_KEY 後重新啟動。",
+  moErr_nosdk:"本機伺服器缺少 Anthropic SDK。請執行：pip install anthropic",
+  moErr_key:"Claude 拒絕了該 API 金鑰，請檢查伺服器終端機中的金鑰。",moErr_rate:"Claude 目前繁忙，請稍後再試。",
+  moErr_notable:"圖片中未找到月度回報表或份額類別表。",moErr_big:"圖片過大，請使用 4.5 MB 以下的圖片。",
+  moErr_type:"請使用 PNG、JPEG、WebP 或 GIF 圖片。",moErr_network:"本機伺服器沒有回應，請確認 server.py 仍在執行。",
+  moErr_api:"無法讀取圖片，請重試。"});
+
+/* share classes (fees and liquidity terms per class), and the shared picture box */
+Object.assign(UI.en,{clHead:"Share Classes: Fees & Liquidity",picTitle:"Tables from a picture (optional)",moBoxTitle:"Monthly returns table (optional)",
+  clTitle:"Share classes: fees and liquidity (optional)",
+  clHelp:"Column titles on the first line, then one class per line, with | between the cells. Rows pasted from Excel work too. In View Fund this table replaces the liquidity terms text. Empty the box to remove the table.",
+  clDone:n=>`Share class table read: ${n} row${n===1?"":"s"}. Check it below.`,clRows:(n,c)=>`Table: ${n} class${n===1?"":"es"}, ${c} columns.`,clNone:"No share class table yet.",
+  clErrLine:x=>`Check the share class table line starting with "${x}": it needs a title line and at least one class, 2 to 10 cells per line separated by |, and no more cells than the title line.`});
+Object.assign(UI.sc,{clHead:"份额类别：费用与流动性",picTitle:"从图片读取表格 (可选)",moBoxTitle:"月度回报表 (可选)",
+  clTitle:"份额类别：费用与流动性 (可选)",
+  clHelp:"第一行为列标题，其后每行一个类别，单元格之间用 | 分隔，也可直接粘贴 Excel 行。在“查看基金”中，此表格将取代流动性条款文字。清空此框即可移除表格。",
+  clDone:n=>`已读取份额类别表：${n} 行，请在下方核对。`,clRows:(n,c)=>`表格：${n} 个类别，${c} 列。`,clNone:"尚无份额类别表。",
+  clErrLine:x=>`请检查份额类别表中以“${x}”开头的一行：需要标题行和至少一个类别，每行 2 至 10 个单元格并以 | 分隔，且不能多于标题行的单元格数。`});
+Object.assign(UI.tc,{clHead:"份額類別：費用與流動性",picTitle:"從圖片讀取表格 (可選)",moBoxTitle:"月度回報表 (可選)",
+  clTitle:"份額類別：費用與流動性 (可選)",
+  clHelp:"第一行為欄標題，其後每行一個類別，儲存格之間用 | 分隔，也可直接貼上 Excel 列。在「查看基金」中，此表格將取代流動性條款文字。清空此框即可移除表格。",
+  clDone:n=>`已讀取份額類別表：${n} 行，請在下方核對。`,clRows:(n,c)=>`表格：${n} 個類別，${c} 欄。`,clNone:"尚無份額類別表。",
+  clErrLine:x=>`請檢查份額類別表中以「${x}」開頭的一行：需要標題行和至少一個類別，每行 2 至 10 個儲存格並以 | 分隔，且不能多於標題行的儲存格數。`});

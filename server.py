@@ -10,6 +10,7 @@ then open http://localhost:5173
 What it adds on top of a plain file server, for the site running on this computer only:
     GET  /api/health      tells the site that this server is here and whether it can translate
     POST /api/translate   translates one fund with Claude and returns it in English / 简体 / 繁體
+    POST /api/picture     reads a picture of a monthly-returns or share-class table with Claude and returns the table
     PUT  /api/funds       saves the shared data to data/funds.json on this computer
 
 The key stays in this process. It is read from the ANTHROPIC_API_KEY environment variable, never written to a file
@@ -31,14 +32,16 @@ ROOT = Path(__file__).resolve().parent
 DATA = ROOT / "data" / "funds.json"
 PORT = int(sys.argv[1]) if len(sys.argv) > 1 else 5173
 MAX_BODY = 2_000_000
+MAX_PICTURE_BODY = 7_000_000          # a picture of a table, base64-encoded
 
 sys.path.insert(0, str(ROOT / "scripts"))
 try:
     import anthropic
     import translate_funds as tf           # the same prompt, schema and text handling the GitHub workflow uses
+    import picture_tables as pt            # reads a picture of a monthly-returns or share-class table
     SDK_ERROR = None
 except ImportError as exc:                 # the site still works; translation is reported as unavailable
-    anthropic = tf = None
+    anthropic = tf = pt = None
     SDK_ERROR = str(exc)
 
 
@@ -74,9 +77,9 @@ class Handler(SimpleHTTPRequestHandler):
         origin = self.headers.get("Origin")
         return origin is None or origin in (f"http://localhost:{PORT}", f"http://127.0.0.1:{PORT}", f"http://[::1]:{PORT}")
 
-    def read_json(self):
+    def read_json(self, limit=MAX_BODY):
         length = int(self.headers.get("Content-Length") or 0)
-        if length <= 0 or length > MAX_BODY:
+        if length <= 0 or length > limit:
             raise ValueError("missing or oversized body")
         return json.loads(self.rfile.read(length).decode("utf-8"))
 
@@ -88,7 +91,8 @@ class Handler(SimpleHTTPRequestHandler):
         return super().do_GET()
 
     def do_POST(self):
-        if self.path.split("?")[0] != "/api/translate":
+        route = self.path.split("?")[0]
+        if route not in ("/api/translate", "/api/picture"):
             return self.send_json(404, {"error": "notfound"})
         if not self.same_site():
             return self.send_json(403, {"error": "forbidden"})
@@ -96,8 +100,16 @@ class Handler(SimpleHTTPRequestHandler):
         if not ok:
             return self.send_json(503, {"error": reason})
         try:
-            fund = self.read_json()["fund"]
             client = anthropic.Anthropic()                    # reads ANTHROPIC_API_KEY from the environment
+            if route == "/api/picture":
+                try:
+                    body = self.read_json(MAX_PICTURE_BODY)
+                    found = pt.parse_image(client, str(body["image"]), str(body.get("mediaType") or ""))
+                except ValueError as exc:                     # "big", "type", "notable", or an unreadable request
+                    code = str(exc) if str(exc) in ("big", "type", "notable") else "big" if "oversized" in str(exc) else "api"
+                    return self.send_json(400, {"error": code})
+                return self.send_json(200, found)             # {"kind": "monthly", "rows"} or {"kind": "classes", "table"}
+            fund = self.read_json()["fund"]
             tf.apply_translation(fund, tf.translate(client, tf.fields_of(fund)))
             return self.send_json(200, {"fund": fund})
         except anthropic.AuthenticationError:

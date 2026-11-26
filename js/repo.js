@@ -125,6 +125,30 @@ const Local = {
     const res = await fetch("api/funds", { method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify(state) });
     if (!res.ok) throw new Error("local save failed");
   },
+  /** Sends a picture of a table to the local server, which has Claude read it. Resolves to
+      { kind: "monthly", rows } or { kind: "classes", table: { head, rows } }; rejects with an Error whose message
+      is a code (noserver, nokey, notable, big, ...). */
+  async parsePicture(file) {
+    if (!Local.on) throw new Error("noserver");
+    if (!Local.canTranslate) throw new Error(Local.reason);
+    if (!/^image\/(png|jpeg|webp|gif)$/.test(file.type)) throw new Error("type");
+    if (file.size > 4500000) throw new Error("big");
+    const dataUrl = await new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result); reader.onerror = () => reject(new Error("api"));
+      reader.readAsDataURL(file);
+    });
+    let res, reply;
+    try {
+      res = await fetch("api/picture", { method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ image: String(dataUrl).split(",")[1], mediaType: file.type }) });
+      reply = await res.json();
+    } catch (e) { throw new Error("network"); }
+    const good = reply.kind === "monthly" ? Array.isArray(reply.rows) && reply.rows.length
+      : reply.kind === "classes" && reply.table && Array.isArray(reply.table.head) && Array.isArray(reply.table.rows) && reply.table.rows.length;
+    if (!res.ok || !good) throw new Error(reply.error || "api");
+    return reply;
+  },
   /** Translates every fund that is not translated yet. Resolves to { done, failed, code }. */
   async translatePending() {
     const pending = Object.values(FundStore.getState().funds).flat().filter(f => !f.translated);
