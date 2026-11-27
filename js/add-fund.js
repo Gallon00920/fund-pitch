@@ -12,7 +12,7 @@ const imStratRow = document.getElementById("imStratRow"), imStratName = document
 const escLines = a => (a || []).map(esc).filter(Boolean).join("<br>");
 
 function showFundModal(show) {
-  fundModal.hidden = !show;
+  setModal(fundModal, show);
   document.body.classList.toggle("modal-open", show);
   if (show) { resetImport(); refreshTokenBox(); fundModal.scrollTop = 0; }
 }
@@ -322,10 +322,12 @@ fundForm.addEventListener("submit", e => {
     added.push(fund.id);
   });
   showFundModal(false);
+  added.forEach(id => markJustAdded(id));                                           // the new cards carry a gold outline that fades away
   selectTab(lastTab);                                                               // show the strategy the funds went to
   applyLang();
   const sc = document.getElementById("scroller");
   sc.scrollTo({ left: sc.scrollWidth, behavior: "smooth" });                        // new funds are added at the end
+
   if (!saved) alert(t("errStorage"));
   // Saving and translating happen in js/repo.js: FundStore reports the change, the file is committed to GitHub,
   // and the "Translate funds" workflow fills in the other two languages.

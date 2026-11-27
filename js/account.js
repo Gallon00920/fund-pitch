@@ -71,9 +71,7 @@ acctBtn.onclick = () => {
 
 // language links on the login screen (the top-bar menu is covered while it is open)
 document.querySelectorAll(".login-lang button").forEach(b => b.onclick = () => {
-  lang = b.dataset.lang;
-  try { localStorage.setItem("jc-lang", lang); } catch (e) {}
-  applyLang();
+  setLanguage(b.dataset.lang);
 });
 
 // app.js calls this at the end of every applyLang()

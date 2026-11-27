@@ -507,3 +507,28 @@ body.auth-in #track>:nth-child(n+4){animation-delay:170ms}
 body.auth-in #tabs,body.auth-in #acctBtn,body.auth-in #addFundBtn{animation:authfade .45s ease both}
 @keyframes authfade{from{opacity:0}to{opacity:1}}
 @media (prefers-reduced-motion:reduce){.login,.login-card{transition:none}body.auth-in #track>*,body.auth-in #tabs,body.auth-in #acctBtn,body.auth-in #addFundBtn{animation:none}}
+
+/* ---- windows (Add Fund, Edit, monthly table): fade in while the panel rises; fade out on close ---- */
+.modal:not([hidden]){animation:modalfade .26s ease both}
+.modal:not([hidden]) .modal-card{animation:modalrise .42s cubic-bezier(.22,.8,.2,1) both}
+.modal.closing{animation:modalout .22s ease both;pointer-events:none}
+.modal.closing .modal-card{animation:modalsink .22s ease both}
+@keyframes modalfade{from{opacity:0}to{opacity:1}}
+@keyframes modalout{from{opacity:1}to{opacity:0}}
+@keyframes modalrise{from{opacity:0;transform:translateY(22px) scale(.985)}to{opacity:1;transform:none}}
+@keyframes modalsink{from{opacity:1;transform:none}to{opacity:0;transform:translateY(12px)}}
+/* the funds read from a deck appear one after another in the Add Fund window */
+.im-item{animation:cardin .45s cubic-bezier(.22,.8,.2,1) both}
+.im-item:nth-child(2){animation-delay:70ms}.im-item:nth-child(3){animation-delay:140ms}.im-item:nth-child(n+4){animation-delay:200ms}
+.im-status{transition:color .2s ease}
+/* cards just added from a deck: rise in, with a gold outline that fades away */
+.card.just-added,.track.swap-in>.card.just-added,body.auth-in #track>.card.just-added{animation:addedglow 3s ease both}   /* its delay is set on the card: minus the time since it was added */
+@keyframes addedglow{0%{box-shadow:0 0 0 2px var(--gold),0 24px 50px -24px rgba(218,181,110,.9)}100%{box-shadow:0 0 0 2px rgba(218,181,110,0),0 0 0 0 rgba(218,181,110,0)}}
+@media (prefers-reduced-motion:reduce){.modal:not([hidden]),.modal:not([hidden]) .modal-card,.modal.closing,.modal.closing .modal-card,.im-item,.card.just-added{animation:none}}
+
+/* ---- changing language: the wording fades out, is swapped, and fades back in ---- */
+body.lang-anim nav .links,body.lang-anim nav .logo,body.lang-anim #acctBtn,body.lang-anim #addFundBtn,body.lang-anim #langCur,
+body.lang-anim .hero .wrap,body.lang-anim .funds .wrap,body.lang-anim footer .wrap,body.lang-anim .drawer>*,body.lang-anim .login-card>*,body.lang-anim .modal-card>*{transition:opacity .22s ease,transform .3s cubic-bezier(.22,.8,.2,1)}
+body.lang-out nav .links,body.lang-out nav .logo,body.lang-out #acctBtn,body.lang-out #addFundBtn,body.lang-out #langCur,
+body.lang-out .hero .wrap,body.lang-out .funds .wrap,body.lang-out footer .wrap,body.lang-out .drawer>*,body.lang-out .login-card>*,body.lang-out .modal-card>*{opacity:0;transition:opacity .18s ease}
+body.lang-out .hero .wrap,body.lang-out .funds .wrap{transform:translateY(6px);transition:opacity .18s ease,transform .18s ease}

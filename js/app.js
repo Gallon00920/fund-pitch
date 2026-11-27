@@ -95,12 +95,17 @@ function togglePick(id){
   renderCards(true);
   refreshOpenFund(id);
 }
+/* Funds added from a deck a moment ago: fund id -> when. Their cards show a gold outline that fades over a few
+   seconds. The card is redrawn several times while the change is saved, so the outline picks up where it was. */
+const justAdded=new Map(), ADDED_GLOW=3000;
+function markJustAdded(id){ justAdded.set(id,Date.now()); setTimeout(()=>justAdded.delete(id),ADDED_GLOW); }
 function cardHTML(f,i){
   const P=cardPerf(f), has=P.length>0;                               // deck-imported funds may have no yearly returns
   const max=has?Math.max(...P.map(x=>Math.abs(x[1])))||1:1;
   const bars=P.map(p=>`<div class="bar ${p[2]==="ytd"?"ytd":""}" data-v="${perLabel(p)}: ${fmt(p[1])}"><i class="${p[1]>=0?"p":"n"}" style="height:0" data-h="${Math.abs(p[1])/max*50}%"></i><em>${p[2]==="ytd"?"YTD":"'"+p[0].slice(2)}</em></div>`).join("");
   const a=has?ann(P):null, last=P.at(-1);
-  return `<article class="card">
+  const age=justAdded.has(f.id)?Date.now()-justAdded.get(f.id):-1;   // a card added moments ago keeps its fading outline across redraws
+  return `<article class="card${age>=0?" just-added":""}"${age>=0?` style="animation-delay:-${age}ms"`:""}>
     <div class="card-top${Auth.isAdmin()?" has-tools":""}">${FundStore.isFeatured(f.id)?`<span class="pick-wrap" title="${t("pickLabel")}">${PICK_STAR}</span>`:""}${Auth.isAdmin()?`<div class="card-tools">
         <button class="tool star${FundStore.isFeatured(f.id)?" on":""}" data-star="${f.id}" title="${t(FundStore.isFeatured(f.id)?"pickRemove":"pickAdd")}" aria-label="${t(FundStore.isFeatured(f.id)?"pickRemove":"pickAdd")}" aria-pressed="${FundStore.isFeatured(f.id)}"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M12 3.5l2.6 5.4 5.9.8-4.3 4.1 1 5.8L12 16.9 6.8 19.6l1-5.8L3.5 9.7l5.9-.8z"/></svg></button>
         ${tab!==FOCUS&&tabFunds().length>1?`<button class="tool grip" data-grip title="${t("reorder")}" aria-label="${t("reorder")}"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><circle cx="8" cy="5" r="1.9"/><circle cx="16" cy="5" r="1.9"/><circle cx="8" cy="12" r="1.9"/><circle cx="16" cy="12" r="1.9"/><circle cx="8" cy="19" r="1.9"/><circle cx="16" cy="19" r="1.9"/></svg></button>`:""}
@@ -208,7 +213,26 @@ function applyLang(){
 const langBox=document.getElementById("lang"), langBtn=document.getElementById("langBtn");
 function setMenu(open){langBox.classList.toggle("open",open);langBtn.setAttribute("aria-expanded",open)}
 langBtn.onclick=e=>{e.stopPropagation();setMenu(!langBox.classList.contains("open"))};
-document.querySelectorAll(".lang-menu button").forEach(b=>b.onclick=()=>{lang=b.dataset.lang;try{localStorage.setItem("jc-lang",lang)}catch(e){}setMenu(false);applyLang()});
+/* Changing language: the wording on the page fades out, is swapped while invisible, and fades back in, so the text
+   does not jump. Clicking another language during the fade simply lands on the last one chosen. */
+let langTimer=0, langNext="";
+function setLanguage(code){
+  if(!UI[code]||code===(langNext||lang)) return;
+  try{localStorage.setItem("jc-lang",code)}catch(e){}
+  if(calmMotion.matches){lang=code;applyLang();return}
+  const fading=!!langNext;
+  langNext=code;
+  document.body.classList.add("lang-anim","lang-out");
+  if(fading) return;                                           // already fading out: the swap below will use the newest choice
+  clearTimeout(langTimer);
+  langTimer=setTimeout(()=>{
+    lang=langNext; langNext="";
+    applyLang();
+    document.body.classList.remove("lang-out");                // fade back in
+    langTimer=setTimeout(()=>document.body.classList.remove("lang-anim"),320);
+  },190);
+}
+document.querySelectorAll(".lang-menu button").forEach(b=>b.onclick=()=>{setMenu(false);setLanguage(b.dataset.lang)});
 document.addEventListener("click",e=>{if(!langBox.contains(e.target))setMenu(false)});
 addEventListener("keydown",e=>{if(e.key==="Escape")setMenu(false)});
 
@@ -410,6 +434,18 @@ function monthlyThumb(rows){
   return `<svg class="mo-pic" viewBox="0 0 83 ${show.length*5-1}" width="83" height="${show.length*5-1}" aria-hidden="true">${cells}</svg>`;
 }
 const monthNames=()=>zh()?MON.map((_,i)=>`${i+1}月`):MON;
+/* Windows (Add Fund, Edit, the monthly table) open with a fade while the panel rises, and close the same way.
+   Opening is pure CSS (it plays whenever `hidden` is removed); closing keeps the window on screen for the length of
+   the fade-out (class "closing"), then sets `hidden`. */
+const modalTimers=new WeakMap();
+function setModal(el,show){
+  clearTimeout(modalTimers.get(el)); el.classList.remove("closing");
+  if(show){el.hidden=false;return}
+  if(el.hidden) return;
+  if(calmMotion.matches){el.hidden=true;return}
+  el.classList.add("closing");
+  modalTimers.set(el,setTimeout(()=>{el.hidden=true;el.classList.remove("closing")},230));
+}
 const moModal=document.getElementById("monthlyModal");
 let moFund=null;
 function openMonthly(id){
@@ -419,9 +455,9 @@ function openMonthly(id){
   document.getElementById("moTable").innerHTML=`<table class="mo"><tr><th>${t("moYear")}</th>${monthNames().map(m=>`<th>${m}</th>`).join("")}<th>${t("moTotal")}</th></tr>${
     rows.map(r=>`<tr${bad.includes(r.y)?' class="check"':""}><td>${r.y}</td>${r.m.map(v=>`<td class="${v<0?"neg":""}">${moNum(v,2)}</td>`).join("")}<td class="${r.t<0?"neg":""}">${moNum(r.t,r.t==null?1:moDecimals(r.t))}</td></tr>`).join("")}</table>`;
   document.getElementById("moNote").textContent=(bad.length?t("moCheck")(bad.join(", "))+" ":"")+t("past");
-  moModal.hidden=false; document.body.classList.add("modal-open"); moModal.scrollTop=0;
+  setModal(moModal,true); document.body.classList.add("modal-open"); moModal.scrollTop=0;
 }
-function closeMonthly(){ if(moModal.hidden) return; moModal.hidden=true; moFund=null; document.body.classList.remove("modal-open") }
+function closeMonthly(){ if(moModal.hidden) return; setModal(moModal,false); moFund=null; document.body.classList.remove("modal-open") }
 document.getElementById("moClose").onclick=closeMonthly;
 moModal.addEventListener("mousedown",e=>{if(e.target===moModal)closeMonthly()});
 addEventListener("keydown",e=>{if(e.key==="Escape"&&!moModal.hidden){e.stopImmediatePropagation();closeMonthly()}},true);

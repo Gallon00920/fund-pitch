@@ -516,6 +516,31 @@ body.auth-in #track>:nth-child(n+4){animation-delay:170ms}
 body.auth-in #tabs,body.auth-in #acctBtn,body.auth-in #addFundBtn{animation:authfade .45s ease both}
 @keyframes authfade{from{opacity:0}to{opacity:1}}
 @media (prefers-reduced-motion:reduce){.login,.login-card{transition:none}body.auth-in #track>*,body.auth-in #tabs,body.auth-in #acctBtn,body.auth-in #addFundBtn{animation:none}}
+
+/* ---- windows (Add Fund, Edit, monthly table): fade in while the panel rises; fade out on close ---- */
+.modal:not([hidden]){animation:modalfade .26s ease both}
+.modal:not([hidden]) .modal-card{animation:modalrise .42s cubic-bezier(.22,.8,.2,1) both}
+.modal.closing{animation:modalout .22s ease both;pointer-events:none}
+.modal.closing .modal-card{animation:modalsink .22s ease both}
+@keyframes modalfade{from{opacity:0}to{opacity:1}}
+@keyframes modalout{from{opacity:1}to{opacity:0}}
+@keyframes modalrise{from{opacity:0;transform:translateY(22px) scale(.985)}to{opacity:1;transform:none}}
+@keyframes modalsink{from{opacity:1;transform:none}to{opacity:0;transform:translateY(12px)}}
+/* the funds read from a deck appear one after another in the Add Fund window */
+.im-item{animation:cardin .45s cubic-bezier(.22,.8,.2,1) both}
+.im-item:nth-child(2){animation-delay:70ms}.im-item:nth-child(3){animation-delay:140ms}.im-item:nth-child(n+4){animation-delay:200ms}
+.im-status{transition:color .2s ease}
+/* cards just added from a deck: rise in, with a gold outline that fades away */
+.card.just-added,.track.swap-in>.card.just-added,body.auth-in #track>.card.just-added{animation:addedglow 3s ease both}   /* its delay is set on the card: minus the time since it was added */
+@keyframes addedglow{0%{box-shadow:0 0 0 2px var(--gold),0 24px 50px -24px rgba(218,181,110,.9)}100%{box-shadow:0 0 0 2px rgba(218,181,110,0),0 0 0 0 rgba(218,181,110,0)}}
+@media (prefers-reduced-motion:reduce){.modal:not([hidden]),.modal:not([hidden]) .modal-card,.modal.closing,.modal.closing .modal-card,.im-item,.card.just-added{animation:none}}
+
+/* ---- changing language: the wording fades out, is swapped, and fades back in ---- */
+body.lang-anim nav .links,body.lang-anim nav .logo,body.lang-anim #acctBtn,body.lang-anim #addFundBtn,body.lang-anim #langCur,
+body.lang-anim .hero .wrap,body.lang-anim .funds .wrap,body.lang-anim footer .wrap,body.lang-anim .drawer>*,body.lang-anim .login-card>*,body.lang-anim .modal-card>*{transition:opacity .22s ease,transform .3s cubic-bezier(.22,.8,.2,1)}
+body.lang-out nav .links,body.lang-out nav .logo,body.lang-out #acctBtn,body.lang-out #addFundBtn,body.lang-out #langCur,
+body.lang-out .hero .wrap,body.lang-out .funds .wrap,body.lang-out footer .wrap,body.lang-out .drawer>*,body.lang-out .login-card>*,body.lang-out .modal-card>*{opacity:0;transition:opacity .18s ease}
+body.lang-out .hero .wrap,body.lang-out .funds .wrap{transform:translateY(6px);transition:opacity .18s ease,transform .18s ease}
 </style>
 </head>
 <body>
@@ -1877,12 +1902,17 @@ function togglePick(id){
   renderCards(true);
   refreshOpenFund(id);
 }
+/* Funds added from a deck a moment ago: fund id -> when. Their cards show a gold outline that fades over a few
+   seconds. The card is redrawn several times while the change is saved, so the outline picks up where it was. */
+const justAdded=new Map(), ADDED_GLOW=3000;
+function markJustAdded(id){ justAdded.set(id,Date.now()); setTimeout(()=>justAdded.delete(id),ADDED_GLOW); }
 function cardHTML(f,i){
   const P=cardPerf(f), has=P.length>0;                               // deck-imported funds may have no yearly returns
   const max=has?Math.max(...P.map(x=>Math.abs(x[1])))||1:1;
   const bars=P.map(p=>`<div class="bar ${p[2]==="ytd"?"ytd":""}" data-v="${perLabel(p)}: ${fmt(p[1])}"><i class="${p[1]>=0?"p":"n"}" style="height:0" data-h="${Math.abs(p[1])/max*50}%"></i><em>${p[2]==="ytd"?"YTD":"'"+p[0].slice(2)}</em></div>`).join("");
   const a=has?ann(P):null, last=P.at(-1);
-  return `<article class="card">
+  const age=justAdded.has(f.id)?Date.now()-justAdded.get(f.id):-1;   // a card added moments ago keeps its fading outline across redraws
+  return `<article class="card${age>=0?" just-added":""}"${age>=0?` style="animation-delay:-${age}ms"`:""}>
     <div class="card-top${Auth.isAdmin()?" has-tools":""}">${FundStore.isFeatured(f.id)?`<span class="pick-wrap" title="${t("pickLabel")}">${PICK_STAR}</span>`:""}${Auth.isAdmin()?`<div class="card-tools">
         <button class="tool star${FundStore.isFeatured(f.id)?" on":""}" data-star="${f.id}" title="${t(FundStore.isFeatured(f.id)?"pickRemove":"pickAdd")}" aria-label="${t(FundStore.isFeatured(f.id)?"pickRemove":"pickAdd")}" aria-pressed="${FundStore.isFeatured(f.id)}"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M12 3.5l2.6 5.4 5.9.8-4.3 4.1 1 5.8L12 16.9 6.8 19.6l1-5.8L3.5 9.7l5.9-.8z"/></svg></button>
         ${tab!==FOCUS&&tabFunds().length>1?`<button class="tool grip" data-grip title="${t("reorder")}" aria-label="${t("reorder")}"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><circle cx="8" cy="5" r="1.9"/><circle cx="16" cy="5" r="1.9"/><circle cx="8" cy="12" r="1.9"/><circle cx="16" cy="12" r="1.9"/><circle cx="8" cy="19" r="1.9"/><circle cx="16" cy="19" r="1.9"/></svg></button>`:""}
@@ -1990,7 +2020,26 @@ function applyLang(){
 const langBox=document.getElementById("lang"), langBtn=document.getElementById("langBtn");
 function setMenu(open){langBox.classList.toggle("open",open);langBtn.setAttribute("aria-expanded",open)}
 langBtn.onclick=e=>{e.stopPropagation();setMenu(!langBox.classList.contains("open"))};
-document.querySelectorAll(".lang-menu button").forEach(b=>b.onclick=()=>{lang=b.dataset.lang;try{localStorage.setItem("jc-lang",lang)}catch(e){}setMenu(false);applyLang()});
+/* Changing language: the wording on the page fades out, is swapped while invisible, and fades back in, so the text
+   does not jump. Clicking another language during the fade simply lands on the last one chosen. */
+let langTimer=0, langNext="";
+function setLanguage(code){
+  if(!UI[code]||code===(langNext||lang)) return;
+  try{localStorage.setItem("jc-lang",code)}catch(e){}
+  if(calmMotion.matches){lang=code;applyLang();return}
+  const fading=!!langNext;
+  langNext=code;
+  document.body.classList.add("lang-anim","lang-out");
+  if(fading) return;                                           // already fading out: the swap below will use the newest choice
+  clearTimeout(langTimer);
+  langTimer=setTimeout(()=>{
+    lang=langNext; langNext="";
+    applyLang();
+    document.body.classList.remove("lang-out");                // fade back in
+    langTimer=setTimeout(()=>document.body.classList.remove("lang-anim"),320);
+  },190);
+}
+document.querySelectorAll(".lang-menu button").forEach(b=>b.onclick=()=>{setMenu(false);setLanguage(b.dataset.lang)});
 document.addEventListener("click",e=>{if(!langBox.contains(e.target))setMenu(false)});
 addEventListener("keydown",e=>{if(e.key==="Escape")setMenu(false)});
 
@@ -2192,6 +2241,18 @@ function monthlyThumb(rows){
   return `<svg class="mo-pic" viewBox="0 0 83 ${show.length*5-1}" width="83" height="${show.length*5-1}" aria-hidden="true">${cells}</svg>`;
 }
 const monthNames=()=>zh()?MON.map((_,i)=>`${i+1}月`):MON;
+/* Windows (Add Fund, Edit, the monthly table) open with a fade while the panel rises, and close the same way.
+   Opening is pure CSS (it plays whenever `hidden` is removed); closing keeps the window on screen for the length of
+   the fade-out (class "closing"), then sets `hidden`. */
+const modalTimers=new WeakMap();
+function setModal(el,show){
+  clearTimeout(modalTimers.get(el)); el.classList.remove("closing");
+  if(show){el.hidden=false;return}
+  if(el.hidden) return;
+  if(calmMotion.matches){el.hidden=true;return}
+  el.classList.add("closing");
+  modalTimers.set(el,setTimeout(()=>{el.hidden=true;el.classList.remove("closing")},230));
+}
 const moModal=document.getElementById("monthlyModal");
 let moFund=null;
 function openMonthly(id){
@@ -2201,9 +2262,9 @@ function openMonthly(id){
   document.getElementById("moTable").innerHTML=`<table class="mo"><tr><th>${t("moYear")}</th>${monthNames().map(m=>`<th>${m}</th>`).join("")}<th>${t("moTotal")}</th></tr>${
     rows.map(r=>`<tr${bad.includes(r.y)?' class="check"':""}><td>${r.y}</td>${r.m.map(v=>`<td class="${v<0?"neg":""}">${moNum(v,2)}</td>`).join("")}<td class="${r.t<0?"neg":""}">${moNum(r.t,r.t==null?1:moDecimals(r.t))}</td></tr>`).join("")}</table>`;
   document.getElementById("moNote").textContent=(bad.length?t("moCheck")(bad.join(", "))+" ":"")+t("past");
-  moModal.hidden=false; document.body.classList.add("modal-open"); moModal.scrollTop=0;
+  setModal(moModal,true); document.body.classList.add("modal-open"); moModal.scrollTop=0;
 }
-function closeMonthly(){ if(moModal.hidden) return; moModal.hidden=true; moFund=null; document.body.classList.remove("modal-open") }
+function closeMonthly(){ if(moModal.hidden) return; setModal(moModal,false); moFund=null; document.body.classList.remove("modal-open") }
 document.getElementById("moClose").onclick=closeMonthly;
 moModal.addEventListener("mousedown",e=>{if(e.target===moModal)closeMonthly()});
 addEventListener("keydown",e=>{if(e.key==="Escape"&&!moModal.hidden){e.stopImmediatePropagation();closeMonthly()}},true);
@@ -2367,9 +2428,7 @@ acctBtn.onclick = () => {
 
 // language links on the login screen (the top-bar menu is covered while it is open)
 document.querySelectorAll(".login-lang button").forEach(b => b.onclick = () => {
-  lang = b.dataset.lang;
-  try { localStorage.setItem("jc-lang", lang); } catch (e) {}
-  applyLang();
+  setLanguage(b.dataset.lang);
 });
 
 // app.js calls this at the end of every applyLang()
@@ -2568,7 +2627,7 @@ const imStratRow = document.getElementById("imStratRow"), imStratName = document
 const escLines = a => (a || []).map(esc).filter(Boolean).join("<br>");
 
 function showFundModal(show) {
-  fundModal.hidden = !show;
+  setModal(fundModal, show);
   document.body.classList.toggle("modal-open", show);
   if (show) { resetImport(); refreshTokenBox(); fundModal.scrollTop = 0; }
 }
@@ -2878,10 +2937,12 @@ fundForm.addEventListener("submit", e => {
     added.push(fund.id);
   });
   showFundModal(false);
+  added.forEach(id => markJustAdded(id));                                           // the new cards carry a gold outline that fades away
   selectTab(lastTab);                                                               // show the strategy the funds went to
   applyLang();
   const sc = document.getElementById("scroller");
   sc.scrollTo({ left: sc.scrollWidth, behavior: "smooth" });                        // new funds are added at the end
+
   if (!saved) alert(t("errStorage"));
   // Saving and translating happen in js/repo.js: FundStore reports the change, the file is committed to GitHub,
   // and the "Translate funds" workflow fills in the other two languages.
@@ -2925,7 +2986,7 @@ function parseReturnLines(text) {
 }
 
 function showEditModal(show) {
-  editModal.hidden = !show;
+  setModal(editModal, show);
   document.body.classList.toggle("modal-open", show);
   if (!show) editing = null;
 }

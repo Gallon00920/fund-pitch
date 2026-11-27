@@ -25,7 +25,7 @@ function parseReturnLines(text) {
 }
 
 function showEditModal(show) {
-  editModal.hidden = !show;
+  setModal(editModal, show);
   document.body.classList.toggle("modal-open", show);
   if (!show) editing = null;
 }
