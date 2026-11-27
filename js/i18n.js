@@ -478,3 +478,14 @@ UI.en.noFunds="No funds in this strategy yet.";UI.sc.noFunds="此策略暂无基
 Object.assign(UI.en,{focusTab:"Focus List",focusAdd:"Add to Focus List",focusRemove:"Remove from Focus List",descFocus:"Funds we are highlighting at the moment, drawn from the strategies alongside."});
 Object.assign(UI.sc,{focusTab:"重点推荐",focusAdd:"加入重点推荐",focusRemove:"移出重点推荐",descFocus:"当前重点推荐的基金，选自各策略。"});
 Object.assign(UI.tc,{focusTab:"重點推薦",focusAdd:"加入重點推薦",focusRemove:"移出重點推薦",descFocus:"當前重點推薦的基金，選自各策略。"});
+
+/* My Focus List is each visitor's own; the admin star marks the team's top picks */
+Object.assign(UI.en,{focusTab:"My Focus List",descFocus:"Funds you have saved. Your list is kept in this browser only.",
+  save:"Focus List",saved:"In Focus List",saveAdd:"Add to My Focus List",saveRemove:"Remove from My Focus List",
+  pickAdd:"Mark as top pick",pickRemove:"Clear top pick",pickLabel:"Top pick",pickNote:"Top pick: a fund our team rates most highly."});
+Object.assign(UI.sc,{focusTab:"我的关注",descFocus:"您已收藏的基金。此列表仅保存在本浏览器中。",
+  save:"加入关注",saved:"已关注",saveAdd:"加入我的关注",saveRemove:"移出我的关注",
+  pickAdd:"标记为重点推荐",pickRemove:"取消重点推荐",pickLabel:"重点推荐",pickNote:"重点推荐：我们团队最看好的基金。"});
+Object.assign(UI.tc,{focusTab:"我的關注",descFocus:"您已收藏的基金。此列表僅保存在本瀏覽器中。",
+  save:"加入關注",saved:"已關注",saveAdd:"加入我的關注",saveRemove:"移出我的關注",
+  pickAdd:"標記為重點推薦",pickRemove:"取消重點推薦",pickLabel:"重點推薦",pickNote:"重點推薦：我們團隊最看好的基金。"});

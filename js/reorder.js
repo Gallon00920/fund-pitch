@@ -68,7 +68,7 @@
     drag = null;
     if (commit && to !== from) {
       const keep = box.scrollLeft;
-      if (tab === FOCUS) FundStore.reorderFeatured(from, to); else FundStore.reorder(tab, from, to);   // the Focus List has its own order
+      FundStore.reorder(tab, from, to);
       applyLang();
       box.scrollLeft = keep;
     }

@@ -11,7 +11,7 @@
      removed     [ built-in strategy id ]    built-in strategies admins deleted
      names       { built-in strategy id: name }      built-in strategies admins renamed
      stats       [ "130+", "40+", "9" ]      the three cover-page numbers, once an admin has edited them
-     featured    [ fundId, ... ]             funds admins highlighted, in the order shown on the Focus List tab
+     featured    [ fundId, ... ]             top picks: funds admins marked with a star
    This file only holds that state in memory and rebuilds the live FUNDS list from it.
    Loading and saving the file is done by js/repo.js, which is told about every change through onChange(). */
 const FundStore = (() => {
@@ -69,6 +69,11 @@ const FundStore = (() => {
       if (!FUNDS[strat] || !Array.isArray(ids)) return;
       const rank = f => { const i = ids.indexOf(f.id); return i < 0 ? Infinity : i; };              // unlisted funds keep their place at the end
       FUNDS[strat] = FUNDS[strat].map((f, i) => ({ f, i })).sort((a, b) => rank(a.f) - rank(b.f) || a.i - b.i).map(x => x.f);
+    });
+    // top picks lead their strategy: starred funds first, each group keeping the order set above
+    if (state.featured.length) Object.keys(FUNDS).forEach(strat => {
+      const picks = FUNDS[strat].filter(f => state.featured.includes(f.id));
+      if (picks.length) FUNDS[strat] = [...picks, ...FUNDS[strat].filter(f => !state.featured.includes(f.id))];
     });
   }
   const changed = () => { rebuild(); listener(); };
@@ -154,22 +159,13 @@ const FundStore = (() => {
       return true;
     },
 
-    /** Ids of the highlighted funds that are on the site, in Focus List order. */
+    /** Ids of the top picks that are on the site. */
     featured: () => state.featured.filter(id => locate(id)),
     isFeatured: id => state.featured.includes(id),
-    /** Adds a fund to the Focus List (at the end) or takes it off. */
+    /** Marks a fund as a top pick, or clears the mark. */
     toggleFeatured(id) {
       state.featured = state.featured.includes(id) ? state.featured.filter(x => x !== id) : [...state.featured.filter(x => locate(x)), id];
       changed();
-    },
-    /** Moves the Focus List card at position `from` to position `to`. */
-    reorderFeatured(from, to) {
-      const ids = state.featured.filter(id => locate(id));
-      if (from < 0 || from >= ids.length || to < 0 || to >= ids.length || from === to) return false;
-      ids.splice(to, 0, ids.splice(from, 1)[0]);
-      state.featured = ids;
-      changed();
-      return true;
     },
 
     /** Deletes a fund. An added fund is removed for good; a built-in fund is hidden. */

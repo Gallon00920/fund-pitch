@@ -56,22 +56,44 @@ function ddText(f){                                     // max drawdown as a pla
 
 const track=document.getElementById("track"), prog=document.getElementById("prog");
 
-/* The Focus List: funds an admin has highlighted (a star on each card, or the button in View Fund). It is the first
-   tab, shown only while at least one fund is on it, and its cards come from every strategy. */
+/* My Focus List: each visitor keeps their own list of funds they like (the bookmark on a card, or the button in
+   View Fund). It is kept in that visitor's browser only, never sent anywhere, and shows as the first tab while it
+   holds at least one fund. Its cards come from every strategy. */
 const FOCUS="focus";
-const tabFunds=()=>tab===FOCUS?FundStore.featured().map(id=>FundStore.find(id).fund):(FUNDS[tab]||[]);   // the funds on screen
+const MyFocus=(()=>{
+  const KEY="fundPitch.myFocus";
+  let ids=[];
+  try{const saved=JSON.parse(localStorage.getItem(KEY));if(Array.isArray(saved))ids=saved.map(String)}catch(e){}
+  const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(ids))}catch(e){}};       // private browsing may refuse: the list then lasts for this visit
+  return {
+    list:()=>ids.filter(id=>FundStore.find(id)),               // funds that are on the site right now, in the order they were saved
+    has:id=>ids.includes(id),
+    toggle(id){ids=ids.includes(id)?ids.filter(x=>x!==id):[...ids,id];save()}
+  };
+})();
+const tabFunds=()=>tab===FOCUS?MyFocus.list().map(id=>FundStore.find(id).fund):(FUNDS[tab]||[]);   // the funds on screen
+/* Top picks: funds the team rates most highly. An admin marks them with the star tool; every visitor then sees a gold
+   star in the card's top-left corner, explained in a line under the cards. Shared like any other admin change. */
+const PICK_STAR='<svg class="pick" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5l2.6 5.4 5.9.8-4.3 4.1 1 5.8L12 16.9 6.8 19.6l1-5.8L3.5 9.7l5.9-.8z"/></svg>';
 /** On the Focus List, each card carries a tag naming the strategy the fund belongs to: "Liquid · Daily", "Royalty". */
 function stratTag(f){
   if(tab!==FOCUS) return "";
   const hit=FundStore.find(f.id), s=hit&&FundStore.strategies().find(x=>x.id===hit.strat);
   return s?(s.group==="liquid"?t("grpLiquid")+" · ":"")+stratName(s):"";
 }
-function toggleFocus(id){
-  if(!Auth.isAdmin()||needToken()) return;
-  pickedTab=true;                                              // stay on the tab the admin is working in
-  FundStore.toggleFeatured(id);
+const refreshOpenFund=id=>{if(openFund&&openFund.id===id){const hit=FundStore.find(id); if(hit) openD(openFund=hit.fund)}};   // redraw View Fund's buttons
+/** Any visitor: put a fund on, or take it off, their own Focus List. */
+function toggleSave(id){
+  MyFocus.toggle(id);
   renderTabs(); renderCards(true);
-  if(openFund&&openFund.id===id){const hit=FundStore.find(id); if(hit) openD(openFund=hit.fund)}       // refresh the button in View Fund
+  refreshOpenFund(id);
+}
+/** Admin: mark a fund as a top pick, or clear the mark. */
+function togglePick(id){
+  if(!Auth.isAdmin()||needToken()) return;
+  FundStore.toggleFeatured(id);
+  renderCards(true);
+  refreshOpenFund(id);
 }
 function cardHTML(f,i){
   const P=cardPerf(f), has=P.length>0;                               // deck-imported funds may have no yearly returns
@@ -79,9 +101,9 @@ function cardHTML(f,i){
   const bars=P.map(p=>`<div class="bar ${p[2]==="ytd"?"ytd":""}" data-v="${perLabel(p)}: ${fmt(p[1])}"><i class="${p[1]>=0?"p":"n"}" style="height:0" data-h="${Math.abs(p[1])/max*50}%"></i><em>${p[2]==="ytd"?"YTD":"'"+p[0].slice(2)}</em></div>`).join("");
   const a=has?ann(P):null, last=P.at(-1);
   return `<article class="card">
-    <div class="card-top${Auth.isAdmin()?" has-tools":""}">${Auth.isAdmin()?`<div class="card-tools">
-        <button class="tool star${FundStore.isFeatured(f.id)?" on":""}" data-star="${f.id}" title="${t(FundStore.isFeatured(f.id)?"focusRemove":"focusAdd")}" aria-label="${t(FundStore.isFeatured(f.id)?"focusRemove":"focusAdd")}" aria-pressed="${FundStore.isFeatured(f.id)}"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M12 3.5l2.6 5.4 5.9.8-4.3 4.1 1 5.8L12 16.9 6.8 19.6l1-5.8L3.5 9.7l5.9-.8z"/></svg></button>
-        ${tabFunds().length>1?`<button class="tool grip" data-grip title="${t("reorder")}" aria-label="${t("reorder")}"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><circle cx="8" cy="5" r="1.9"/><circle cx="16" cy="5" r="1.9"/><circle cx="8" cy="12" r="1.9"/><circle cx="16" cy="12" r="1.9"/><circle cx="8" cy="19" r="1.9"/><circle cx="16" cy="19" r="1.9"/></svg></button>`:""}
+    <div class="card-top${Auth.isAdmin()?" has-tools":""}">${FundStore.isFeatured(f.id)?`<span class="pick-wrap" title="${t("pickLabel")}">${PICK_STAR}</span>`:""}${Auth.isAdmin()?`<div class="card-tools">
+        <button class="tool star${FundStore.isFeatured(f.id)?" on":""}" data-star="${f.id}" title="${t(FundStore.isFeatured(f.id)?"pickRemove":"pickAdd")}" aria-label="${t(FundStore.isFeatured(f.id)?"pickRemove":"pickAdd")}" aria-pressed="${FundStore.isFeatured(f.id)}"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M12 3.5l2.6 5.4 5.9.8-4.3 4.1 1 5.8L12 16.9 6.8 19.6l1-5.8L3.5 9.7l5.9-.8z"/></svg></button>
+        ${tab!==FOCUS&&tabFunds().length>1?`<button class="tool grip" data-grip title="${t("reorder")}" aria-label="${t("reorder")}"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><circle cx="8" cy="5" r="1.9"/><circle cx="16" cy="5" r="1.9"/><circle cx="8" cy="12" r="1.9"/><circle cx="16" cy="12" r="1.9"/><circle cx="8" cy="19" r="1.9"/><circle cx="16" cy="19" r="1.9"/></svg></button>`:""}
         <button class="tool" data-edit="${f.id}" title="${t("edit")}" aria-label="${t("edit")}"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 20h4L19 9l-4-4L4 16v4zM13.5 6.5l4 4"/></svg></button>
         <button class="tool del" data-delfund="${f.id}" title="${t("del")}" aria-label="${t("del")}"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13M10 11v6M14 11v6"/></svg></button>
       </div>`:""}${stratTag(f)||anon()?"":`<span class="tag">${L(f.tag)}</span>`}${stratTag(f)?`<div class="tags"><span class="tag strat">${stratTag(f)}</span>${anon()?"":`<span class="tag">${L(f.tag)}</span>`}</div>`:""}<h3>${title(f)}</h3>${anon()?"":`<div class="mgr">${L(f.mgr)} · ${veh(f)}</div>`}</div>
@@ -101,6 +123,7 @@ function cardHTML(f,i){
       <div class="mini-label"><span>${t("recent5")}</span></div>
       <table class="recent"><tr><th>${t("period")}</th><th>${t("ret")}</th></tr>${P.slice(-5).reverse().map(p=>`<tr><td>${perLabel(p)}</td><td class="${p[1]>=0?"pos":"neg"}">${fmt(p[1])}</td></tr>`).join("")}</table>`:trackHTML(f)}
       <div class="card-foot">
+        <button class="save${MyFocus.has(f.id)?" on":""}" data-save="${f.id}" aria-pressed="${MyFocus.has(f.id)}" title="${t(MyFocus.has(f.id)?"saveRemove":"saveAdd")}"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M6.5 3.5h11v17L12 16.6 6.5 20.5z"/></svg><span>${t(MyFocus.has(f.id)?"saved":"save")}</span></button>
         <button class="more" data-n="${i}">${t("view")} <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 7h10M8 3l4 4-4 4"/></svg></button></div>
     </div></article>`;
 }
@@ -110,7 +133,9 @@ const scroller=document.getElementById("scroller");
 function renderCards(keepPos){
   const x=scroller.scrollLeft;
   track.innerHTML=tabFunds().map(cardHTML).join("")||`<p class="track-empty">${t("noFunds")}</p>`;   // a strategy with no funds yet
-  document.getElementById("tabDesc").textContent=tab===FOCUS?t("descFocus"):tab==="liquid"?t(anon()?"descLiquidAnon":"descLiquid"):tab==="illiquid"||tab==="monthly"?t("descIlliquid"):"";   // custom strategies have no description line
+  const desc=tab===FOCUS?t("descFocus"):tab==="liquid"?t(anon()?"descLiquidAnon":"descLiquid"):tab==="illiquid"||tab==="monthly"?t("descIlliquid"):"";   // added strategies have no description line
+  const picks=tabFunds().some(f=>FundStore.isFeatured(f.id));     // explain the star only when a card on screen carries one
+  document.getElementById("tabDesc").innerHTML=(picks?`<span class="pick-note">${PICK_STAR}${t("pickNote")}</span>`:"")+(desc?`<span>${esc(desc)}</span>`:"");
   requestAnimationFrame(()=>setTimeout(()=>track.querySelectorAll(".bar i").forEach(b=>b.style.height=b.dataset.h),80));
   scroller.scrollLeft=keepPos?x:0;
   updateProg();
@@ -199,12 +224,10 @@ const stratName=s=>s.builtIn&&!s.name?t(BUILT_IN_NAME[s.id]):s.name;   // a rena
 const stratLabel=s=>`${t(GROUPS.find(g=>g.id===s.group).key)} › ${stratName(s)}`;   // for the strategy pickers in Add Fund and Edit
 let addingStrat="", renamingStrat="";                          // category a new strategy is being typed into; id of the strategy being renamed
 let shownGroup="liquid", shownTab="liquid";                    // what the tab row showed last time it was drawn
-let pickedTab=false;                                           // true once the visitor (or an admin action) has chosen a tab
 let openGroup="", shutGroup="";                                // category whose list was opened by a click; category whose list stays closed until the mouse leaves
 function renderTabs(){
   const list=FundStore.strategies(), admin=Auth.isAdmin();
-  const focus=FundStore.featured();
-  if(!pickedTab) tab=focus.length?FOCUS:tab===FOCUS?"liquid":tab;    // until the visitor picks a tab, the site opens on the Focus List when there is one
+  const focus=MyFocus.list();                                        // this visitor's own list
   if(tab===FOCUS?!focus.length:!list.some(s=>s.id===tab)) tab=list.length?list[0].id:"";   // the tab on screen is gone: fall back to the first strategy
   if(!admin) addingStrat="";
   if(!admin||!list.some(s=>s.id===renamingStrat)) renamingStrat="";
@@ -235,7 +258,6 @@ const calmMotion=matchMedia("(prefers-reduced-motion: reduce)");
 let swapTimer=0;
 function selectTab(id){
   const changed=id!==tab;
-  pickedTab=true;
   tab=id; renderTabs();
   clearTimeout(swapTimer);
   if(!changed||calmMotion.matches){track.classList.remove("swap-out","swap-in");renderCards();return}
@@ -424,7 +446,7 @@ const classesOf=f=>{const c=f.classes&&(f.classes.head?f.classes:L(f.classes));r
 /* drawer */
 const drawer=document.getElementById("drawer"), scrim=document.getElementById("scrim");
 let openFund=null;
-track.addEventListener("click",e=>{const b=e.target.closest(".more");if(b)openD(tabFunds()[b.dataset.n]);const s=e.target.closest("[data-star]");if(s)toggleFocus(s.dataset.star)});
+track.addEventListener("click",e=>{const b=e.target.closest(".more");if(b)openD(tabFunds()[b.dataset.n]);const s=e.target.closest("[data-star]");if(s)togglePick(s.dataset.star);const v=e.target.closest("[data-save]");if(v)toggleSave(v.dataset.save)});
 function openD(f){
   const keep=openFund===f?drawer.scrollTop:0; openFund=f;
   const rows=[...(f.hist||[]),...f.perf];
@@ -454,7 +476,8 @@ function openD(f){
     ${liqBlock}
     ${perfBlock}${monthlyBlock}${notesBlock}
     <p class="note">${f.note&&!anon()?L(f.note)+" ":""}${t("past")}</p>
-    ${Auth.isAdmin()?`<div class="d-admin"><button class="btn ghost" onclick="openEdit('${f.id}')">${t("edit")}</button><button class="btn ghost" onclick="toggleFocus('${f.id}')">${t(FundStore.isFeatured(f.id)?"focusRemove":"focusAdd")}</button>${f.custom?`<button class="btn ghost" onclick="translateNow('${f.id}')">${t(f.translated?"retranslate":"translate")}</button>`:""}<button class="btn danger" onclick="deleteFund('${f.id}')">${t("del")}</button></div>`:""}
+    <div class="d-save"><button class="btn ghost${MyFocus.has(f.id)?" on":""}" onclick="toggleSave('${f.id}')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M6.5 3.5h11v17L12 16.6 6.5 20.5z"/></svg> ${t(MyFocus.has(f.id)?"saveRemove":"saveAdd")}</button></div>
+    ${Auth.isAdmin()?`<div class="d-admin"><button class="btn ghost" onclick="openEdit('${f.id}')">${t("edit")}</button><button class="btn ghost" onclick="togglePick('${f.id}')">${t(FundStore.isFeatured(f.id)?"pickRemove":"pickAdd")}</button>${f.custom?`<button class="btn ghost" onclick="translateNow('${f.id}')">${t(f.translated?"retranslate":"translate")}</button>`:""}<button class="btn danger" onclick="deleteFund('${f.id}')">${t("del")}</button></div>`:""}
   </div>`;
   drawer.classList.add("on");scrim.classList.add("on");drawer.setAttribute("aria-hidden","false");drawer.scrollTop=keep;
 }

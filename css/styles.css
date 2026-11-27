@@ -473,3 +473,22 @@ html:not([lang="en"]) .tab-menu .sub{letter-spacing:2px}
 .has-tools .tags{max-width:calc(100% - 136px)}             /* four buttons now: star, grip, edit, delete */
 .has-tools .tags .tag{max-width:100%}
 .has-tools .tag{max-width:calc(100% - 136px)}
+
+/* ---- top picks (gold star, top-left of the card) and My Focus List (bookmark in the card foot) ---- */
+.pick{fill:var(--gold);flex:none}
+.pick-wrap{position:absolute;top:8px;left:28px;z-index:2;line-height:0}
+.tab-desc{display:flex;flex-wrap:wrap;gap:6px 22px;align-items:center}
+.pick-note{display:inline-flex;align-items:center;gap:7px;color:var(--navy);font-weight:500}
+.pick-note .pick{width:15px;height:15px}
+.card-foot{justify-content:space-between}
+.save{display:inline-flex;align-items:center;gap:7px;padding:0;background:none;border:none;font-family:var(--sans);font-size:12px;letter-spacing:1.2px;text-transform:uppercase;color:var(--muted);cursor:pointer;transition:color .2s}
+.save:hover,.save:focus-visible{color:var(--navy)}
+.save.on{color:var(--gold-ink,#a8823d)}
+.save.on svg{fill:currentColor}
+.d-save{margin-top:26px}
+.d-save .btn{display:inline-flex;align-items:center;gap:8px}
+.d-save .btn.on svg{fill:currentColor}
+.d-save+.d-admin{margin-top:14px}
+/* a larger click area for the Focus List button: the padding is cancelled by the margin, so nothing moves */
+.save{position:relative;padding:14px 18px 14px 14px;margin:-14px -18px -14px -14px;min-height:44px}
+.save::before{content:"";position:absolute;inset:-4px -10px -12px -24px}   /* reaches the card edge on the left and a little below */
