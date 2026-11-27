@@ -492,3 +492,18 @@ html:not([lang="en"]) .tab-menu .sub{letter-spacing:2px}
 /* a larger click area for the Focus List button: the padding is cancelled by the margin, so nothing moves */
 .save{position:relative;padding:14px 18px 14px 14px;margin:-14px -18px -14px -14px;min-height:44px}
 .save::before{content:"";position:absolute;inset:-4px -10px -12px -24px}   /* reaches the card edge on the left and a little below */
+
+/* ---- signing in and out: the login screen fades, and the page behind fades and rises back in ---- */
+.login{opacity:0;transition:opacity .3s ease}
+.login.in{opacity:1}
+.login-card{opacity:0;transform:translateY(16px);transition:opacity .35s ease,transform .45s cubic-bezier(.22,.8,.2,1)}
+.login.in .login-card{opacity:1;transform:none;transition-delay:.06s}
+body.auth-out #track,body.auth-out #tabs,body.auth-out #acctBtn,body.auth-out #addFundBtn{opacity:0;transition:opacity .2s ease}
+body.auth-out #track{transform:translateY(8px);transition:opacity .2s ease,transform .2s ease}
+body.auth-in #track>*{animation:cardin .55s cubic-bezier(.22,.8,.2,1) both}
+body.auth-in #track>:nth-child(2){animation-delay:60ms}
+body.auth-in #track>:nth-child(3){animation-delay:120ms}
+body.auth-in #track>:nth-child(n+4){animation-delay:170ms}
+body.auth-in #tabs,body.auth-in #acctBtn,body.auth-in #addFundBtn{animation:authfade .45s ease both}
+@keyframes authfade{from{opacity:0}to{opacity:1}}
+@media (prefers-reduced-motion:reduce){.login,.login-card{transition:none}body.auth-in #track>*,body.auth-in #tabs,body.auth-in #acctBtn,body.auth-in #addFundBtn{animation:none}}
