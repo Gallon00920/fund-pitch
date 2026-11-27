@@ -532,3 +532,61 @@ body.lang-anim .hero .wrap,body.lang-anim .funds .wrap,body.lang-anim footer .wr
 body.lang-out nav .links,body.lang-out nav .logo,body.lang-out #acctBtn,body.lang-out #addFundBtn,body.lang-out #langCur,
 body.lang-out .hero .wrap,body.lang-out .funds .wrap,body.lang-out footer .wrap,body.lang-out .drawer>*,body.lang-out .login-card>*,body.lang-out .modal-card>*{opacity:0;transition:opacity .18s ease}
 body.lang-out .hero .wrap,body.lang-out .funds .wrap{transform:translateY(6px);transition:opacity .18s ease,transform .18s ease}
+
+/* ================= cover entrance and scrolling ================= */
+html{scroll-behavior:smooth}
+/* --- the cover builds itself on load --- */
+nav{animation:navdrop .9s cubic-bezier(.22,.8,.2,1) both}
+@keyframes navdrop{from{opacity:0;transform:translateY(-14px)}to{opacity:1;transform:none}}
+.hero svg.lines path{stroke-dasharray:1;stroke-dashoffset:1;animation:linedraw 2.4s cubic-bezier(.45,.05,.2,1) .25s forwards}
+.hero svg.lines path:nth-child(2){animation-delay:.5s}
+.hero svg.lines path:nth-child(3){animation-delay:.75s}
+@keyframes linedraw{to{stroke-dashoffset:0}}
+.hero .eyebrow{animation:fadeup .8s cubic-bezier(.22,.8,.2,1) .35s both}
+.hero .eyebrow::before{transform-origin:left;animation:growx .9s cubic-bezier(.22,.8,.2,1) .35s both}
+@keyframes growx{from{transform:scaleX(0)}to{transform:none}}
+.hero h1{animation:wipeup 1.15s cubic-bezier(.19,.9,.22,1) .5s both}
+@keyframes wipeup{from{opacity:0;transform:translateY(34px);clip-path:inset(0 0 100% 0)}60%{opacity:1}to{opacity:1;transform:none;clip-path:inset(-10% -5% -15% -5%)}}
+.hero .wrap>p{animation:fadeup .95s cubic-bezier(.22,.8,.2,1) .85s both}
+@keyframes fadeup{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+.hero-stats{position:relative;border-top-color:transparent}
+.hero-stats::before{content:"";position:absolute;left:0;right:0;top:-1px;height:1px;background:rgba(255,255,255,.14);transform-origin:left;animation:growx 1.3s cubic-bezier(.45,.05,.2,1) 1s both}
+.hero-stats>div{animation:fadeup .9s cubic-bezier(.22,.8,.2,1) 1.15s both}
+.hero-stats>div:nth-child(2){animation-delay:1.27s}
+.hero-stats>div:nth-child(3){animation-delay:1.39s}
+.hero-stats b{font-variant-numeric:tabular-nums}
+/* --- a quiet cue to scroll: a line with a gold bead travelling down it --- */
+.scroll-cue{position:absolute;left:50%;bottom:22px;width:26px;height:46px;margin-left:-13px;display:grid;justify-items:center;opacity:calc(.9 - var(--p,0)*7)}   /* fades as soon as the page is scrolled; the entrance is on its parts so this stays in charge */
+.scroll-cue::before{content:"";width:1px;height:100%;background:linear-gradient(rgba(255,255,255,0),rgba(255,255,255,.35));animation:authfade 1s ease 2s both}
+.scroll-cue i{position:absolute;top:0;width:5px;height:5px;border-radius:50%;background:var(--gold);opacity:0;animation:cuedrop 2.2s cubic-bezier(.6,0,.3,1) 2.4s infinite}
+@keyframes cuedrop{0%{transform:translateY(0);opacity:0}20%{opacity:1}80%{opacity:1}100%{transform:translateY(42px);opacity:0}}
+/* --- scrolling away from the cover: the text sinks and fades, the curves rise and turn slightly --- */
+.hero .wrap{transform:translateY(calc(var(--p,0)*70px));opacity:calc(1 - var(--p,0)*1.35);will-change:transform,opacity}
+.hero svg.lines{transform-origin:100% 40%;transform:translateY(calc(var(--p,0)*-60px)) rotate(calc(var(--p,0)*-5deg)) scale(calc(1 + var(--p,0)*.06));will-change:transform}
+.hero::before{transform:translateY(calc(var(--p,0)*40px))}
+/* --- sections further down: the heading is wiped in, its line extends, the rest follows --- */
+.reveal{transition:opacity .9s ease,transform 1s cubic-bezier(.22,.8,.2,1)}
+.sec-head.reveal .eyebrow::before{transform:scaleX(0);transform-origin:left;transition:transform .9s cubic-bezier(.22,.8,.2,1) .15s}
+.sec-head.reveal.in .eyebrow::before{transform:none}
+.sec-head.reveal h2{clip-path:inset(0 0 100% 0);transform:translateY(22px);transition:clip-path 1s cubic-bezier(.19,.9,.22,1) .12s,transform 1s cubic-bezier(.19,.9,.22,1) .12s}
+.sec-head.reveal.in h2{clip-path:inset(-10% -5% -20% -5%);transform:none}
+.sec-head.reveal>p{opacity:0;transform:translateY(16px);transition:opacity .9s ease .3s,transform .9s cubic-bezier(.22,.8,.2,1) .3s}
+.sec-head.reveal.in>p{opacity:1;transform:none}
+.tabbar.reveal{transition-delay:.18s}
+/* --- the fund cards rise one after another the first time the row comes into view --- */
+#scroller:not(.seen) .track{opacity:0}
+.track.enter>*{animation:cardrise 1s cubic-bezier(.19,.9,.22,1) both}
+.track.enter>:nth-child(2){animation-delay:.12s}
+.track.enter>:nth-child(3){animation-delay:.24s}
+.track.enter>:nth-child(n+4){animation-delay:.34s}
+@keyframes cardrise{from{opacity:0;transform:translateY(46px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  nav,.hero .eyebrow,.hero .eyebrow::before,.hero h1,.hero .wrap>p,.hero-stats::before,.hero-stats>div,.scroll-cue::before,.scroll-cue i,.track.enter>*{animation:none}
+  .hero svg.lines path{animation:none;stroke-dashoffset:0}
+  .hero .wrap{transform:none;opacity:1}
+  .hero svg.lines,.hero::before{transform:none}
+  .sec-head.reveal h2{clip-path:none;transform:none}.sec-head.reveal>p{opacity:1;transform:none}.sec-head.reveal .eyebrow::before{transform:none}
+  #scroller:not(.seen) .track{opacity:1}
+}
+@media (max-width:680px){.scroll-cue{display:none}}

@@ -540,8 +540,51 @@ document.querySelector(".logo").addEventListener("click",e=>{e.preventDefault();
 
 /* nav + reveal */
 addEventListener("scroll",()=>document.getElementById("nav").classList.toggle("solid",scrollY>40));
-const io=new IntersectionObserver(es=>es.forEach(e=>e.isIntersecting&&e.target.classList.add("in")),{threshold:.15});
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target)}}),{threshold:.15});
 document.querySelectorAll(".reveal").forEach(el=>io.observe(el));
+
+/* ---------- cover and scrolling ----------
+   The cover builds itself on load (CSS): the curves draw in, the eyebrow line extends, the headline is wiped in from
+   below, then the text and the three figures follow, and the figures count up. While scrolling, the cover drifts
+   away at its own pace: its text sinks and fades, and the curves rise and turn a little. Further down, the fund
+   cards rise one after another the first time they come into view. All of it is skipped for reduced motion. */
+const heroEl=document.querySelector(".hero");
+function heroScroll(){
+  if(calmMotion.matches||scrollY>heroEl.offsetHeight+200&&heroEl.style.getPropertyValue("--p")==="1.0000") return;   // nothing to do once the cover is out of sight
+  heroEl.style.setProperty("--p",Math.min(1,scrollY/Math.max(1,heroEl.offsetHeight)).toFixed(4));   // 0 at the top, 1 once the cover has left
+}
+addEventListener("scroll",heroScroll,{passive:true});
+heroScroll();                                                 // a page reloaded part-way down starts in the right place
+
+/** The three cover figures count up from zero ("130+" keeps its "+"). */
+function countStats(){
+  if(calmMotion.matches) return;
+  const items=statEls.filter(b=>!b.isContentEditable).map(b=>{const m=b.textContent.trim().match(/^(\d[\d,]*)(.*)$/);return m?{b,n:+m[1].replace(/,/g,""),tail:m[2]}:null}).filter(Boolean);
+  if(!items.length) return;
+  const start=performance.now()+1150, length=1500;
+  let done=false;
+  const finish=()=>{if(done)return;done=true;renderStats()};   // puts back the exact text, including an admin's edit loaded meanwhile
+  items.forEach(x=>x.b.textContent="0"+x.tail);
+  (function step(now){
+    if(done) return;
+    const k=Math.min(1,Math.max(0,(now-start)/length)), eased=1-Math.pow(1-k,3);
+    items.forEach(x=>x.b.textContent=Math.round(x.n*eased)+x.tail);
+    if(k<1) requestAnimationFrame(step); else finish();
+  })(performance.now());
+  setTimeout(finish,5000);                                    // a tab opened in the background never runs the frames
+}
+addEventListener("load",()=>setTimeout(countStats,150));
+
+/* the fund cards rise in one after another the first time the row is scrolled into view */
+const rowSeen=new IntersectionObserver(es=>es.forEach(e=>{
+  if(!e.isIntersecting) return;
+  rowSeen.disconnect();
+  scroller.classList.add("seen");
+  if(calmMotion.matches) return;
+  track.classList.add("enter");
+  setTimeout(()=>track.classList.remove("enter"),1700);
+}),{threshold:.08});
+rowSeen.observe(scroller);
 
 applyLang();
 spy();
