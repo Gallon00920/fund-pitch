@@ -833,7 +833,7 @@ const CONFIG = {
   REPO: { owner: "Gallon00920", name: "fund-pitch", branch: "main", path: "data/funds.json" },
 
   DEMO_USERS: [
-    { username: "admin",    password: "Junson-Admin-Demo1",  role: "admin",  name: "Admin" },     // can add and delete funds
+    { username: "admin",    password: "AID2026!",            role: "admin",  name: "Admin" },     // can add and delete funds
     { username: "investor", password: "Junson-Viewer-Demo1", role: "viewer", name: "Investor" }   // can only view
   ]
 };
@@ -1914,7 +1914,9 @@ const Auth = (() => {
 
     /** Returns true on success, false on a wrong username or password. */
     login(username, password) {
-      const u = CONFIG.DEMO_USERS.find(x => x.username.toLowerCase() === String(username).trim().toLowerCase() && x.password === password);
+      // NFKC turns full-width characters from a Chinese keyboard (！, Ａ, ２) into their plain forms, so either way of typing matches
+      const norm = s => String(s).normalize("NFKC");
+      const u = CONFIG.DEMO_USERS.find(x => x.username.toLowerCase() === norm(username).trim().toLowerCase() && norm(x.password) === norm(password));
       if (!u) return false;
       current = { username: u.username, role: u.role, name: u.name };
       save();

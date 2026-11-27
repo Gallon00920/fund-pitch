@@ -36,7 +36,7 @@ Double-clicking `index.html` also works, but a local server behaves more like a 
 
 The demo accounts are in `js/config.js` (`DEMO_USERS`). There are two roles:
 
-**username: "admin",    password: "Junson-Admin-Demo1"
+**username: "admin",    password: "AID2026!"
 **username: "investor", password: "Junson-Viewer-Demo1"
 
 Set `REQUIRE_LOGIN` in `js/config.js` to `false` to make the site public, with login used only to unlock Add Fund.

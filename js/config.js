@@ -11,7 +11,7 @@ const CONFIG = {
   REPO: { owner: "Gallon00920", name: "fund-pitch", branch: "main", path: "data/funds.json" },
 
   DEMO_USERS: [
-    { username: "admin",    password: "Junson-Admin-Demo1",  role: "admin",  name: "Admin" },     // can add and delete funds
+    { username: "admin",    password: "AID2026!",            role: "admin",  name: "Admin" },     // can add and delete funds
     { username: "investor", password: "Junson-Viewer-Demo1", role: "viewer", name: "Investor" }   // can only view
   ]
 };
