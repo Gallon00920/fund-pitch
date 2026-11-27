@@ -531,6 +531,7 @@ function openD(f){
     ${ddBlock}
     ${liqBlock}
     ${sib?perfBlock+monthlyBlock+vintBlock:vintBlock+perfBlock+monthlyBlock}${notesBlock}
+    ${Auth.isAdmin()&&f.adminNote?`<div class="d-anote"><h4>${t("adminNoteHead")} <small>${t("adminNoteTag")}</small></h4><p>${f.adminNote}</p></div>`:""}
     <p class="note">${f.note&&!anon()?L(f.note)+" ":""}${t("past")}</p>
     <div class="d-save"><button class="btn ghost${MyFocus.has(f.id)?" on":""}" onclick="toggleSave('${f.id}')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M6.5 3.5h11v17L12 16.6 6.5 20.5z"/></svg> ${t(MyFocus.has(f.id)?"saveRemove":"saveAdd")}</button></div>
     ${Auth.isAdmin()?`<div class="d-admin"><button class="btn ghost" onclick="openEdit('${f.id}')">${t("edit")}</button><button class="btn ghost" onclick="togglePick('${f.id}')">${t(FundStore.isFeatured(f.id)?"pickRemove":"pickAdd")}</button>${f.custom?`<button class="btn ghost" onclick="translateNow('${f.id}')">${t(f.translated?"retranslate":"translate")}</button>`:""}<button class="btn danger" onclick="deleteFund('${f.id}')">${t("del")}</button></div>`:""}

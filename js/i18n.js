@@ -508,6 +508,13 @@ Object.assign(UI.tc,{vintTitle:"各期基金淨 IRR",vintTable:"前序基金",vi
   efVint:"前序基金 (新發基金適用；每行一隻，選填)",
   efVintHelp:"基金, 年份: 淨 IRR / 倍數 / DPI，尚未結束的加 \"investing\"。例如：  Kreos IV, 2012: 11.1 / 1.32x / DPI 1.23x    Kreos VII, 2022: 17.0 / 1.31x investing",
   efErrVint:n=>`請檢查前序基金第 ${n} 行：格式如  Kreos IV, 2012: 11.1 / 1.32x  (倍數、DPI 及 investing 可省略)。`});
+/* admin notes: written in Edit Fund, shown in View Fund to admins only */
+Object.assign(UI.en,{adminNoteHead:"Admin Notes",adminNoteTag:"Only admins see this",efAdminNote:"Admin notes (only admins see these, optional)",
+  efAdminNoteHelp:"Your team's own notes on this fund: views, follow-ups, meeting points. Investors never see them on the site."});
+Object.assign(UI.sc,{adminNoteHead:"管理员备注",adminNoteTag:"仅管理员可见",efAdminNote:"管理员备注 (仅管理员可见，选填)",
+  efAdminNoteHelp:"团队内部对本基金的备注：观点、待跟进事项、会议要点等。投资者在网站上看不到。"});
+Object.assign(UI.tc,{adminNoteHead:"管理員備註",adminNoteTag:"僅管理員可見",efAdminNote:"管理員備註 (僅管理員可見，選填)",
+  efAdminNoteHelp:"團隊內部對本基金的備註：觀點、待跟進事項、會議要點等。投資者在網站上看不到。"});
 /* a fund with its own record can still list the strategy's other funds by vintage (View Fund) */
 Object.assign(UI.en,{vintHeadSib:"Other Funds in the Strategy",vintCapSib:"Net IRR of the manager's other funds running the same strategy, by the year each started. They are separate funds, shown for context alongside this fund's own returns. Pale bars are funds still investing, so their figures are not final."});
 Object.assign(UI.sc,{vintHeadSib:"同策略其他基金",vintCapSib:"管理人运行同一策略的其他基金的净 IRR，按各基金成立年份排列。它们是独立的基金，与本基金自身业绩一并列示供参考。浅色柱为仍在投资期的基金，数据尚非最终结果。"});

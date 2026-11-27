@@ -70,6 +70,7 @@ function openEdit(id) {
   ef("efVint").value = (f.vintages || []).map(vintLine).join("\n");
   ef("efDd").value = ddShown;
   ef("efNote").value = f.note ? plain(L(f.note)) : "";
+  ef("efAdminNote").value = plain(f.adminNote);
   ef("efHide").defaultValue = ef("efHide").value = (f.redact || []).map(w => plain(w.replace(/\\(.)/g, "$1"))).join(", ");
   // The monthly table is edited as text, one year per line. A picture fills the box; any figure can then be corrected.
   ef("efMonthly").value = "";
@@ -182,6 +183,9 @@ editForm.addEventListener("submit", e => {
     else { delete f.ddRaw; delete f.dd; }
   }
   optional("note", escLines(lines(ef("efNote").value)), true);
+  // admin notes: one text in every language, kept as typed (blank lines become line breaks too)
+  const adminNote = ef("efAdminNote").value.replace(/\s+$/, "").split(/\n/).map(s => esc(s.trimEnd())).join("<br>").replace(/^(<br>)+/, "");
+  if (adminNote) f.adminNote = adminNote; else delete f.adminNote;
   if (val("efHide") !== ef("efHide").defaultValue.trim()) f.redactAuto = false;   // the admin changed the list: keep it on later re-translations
   f.redact = [...new Set(val("efHide").split(/[,，、;；]/).map(w => esc(w)).filter(w => w.length > 1))]
     .sort((x, y) => y.length - x.length)

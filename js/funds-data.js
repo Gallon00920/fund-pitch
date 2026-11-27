@@ -27,7 +27,7 @@ const FUNDS = {
      note:{en:"AUM of €5,281M converted at EUR/USD ≈ 1.16.",sc:"规模 €5,281M，按 EUR/USD≈1.16 折算。",tc:"規模 €5,281M，按 EUR/USD≈1.16 折算。"}}
   ],
   illiquid:[
-    {name:"PARS IV", home:"monthly",   // shown under Liquid > Monthly (js/fund-store.js); its id stays b-illiquid-0
+    {name:"PIMCO Absolute Return Strategy IV", home:"monthly",   // shown under Liquid > Monthly (js/fund-store.js); its id stays b-illiquid-0
       mgr:{en:"Global Macro",sc:"全球宏观",tc:"全球宏觀"}, vehicle:"private", inception:"2004-09", aum:4.932,
      tag:{en:"Global Macro · Absolute Return",sc:"全球宏观 · 绝对收益",tc:"全球宏觀 · 絕對收益"},
      strategy:{en:"Multi-asset macro positions; underlying exposures are not credit-based.",
@@ -44,7 +44,7 @@ const FUNDS = {
      note:{en:"PARS strategy total $6.5bn. Class N model, net of fees, as of 31 Aug 2026.",
            sc:"PARS 策略合计 $6.5bn。Class N 模型费后回报，截至2026年8月31日。",
            tc:"PARS 策略合計 $6.5bn。Class N 模型費後回報，截至2026年8月31日。"}},
-    {name:"LibreMax", mgr:{en:"Securitized Products",sc:"证券化产品",tc:"證券化產品"}, vehicle:"private", inception:"2010-10", aum:1.117,
+    {name:"LibreMax Master Fund", mgr:{en:"Securitized Products",sc:"证券化产品",tc:"證券化產品"}, vehicle:"private", inception:"2010-10", aum:1.117,
      tag:{en:"Securitized Products · Long/Short",sc:"证券化产品 · 多空",tc:"證券化產品 · 多空"},
      strategy:{en:"Opportunistic structured credit long/short across housing, CRE, ABS, CLO and special situations; hedged with rates, equity index options, HY CDX and CMBX.",
                sc:"机会型结构化信用多空，覆盖住房、商业地产、ABS、CLO 及特殊情况；以利率、股指期权、HY CDX、CMBX 对冲。",
@@ -92,7 +92,7 @@ const FUNDS = {
                     ["Series F","1.50%","17.5%","1年硬鎖定","25%","$50M"],
                     ["Class B","2.00%","20%","1年軟鎖定，2% 罰金","無","$5M"]]}},
      note:{en:"Size shown is NAV. Net returns as of 31 Mar 2026.",sc:"规模为 NAV。净回报，截至2026年3月31日。",tc:"規模為 NAV。淨回報，截至2026年3月31日。"}},
-    {name:"SCMF", mgr:{en:"Multi-Strategy",sc:"多策略",tc:"多策略"}, vehicle:"private", inception:"1998-01", aum:8.9,
+    {name:"Sculptor Multi-Strategy Fund", mgr:{en:"Multi-Strategy",sc:"多策略",tc:"多策略"}, vehicle:"private", inception:"1998-01", aum:8.9,
      tag:{en:"Multi-Strategy Hedge Fund",sc:"多策略对冲基金",tc:"多策略對沖基金"},
      strategy:{en:"Multi-asset, with credit as only one component. Beta to global equities of 0.27.",
                sc:"多资产策略，信用仅为其中一部分；对全球股票 beta 为 0.27。",
@@ -211,7 +211,7 @@ const EXTRA={
         ["IU","0.60%","—","0.22%","1,000,000"],
         ["IV","0.88%","—","1.10%","1,000,000"]]}},
     classesKeepText:true},
-  "PARS IV":{
+  "PIMCO Absolute Return Strategy IV":{
     monthly:[
       {"y":"2004","m":[null,null,null,null,null,null,null,null,null,1.35,2.28,0.64],"t":4.32},
       {"y":"2005","m":[0.39,0.93,1.88,0.62,0.32,0.14,1.21,0.56,-0.15,-0.27,0.15,0.55],"t":6.5},
@@ -236,7 +236,7 @@ const EXTRA={
       {"y":"2024","m":[3.43,2.12,0.26,2.94,-0.79,-1.18,0.83,-2.27,-0.53,3.98,-0.28,3.52],"t":12.44},
       {"y":"2025","m":[2.03,-1.01,1.63,0.77,3.59,-0.2,1.5,1.11,-0.77,-0.32,-0.06,1.55],"t":10.17},
       {"y":"2026","m":[0.53,-0.88,4.77,-1.08,0.69,-0.92,6.49,-0.26,null,null,null,null],"t":9.43}]},
-  "LibreMax":{
+  "LibreMax Master Fund":{
     monthly:[
       {"y":"2010","m":[null,null,null,null,null,null,null,null,null,1.66,1.74,0.71],"t":4.16},
       {"y":"2011","m":[2.29,1.58,0.61,0.15,1.14,-2.66,0.74,1.21,0.53,-3.46,0.61,-0.59],"t":2.01},
@@ -275,7 +275,7 @@ const EXTRA={
       {"y":"2024","m":[1.36,1.06,1.06,0.55,1.17,0.8,0.9,0.82,0.9,0.39,1.19,0.75],"t":11.45},
       {"y":"2025","m":[1.22,0.84,0.35,-0.46,1.45,0.94,0.97,1.13,0.78,0.72,0.7,0.37],"t":9.44},
       {"y":"2026","m":[0.78,0.64,-0.07,0.61,0.88,0.54,0.5,0.51,-0.28,null,null,null],"t":4.18}]},
-  "SCMF":{
+  "Sculptor Multi-Strategy Fund":{
     monthly:[
       {"y":"1994","m":[null,null,null,3.6,3.09,-0.12,1.75,5.37,0.46,4.71,1.01,5.54],"t":28.23},
       {"y":"1995","m":[0.87,3.48,2.11,0.3,1.29,2.02,2.25,2.2,1.62,0.24,2.36,2.31],"t":23.14},
