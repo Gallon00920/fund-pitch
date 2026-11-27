@@ -279,6 +279,23 @@ html:not([lang="en"]) .wordmark{font-size:19px;letter-spacing:5px}
 .trk li{padding:7px 0;border-bottom:1px solid var(--line)}
 .trk li:first-child{border-top:1px solid var(--navy)}
 .kpis b.txt{font-size:15px;white-space:normal;line-height:1.3}
+/* The three figures under a card's title never push past the card: the columns share the card's width, and the
+   figures, labels and gaps shrink a little on narrow cards. --cw is 1% of a card's width, worked out from the screen
+   width for each layout (3, 2 or 1 card across). It is not a CSS container query: that would cut the card off from
+   the shared rows that keep every card's sections level. Long text, such as a target return, wraps onto a second
+   line inside its own column. */
+.kpis{--cw:min(calc(.3333vw - .42px),3.76px)}
+@media (max-width:1000px){.kpis{--cw:calc(.5vw - .51px)}}
+@media (max-width:680px){.kpis{--cw:calc(.88vw - .34px)}}
+.card,.card-top{grid-template-columns:minmax(0,1fr)}          /* the card's column is the card's width, never its widest line */
+.card h3{overflow-wrap:break-word}
+.card-body{grid-template-columns:minmax(0,1fr)}
+.card-body p,.card-body li{overflow-wrap:anywhere}            /* e.g. "transportation/aviation/equipment" has no space to break at */
+.kpis{grid-template-columns:minmax(0,1.3fr) minmax(0,1fr) minmax(0,1fr)}
+.kpis div{padding:18px clamp(8px,calc(4*var(--cw)),16px) 16px clamp(14px,calc(8*var(--cw)),30px)}
+.kpis div+div{padding-left:clamp(10px,calc(4.5*var(--cw)),16px)}
+.kpis b{font-size:clamp(15px,calc(5.6*var(--cw)),20px)}
+.kpis b.txt{font-size:clamp(13px,calc(4.6*var(--cw)),15px);overflow-wrap:break-word}
 @media (max-width:680px){.im-body{padding:22px 20px 4px}.im-fields{grid-template-columns:1fr}}
 .im-fields label.wide{grid-column:1/-1}
 
@@ -593,3 +610,22 @@ nav{animation:navdrop .9s cubic-bezier(.22,.8,.2,1) both}
   #scroller:not(.seen) .track{opacity:1}
 }
 @media (max-width:680px){.scroll-cue{display:none}}
+
+/* ---- new funds: the earlier funds' net IRR by vintage ---- */
+.bars.up::before{top:auto;bottom:0;border-top-style:solid}      /* every fund above zero: bars stand on the axis */
+.bars.up .bar i.p{bottom:0}
+.bars.vint .bar i b{font-style:normal;position:absolute;left:50%;transform:translateX(-50%);bottom:calc(100% + 3px);font-size:9.5px;font-weight:600;color:var(--navy);white-space:nowrap;letter-spacing:-.2px}
+.bars.vint .bar i.n b{bottom:auto;top:calc(100% + 3px);color:var(--neg)}
+.bars.vint .bar.live i.p{background:#a9b3c9}                    /* still investing: the figure is not final */
+.bars.vint .bar.live i b{color:var(--muted)}
+.mini-label .vint-key{display:inline-flex;align-items:center;gap:5px;color:var(--muted)!important;font-weight:400!important}
+.mini-label .vint-key::before{content:"";width:8px;height:8px;background:#a9b3c9}
+.bars.big{height:140px;margin:18px 0 34px}
+.bars.big .bar i b{font-size:11px}
+.bars.big .bar em{font-size:10.5px}
+.vint-tbl small{font-size:10px;letter-spacing:.8px;text-transform:uppercase;color:var(--muted);margin-left:4px}
+.vint-tbl tr.live td{color:var(--muted)}
+.vint-tbl td:not(:first-child),.vint-tbl th:not(:first-child){text-align:right;font-variant-numeric:tabular-nums}
+.vint-tbl th+th,.vint-tbl td+td{padding-left:12px}
+.bars.vint{justify-content:space-around}
+.bars.vint .bar{flex:0 1 44px}                                   /* two or three earlier funds: slim bars, not wide blocks */

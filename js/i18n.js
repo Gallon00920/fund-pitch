@@ -489,3 +489,26 @@ Object.assign(UI.sc,{focusTab:"我的关注",descFocus:"您已收藏的基金。
 Object.assign(UI.tc,{focusTab:"我的關注",descFocus:"您已收藏的基金。此列表僅保存在本瀏覽器中。",
   save:"加入關注",saved:"已關注",saveAdd:"加入我的關注",saveRemove:"移出我的關注",
   pickAdd:"標記為推薦",pickRemove:"取消推薦",pickLabel:"推薦",pickNote:"推薦：我們團隊最看好的基金。"});
+/* new funds: earlier funds' net IRR by vintage (card chart, View Fund chart and table, Edit Fund box) */
+Object.assign(UI.en,{vintTitle:"Net IRR by vintage",vintTable:"Earlier funds",vintKey:"Pale: investing",vintFund:"Fund",vintRetHead:"Net IRR / multiple",
+  vintHead:"Earlier Funds by Vintage",vintCap:"Net IRR of the manager's earlier funds in this series, by the year each started. This fund is new and has no returns of its own yet. Pale bars are funds still investing, so their figures are not final.",
+  vintYear:"Vintage",vintIrr:"Net IRR",vintX:"Net multiple",vintLiveTag:"investing",
+  efVint:"Earlier funds by vintage (new funds; one per line, optional)",
+  efVintHelp:"Fund, vintage: net IRR / multiple / DPI, then \"investing\" if not final.  For example:  Kreos IV, 2012: 11.1 / 1.32x / DPI 1.23x    Kreos VII, 2022: 17.0 / 1.31x investing",
+  efErrVint:n=>`Check line ${n} of the earlier funds: write it like  Kreos IV, 2012: 11.1 / 1.32x  (the multiple, DPI and "investing" are optional).`});
+Object.assign(UI.sc,{vintTitle:"各期基金净 IRR",vintTable:"前序基金",vintKey:"浅色：投资中",vintFund:"基金",vintRetHead:"净 IRR / 倍数",
+  vintHead:"前序基金 (按成立年份)",vintCap:"管理人同系列前序基金的净 IRR，按各基金成立年份排列。本基金为新发基金，尚无自身业绩。浅色柱为仍在投资期的基金，数据尚非最终结果。",
+  vintYear:"成立年份",vintIrr:"净 IRR",vintX:"净倍数",vintLiveTag:"投资中",
+  efVint:"前序基金 (新发基金适用；每行一只，选填)",
+  efVintHelp:"基金, 年份: 净 IRR / 倍数 / DPI，尚未结束的加 \"investing\"。例如：  Kreos IV, 2012: 11.1 / 1.32x / DPI 1.23x    Kreos VII, 2022: 17.0 / 1.31x investing",
+  efErrVint:n=>`请检查前序基金第 ${n} 行：格式如  Kreos IV, 2012: 11.1 / 1.32x  (倍数、DPI 及 investing 可省略)。`});
+Object.assign(UI.tc,{vintTitle:"各期基金淨 IRR",vintTable:"前序基金",vintKey:"淺色：投資中",vintFund:"基金",vintRetHead:"淨 IRR / 倍數",
+  vintHead:"前序基金 (按成立年份)",vintCap:"管理人同系列前序基金的淨 IRR，按各基金成立年份排列。本基金為新發基金，尚無自身績效。淺色柱為仍在投資期的基金，數據尚非最終結果。",
+  vintYear:"成立年份",vintIrr:"淨 IRR",vintX:"淨倍數",vintLiveTag:"投資中",
+  efVint:"前序基金 (新發基金適用；每行一隻，選填)",
+  efVintHelp:"基金, 年份: 淨 IRR / 倍數 / DPI，尚未結束的加 \"investing\"。例如：  Kreos IV, 2012: 11.1 / 1.32x / DPI 1.23x    Kreos VII, 2022: 17.0 / 1.31x investing",
+  efErrVint:n=>`請檢查前序基金第 ${n} 行：格式如  Kreos IV, 2012: 11.1 / 1.32x  (倍數、DPI 及 investing 可省略)。`});
+/* a fund with its own record can still list the strategy's other funds by vintage (View Fund) */
+Object.assign(UI.en,{vintHeadSib:"Other Funds in the Strategy",vintCapSib:"Net IRR of the manager's other funds running the same strategy, by the year each started. They are separate funds, shown for context alongside this fund's own returns. Pale bars are funds still investing, so their figures are not final."});
+Object.assign(UI.sc,{vintHeadSib:"同策略其他基金",vintCapSib:"管理人运行同一策略的其他基金的净 IRR，按各基金成立年份排列。它们是独立的基金，与本基金自身业绩一并列示供参考。浅色柱为仍在投资期的基金，数据尚非最终结果。"});
+Object.assign(UI.tc,{vintHeadSib:"同策略其他基金",vintCapSib:"管理人運行同一策略的其他基金的淨 IRR，按各基金成立年份排列。它們是獨立的基金，與本基金自身績效一併列示供參考。淺色柱為仍在投資期的基金，數據尚非最終結果。"});

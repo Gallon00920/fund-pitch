@@ -45,6 +45,22 @@ const title=f=>anon()?L(f.tag):f.name;
 /* Deck-imported text can mention the fund or manager by name. For investors, mask the words the admin typed as the
    fund name and manager. This is best-effort: other names in the deck text (sister funds, vintages) are not caught. */
 const R=(f,s)=>anon()&&f.redact&&f.redact.length&&s?s.replace(new RegExp(f.redact.join("|"),"gi"),"●●●"):s;
+/* A new fund has no returns of its own yet. When `vintages` lists the manager's earlier funds in the series
+   ({n: "Kreos IV", y: "2012", irr: 11.1, x: 1.32, dpi: 1.23, live: true}), the card and View Fund chart their net IRRs
+   by vintage year. `live` marks a fund still investing: its bar is pale because the figure is not final. */
+const vintOf=f=>Array.isArray(f.vintages)&&f.vintages.length>1?f.vintages:null;          // a chart needs at least two funds
+const pct1=v=>(v<0?"−":"")+Math.abs(v).toFixed(1)+"%";
+const xs=n=>`${+n}x`;                                                                    // a multiple as the deck gives it: 1.3x, 1.32x
+const vintRet=v=>pct1(v.irr)+(v.x!=null?` / ${xs(v.x)}`:"");
+function vintBars(f,V,big){
+  const neg=V.some(v=>v.irr<0), max=Math.max(...V.map(v=>Math.abs(v.irr)))||1, room=neg?40:76;   // room left for the figure above each bar
+  return `<div class="bars vint${neg?"":" up"}${big?" big":""}">${V.map(v=>{const h=`${Math.abs(v.irr)/max*room}%`;
+    return `<div class="bar${v.live?" live":""}" data-v="${esc(R(f,v.n))} (${v.y}): ${vintRet(v)}"><i class="${v.irr>=0?"p":"n"}" style="height:${big?h:0}" data-h="${h}"><b>${pct1(v.irr)}</b></i><em>'${String(v.y).slice(2)}</em></div>`}).join("")}</div>`;
+}
+const vintCard=(f,V)=>`<div class="mini-label"><span>${t("vintTitle")}</span><span>${V[0].y}–${V.at(-1).y}</span></div>
+      ${vintBars(f,V)}
+      <div class="mini-label"><span>${t("vintTable")}</span>${V.some(v=>v.live)?`<span class="vint-key">${t("vintKey")}</span>`:""}</div>
+      <table class="recent"><tr><th>${t("vintFund")}</th><th>${t("vintRetHead")}</th></tr>${[...V].reverse().slice(0,5).map(v=>`<tr><td>${esc(R(f,v.n))} (${v.y})</td><td class="${v.irr>=0?"pos":"neg"}">${vintRet(v)}</td></tr>`).join("")}</table>`;
 const trackHTML=f=>`<div class="trk"><div class="mini-label"><span>${t("trackRecord")}</span></div><ul>${notesOf(f).slice(0,6).map(x=>`<li>${R(f,x)}</li>`).join("")||"<li>—</li>"}</ul></div>`;
 
 function ddText(f){                                     // max drawdown as a plain sentence, same style as other drawer text
@@ -115,7 +131,7 @@ function cardHTML(f,i){
     <div class="kpis">
       <div>${f.aum!=null?`<b>${money(f.aum)}</b>`:`<b class="txt">${LX(f.aumText)||"—"}</b>`}<span>${t("aum")}</span></div>
       <div><b>${incYear(f)||(f.isNew?t("newFund"):"—")}</b><span>${t("inception")}</span></div>
-      <div><b>${a!==null?fmt(a):LX(f.target)||"—"}</b><span>${a===null&&LX(f.target)?t("target"):t("ann")}</span></div>
+      <div>${a!==null?`<b>${fmt(a)}</b>`:LX(f.target)?`<b class="txt">${LX(f.target)}</b>`:"<b>—</b>"}<span>${a===null&&LX(f.target)?t("target"):t("ann")}</span></div>
     </div>
     <div class="liq-row${/^(daily|每日)$/i.test(liqTxt(f))?"":" semi"}">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 11a8 8 0 0 0-14.6-3.5M4 4v4h4M4 13a8 8 0 0 0 14.6 3.5M20 20v-4h-4"/></svg>
@@ -126,7 +142,7 @@ function cardHTML(f,i){
       ${has?`<div class="mini-label"><span>${t("annual")}</span><span>${fmt(last[1])} ${perLabel(last)}</span></div>
       <div class="bars">${bars}</div>
       <div class="mini-label"><span>${t("recent5")}</span></div>
-      <table class="recent"><tr><th>${t("period")}</th><th>${t("ret")}</th></tr>${P.slice(-5).reverse().map(p=>`<tr><td>${perLabel(p)}</td><td class="${p[1]>=0?"pos":"neg"}">${fmt(p[1])}</td></tr>`).join("")}</table>`:trackHTML(f)}
+      <table class="recent"><tr><th>${t("period")}</th><th>${t("ret")}</th></tr>${P.slice(-5).reverse().map(p=>`<tr><td>${perLabel(p)}</td><td class="${p[1]>=0?"pos":"neg"}">${fmt(p[1])}</td></tr>`).join("")}</table>`:vintOf(f)?vintCard(f,vintOf(f)):trackHTML(f)}
       <div class="card-foot">
         <button class="save${MyFocus.has(f.id)?" on":""}" data-save="${f.id}" aria-pressed="${MyFocus.has(f.id)}" title="${t(MyFocus.has(f.id)?"saveRemove":"saveAdd")}"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M6.5 3.5h11v17L12 16.6 6.5 20.5z"/></svg><span>${t(MyFocus.has(f.id)?"saved":"save")}</span></button>
         <button class="more" data-n="${i}">${t("view")} <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 7h10M8 3l4 4-4 4"/></svg></button></div>
@@ -491,6 +507,10 @@ function openD(f){
   // perfCaption explains rows that are not this fund's own record (a predecessor or composite series)
   const perfBlock=rows.length?`<h4>${t("perfTitle")}</h4>${LX(f.perfCaption)?`<p class="perf-cap">${R(f,LX(f.perfCaption))}</p>`:""}
     <table class="perf"><tr><th>${t("period")}</th><th>${t("ret")}</th></tr>${rows.map(p=>`<tr><td>${perLabel(p)}</td><td class="${p[1]>=0?"pos":"neg"}">${fmt(p[1])}</td></tr>`).join("")}</table>`:"";
+  const V=vintOf(f), hasX=V&&V.some(v=>v.x!=null), hasD=V&&V.some(v=>v.dpi!=null);
+  const sib=!f.isNew&&rows.length>0;                          // an established fund with its own record: these are sister funds in the strategy, not predecessors
+  const vintBlock=V?`<h4>${t(sib?"vintHeadSib":"vintHead")}</h4><p class="perf-cap">${t(sib?"vintCapSib":"vintCap")}</p>${vintBars(f,V,true)}
+    <table class="perf vint-tbl"><tr><th>${t("vintFund")}</th><th>${t("vintYear")}</th><th>${t("vintIrr")}</th>${hasX?`<th>${t("vintX")}</th>`:""}${hasD?"<th>DPI</th>":""}</tr>${V.map(v=>`<tr${v.live?' class="live"':""}><td>${esc(R(f,v.n))}${v.live?` <small>${t("vintLiveTag")}</small>`:""}</td><td>${v.y}</td><td class="${v.irr>=0?"pos":"neg"}">${pct1(v.irr)}</td>${hasX?`<td>${v.x!=null?xs(v.x):"—"}</td>`:""}${hasD?`<td>${v.dpi!=null?xs(v.dpi):"—"}</td>`:""}</tr>`).join("")}</table>`:"";
   const mo=f.monthly&&f.monthly.length?f.monthly:null;
   const monthlyBlock=mo?`<button class="mo-thumb" type="button" onclick="openMonthly('${f.id}')">${monthlyThumb(mo)}<span><b>${t("monthlyTitle")}</b><small>${mo[0].y}${mo.length>1?" – "+mo.at(-1).y:""} · ${t("monthlyOpen")}</small></span>
       <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 7h10M8 3l4 4-4 4"/></svg></button>`:"";
@@ -510,7 +530,7 @@ function openD(f){
     </div>
     ${ddBlock}
     ${liqBlock}
-    ${perfBlock}${monthlyBlock}${notesBlock}
+    ${sib?perfBlock+monthlyBlock+vintBlock:vintBlock+perfBlock+monthlyBlock}${notesBlock}
     <p class="note">${f.note&&!anon()?L(f.note)+" ":""}${t("past")}</p>
     <div class="d-save"><button class="btn ghost${MyFocus.has(f.id)?" on":""}" onclick="toggleSave('${f.id}')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M6.5 3.5h11v17L12 16.6 6.5 20.5z"/></svg> ${t(MyFocus.has(f.id)?"saveRemove":"saveAdd")}</button></div>
     ${Auth.isAdmin()?`<div class="d-admin"><button class="btn ghost" onclick="openEdit('${f.id}')">${t("edit")}</button><button class="btn ghost" onclick="togglePick('${f.id}')">${t(FundStore.isFeatured(f.id)?"pickRemove":"pickAdd")}</button>${f.custom?`<button class="btn ghost" onclick="translateNow('${f.id}')">${t(f.translated?"retranslate":"translate")}</button>`:""}<button class="btn danger" onclick="deleteFund('${f.id}')">${t("del")}</button></div>`:""}

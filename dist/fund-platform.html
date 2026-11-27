@@ -288,6 +288,23 @@ html:not([lang="en"]) .wordmark{font-size:19px;letter-spacing:5px}
 .trk li{padding:7px 0;border-bottom:1px solid var(--line)}
 .trk li:first-child{border-top:1px solid var(--navy)}
 .kpis b.txt{font-size:15px;white-space:normal;line-height:1.3}
+/* The three figures under a card's title never push past the card: the columns share the card's width, and the
+   figures, labels and gaps shrink a little on narrow cards. --cw is 1% of a card's width, worked out from the screen
+   width for each layout (3, 2 or 1 card across). It is not a CSS container query: that would cut the card off from
+   the shared rows that keep every card's sections level. Long text, such as a target return, wraps onto a second
+   line inside its own column. */
+.kpis{--cw:min(calc(.3333vw - .42px),3.76px)}
+@media (max-width:1000px){.kpis{--cw:calc(.5vw - .51px)}}
+@media (max-width:680px){.kpis{--cw:calc(.88vw - .34px)}}
+.card,.card-top{grid-template-columns:minmax(0,1fr)}          /* the card's column is the card's width, never its widest line */
+.card h3{overflow-wrap:break-word}
+.card-body{grid-template-columns:minmax(0,1fr)}
+.card-body p,.card-body li{overflow-wrap:anywhere}            /* e.g. "transportation/aviation/equipment" has no space to break at */
+.kpis{grid-template-columns:minmax(0,1.3fr) minmax(0,1fr) minmax(0,1fr)}
+.kpis div{padding:18px clamp(8px,calc(4*var(--cw)),16px) 16px clamp(14px,calc(8*var(--cw)),30px)}
+.kpis div+div{padding-left:clamp(10px,calc(4.5*var(--cw)),16px)}
+.kpis b{font-size:clamp(15px,calc(5.6*var(--cw)),20px)}
+.kpis b.txt{font-size:clamp(13px,calc(4.6*var(--cw)),15px);overflow-wrap:break-word}
 @media (max-width:680px){.im-body{padding:22px 20px 4px}.im-fields{grid-template-columns:1fr}}
 .im-fields label.wide{grid-column:1/-1}
 
@@ -602,6 +619,25 @@ nav{animation:navdrop .9s cubic-bezier(.22,.8,.2,1) both}
   #scroller:not(.seen) .track{opacity:1}
 }
 @media (max-width:680px){.scroll-cue{display:none}}
+
+/* ---- new funds: the earlier funds' net IRR by vintage ---- */
+.bars.up::before{top:auto;bottom:0;border-top-style:solid}      /* every fund above zero: bars stand on the axis */
+.bars.up .bar i.p{bottom:0}
+.bars.vint .bar i b{font-style:normal;position:absolute;left:50%;transform:translateX(-50%);bottom:calc(100% + 3px);font-size:9.5px;font-weight:600;color:var(--navy);white-space:nowrap;letter-spacing:-.2px}
+.bars.vint .bar i.n b{bottom:auto;top:calc(100% + 3px);color:var(--neg)}
+.bars.vint .bar.live i.p{background:#a9b3c9}                    /* still investing: the figure is not final */
+.bars.vint .bar.live i b{color:var(--muted)}
+.mini-label .vint-key{display:inline-flex;align-items:center;gap:5px;color:var(--muted)!important;font-weight:400!important}
+.mini-label .vint-key::before{content:"";width:8px;height:8px;background:#a9b3c9}
+.bars.big{height:140px;margin:18px 0 34px}
+.bars.big .bar i b{font-size:11px}
+.bars.big .bar em{font-size:10.5px}
+.vint-tbl small{font-size:10px;letter-spacing:.8px;text-transform:uppercase;color:var(--muted);margin-left:4px}
+.vint-tbl tr.live td{color:var(--muted)}
+.vint-tbl td:not(:first-child),.vint-tbl th:not(:first-child){text-align:right;font-variant-numeric:tabular-nums}
+.vint-tbl th+th,.vint-tbl td+td{padding-left:12px}
+.bars.vint{justify-content:space-around}
+.bars.vint .bar{flex:0 1 44px}                                   /* two or three earlier funds: slim bars, not wide blocks */
 </style>
 </head>
 <body>
@@ -747,6 +783,7 @@ nav{animation:navdrop .9s cubic-bezier(.22,.8,.2,1) both}
       <label><span data-i="efTarget"></span><input id="efTarget" maxlength="40"></label>
       <label><span data-i="imHide"></span><input id="efHide" maxlength="300"></label>
       <label class="wide"><span data-i="efNotes"></span><textarea id="efNotes" rows="4"></textarea></label>
+      <label class="wide"><span data-i="efVint"></span><textarea id="efVint" rows="5" spellcheck="false"></textarea><small data-i="efVintHelp"></small></label>
       <label class="wide"><span data-i="efDd"></span><textarea id="efDd" rows="3"></textarea></label>
       <label class="wide"><span data-i="efLiqFull"></span><textarea id="efLiqFull" rows="3"></textarea></label>
       <label class="wide"><span data-i="efNote"></span><textarea id="efNote" rows="3"></textarea></label>
@@ -1294,6 +1331,29 @@ Object.assign(UI.sc,{focusTab:"我的关注",descFocus:"您已收藏的基金。
 Object.assign(UI.tc,{focusTab:"我的關注",descFocus:"您已收藏的基金。此列表僅保存在本瀏覽器中。",
   save:"加入關注",saved:"已關注",saveAdd:"加入我的關注",saveRemove:"移出我的關注",
   pickAdd:"標記為推薦",pickRemove:"取消推薦",pickLabel:"推薦",pickNote:"推薦：我們團隊最看好的基金。"});
+/* new funds: earlier funds' net IRR by vintage (card chart, View Fund chart and table, Edit Fund box) */
+Object.assign(UI.en,{vintTitle:"Net IRR by vintage",vintTable:"Earlier funds",vintKey:"Pale: investing",vintFund:"Fund",vintRetHead:"Net IRR / multiple",
+  vintHead:"Earlier Funds by Vintage",vintCap:"Net IRR of the manager's earlier funds in this series, by the year each started. This fund is new and has no returns of its own yet. Pale bars are funds still investing, so their figures are not final.",
+  vintYear:"Vintage",vintIrr:"Net IRR",vintX:"Net multiple",vintLiveTag:"investing",
+  efVint:"Earlier funds by vintage (new funds; one per line, optional)",
+  efVintHelp:"Fund, vintage: net IRR / multiple / DPI, then \"investing\" if not final.  For example:  Kreos IV, 2012: 11.1 / 1.32x / DPI 1.23x    Kreos VII, 2022: 17.0 / 1.31x investing",
+  efErrVint:n=>`Check line ${n} of the earlier funds: write it like  Kreos IV, 2012: 11.1 / 1.32x  (the multiple, DPI and "investing" are optional).`});
+Object.assign(UI.sc,{vintTitle:"各期基金净 IRR",vintTable:"前序基金",vintKey:"浅色：投资中",vintFund:"基金",vintRetHead:"净 IRR / 倍数",
+  vintHead:"前序基金 (按成立年份)",vintCap:"管理人同系列前序基金的净 IRR，按各基金成立年份排列。本基金为新发基金，尚无自身业绩。浅色柱为仍在投资期的基金，数据尚非最终结果。",
+  vintYear:"成立年份",vintIrr:"净 IRR",vintX:"净倍数",vintLiveTag:"投资中",
+  efVint:"前序基金 (新发基金适用；每行一只，选填)",
+  efVintHelp:"基金, 年份: 净 IRR / 倍数 / DPI，尚未结束的加 \"investing\"。例如：  Kreos IV, 2012: 11.1 / 1.32x / DPI 1.23x    Kreos VII, 2022: 17.0 / 1.31x investing",
+  efErrVint:n=>`请检查前序基金第 ${n} 行：格式如  Kreos IV, 2012: 11.1 / 1.32x  (倍数、DPI 及 investing 可省略)。`});
+Object.assign(UI.tc,{vintTitle:"各期基金淨 IRR",vintTable:"前序基金",vintKey:"淺色：投資中",vintFund:"基金",vintRetHead:"淨 IRR / 倍數",
+  vintHead:"前序基金 (按成立年份)",vintCap:"管理人同系列前序基金的淨 IRR，按各基金成立年份排列。本基金為新發基金，尚無自身績效。淺色柱為仍在投資期的基金，數據尚非最終結果。",
+  vintYear:"成立年份",vintIrr:"淨 IRR",vintX:"淨倍數",vintLiveTag:"投資中",
+  efVint:"前序基金 (新發基金適用；每行一隻，選填)",
+  efVintHelp:"基金, 年份: 淨 IRR / 倍數 / DPI，尚未結束的加 \"investing\"。例如：  Kreos IV, 2012: 11.1 / 1.32x / DPI 1.23x    Kreos VII, 2022: 17.0 / 1.31x investing",
+  efErrVint:n=>`請檢查前序基金第 ${n} 行：格式如  Kreos IV, 2012: 11.1 / 1.32x  (倍數、DPI 及 investing 可省略)。`});
+/* a fund with its own record can still list the strategy's other funds by vintage (View Fund) */
+Object.assign(UI.en,{vintHeadSib:"Other Funds in the Strategy",vintCapSib:"Net IRR of the manager's other funds running the same strategy, by the year each started. They are separate funds, shown for context alongside this fund's own returns. Pale bars are funds still investing, so their figures are not final."});
+Object.assign(UI.sc,{vintHeadSib:"同策略其他基金",vintCapSib:"管理人运行同一策略的其他基金的净 IRR，按各基金成立年份排列。它们是独立的基金，与本基金自身业绩一并列示供参考。浅色柱为仍在投资期的基金，数据尚非最终结果。"});
+Object.assign(UI.tc,{vintHeadSib:"同策略其他基金",vintCapSib:"管理人運行同一策略的其他基金的淨 IRR，按各基金成立年份排列。它們是獨立的基金，與本基金自身績效一併列示供參考。淺色柱為仍在投資期的基金，數據尚非最終結果。"});
 </script>
 <script>
 /* ===== js/funds-data.js ===== */
@@ -1914,6 +1974,22 @@ const title=f=>anon()?L(f.tag):f.name;
 /* Deck-imported text can mention the fund or manager by name. For investors, mask the words the admin typed as the
    fund name and manager. This is best-effort: other names in the deck text (sister funds, vintages) are not caught. */
 const R=(f,s)=>anon()&&f.redact&&f.redact.length&&s?s.replace(new RegExp(f.redact.join("|"),"gi"),"●●●"):s;
+/* A new fund has no returns of its own yet. When `vintages` lists the manager's earlier funds in the series
+   ({n: "Kreos IV", y: "2012", irr: 11.1, x: 1.32, dpi: 1.23, live: true}), the card and View Fund chart their net IRRs
+   by vintage year. `live` marks a fund still investing: its bar is pale because the figure is not final. */
+const vintOf=f=>Array.isArray(f.vintages)&&f.vintages.length>1?f.vintages:null;          // a chart needs at least two funds
+const pct1=v=>(v<0?"−":"")+Math.abs(v).toFixed(1)+"%";
+const xs=n=>`${+n}x`;                                                                    // a multiple as the deck gives it: 1.3x, 1.32x
+const vintRet=v=>pct1(v.irr)+(v.x!=null?` / ${xs(v.x)}`:"");
+function vintBars(f,V,big){
+  const neg=V.some(v=>v.irr<0), max=Math.max(...V.map(v=>Math.abs(v.irr)))||1, room=neg?40:76;   // room left for the figure above each bar
+  return `<div class="bars vint${neg?"":" up"}${big?" big":""}">${V.map(v=>{const h=`${Math.abs(v.irr)/max*room}%`;
+    return `<div class="bar${v.live?" live":""}" data-v="${esc(R(f,v.n))} (${v.y}): ${vintRet(v)}"><i class="${v.irr>=0?"p":"n"}" style="height:${big?h:0}" data-h="${h}"><b>${pct1(v.irr)}</b></i><em>'${String(v.y).slice(2)}</em></div>`}).join("")}</div>`;
+}
+const vintCard=(f,V)=>`<div class="mini-label"><span>${t("vintTitle")}</span><span>${V[0].y}–${V.at(-1).y}</span></div>
+      ${vintBars(f,V)}
+      <div class="mini-label"><span>${t("vintTable")}</span>${V.some(v=>v.live)?`<span class="vint-key">${t("vintKey")}</span>`:""}</div>
+      <table class="recent"><tr><th>${t("vintFund")}</th><th>${t("vintRetHead")}</th></tr>${[...V].reverse().slice(0,5).map(v=>`<tr><td>${esc(R(f,v.n))} (${v.y})</td><td class="${v.irr>=0?"pos":"neg"}">${vintRet(v)}</td></tr>`).join("")}</table>`;
 const trackHTML=f=>`<div class="trk"><div class="mini-label"><span>${t("trackRecord")}</span></div><ul>${notesOf(f).slice(0,6).map(x=>`<li>${R(f,x)}</li>`).join("")||"<li>—</li>"}</ul></div>`;
 
 function ddText(f){                                     // max drawdown as a plain sentence, same style as other drawer text
@@ -1984,7 +2060,7 @@ function cardHTML(f,i){
     <div class="kpis">
       <div>${f.aum!=null?`<b>${money(f.aum)}</b>`:`<b class="txt">${LX(f.aumText)||"—"}</b>`}<span>${t("aum")}</span></div>
       <div><b>${incYear(f)||(f.isNew?t("newFund"):"—")}</b><span>${t("inception")}</span></div>
-      <div><b>${a!==null?fmt(a):LX(f.target)||"—"}</b><span>${a===null&&LX(f.target)?t("target"):t("ann")}</span></div>
+      <div>${a!==null?`<b>${fmt(a)}</b>`:LX(f.target)?`<b class="txt">${LX(f.target)}</b>`:"<b>—</b>"}<span>${a===null&&LX(f.target)?t("target"):t("ann")}</span></div>
     </div>
     <div class="liq-row${/^(daily|每日)$/i.test(liqTxt(f))?"":" semi"}">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 11a8 8 0 0 0-14.6-3.5M4 4v4h4M4 13a8 8 0 0 0 14.6 3.5M20 20v-4h-4"/></svg>
@@ -1995,7 +2071,7 @@ function cardHTML(f,i){
       ${has?`<div class="mini-label"><span>${t("annual")}</span><span>${fmt(last[1])} ${perLabel(last)}</span></div>
       <div class="bars">${bars}</div>
       <div class="mini-label"><span>${t("recent5")}</span></div>
-      <table class="recent"><tr><th>${t("period")}</th><th>${t("ret")}</th></tr>${P.slice(-5).reverse().map(p=>`<tr><td>${perLabel(p)}</td><td class="${p[1]>=0?"pos":"neg"}">${fmt(p[1])}</td></tr>`).join("")}</table>`:trackHTML(f)}
+      <table class="recent"><tr><th>${t("period")}</th><th>${t("ret")}</th></tr>${P.slice(-5).reverse().map(p=>`<tr><td>${perLabel(p)}</td><td class="${p[1]>=0?"pos":"neg"}">${fmt(p[1])}</td></tr>`).join("")}</table>`:vintOf(f)?vintCard(f,vintOf(f)):trackHTML(f)}
       <div class="card-foot">
         <button class="save${MyFocus.has(f.id)?" on":""}" data-save="${f.id}" aria-pressed="${MyFocus.has(f.id)}" title="${t(MyFocus.has(f.id)?"saveRemove":"saveAdd")}"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M6.5 3.5h11v17L12 16.6 6.5 20.5z"/></svg><span>${t(MyFocus.has(f.id)?"saved":"save")}</span></button>
         <button class="more" data-n="${i}">${t("view")} <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 7h10M8 3l4 4-4 4"/></svg></button></div>
@@ -2360,6 +2436,10 @@ function openD(f){
   // perfCaption explains rows that are not this fund's own record (a predecessor or composite series)
   const perfBlock=rows.length?`<h4>${t("perfTitle")}</h4>${LX(f.perfCaption)?`<p class="perf-cap">${R(f,LX(f.perfCaption))}</p>`:""}
     <table class="perf"><tr><th>${t("period")}</th><th>${t("ret")}</th></tr>${rows.map(p=>`<tr><td>${perLabel(p)}</td><td class="${p[1]>=0?"pos":"neg"}">${fmt(p[1])}</td></tr>`).join("")}</table>`:"";
+  const V=vintOf(f), hasX=V&&V.some(v=>v.x!=null), hasD=V&&V.some(v=>v.dpi!=null);
+  const sib=!f.isNew&&rows.length>0;                          // an established fund with its own record: these are sister funds in the strategy, not predecessors
+  const vintBlock=V?`<h4>${t(sib?"vintHeadSib":"vintHead")}</h4><p class="perf-cap">${t(sib?"vintCapSib":"vintCap")}</p>${vintBars(f,V,true)}
+    <table class="perf vint-tbl"><tr><th>${t("vintFund")}</th><th>${t("vintYear")}</th><th>${t("vintIrr")}</th>${hasX?`<th>${t("vintX")}</th>`:""}${hasD?"<th>DPI</th>":""}</tr>${V.map(v=>`<tr${v.live?' class="live"':""}><td>${esc(R(f,v.n))}${v.live?` <small>${t("vintLiveTag")}</small>`:""}</td><td>${v.y}</td><td class="${v.irr>=0?"pos":"neg"}">${pct1(v.irr)}</td>${hasX?`<td>${v.x!=null?xs(v.x):"—"}</td>`:""}${hasD?`<td>${v.dpi!=null?xs(v.dpi):"—"}</td>`:""}</tr>`).join("")}</table>`:"";
   const mo=f.monthly&&f.monthly.length?f.monthly:null;
   const monthlyBlock=mo?`<button class="mo-thumb" type="button" onclick="openMonthly('${f.id}')">${monthlyThumb(mo)}<span><b>${t("monthlyTitle")}</b><small>${mo[0].y}${mo.length>1?" – "+mo.at(-1).y:""} · ${t("monthlyOpen")}</small></span>
       <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 7h10M8 3l4 4-4 4"/></svg></button>`:"";
@@ -2379,7 +2459,7 @@ function openD(f){
     </div>
     ${ddBlock}
     ${liqBlock}
-    ${perfBlock}${monthlyBlock}${notesBlock}
+    ${sib?perfBlock+monthlyBlock+vintBlock:vintBlock+perfBlock+monthlyBlock}${notesBlock}
     <p class="note">${f.note&&!anon()?L(f.note)+" ":""}${t("past")}</p>
     <div class="d-save"><button class="btn ghost${MyFocus.has(f.id)?" on":""}" onclick="toggleSave('${f.id}')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M6.5 3.5h11v17L12 16.6 6.5 20.5z"/></svg> ${t(MyFocus.has(f.id)?"saveRemove":"saveAdd")}</button></div>
     ${Auth.isAdmin()?`<div class="d-admin"><button class="btn ghost" onclick="openEdit('${f.id}')">${t("edit")}</button><button class="btn ghost" onclick="togglePick('${f.id}')">${t(FundStore.isFeatured(f.id)?"pickRemove":"pickAdd")}</button>${f.custom?`<button class="btn ghost" onclick="translateNow('${f.id}')">${t(f.translated?"retranslate":"translate")}</button>`:""}<button class="btn danger" onclick="deleteFund('${f.id}')">${t("del")}</button></div>`:""}
@@ -3090,6 +3170,19 @@ function parseReturnLines(text) {
   return rows.sort((a, b) => a[0] - b[0] || (a[2] === "ytd") - (b[2] === "ytd"));
 }
 
+/* earlier funds by vintage as editable lines:   Kreos IV, 2012: 11.1 / 1.32x / DPI 1.23x   |   Kreos VII, 2022: 17.0 / 1.31x investing */
+const vintLine = v => `${plain(v.n)}, ${v.y}: ${v.irr}${v.x != null ? ` / ${v.x}x` : ""}${v.dpi != null ? ` / DPI ${v.dpi}x` : ""}${v.live ? " investing" : ""}`;
+/** Returns { rows } sorted by vintage, or { bad: line number }. */
+function parseVintLines(text) {
+  const rows = [], all = lines(text);
+  for (let i = 0; i < all.length; i++) {
+    const m = all[i].match(/^(.+?)\s*[,，]\s*(\d{4})\s*[:：]\s*([+\-−]?\d+(?:\.\d+)?)\s*%?(?:\s*\/\s*(\d+(?:\.\d+)?)\s*x)?(?:\s*\/\s*DPI\s*(\d+(?:\.\d+)?)\s*x?)?\s*(investing|投资中|投資中)?$/i);
+    if (!m) return { bad: i + 1 };
+    rows.push({ n: esc(m[1]), y: m[2], irr: Number(m[3].replace("−", "-")), ...(m[4] ? { x: Number(m[4]) } : {}), ...(m[5] ? { dpi: Number(m[5]) } : {}), ...(m[6] ? { live: true } : {}) });
+  }
+  return { rows: rows.sort((a, b) => a.y - b.y) };
+}
+
 function showEditModal(show) {
   setModal(editModal, show);
   document.body.classList.toggle("modal-open", show);
@@ -3120,6 +3213,7 @@ function openEdit(id) {
   ef("efLiqFull").value = f.liqFull ? plain(L(f.liqFull)) : "";
   ef("efReturns").value = [...(f.hist || []), ...f.perf].map(returnLine).join("\n");
   ef("efNotes").value = notesOf(f).map(plain).join("\n");
+  ef("efVint").value = (f.vintages || []).map(vintLine).join("\n");
   ef("efDd").value = ddShown;
   ef("efNote").value = f.note ? plain(L(f.note)) : "";
   ef("efHide").defaultValue = ef("efHide").value = (f.redact || []).map(w => plain(w.replace(/\\(.)/g, "$1"))).join(", ");
@@ -3183,6 +3277,8 @@ editForm.addEventListener("submit", e => {
   if (!val("efName") || !val("efTag")) return fail("efErrRequired");
   const all = parseReturnLines(ef("efReturns").value);
   if (!all) return fail("efErrReturns");
+  const vint = parseVintLines(ef("efVint").value);
+  if (vint.bad != null) return fail("efErrVint", vint.bad);
   const aum = val("efAum") === "" ? null : Number(val("efAum"));
   if (aum !== null && !(aum > 0)) return fail("errAum");
 
@@ -3224,6 +3320,7 @@ editForm.addEventListener("submit", e => {
   f.hist = all.filter(p => !f.perf.includes(p));
   const noteLines = lines(ef("efNotes").value).map(esc);
   if (perLang("perfNotes")) f.perfNotes[lang] = noteLines; else f.perfNotes = noteLines;
+  if (vint.rows.length) f.vintages = vint.rows; else delete f.vintages;
   const dd = ef("efDd").value.trim();
   if (dd !== editing.ddShown.trim()) {                       // only touched when the admin changed it
     if (perLang("ddRaw")) f.ddRaw[lang] = escLines(lines(dd));

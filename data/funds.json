@@ -19,6 +19,31 @@
       "id": "s-1795700000000",
       "name": "Corp credit",
       "group": "closed"
+    },
+    {
+      "id": "s-1795800000001",
+      "name": "Distressed & opportunistic",
+      "group": "closed"
+    },
+    {
+      "id": "s-1795800000002",
+      "name": "GP secondaries",
+      "group": "closed"
+    },
+    {
+      "id": "s-1795800000003",
+      "name": "Infrastructure",
+      "group": "closed"
+    },
+    {
+      "id": "s-1795800000004",
+      "name": "Real estate",
+      "group": "closed"
+    },
+    {
+      "id": "s-1795800000005",
+      "name": "Triple net lease",
+      "group": "closed"
     }
   ],
   "funds": {
@@ -59,21 +84,24 @@
         "perfNotes": {
           "en": [
             "Fund I 2015: 10.5% / 1.5x, fully exited, DPI 1.46x",
-            "Fund II 2019: target 12% / 1.7x, DPI 1.00x",
-            "Fund III 2022: target 11-12% / 1.5x (investment period)",
-            "Fund IV 2025: target 11-12% / 1.5x"
+            "Fund II 2019: 11.4% / 1.7x (estimated, 2026/6/30), harvesting, DPI 1.00x; target 12% / 1.7x",
+            "Fund III 2022: 10.1% / 1.2x (estimated, 2026/6/30), investment period; target 11-12% / 1.5x",
+            "Fund IV 2025: target 11-12% / 1.5x",
+            "Pre-ABL portfolios 2005-2014: 11.6% net IRR"
           ],
           "sc": [
             "Fund I 2015: 10.5% / 1.5x，已退出，DPI 1.46x",
-            "Fund II 2019: 目标 12% / 1.7x，DPI 1.00x",
-            "Fund III 2022: 目标 11-12% / 1.5x (投资期)",
-            "Fund IV 2025: 目标 11-12% / 1.5x"
+            "Fund II 2019: 11.4% / 1.7x (估算，2026/6/30)，退出期，DPI 1.00x；目标 12% / 1.7x",
+            "Fund III 2022: 10.1% / 1.2x (估算，2026/6/30)，投资期；目标 11-12% / 1.5x",
+            "Fund IV 2025: 目标 11-12% / 1.5x",
+            "Pre-ABL 组合 2005-2014：净 IRR 11.6%"
           ],
           "tc": [
             "Fund I 2015: 10.5% / 1.5x，已退出，DPI 1.46x",
-            "Fund II 2019: 目標 12% / 1.7x，DPI 1.00x",
-            "Fund III 2022: 目標 11-12% / 1.5x (投資期)",
-            "Fund IV 2025: 目標 11-12% / 1.5x"
+            "Fund II 2019: 11.4% / 1.7x (估算，2026/6/30)，退出期，DPI 1.00x；目標 12% / 1.7x",
+            "Fund III 2022: 10.1% / 1.2x (估算，2026/6/30)，投資期；目標 11-12% / 1.5x",
+            "Fund IV 2025: 目標 11-12% / 1.5x",
+            "Pre-ABL 組合 2005-2014：淨 IRR 11.6%"
           ]
         },
         "target": {
@@ -102,9 +130,9 @@
           "tc": "硬鎖定期 1 年；每年贖回，經 liquidation account 支付；"
         },
         "note": {
-          "en": "Source: Marathon ABL Evergreen Fund deck (CVC Marathon, Q3 2026) — terms/strategy/size p19-20, vintage performance and DPI p8 (DPI as of 2026/8, called as of 2026/6), ABL program net IRR of 11.4% on a model fees basis for 2005–2025/9/30, loss rate for 2014–2024/12/31 (p10); KKR HCRx Evergreen deck (Aug 2026) — data as of 2026/3/31, Evergreen net return is for a Class A model investor since inception (p12), fund-level net IRR and legacy aggregate of ~12% see p13 (excluding Fund I/II under prior management), loss rate/strategy p10-16, terms p24 (fee structure updated from 2026/1/1).",
-          "sc": "来源: Marathon ABL Evergreen Fund deck (CVC Marathon, Q3 2026)——条款/策略/规模 p19-20，vintage 表现与 DPI p8 (DPI 截至 2026/8，called 截至 2026/6)，ABL program 净IRR 11.4% 为 2005–2025/9/30 model fees 口径，损失率为 2014–2024/12/31 (p10)；KKR HCRx Evergreen deck (Aug 2026)——数据截至 2026/3/31，Evergreen 净回报为 Class A 自成立模型投资者 (p12)，分基金净IRR 及 legacy 合计 ~12% 见 p13 (不含前管理层时期 Fund I/II)，损失率/策略 p10-16，条款 p24 (费用结构 2026/1/1 起更新)。",
-          "tc": "來源: Marathon ABL Evergreen Fund deck (CVC Marathon, Q3 2026)——條款/策略/規模 p19-20，vintage 表現與 DPI p8 (DPI 截至 2026/8，called 截至 2026/6)，ABL program 淨IRR 11.4% 為 2005–2025/9/30 model fees 口徑，損失率為 2014–2024/12/31 (p10)；KKR HCRx Evergreen deck (Aug 2026)——數據截至 2026/3/31，Evergreen 淨回報為 Class A 自成立模型投資者 (p12)，分基金淨IRR 及 legacy 合計 ~12% 見 p13 (不含前管理層時期 Fund I/II)，損失率/策略 p10-16，條款 p24 (費用結構 2026/1/1 起更新)。"
+          "en": "Source: Marathon ABL Evergreen Fund deck (CVC Marathon, Q3 2026) — terms/strategy/size p19-20, vintage performance and DPI p8 (DPI as of 2026/8, called as of 2026/6), ABL program net IRR of 11.4% on a model fees basis for 2005–2025/9/30, loss rate for 2014–2024/12/31 (p10); KKR HCRx Evergreen deck (Aug 2026) — data as of 2026/3/31, Evergreen net return is for a Class A model investor since inception (p12), fund-level net IRR and legacy aggregate of ~12% see p13 (excluding Fund I/II under prior management), loss rate/strategy p10-16, terms p24 (fee structure updated from 2026/1/1). Fund II and III net IRR / MOIC: Marathon Asset-Based Lending Fund II and III quarterly reports, Q2 2026 (estimated, unaudited, as of 2026/6/30).",
+          "sc": "来源: Marathon ABL Evergreen Fund deck (CVC Marathon, Q3 2026)——条款/策略/规模 p19-20，vintage 表现与 DPI p8 (DPI 截至 2026/8，called 截至 2026/6)，ABL program 净IRR 11.4% 为 2005–2025/9/30 model fees 口径，损失率为 2014–2024/12/31 (p10)；KKR HCRx Evergreen deck (Aug 2026)——数据截至 2026/3/31，Evergreen 净回报为 Class A 自成立模型投资者 (p12)，分基金净IRR 及 legacy 合计 ~12% 见 p13 (不含前管理层时期 Fund I/II)，损失率/策略 p10-16，条款 p24 (费用结构 2026/1/1 起更新)。 Fund II 及 III 净 IRR / MOIC：Marathon Asset-Based Lending Fund II、III 2026 Q2 季度报告 (估算、未经审计，截至 2026/6/30)。",
+          "tc": "來源: Marathon ABL Evergreen Fund deck (CVC Marathon, Q3 2026)——條款/策略/規模 p19-20，vintage 表現與 DPI p8 (DPI 截至 2026/8，called 截至 2026/6)，ABL program 淨IRR 11.4% 為 2005–2025/9/30 model fees 口徑，損失率為 2014–2024/12/31 (p10)；KKR HCRx Evergreen deck (Aug 2026)——數據截至 2026/3/31，Evergreen 淨回報為 Class A 自成立模型投資者 (p12)，分基金淨IRR 及 legacy 合計 ~12% 見 p13 (不含前管理層時期 Fund I/II)，損失率/策略 p10-16，條款 p24 (費用結構 2026/1/1 起更新)。 Fund II 及 III 淨 IRR / MOIC：Marathon Asset-Based Lending Fund II、III 2026 Q2 季度報告 (估算、未經審計，截至 2026/6/30)。"
         },
         "redact": [
           "Marathon"
@@ -196,7 +224,30 @@
             ]
           }
         },
-        "classesKeepText": true
+        "classesKeepText": true,
+        "vintages": [
+          {
+            "n": "ABL Fund I",
+            "y": "2015",
+            "irr": 10.5,
+            "x": 1.5,
+            "dpi": 1.46
+          },
+          {
+            "n": "ABL Fund II",
+            "y": "2019",
+            "irr": 11.4,
+            "x": 1.7,
+            "dpi": 1
+          },
+          {
+            "n": "ABL Fund III",
+            "y": "2022",
+            "irr": 10.1,
+            "x": 1.2,
+            "live": true
+          }
+        ]
       },
       {
         "id": "custom-1795591079442-2",
@@ -785,7 +836,28 @@
             ]
           }
         },
-        "classesKeepText": true
+        "classesKeepText": true,
+        "vintages": [
+          {
+            "n": "ABF Fund of One",
+            "y": "2010",
+            "irr": 14.7,
+            "x": 4.5,
+            "live": true
+          },
+          {
+            "n": "SABF I",
+            "y": "2010",
+            "irr": 18.9,
+            "x": 1.8
+          },
+          {
+            "n": "SABF II",
+            "y": "2011",
+            "irr": 15.1,
+            "x": 1.8
+          }
+        ]
       },
       {
         "id": "custom-1795591079442-3",
@@ -865,6 +937,184 @@
           "OABF"
         ],
         "translated": true
+      },
+      {
+        "custom": true,
+        "vehicle": "private",
+        "redactAuto": false,
+        "translated": true,
+        "id": "custom-1795900000000-0",
+        "name": "TPG AG Asset Based Credit Evergreen Fund (ABEF)",
+        "mgr": {
+          "en": "TPG Angelo Gordon"
+        },
+        "tag": {
+          "en": "Diversified Asset-Based Credit · Evergreen",
+          "sc": "多元资产支持信贷 · 常青",
+          "tc": "多元資產支持信貸 · 常青"
+        },
+        "inception": "2024-08",
+        "isNew": false,
+        "inceptionText": {
+          "en": "Aug 2024 (first close Q2 2024);<br>evergreen; asset-based credit strategy since 2010",
+          "sc": "2024年8月 (首次关账 2024 Q2)；<br>常青结构；资产支持信贷策略 2010 年起",
+          "tc": "2024年8月 (首次關帳 2024 Q2)；<br>常青結構；資產支持信貸策略 2010 年起"
+        },
+        "aum": 1.42,
+        "aumText": {
+          "en": "$1.42bn NAV ($1.59bn committed, 2026/3/31)",
+          "sc": "NAV $1.42bn (认缴 $1.59bn，2026/3/31)",
+          "tc": "NAV $1.42bn (認繳 $1.59bn，2026/3/31)"
+        },
+        "strategy": {
+          "en": "Asset-based private credit across consumer finance (20–40%: credit cards, auto, student and consumer loans), real assets (20–40%: residential mortgages, land and construction / bridge loans) and specialty finance (10–30%: equipment, small business, digital infrastructure), plus opportunistic investments;<br>Senior-focused with structural protection; North America 85%+; fund leverage 0–0.5x (none used so far); portfolio yield 14.0%, rate duration 1.0; real assets 47%, specialty 29%, consumer 24% (2026/3/31);",
+          "sc": "资产支持私募信贷，覆盖消费金融 (20–40%：信用卡、汽车、学生及消费贷款)、实物资产 (20–40%：住宅按揭、地块及建设 / 过桥贷款) 与专业金融 (10–30%：设备、小微企业、数字基础设施)，另可配置机会型投资；<br>以优先级为主并设结构保护；北美 85%+；基金杠杆 0–0.5x (目前未使用)；组合收益率 14.0%，利率久期 1.0；实物资产 47%、专业金融 29%、消费 24% (2026/3/31)；",
+          "tc": "資產支持私募信貸，涵蓋消費金融 (20–40%：信用卡、汽車、學生及消費貸款)、實物資產 (20–40%：住宅按揭、地塊及建設 / 過橋貸款) 與專業金融 (10–30%：設備、小微企業、數位基礎設施)，另可配置機會型投資；<br>以優先級為主並設結構保護；北美 85%+；基金槓桿 0–0.5x (目前未使用)；組合收益率 14.0%，利率存續期 1.0；實物資產 47%、專業金融 29%、消費 24% (2026/3/31)；"
+        },
+        "hist": [],
+        "perf": [
+          [
+            "2024",
+            20.34,
+            "p",
+            8
+          ],
+          [
+            "2025",
+            14.02
+          ],
+          [
+            "2026",
+            3.1,
+            "ytd",
+            3
+          ]
+        ],
+        "perfCaption": {
+          "en": "2024 runs from launch in August. Its fourth quarter (+16.84%) came largely from assets bought at a discount early on and is not expected to repeat. 2026 is January to March.",
+          "sc": "2024 年自 8 月成立起计。其第四季度 (+16.84%) 主要来自早期折价买入资产的一次性收益，预计不会重复。2026 年为 1–3 月数据。",
+          "tc": "2024 年自 8 月成立起計。其第四季度 (+16.84%) 主要來自早期折價買入資產的一次性收益，預計不會重複。2026 年為 1–3 月數據。"
+        },
+        "perfNotes": {
+          "en": [
+            "Annualized net return since launch 23.1% (to 2026/3/31); excluding the one-off Q4 2024, 2025 returned 14.02%",
+            "2025 quarterly net: 4.40% / 3.04% / 3.66% / 2.25%; Q1 2026 3.10%",
+            "Target 10–15% net; 8% annual distributions, paid quarterly",
+            "Closed-end sister funds: ABC I (2021) net IRR 11.6%, ABC II (2025) 11.1% (2026/3/31)"
+          ],
+          "sc": [
+            "成立以来年化净回报 23.1% (截至 2026/3/31)；剔除 2024 Q4 一次性收益，2025 年为 14.02%",
+            "2025 年各季净回报：4.40% / 3.04% / 3.66% / 2.25%；2026 Q1 3.10%",
+            "目标净回报 10–15%；年化派息 8%，按季派发",
+            "同策略封闭式基金：ABC I (2021) 净 IRR 11.6%，ABC II (2025) 11.1% (2026/3/31)"
+          ],
+          "tc": [
+            "成立以來年化淨回報 23.1% (截至 2026/3/31)；剔除 2024 Q4 一次性收益，2025 年為 14.02%",
+            "2025 年各季淨回報：4.40% / 3.04% / 3.66% / 2.25%；2026 Q1 3.10%",
+            "目標淨回報 10–15%；年化派息 8%，按季派發",
+            "同策略封閉式基金：ABC I (2021) 淨 IRR 11.6%，ABC II (2025) 11.1% (2026/3/31)"
+          ]
+        },
+        "target": {
+          "en": "10–15% net",
+          "sc": "净 10–15%",
+          "tc": "淨 10–15%"
+        },
+        "ddLabel": {
+          "en": "Loss Rate",
+          "sc": "损失率",
+          "tc": "損失率"
+        },
+        "ddRaw": {
+          "en": "Annualized loss rate 3 bps since 2010 (strategy);<br>no negative quarter since launch",
+          "sc": "策略 2010 年以来年化损失率 3 bps；<br>成立以来无负回报季度",
+          "tc": "策略 2010 年以來年化損失率 3 bps；<br>成立以來無負回報季度"
+        },
+        "liq": {
+          "en": "Annual, 1-year lock-up",
+          "sc": "每年，1 年锁定",
+          "tc": "每年，1 年鎖定"
+        },
+        "liqFull": {
+          "en": "Evergreen; commitments drawn monthly in order of close date; quarterly distributions;<br>1-year lock-up, then annual withdrawals with 90 days' notice before 31 December; withdrawals are paid from a slow-pay account as its assets repay or are sold (about 75% within 2 years, 90–95% within 3), with fees still charged meanwhile;<br>Incentive fee 20% a year over a 7.5% hurdle, high-water mark; minimum $5M",
+          "sc": "常青结构；认缴资本按关账顺序每月提取；按季派息；<br>锁定 1 年，之后每年赎回，须于 12 月 31 日前 90 天通知；赎回经 slow-pay 账户随资产回款或处置逐步支付 (约 2 年内 75%、3 年内 90–95%)，期间照常计费；<br>业绩报酬每年 20%，门槛 7.5%，设高水位；最低认购 $5M",
+          "tc": "常青結構；認繳資本按關帳順序每月提取；按季派息；<br>鎖定 1 年，之後每年贖回，須於 12 月 31 日前 90 天通知；贖回經 slow-pay 帳戶隨資產回款或處置逐步支付 (約 2 年內 75%、3 年內 90–95%)，期間照常計費；<br>業績報酬每年 20%，門檻 7.5%，設高水位；最低認購 $5M"
+        },
+        "classes": {
+          "en": {
+            "head": [
+              "Commitment",
+              "Management Fee (on NAV)"
+            ],
+            "rows": [
+              [
+                "Under $50M",
+                "1.50%"
+              ],
+              [
+                "$50M to $99M",
+                "1.25%"
+              ]
+            ]
+          },
+          "sc": {
+            "head": [
+              "认缴金额",
+              "管理费 (按 NAV)"
+            ],
+            "rows": [
+              [
+                "$50M 以下",
+                "1.50%"
+              ],
+              [
+                "$50M 至 $99M",
+                "1.25%"
+              ]
+            ]
+          },
+          "tc": {
+            "head": [
+              "認繳金額",
+              "管理費 (按 NAV)"
+            ],
+            "rows": [
+              [
+                "$50M 以下",
+                "1.50%"
+              ],
+              [
+                "$50M 至 $99M",
+                "1.25%"
+              ]
+            ]
+          }
+        },
+        "classesKeepText": true,
+        "vintages": [
+          {
+            "n": "ABC I",
+            "y": "2021",
+            "irr": 11.6
+          },
+          {
+            "n": "ABC II",
+            "y": "2025",
+            "irr": 11.1,
+            "live": true
+          }
+        ],
+        "note": {
+          "en": "Source: TPG ABC Combined Presentation (Institutional), summary of key terms p43–44; ABC Quarterly Returns (data room Exhibit D, through 2026/3/31); ABEF Portfolio Update (2026/3/31) as summarised in the AID IC deck (Jul 2026). Returns are estimated, unaudited and net of fees. Fee tiers from $100M up are left out.",
+          "sc": "来源: TPG ABC Combined Presentation (Institutional) 主要条款 p43–44；ABC 季度回报 (资料室 Exhibit D，截至 2026/3/31)；ABEF Portfolio Update (2026/3/31)，经 AID 投委会材料 (2026 年 7 月) 汇总。回报为估算、未经审计的扣费后数据。$100M 及以上的费率档未列出。",
+          "tc": "來源: TPG ABC Combined Presentation (Institutional) 主要條款 p43–44；ABC 季度回報 (資料室 Exhibit D，截至 2026/3/31)；ABEF Portfolio Update (2026/3/31)，經 AID 投委會材料 (2026 年 7 月) 匯總。回報為估算、未經審計的扣費後數據。$100M 及以上的費率檔未列出。"
+        },
+        "redact": [
+          "TPG",
+          "Angelo Gordon",
+          "ABEF",
+          "ABC"
+        ]
       }
     ],
     "s-1795591188122": [
@@ -1948,7 +2198,313 @@
           "Balbec",
           "IGCF"
         ],
-        "translated": true
+        "translated": true,
+        "vintages": [
+          {
+            "n": "IGCF-I",
+            "y": "2011",
+            "irr": 11.3,
+            "x": 1.23
+          },
+          {
+            "n": "IGCF-II",
+            "y": "2014",
+            "irr": 11.7,
+            "x": 1.33
+          },
+          {
+            "n": "IGCF-III",
+            "y": "2017",
+            "irr": 13.1,
+            "x": 1.45
+          },
+          {
+            "n": "IGCF-IV",
+            "y": "2019",
+            "irr": 12.3,
+            "dpi": 1.05
+          },
+          {
+            "n": "IGCF-V",
+            "y": "2021",
+            "irr": 7,
+            "dpi": 0.44,
+            "live": true
+          },
+          {
+            "n": "IGCF-VI",
+            "y": "2023",
+            "irr": 22.8,
+            "dpi": 0.12,
+            "live": true
+          }
+        ]
+      },
+      {
+        "custom": true,
+        "vehicle": "private",
+        "redactAuto": false,
+        "translated": true,
+        "id": "custom-1795900000000-1",
+        "name": "Invictus Gladiator Fund",
+        "mgr": {
+          "en": "Invictus Capital Partners"
+        },
+        "tag": {
+          "en": "Non-QM Residential Whole Loans · Evergreen",
+          "sc": "Non-QM 住宅整贷 · 常青",
+          "tc": "Non-QM 住宅整體貸款 · 常青"
+        },
+        "inception": "2023-01",
+        "isNew": false,
+        "inceptionText": {
+          "en": "Jan 2023 (founder class final close Q1 2025);<br>evergreen; part of Invictus's whole-loan strategy since 2015",
+          "sc": "2023年1月 (创始类份额于 2025 Q1 最终关账)；<br>常青结构；属 Invictus 2015 年起的整贷策略",
+          "tc": "2023年1月 (創始類份額於 2025 Q1 最終關帳)；<br>常青結構；屬 Invictus 2015 年起的整貸策略"
+        },
+        "aum": null,
+        "aumText": {
+          "en": "$143.6M committed",
+          "sc": "认缴 $143.6M",
+          "tc": "認繳 $143.6M"
+        },
+        "strategy": {
+          "en": "Buys newly originated prime Non-QM residential loans through Invictus's own Verus platform (average coupon 7–8%, LTV ~70%, FICO 740+), warehouses them for about 3 months, then securitizes, keeping the subordinate tranches and excess spread and reinvesting the cash;<br>Invictus manages $20bn+ in residential credit: $45bn+ of loans bought since 2015 with 6 bps cumulative credit loss; the largest Non-QM securitization issuer since 2021 (86 deals);",
+          "sc": "通过 Invictus 自有 Verus 平台买入新发放的优质 Non-QM 住宅贷款 (平均票息 7–8%，LTV 约 70%，FICO 740+)，仓储约 3 个月后证券化，保留次级档及超额利差，并将回款再投资；<br>Invictus 管理住宅信贷 $20bn+：2015 年以来累计收购 $45bn+ 贷款，累计信用损失 6 bps；2021 年以来 Non-QM 证券化发行量第一 (累计 86 单)；",
+          "tc": "透過 Invictus 自有 Verus 平台買入新發放的優質 Non-QM 住宅貸款 (平均票息 7–8%，LTV 約 70%，FICO 740+)，倉儲約 3 個月後證券化，保留次級檔及超額利差，並將回款再投資；<br>Invictus 管理住宅信貸 $20bn+：2015 年以來累計收購 $45bn+ 貸款，累計信用損失 6 bps；2021 年以來 Non-QM 證券化發行量第一 (累計 86 單)；"
+        },
+        "hist": [],
+        "perf": [
+          [
+            "2023",
+            12.48
+          ],
+          [
+            "2024",
+            17.26
+          ],
+          [
+            "2025",
+            24.83
+          ],
+          [
+            "2026",
+            2.24,
+            "ytd",
+            3
+          ]
+        ],
+        "perfNotes": {
+          "en": [
+            "Since launch (2023/1–2026/3): cumulative net return 75.2%, 18.8% a year (gross 23.2%)",
+            "Net cash yield paid since launch 10.3% a year",
+            "Target net IRR 14%+, cash yield 8–10%",
+            "Strategy's other funds (net IRR / MOIC): Opportunity Fund I (2017) 10.7% / 1.42x, II (2019) 8.3% / 1.47x, III (2021) 12.8% / 1.40x; SMA 1 (2020) 21.5% / 2.13x, SMA 2 (2022) 22.9% / 1.49x"
+          ],
+          "sc": [
+            "成立以来 (2023/1–2026/3)：累计净回报 75.2%，年化 18.8% (毛 23.2%)",
+            "成立以来已派付净现金收益率年化 10.3%",
+            "目标净 IRR 14%+，现金收益率 8–10%",
+            "同策略其他基金 (净 IRR / MOIC)：Opportunity Fund I (2017) 10.7% / 1.42x，II (2019) 8.3% / 1.47x，III (2021) 12.8% / 1.40x；SMA 1 (2020) 21.5% / 2.13x，SMA 2 (2022) 22.9% / 1.49x"
+          ],
+          "tc": [
+            "成立以來 (2023/1–2026/3)：累計淨回報 75.2%，年化 18.8% (毛 23.2%)",
+            "成立以來已派付淨現金收益率年化 10.3%",
+            "目標淨 IRR 14%+，現金收益率 8–10%",
+            "同策略其他基金 (淨 IRR / MOIC)：Opportunity Fund I (2017) 10.7% / 1.42x，II (2019) 8.3% / 1.47x，III (2021) 12.8% / 1.40x；SMA 1 (2020) 21.5% / 2.13x，SMA 2 (2022) 22.9% / 1.49x"
+          ]
+        },
+        "target": {
+          "en": "14%+ net",
+          "sc": "净 14%+",
+          "tc": "淨 14%+"
+        },
+        "ddLabel": {
+          "en": "Loss Rate",
+          "sc": "损失率",
+          "tc": "損失率"
+        },
+        "ddRaw": {
+          "en": "6 bps cumulative credit loss on $45bn+ of loans bought since 2015 (platform);<br>no negative calendar year for the fund",
+          "sc": "平台 2015 年以来收购 $45bn+ 贷款，累计信用损失 6 bps；<br>本基金无负回报年度",
+          "tc": "平台 2015 年以來收購 $45bn+ 貸款，累計信用損失 6 bps；<br>本基金無負回報年度"
+        },
+        "liq": {
+          "en": "Quarterly, 3-year lock-up",
+          "sc": "每季，3 年锁定",
+          "tc": "每季，3 年鎖定"
+        },
+        "liqFull": {
+          "en": "Evergreen; commitments called 25% a quarter, fully within a year; quarterly distributions (income during the lock-up, income plus gains after);<br>3-year lock-up from first funding, then quarterly redemptions with 90 days' notice: the cash share is paid within about 30 days (up to 5% held until the audit), and the rest as the underlying loans repay or are sold, with management fee still charged;<br>Management fee 1.25% on NAV; performance fee 15% over SOFR + 250 bps (floor 5%, cap 8%), crystallized every 3 years with a high-water mark",
+          "sc": "常青结构；认缴资本每季提取 25%，一年内提取完毕；按季派息 (锁定期内为利息收入，之后为利息收入加资本收益)；<br>自首次出资起锁定 3 年，之后按季赎回，提前 90 天通知：现金部分约 30 天内支付 (最多 5% 待审计后支付)，其余随底层贷款回款或处置逐步支付，期间照常收取管理费；<br>管理费 1.25% (按 NAV)；业绩报酬 15%，门槛 SOFR + 250 bps (下限 5%、上限 8%)，每 3 年结算，设高水位",
+          "tc": "常青結構；認繳資本每季提取 25%，一年內提取完畢；按季派息 (鎖定期內為利息收入，之後為利息收入加資本收益)；<br>自首次出資起鎖定 3 年，之後按季贖回，提前 90 天通知：現金部分約 30 天內支付 (最多 5% 待審計後支付)，其餘隨底層貸款回款或處置逐步支付，期間照常收取管理費；<br>管理費 1.25% (按 NAV)；業績報酬 15%，門檻 SOFR + 250 bps (下限 5%、上限 8%)，每 3 年結算，設高水位"
+        },
+        "vintages": [
+          {
+            "n": "Opportunity Fund I",
+            "y": "2017",
+            "irr": 10.7,
+            "x": 1.42
+          },
+          {
+            "n": "Opportunity Fund II",
+            "y": "2019",
+            "irr": 8.3,
+            "x": 1.47
+          },
+          {
+            "n": "SMA 1",
+            "y": "2020",
+            "irr": 21.5,
+            "x": 2.13
+          },
+          {
+            "n": "Opportunity Fund III",
+            "y": "2021",
+            "irr": 12.8,
+            "x": 1.4
+          },
+          {
+            "n": "SMA 2",
+            "y": "2022",
+            "irr": 22.9,
+            "x": 1.49,
+            "live": true
+          }
+        ],
+        "note": {
+          "en": "Source: Invictus Opportunity Summary (May 2026, as of 2026/3/31) for the platform and the strategy's funds; Gladiator Cash Yield and Track Record Supplement (2026/3/31) for the fund's net returns and cash yield; terms per the AID IC deck (Jul 2026) and the fund PPM. 2023/1 to 2025/3 was a combined period while the founder class was raised. Opportunity Fund IV (2024) is too early to report.",
+          "sc": "来源: Invictus Opportunity Summary (2026 年 5 月，截至 2026/3/31)——平台及同策略基金数据；Gladiator Cash Yield and Track Record Supplement (2026/3/31)——本基金净回报及现金收益率；条款见 AID 投委会材料 (2026 年 7 月) 及基金 PPM。2023/1 至 2025/3 为创始类份额募集期的合并期间。Opportunity Fund IV (2024) 尚处早期，未列示。",
+          "tc": "來源: Invictus Opportunity Summary (2026 年 5 月，截至 2026/3/31)——平台及同策略基金數據；Gladiator Cash Yield and Track Record Supplement (2026/3/31)——本基金淨回報及現金收益率；條款見 AID 投委會材料 (2026 年 7 月) 及基金 PPM。2023/1 至 2025/3 為創始類份額募集期的合併期間。Opportunity Fund IV (2024) 尚處早期，未列示。"
+        },
+        "redact": [
+          "Invictus",
+          "Verus",
+          "Gladiator"
+        ]
+      },
+      {
+        "custom": true,
+        "vehicle": "private",
+        "redactAuto": false,
+        "translated": true,
+        "id": "custom-1795900000000-2",
+        "name": "Canyon Home Equity Credit Co-Investment Fund II (CHECC II)",
+        "mgr": {
+          "en": "Canyon Partners"
+        },
+        "tag": {
+          "en": "Prime Home Equity (HELOC / CES) · Drawdown",
+          "sc": "优质房屋净值贷款 (HELOC / CES) · Drawdown",
+          "tc": "優質房屋淨值貸款 (HELOC / CES) · Drawdown"
+        },
+        "inception": null,
+        "isNew": true,
+        "inceptionText": {
+          "en": "New fund (2026);<br>Canyon asset-backed record since 2005; CHECC I launched Nov 2025",
+          "sc": "新发基金 (2026)；<br>Canyon 资产支持业绩 2005 年起；CHECC I 于 2025 年 11 月成立",
+          "tc": "新發基金 (2026)；<br>Canyon 資產支持績效 2005 年起；CHECC I 於 2025 年 11 月成立"
+        },
+        "aum": null,
+        "aumText": {
+          "en": "$250M capacity",
+          "sc": "规模上限 $250M",
+          "tc": "規模上限 $250M"
+        },
+        "strategy": {
+          "en": "Co-invests alongside Canyon's funds in 9 originator partnerships (banks and non-bank platforms): ~70% prime HELOCs and closed-end second liens, ~30% prime Non-QM first liens; loans are warehoused for 3–6 months, then securitized, keeping the equity and mezzanine tranches;<br>Target average FICO 730+, combined LTV ~60–70%, fully amortizing loans; target weighted average life 2.5–3.5 years;",
+          "sc": "与 Canyon 旗下基金共同投资于 9 个贷款发起合作 (银行及非银行平台)：约 70% 为优质 HELOC 及闭端二押，约 30% 为优质 Non-QM 一押；贷款仓储 3–6 个月后证券化，保留权益档及夹层档；<br>目标平均 FICO 730+，综合 LTV 约 60–70%，全额摊还贷款；目标加权平均期限 2.5–3.5 年；",
+          "tc": "與 Canyon 旗下基金共同投資於 9 個貸款發起合作 (銀行及非銀行平台)：約 70% 為優質 HELOC 及閉端二押，約 30% 為優質 Non-QM 一押；貸款倉儲 3–6 個月後證券化，保留權益檔及夾層檔；<br>目標平均 FICO 730+，綜合 LTV 約 60–70%，全額攤還貸款；目標加權平均期限 2.5–3.5 年；"
+        },
+        "hist": [],
+        "perf": [],
+        "perfNotes": {
+          "en": [
+            "Fund targets net IRR 13–15% and net MOIC 1.40–1.50x; cash yield 10–12%",
+            "Canyon asset-backed strategy since 2005: $20bn+ invested, unlevered gross IRR 21.0% / hypothetical net 17.0%",
+            "Earlier asset-backed funds and accounts (2008–2013, all realized): weighted net IRR 19.1% / 1.77x",
+            "CHECC I (Nov 2025, $140M) and Canyon Residential Credit Strategies (Dec 2025) are too early to report"
+          ],
+          "sc": [
+            "基金目标净 IRR 13–15%、净 MOIC 1.40–1.50x；现金收益率 10–12%",
+            "Canyon 资产支持策略 2005 年起：累计投资 $20bn+，无杠杆毛 IRR 21.0% / 假设净 IRR 17.0%",
+            "此前的资产支持基金及账户 (2008–2013，均已实现)：加权净 IRR 19.1% / 1.77x",
+            "CHECC I (2025 年 11 月，$140M) 及 Canyon Residential Credit Strategies (2025 年 12 月) 尚处早期，未列示"
+          ],
+          "tc": [
+            "基金目標淨 IRR 13–15%、淨 MOIC 1.40–1.50x；現金收益率 10–12%",
+            "Canyon 資產支持策略 2005 年起：累計投資 $20bn+，無槓桿毛 IRR 21.0% / 假設淨 IRR 17.0%",
+            "此前的資產支持基金及帳戶 (2008–2013，均已實現)：加權淨 IRR 19.1% / 1.77x",
+            "CHECC I (2025 年 11 月，$140M) 及 Canyon Residential Credit Strategies (2025 年 12 月) 尚處早期，未列示"
+          ]
+        },
+        "target": {
+          "en": "13–15% net",
+          "sc": "净 13–15%",
+          "tc": "淨 13–15%"
+        },
+        "ddLabel": {
+          "en": "Loss Rate",
+          "sc": "损失率",
+          "tc": "損失率"
+        },
+        "ddRaw": {
+          "en": "Annualized loss rate 0.01% across Canyon's asset-backed strategy since 2005",
+          "sc": "Canyon 资产支持策略 2005 年以来年化损失率 0.01%",
+          "tc": "Canyon 資產支持策略 2005 年以來年化損失率 0.01%"
+        },
+        "liq": {
+          "en": "Closed-end: 18-month investment + 3-year harvest",
+          "sc": "封闭式：投资期 18 个月 + 退出期 3 年",
+          "tc": "封閉式：投資期 18 個月 + 退出期 3 年"
+        },
+        "liqFull": {
+          "en": "Closed-end drawdown co-investment fund: capital called over the 18-month investment period; quarterly distributions;<br>3-year harvest after the investment period (+1 year at the GP's election); the GP aims to liquidate by the end of the harvest, so expected fund life is 4.5–5.5 years;<br>Management fee 1% on NAV; incentive fee 12.5% over an 8% soft hurdle, 100% GP catch-up (European waterfall)",
+          "sc": "封闭式 Drawdown 共同投资基金：于 18 个月投资期内缴款；按季派息；<br>投资期后为 3 年退出期 (GP 可选延长 1 年)；GP 力争于退出期结束前完成清算，预计基金存续 4.5–5.5 年；<br>管理费 1% (按 NAV)；业绩报酬 12.5%，软门槛 8%，100% GP catch-up (欧式瀑布)",
+          "tc": "封閉式 Drawdown 共同投資基金：於 18 個月投資期內繳款；按季派息；<br>投資期後為 3 年退出期 (GP 可選延長 1 年)；GP 力爭於退出期結束前完成清算，預計基金存續 4.5–5.5 年；<br>管理費 1% (按 NAV)；業績報酬 12.5%，軟門檻 8%，100% GP catch-up (歐式瀑布)"
+        },
+        "vintages": [
+          {
+            "n": "ABS Account #1",
+            "y": "2008",
+            "irr": 21.7,
+            "x": 2.47
+          },
+          {
+            "n": "ABS Account #2",
+            "y": "2009",
+            "irr": 11,
+            "x": 1.63
+          },
+          {
+            "n": "ABS Account #3",
+            "y": "2009",
+            "irr": 14,
+            "x": 1.73
+          },
+          {
+            "n": "Structured Assets Fund",
+            "y": "2011",
+            "irr": 27.4,
+            "x": 1.72
+          },
+          {
+            "n": "ABS Account #4",
+            "y": "2013",
+            "irr": 19.4,
+            "x": 1.29
+          }
+        ],
+        "note": {
+          "en": "Source: Canyon CHECC II investor presentation (Jun 2026): executive summary p3, asset-backed track record p4 (as of 2025/12/31), originator programs p7, terms p23; AID IC deck (Jul 2026). CHECC II is a new fund; the chart shows Canyon's earlier opportunistic asset-backed accounts and the Canyon Structured Assets Fund.",
+          "sc": "来源: Canyon CHECC II 投资者推介材料 (2026 年 6 月)——摘要 p3，资产支持业绩 p4 (截至 2025/12/31)，发起合作 p7，条款 p23；AID 投委会材料 (2026 年 7 月)。CHECC II 为新发基金；图表为 Canyon 此前的机会型资产支持账户及 Canyon Structured Assets Fund。",
+          "tc": "來源: Canyon CHECC II 投資者推介材料 (2026 年 6 月)——摘要 p3，資產支持績效 p4 (截至 2025/12/31)，發起合作 p7，條款 p23；AID 投委會材料 (2026 年 7 月)。CHECC II 為新發基金；圖表為 Canyon 此前的機會型資產支持帳戶及 Canyon Structured Assets Fund。"
+        },
+        "redact": [
+          "Canyon",
+          "CHECC",
+          "CRCS"
+        ]
       }
     ],
     "s-1795664256764": [
@@ -2330,7 +2886,494 @@
         "translated": true
       }
     ],
-    "s-1795700000000": [],
+    "s-1795700000000": [
+      {
+        "id": "custom-1795800000000-0",
+        "custom": true,
+        "vehicle": "private",
+        "hist": [],
+        "perf": [],
+        "redactAuto": false,
+        "translated": true,
+        "name": "BlackRock Growth Debt Fund (Kreos VIII)",
+        "mgr": {
+          "en": "BlackRock"
+        },
+        "tag": {
+          "en": "European Growth Debt · 10-Year Drawdown",
+          "sc": "欧洲成长型债权 · 10 年期 Drawdown",
+          "tc": "歐洲成長型債權 · 10 年期 Drawdown"
+        },
+        "inception": null,
+        "isNew": true,
+        "inceptionText": {
+          "en": "New fund (fundraising);<br>Kreos funds since 1999; current strategy since Kreos IV (2012)",
+          "sc": "新发基金 (募集中)；<br>Kreos 系列 1999 年起；现行策略自 Kreos IV (2012) 起",
+          "tc": "新發基金 (募集中)；<br>Kreos 系列 1999 年起；現行策略自 Kreos IV (2012) 起"
+        },
+        "aum": null,
+        "aumText": {
+          "en": "€2.0bn target",
+          "sc": "目标 €2.0bn",
+          "tc": "目標 €2.0bn"
+        },
+        "strategy": {
+          "en": "Senior-secured, mostly monthly-amortising loans (3–4 year terms) to sponsor-backed, high-growth European and Israeli technology and healthcare companies;<br>Extra return from fees, make-whole prepayments, warrants and structured equity; ~120–140 commitments across 100+ companies; no fund-level leverage;",
+          "sc": "向有 PE 背书、高增长的欧洲及以色列科技与医疗企业提供优先有抵押、多数按月摊还的贷款 (期限 3–4 年)；<br>另有费用、提前还款补偿、认股权证及结构化股权带来的额外回报；约 120–140 笔承诺、覆盖 100+ 家公司；基金层面不加杠杆；",
+          "tc": "向有 PE 背書、高成長的歐洲及以色列科技與醫療企業提供優先有抵押、多數按月攤還的貸款 (期限 3–4 年)；<br>另有費用、提前還款補償、認股權證及結構化股權帶來的額外回報；約 120–140 筆承諾、涵蓋 100+ 家公司；基金層面不加槓桿；"
+        },
+        "perfNotes": {
+          "en": [
+            "Fund targets: net IRR 12–14% (low to mid teens), gross IRR 18%+, net multiple 1.4x+",
+            "Kreos IV (2012): net IRR 11.1% / 1.32x, DPI 123%",
+            "Kreos V (2016): 11.9% / 1.35x, DPI 125%",
+            "Kreos VI (2019): 10.3% / 1.39x, DPI 90%",
+            "Kreos VII (2022): 17.0% / 1.31x, DPI 45%",
+            "Net IRRs restated at the new 1.25% fee; at the historic fees: 8.4% / 10.0% / 8.8% / 15.4%"
+          ],
+          "sc": [
+            "基金目标：净 IRR 12–14% (low to mid teens)，毛 IRR 18%+，净倍数 1.4x+",
+            "Kreos IV (2012)：净 IRR 11.1% / 1.32x，DPI 123%",
+            "Kreos V (2016)：11.9% / 1.35x，DPI 125%",
+            "Kreos VI (2019)：10.3% / 1.39x，DPI 90%",
+            "Kreos VII (2022)：17.0% / 1.31x，DPI 45%",
+            "净 IRR 已按新费率 1.25% 重算；按历史费率为 8.4% / 10.0% / 8.8% / 15.4%"
+          ],
+          "tc": [
+            "基金目標：淨 IRR 12–14% (low to mid teens)，毛 IRR 18%+，淨倍數 1.4x+",
+            "Kreos IV (2012)：淨 IRR 11.1% / 1.32x，DPI 123%",
+            "Kreos V (2016)：11.9% / 1.35x，DPI 125%",
+            "Kreos VI (2019)：10.3% / 1.39x，DPI 90%",
+            "Kreos VII (2022)：17.0% / 1.31x，DPI 45%",
+            "淨 IRR 已按新費率 1.25% 重算；按歷史費率為 8.4% / 10.0% / 8.8% / 15.4%"
+          ]
+        },
+        "target": {
+          "en": "12–14% net",
+          "sc": "净 12–14%",
+          "tc": "淨 12–14%"
+        },
+        "ddLabel": {
+          "en": "Loss Rate",
+          "sc": "损失率",
+          "tc": "損失率"
+        },
+        "ddRaw": {
+          "en": "Net loss rate 0.4% (Kreos IV to VII);<br>0.5% historically before the 2008–09 credit crunch losses, 1.1% including them",
+          "sc": "净损失率 0.4% (Kreos IV 至 VII)；<br>历史上扣除 2008–09 年信贷危机损失为 0.5%，计入则为 1.1%",
+          "tc": "淨損失率 0.4% (Kreos IV 至 VII)；<br>歷史上扣除 2008–09 年信貸危機損失為 0.5%，計入則為 1.1%"
+        },
+        "liq": {
+          "en": "Closed-end: 10-year term + 2×1-year extensions",
+          "sc": "封闭式：期限 10 年 + 2×1 年延展",
+          "tc": "封閉式：存續期 10 年 + 2×1 年延長"
+        },
+        "liqFull": {
+          "en": "Closed-end: 10-year fund life from first drawdown + 2×1-year extensions (LPAC approval); 4-year commitment period (+1 year with LPAC approval);<br>Management fee 1.25% on invested capital; carry 20% over a 7.0% preferred return, full catch-up; minimum €10M; EUR fund, USD-hedged feeders may be offered",
+          "sc": "封闭式：自首次提款起存续 10 年 + 2×1 年延展 (需 LPAC 批准)；承诺投资期 4 年 (经 LPAC 批准可 +1 年)；<br>管理费 1.25% (按已投资本)；业绩报酬 20%，门槛回报 7.0%，全额 catch-up；最低认购 €10M；欧元基金，或提供美元对冲 feeder",
+          "tc": "封閉式：自首次提款起存續 10 年 + 2×1 年延長 (需 LPAC 批准)；承諾投資期 4 年 (經 LPAC 批准可 +1 年)；<br>管理費 1.25% (按已投資本)；業績報酬 20%，門檻回報 7.0%，全額 catch-up；最低認購 €10M；歐元基金，或提供美元對沖 feeder"
+        },
+        "note": {
+          "en": "Source: BlackRock Growth Debt deck (Q3 2026): fund-level track record p27 and snapshot p8 (as of 2026/3/31), fund targets p43, indicative terms p44. Kreos VIII is a new fund with no returns yet; the figures are its predecessors.",
+          "sc": "来源: BlackRock Growth Debt deck (2026 Q3)——基金层面业绩 p27 及概览 p8 (截至 2026/3/31)，基金目标 p43，指示性条款 p44。Kreos VIII 为新发基金，尚无业绩；以上为前序基金数据。",
+          "tc": "來源: BlackRock Growth Debt deck (2026 Q3)——基金層面績效 p27 及概覽 p8 (截至 2026/3/31)，基金目標 p43，指示性條款 p44。Kreos VIII 為新發基金，尚無績效；以上為前序基金數據。"
+        },
+        "redact": [
+          "BlackRock",
+          "Kreos"
+        ],
+        "vintages": [
+          {
+            "n": "Kreos IV",
+            "y": "2012",
+            "irr": 11.1,
+            "x": 1.32,
+            "dpi": 1.23
+          },
+          {
+            "n": "Kreos V",
+            "y": "2016",
+            "irr": 11.9,
+            "x": 1.35,
+            "dpi": 1.25
+          },
+          {
+            "n": "Kreos VI",
+            "y": "2019",
+            "irr": 10.3,
+            "x": 1.39,
+            "dpi": 0.9
+          },
+          {
+            "n": "Kreos VII",
+            "y": "2022",
+            "irr": 17,
+            "x": 1.31,
+            "dpi": 0.45,
+            "live": true
+          }
+        ]
+      },
+      {
+        "id": "custom-1795800000000-1",
+        "custom": true,
+        "vehicle": "private",
+        "hist": [],
+        "perf": [],
+        "redactAuto": false,
+        "translated": true,
+        "name": "Oaktree Special Situations Fund IV",
+        "mgr": {
+          "en": "Oaktree"
+        },
+        "tag": {
+          "en": "Special Situations · Control-Oriented · 10-Year Drawdown",
+          "sc": "特殊机会 · 控制型 · 10 年期 Drawdown",
+          "tc": "特殊機會 · 控制型 · 10 年期 Drawdown"
+        },
+        "inception": null,
+        "isNew": true,
+        "inceptionText": {
+          "en": "New fund;<br>Special Situations funds since 2014; current team leading since 2016",
+          "sc": "新发基金；<br>Special Situations 系列 2014 年起；现任团队 2016 年起主导",
+          "tc": "新發基金；<br>Special Situations 系列 2014 年起；現任團隊 2016 年起主導"
+        },
+        "aum": 4.5,
+        "aumText": {
+          "en": "$4.5bn",
+          "sc": "$4.5bn",
+          "tc": "$4.5bn"
+        },
+        "strategy": {
+          "en": "Concentrated, control-oriented middle-market portfolio (EBITDA $15–100M+): 15–20 core investments across Structured Equity, Direct Equity and Distressed Debt;<br>Rescue financings, restructurings, partial monetizations and discounted debt bought to gain control; North America >80%, Australia <20%; aims for private-equity returns with credit-like risk, no fund leverage;",
+          "sc": "集中、控制型的中型企业组合 (EBITDA $15–100M+)：15–20 个核心投资，涵盖结构化股权、直接股权及困境债务；<br>救援融资、重组、部分变现，及折价买入债务以取得控制权；北美 >80%、澳洲 <20%；以类信用风险追求 PE 级回报，基金不加杠杆；",
+          "tc": "集中、控制型的中型企業組合 (EBITDA $15–100M+)：15–20 個核心投資，涵蓋結構化股權、直接股權及困境債務；<br>救援融資、重組、部分變現，及折價買入債務以取得控制權；北美 >80%、澳洲 <20%；以類信用風險追求 PE 級回報，基金不加槓桿；"
+        },
+        "perfNotes": {
+          "en": [
+            "Fund targets net IRR 17–24% and net MOC 1.8–2.2x, without leverage",
+            "SSF III (2022): net IRR 21.8% / 1.3x, 33% distributed",
+            "SSF II (2018): 26.7% / 1.9x, 100% distributed",
+            "SSF I / Principal Fund VI (2014): −0.9% / 0.9x",
+            "Principal V Continuation Fund (2019): 15.6% / 1.5x",
+            "All active funds 2014–2022: net IRR 15.6% / 1.5x (pro forma 15.1% / 1.4x); IRRs include a subscription line"
+          ],
+          "sc": [
+            "基金目标净 IRR 17–24%、净 MOC 1.8–2.2x，不使用杠杆",
+            "SSF III (2022)：净 IRR 21.8% / 1.3x，已分配 33%",
+            "SSF II (2018)：26.7% / 1.9x，已分配 100%",
+            "SSF I / Principal Fund VI (2014)：−0.9% / 0.9x",
+            "Principal V Continuation Fund (2019)：15.6% / 1.5x",
+            "全部在管基金 2014–2022：净 IRR 15.6% / 1.5x (pro forma 15.1% / 1.4x)；IRR 含认购信贷额度影响"
+          ],
+          "tc": [
+            "基金目標淨 IRR 17–24%、淨 MOC 1.8–2.2x，不使用槓桿",
+            "SSF III (2022)：淨 IRR 21.8% / 1.3x，已分配 33%",
+            "SSF II (2018)：26.7% / 1.9x，已分配 100%",
+            "SSF I / Principal Fund VI (2014)：−0.9% / 0.9x",
+            "Principal V Continuation Fund (2019)：15.6% / 1.5x",
+            "全部在管基金 2014–2022：淨 IRR 15.6% / 1.5x (pro forma 15.1% / 1.4x)；IRR 含認購信貸額度影響"
+          ]
+        },
+        "target": {
+          "en": "17–24% net",
+          "sc": "净 17–24%",
+          "tc": "淨 17–24%"
+        },
+        "ddLabel": {
+          "en": "Loss Ratio",
+          "sc": "损失比率",
+          "tc": "損失比率"
+        },
+        "ddRaw": {
+          "en": "Realized loss ratio: SSF III 0.0%, SSF II 1.5%, Principal V CF 1.3%, SSF I 9.4%",
+          "sc": "已实现损失比率：SSF III 0.0%，SSF II 1.5%，Principal V CF 1.3%，SSF I 9.4%",
+          "tc": "已實現損失比率：SSF III 0.0%，SSF II 1.5%，Principal V CF 1.3%，SSF I 9.4%"
+        },
+        "liq": {
+          "en": "Closed-end: 10-year term",
+          "sc": "封闭式：期限 10 年",
+          "tc": "封閉式：存續期 10 年"
+        },
+        "liqFull": {
+          "en": "Closed-end: 10 years from the start of the investment period (extendable); 5-year investment period;<br>Management fee on invested capital 1.60% for commitments under $150M; carry 20% over an 8% preferred return, 80/20 catch-up; ancillary fees fully offset the management fee; minimum $10M",
+          "sc": "封闭式：自投资期开始起 10 年 (可延展)；投资期 5 年；<br>管理费按已投资本，承诺 $150M 以下为 1.60%；业绩报酬 20%，门槛回报 8%，80/20 catch-up；附带费用全额抵减管理费；最低认购 $10M",
+          "tc": "封閉式：自投資期開始起 10 年 (可延長)；投資期 5 年；<br>管理費按已投資本，承諾 $150M 以下為 1.60%；業績報酬 20%，門檻回報 8%，80/20 catch-up；附帶費用全額抵減管理費；最低認購 $10M"
+        },
+        "note": {
+          "en": "Source: Oaktree Special Situations Fund IV deck (as of 2026/3/31): strategy overview p9, active funds performance p20, key terms p39, full track record p54. Fee rates for commitments from $150M up are left out.",
+          "sc": "来源: Oaktree Special Situations Fund IV deck (截至 2026/3/31)——策略概览 p9，在管基金业绩 p20，主要条款 p39，完整业绩 p54。$150M 及以上承诺额的费率未列出。",
+          "tc": "來源: Oaktree Special Situations Fund IV deck (截至 2026/3/31)——策略概覽 p9，在管基金績效 p20，主要條款 p39，完整績效 p54。$150M 及以上承諾額的費率未列出。"
+        },
+        "redact": [
+          "Oaktree",
+          "SSF"
+        ],
+        "vintages": [
+          {
+            "n": "SSF I / Principal VI",
+            "y": "2014",
+            "irr": -0.9,
+            "x": 0.9
+          },
+          {
+            "n": "SSF II",
+            "y": "2018",
+            "irr": 26.7,
+            "x": 1.9
+          },
+          {
+            "n": "Principal V CF",
+            "y": "2019",
+            "irr": 15.6,
+            "x": 1.5
+          },
+          {
+            "n": "SSF III",
+            "y": "2022",
+            "irr": 21.8,
+            "x": 1.3,
+            "live": true
+          }
+        ]
+      },
+      {
+        "id": "custom-1795800000000-2",
+        "custom": true,
+        "vehicle": "private",
+        "hist": [],
+        "perf": [],
+        "redactAuto": false,
+        "translated": true,
+        "name": "Man Opportunistic Credit Fund",
+        "mgr": {
+          "en": "Man Group"
+        },
+        "tag": {
+          "en": "Opportunistic Credit · Drawdown",
+          "sc": "机会型信贷 · Drawdown",
+          "tc": "機會型信貸 · Drawdown"
+        },
+        "inception": null,
+        "isNew": true,
+        "inceptionText": {
+          "en": "Fund III in market;<br>first fund (BHOC I) launched 2020/4",
+          "sc": "Fund III 募集中；<br>首只基金 (BHOC I) 2020/4 成立",
+          "tc": "Fund III 募集中；<br>首隻基金 (BHOC I) 2020/4 成立"
+        },
+        "aum": null,
+        "aumText": {
+          "en": "Not disclosed",
+          "sc": "未披露",
+          "tc": "未披露"
+        },
+        "strategy": {
+          "en": "Flexible credit for middle-market companies, rotating across rescue / exit financing, dislocated and influence positions, strategic capital and litigation-backed lending as the credit cycle moves;<br>Part of Man Group's $22bn US private credit platform ($2.3bn in opportunistic credit);",
+          "sc": "为中型企业提供灵活信贷，随信用周期在救援 / 退出融资、错配及可施加影响的头寸、策略性资本及诉讼支持贷款之间轮动；<br>属 Man Group $22bn 美国私募信贷平台 (机会型信贷 $2.3bn)；",
+          "tc": "為中型企業提供靈活信貸，隨信用週期在救援 / 退出融資、錯配及可施加影響的部位、策略性資本及訴訟支持貸款之間輪動；<br>屬 Man Group $22bn 美國私募信貸平台 (機會型信貸 $2.3bn)；"
+        },
+        "perfNotes": {
+          "en": [
+            "BHOC I (2020/4): net fund IRR 15.9% / net MOIC 2.17x",
+            "BHOC II (2022/8): net fund IRR 24.4% / 1.51x",
+            "BHOC II net IRR by year: 2023 12.4%, 2024 12.3%, 2025 19.7%, 2Q 2026 24.4%",
+            "BHOC I net IRR by year: 2020 45.4%, 2021 22.7%, 2022 9.5%, 2023 8.0%, 2024 9.2%, 2025 10.5%, 2Q 2026 15.8%",
+            "Fund III terms and fees are not in the Q2 2026 deck"
+          ],
+          "sc": [
+            "BHOC I (2020/4)：基金净 IRR 15.9% / 净 MOIC 2.17x",
+            "BHOC II (2022/8)：基金净 IRR 24.4% / 1.51x",
+            "BHOC II 历年净 IRR：2023 12.4%，2024 12.3%，2025 19.7%，2026 Q2 24.4%",
+            "BHOC I 历年净 IRR：2020 45.4%，2021 22.7%，2022 9.5%，2023 8.0%，2024 9.2%，2025 10.5%，2026 Q2 15.8%",
+            "2026 Q2 deck 未列出 Fund III 条款及费用"
+          ],
+          "tc": [
+            "BHOC I (2020/4)：基金淨 IRR 15.9% / 淨 MOIC 2.17x",
+            "BHOC II (2022/8)：基金淨 IRR 24.4% / 1.51x",
+            "BHOC II 歷年淨 IRR：2023 12.4%，2024 12.3%，2025 19.7%，2026 Q2 24.4%",
+            "BHOC I 歷年淨 IRR：2020 45.4%，2021 22.7%，2022 9.5%，2023 8.0%，2024 9.2%，2025 10.5%，2026 Q2 15.8%",
+            "2026 Q2 deck 未列出 Fund III 條款及費用"
+          ]
+        },
+        "target": {
+          "en": "Not stated",
+          "sc": "未注明",
+          "tc": "未註明"
+        },
+        "ddLabel": {
+          "en": "Drawdown",
+          "sc": "回撤",
+          "tc": "回撤"
+        },
+        "ddRaw": "",
+        "liq": {
+          "en": "Closed-end drawdown",
+          "sc": "封闭式 Drawdown",
+          "tc": "封閉式 Drawdown"
+        },
+        "liqFull": {
+          "en": "Closed-end drawdown fund;<br>Term, fees and minimum for Fund III are not given in the deck",
+          "sc": "封闭式 Drawdown 基金；<br>deck 未提供 Fund III 的期限、费用及最低认购额",
+          "tc": "封閉式 Drawdown 基金；<br>deck 未提供 Fund III 的存續期、費用及最低認購額"
+        },
+        "note": {
+          "en": "Source: Man Opportunistic Credit deck (as of 2026/6/30): platform p6, BHOC II statistics and net performance p23, BHOC I p28, IRR progression p32. BHOC = Bardin Hill Opportunistic Credit, the predecessor funds.",
+          "sc": "来源: Man Opportunistic Credit deck (截至 2026/6/30)——平台 p6，BHOC II 数据及净业绩 p23，BHOC I p28，IRR 走势 p32。BHOC = Bardin Hill Opportunistic Credit，即前序基金。",
+          "tc": "來源: Man Opportunistic Credit deck (截至 2026/6/30)——平台 p6，BHOC II 數據及淨績效 p23，BHOC I p28，IRR 走勢 p32。BHOC = Bardin Hill Opportunistic Credit，即前序基金。"
+        },
+        "redact": [
+          "Man Group",
+          "Man Opportunistic",
+          "Bardin Hill",
+          "BHOC"
+        ],
+        "vintages": [
+          {
+            "n": "BHOC I",
+            "y": "2020",
+            "irr": 15.9,
+            "x": 2.17,
+            "dpi": 0.67
+          },
+          {
+            "n": "BHOC II",
+            "y": "2022",
+            "irr": 24.4,
+            "x": 1.51,
+            "live": true
+          }
+        ]
+      },
+      {
+        "id": "custom-1795800000000-3",
+        "custom": true,
+        "vehicle": "private",
+        "hist": [],
+        "perf": [],
+        "redactAuto": false,
+        "translated": true,
+        "name": "Golub Capital Credit Opportunities GEMS Fund 7 (GEMS 7)",
+        "mgr": {
+          "en": "Golub Capital"
+        },
+        "tag": {
+          "en": "Opportunistic Credit · 8-Year Drawdown",
+          "sc": "机会型信贷 · 8 年期 Drawdown",
+          "tc": "機會型信貸 · 8 年期 Drawdown"
+        },
+        "inception": "2026-07",
+        "isNew": true,
+        "inceptionText": {
+          "en": "First close 2026/7/1;<br>GEMS series since 2007/11",
+          "sc": "首次关账 2026/7/1；<br>GEMS 系列 2007/11 起",
+          "tc": "首次關帳 2026/7/1；<br>GEMS 系列 2007/11 起"
+        },
+        "aum": null,
+        "aumText": {
+          "en": "Not disclosed",
+          "sc": "未披露",
+          "tc": "未披露"
+        },
+        "strategy": {
+          "en": "Credit and credit-related investments that complement Golub's direct lending, using its sponsor relationships and origination;<br>Prior-fund mix: 124 investments, ~$19M average hold, 41% DLCO / 36% CS / 18% CLO / 5% BSL; upside from convertible features and buying below par; not levered;",
+          "sc": "投资与 Golub 直接贷款互补的信贷及信贷相关工具，借助其 PE 关系与 origination 能力；<br>前序基金组合：124 笔投资，平均持仓约 $19M，41% DLCO / 36% CS / 18% CLO / 5% BSL；可转换条款及折价买入带来额外回报；不加杠杆；",
+          "tc": "投資與 Golub 直接貸款互補的信貸及信貸相關工具，借助其 PE 關係與 origination 能力；<br>前序基金組合：124 筆投資，平均持倉約 $19M，41% DLCO / 36% CS / 18% CLO / 5% BSL；可轉換條款及折價買入帶來額外回報；不加槓桿；"
+        },
+        "perfNotes": {
+          "en": [
+            "Fund targets a low-to-mid-teens IRR; expected minimum 1.5% quarterly distributions once ramped",
+            "Inception-to-date net investor IRR (2026/3/31): GEMS 6 (2023) 14.5%, GEMS 6i (2022) 14.4%",
+            "GEMS 5 / 5i (2020) 7.6%, GEMS 4 (2015) 23.0%, GEMS 3 (2010) 14.3%",
+            "GEMS 2 (2008) 37.0%, GEMS 1 (2007) 14.5%",
+            "Weighted average across GEMS 1–6: 13.6%"
+          ],
+          "sc": [
+            "基金目标 IRR 十几个百分点 (low to mid teens)；建仓完成后预期每季至少分派 1.5%",
+            "成立以来投资者净 IRR (2026/3/31)：GEMS 6 (2023) 14.5%，GEMS 6i (2022) 14.4%",
+            "GEMS 5 / 5i (2020) 7.6%，GEMS 4 (2015) 23.0%，GEMS 3 (2010) 14.3%",
+            "GEMS 2 (2008) 37.0%，GEMS 1 (2007) 14.5%",
+            "GEMS 1–6 加权平均：13.6%"
+          ],
+          "tc": [
+            "基金目標 IRR 十幾個百分點 (low to mid teens)；建倉完成後預期每季至少分派 1.5%",
+            "成立以來投資者淨 IRR (2026/3/31)：GEMS 6 (2023) 14.5%，GEMS 6i (2022) 14.4%",
+            "GEMS 5 / 5i (2020) 7.6%，GEMS 4 (2015) 23.0%，GEMS 3 (2010) 14.3%",
+            "GEMS 2 (2008) 37.0%，GEMS 1 (2007) 14.5%",
+            "GEMS 1–6 加權平均：13.6%"
+          ]
+        },
+        "target": {
+          "en": "Low-to-mid teens",
+          "sc": "十几个百分点",
+          "tc": "十幾個百分點"
+        },
+        "ddLabel": {
+          "en": "Drawdown",
+          "sc": "回撤",
+          "tc": "回撤"
+        },
+        "ddRaw": "",
+        "liq": {
+          "en": "Closed-end: 8-year term + extensions",
+          "sc": "封闭式：期限 8 年 + 延展",
+          "tc": "封閉式：存續期 8 年 + 延長"
+        },
+        "liqFull": {
+          "en": "Closed-end: 8 years from final close + 2×1-year GP extensions + 1 more with Advisory Committee consent; 4-year investment period; 18-month fundraising;<br>Management fee 1% on the fair value of assets (excluding cash); incentive fee 15% over an 8% preferred return, 100% catch-up; GP commitment at least the lesser of 10% and $75M",
+          "sc": "封闭式：自最终关账起 8 年 + GP 可延 2×1 年 + 经顾问委员会同意再延 1 年；投资期 4 年；募集期 18 个月；<br>管理费 1% (按资产公允价值，不含现金)；业绩报酬 15%，门槛回报 8%，100% catch-up；GP 出资不低于总承诺 10% 与 $75M 之较低者",
+          "tc": "封閉式：自最終關帳起 8 年 + GP 可延 2×1 年 + 經顧問委員會同意再延 1 年；投資期 4 年；募集期 18 個月；<br>管理費 1% (按資產公允價值，不含現金)；業績報酬 15%，門檻回報 8%，100% catch-up；GP 出資不低於總承諾 10% 與 $75M 之較低者"
+        },
+        "note": {
+          "en": "Source: Golub GEMS 7 deck (Q2 2026): GCCO track record p10 (as of 2026/3/31), summary of terms p24. GEMS 7 is a new fund; the figures are the earlier GEMS funds.",
+          "sc": "来源: Golub GEMS 7 deck (2026 Q2)——GCCO 业绩 p10 (截至 2026/3/31)，条款摘要 p24。GEMS 7 为新发基金；以上为此前 GEMS 基金数据。",
+          "tc": "來源: Golub GEMS 7 deck (2026 Q2)——GCCO 績效 p10 (截至 2026/3/31)，條款摘要 p24。GEMS 7 為新發基金；以上為此前 GEMS 基金數據。"
+        },
+        "redact": [
+          "Golub",
+          "GEMS",
+          "GCCO"
+        ],
+        "vintages": [
+          {
+            "n": "GEMS 1",
+            "y": "2007",
+            "irr": 14.5
+          },
+          {
+            "n": "GEMS 2",
+            "y": "2008",
+            "irr": 37
+          },
+          {
+            "n": "GEMS 3",
+            "y": "2010",
+            "irr": 14.3
+          },
+          {
+            "n": "GEMS 4",
+            "y": "2015",
+            "irr": 23
+          },
+          {
+            "n": "GEMS 5",
+            "y": "2020",
+            "irr": 7.6
+          },
+          {
+            "n": "GEMS 6i",
+            "y": "2022",
+            "irr": 14.4,
+            "live": true
+          },
+          {
+            "n": "GEMS 6",
+            "y": "2023",
+            "irr": 14.5,
+            "live": true
+          }
+        ]
+      }
+    ],
     "monthly": [
       {
         "id": "custom-1795710000000-0",
@@ -2485,6 +3528,1188 @@
         ],
         "redactAuto": false,
         "translated": true
+      }
+    ],
+    "s-1795800000001": [
+      {
+        "id": "custom-1795800000000-4",
+        "custom": true,
+        "vehicle": "private",
+        "hist": [],
+        "perf": [],
+        "redactAuto": false,
+        "translated": true,
+        "name": "Bain Capital Global Special Situations Fund III (GSS III)",
+        "mgr": {
+          "en": "Bain Capital"
+        },
+        "tag": {
+          "en": "Special Situations · Corporate + Asset-Backed · 8-Year Drawdown",
+          "sc": "特殊机会 · 企业 + 资产支持 · 8 年期 Drawdown",
+          "tc": "特殊機會 · 企業 + 資產支持 · 8 年期 Drawdown"
+        },
+        "inception": null,
+        "isNew": true,
+        "inceptionText": {
+          "en": "New fund;<br>GSS I launched 2019/7",
+          "sc": "新发基金；<br>GSS I 2019/7 成立",
+          "tc": "新發基金；<br>GSS I 2019/7 成立"
+        },
+        "aum": 4.5,
+        "aumText": {
+          "en": "$4.5bn target",
+          "sc": "目标 $4.5bn",
+          "tc": "目標 $4.5bn"
+        },
+        "strategy": {
+          "en": "Flexible capital solutions in two sleeves: Corporate (structured preferreds, debt with warrants, convertibles, structured secondaries, rescue financing) and Asset-Backed (platform JVs, discounted assets, asset refinancings);<br>Deployed across growth, inflection and defensive situations;",
+          "sc": "两大板块的灵活资本解决方案：企业类 (结构化优先股、附认股权证债务、可转债、结构化二手、救援融资) 与资产支持类 (平台合资、折价资产、资产再融资)；<br>覆盖成长、拐点及防御型情形；",
+          "tc": "兩大板塊的靈活資本解決方案：企業類 (結構化優先股、附認股權證債務、可轉債、結構化二手、救援融資) 與資產支持類 (平台合資、折價資產、資產再融資)；<br>涵蓋成長、拐點及防禦型情形；"
+        },
+        "perfNotes": {
+          "en": [
+            "Fund targets net IRR 13–16%",
+            "GSS I (2019, harvesting): net IRR 13.1% / 1.8x, DPI 0.6x (gross 16.6% / 2.2x); estimated final net 12–14% / 1.9–2.1x",
+            "GSS II (2022, investing): net IRR 12.9% / 1.3x (gross 18.6% / 1.4x); estimated final net 15–17% / 1.9–2.1x",
+            "Figures as of 2026/6/30, highest fee-paying class"
+          ],
+          "sc": [
+            "基金目标净 IRR 13–16%",
+            "GSS I (2019，退出期)：净 IRR 13.1% / 1.8x，DPI 0.6x (毛 16.6% / 2.2x)；预计最终净 12–14% / 1.9–2.1x",
+            "GSS II (2022，投资期)：净 IRR 12.9% / 1.3x (毛 18.6% / 1.4x)；预计最终净 15–17% / 1.9–2.1x",
+            "数据截至 2026/6/30，按最高费率份额类别"
+          ],
+          "tc": [
+            "基金目標淨 IRR 13–16%",
+            "GSS I (2019，退出期)：淨 IRR 13.1% / 1.8x，DPI 0.6x (毛 16.6% / 2.2x)；預計最終淨 12–14% / 1.9–2.1x",
+            "GSS II (2022，投資期)：淨 IRR 12.9% / 1.3x (毛 18.6% / 1.4x)；預計最終淨 15–17% / 1.9–2.1x",
+            "數據截至 2026/6/30，按最高費率份額類別"
+          ]
+        },
+        "target": {
+          "en": "13–16% net",
+          "sc": "净 13–16%",
+          "tc": "淨 13–16%"
+        },
+        "ddLabel": {
+          "en": "Drawdown",
+          "sc": "回撤",
+          "tc": "回撤"
+        },
+        "ddRaw": "",
+        "liq": {
+          "en": "Closed-end: 8-year term + 2×1-year extensions",
+          "sc": "封闭式：期限 8 年 + 2×1 年延展",
+          "tc": "封閉式：存續期 8 年 + 2×1 年延長"
+        },
+        "liqFull": {
+          "en": "Closed-end: 8 years from final close + 2 optional 1-year extensions; 4-year investment period (extendable with Advisory Board approval);<br>Management fee 1.50% of asset value; carry 20% after an 8% preferred return, 100% catch-up; first-close, size-based and consultant discounts",
+          "sc": "封闭式：自最终关账起 8 年 + 2 次可选 1 年延展；投资期 4 年 (经顾问委员会批准可延长)；<br>管理费 1.50% (按资产价值)；业绩报酬 20%，门槛回报 8%，100% catch-up；设首次关账、规模及顾问汇总折扣",
+          "tc": "封閉式：自最終關帳起 8 年 + 2 次可選 1 年延長；投資期 4 年 (經顧問委員會批准可延長)；<br>管理費 1.50% (按資產價值)；業績報酬 20%，門檻回報 8%，100% catch-up；設首次關帳、規模及顧問匯總折扣"
+        },
+        "note": {
+          "en": "Source: Bain Capital GSS III deck (Q2 2026): strategy overview p6, performance summary p9 (as of 2026/6/30), key terms p43, fund history p46. GSS III is a new fund; the figures are GSS I and II.",
+          "sc": "来源: Bain Capital GSS III deck (2026 Q2)——策略概览 p6，业绩摘要 p9 (截至 2026/6/30)，主要条款 p43，基金历史 p46。GSS III 为新发基金；以上为 GSS I 及 II 数据。",
+          "tc": "來源: Bain Capital GSS III deck (2026 Q2)——策略概覽 p6，績效摘要 p9 (截至 2026/6/30)，主要條款 p43，基金歷史 p46。GSS III 為新發基金；以上為 GSS I 及 II 數據。"
+        },
+        "redact": [
+          "Bain Capital",
+          "GSS"
+        ],
+        "vintages": [
+          {
+            "n": "GSS I",
+            "y": "2019",
+            "irr": 13.1,
+            "x": 1.8,
+            "dpi": 0.6
+          },
+          {
+            "n": "GSS II",
+            "y": "2022",
+            "irr": 12.9,
+            "x": 1.3,
+            "live": true
+          }
+        ]
+      }
+    ],
+    "s-1795800000002": [
+      {
+        "id": "custom-1795800000000-5",
+        "custom": true,
+        "vehicle": "private",
+        "hist": [],
+        "perf": [],
+        "redactAuto": false,
+        "translated": true,
+        "name": "LGT Crown Global Secondaries VII (CGS VII)",
+        "mgr": {
+          "en": "LGT Capital Partners"
+        },
+        "tag": {
+          "en": "Global PE Secondaries · LP + GP-Led · 10-Year Drawdown",
+          "sc": "全球 PE 二手份额 · LP + GP 主导 · 10 年期 Drawdown",
+          "tc": "全球 PE 二手份額 · LP + GP 主導 · 10 年期 Drawdown"
+        },
+        "inception": null,
+        "isNew": true,
+        "inceptionText": {
+          "en": "New fund;<br>Crown secondaries programme since 1998",
+          "sc": "新发基金；<br>Crown 二手份额项目 1998 年起",
+          "tc": "新發基金；<br>Crown 二手份額項目 1998 年起"
+        },
+        "aum": null,
+        "aumText": {
+          "en": "Not disclosed",
+          "sc": "未披露",
+          "tc": "未披露"
+        },
+        "strategy": {
+          "en": "Multi-asset secondaries: LP stakes 40–60% / GP-leds 40–60%; buyout 75–85%, growth 10–15%, venture 5–10%;<br>Europe 35–45%, North America 35–45%, Asia 10–20%; 100+ transactions over 1,500+ companies expected; small and mid-market focus (~70% of deals ≤ USD 100M); unlevered;",
+          "sc": "多元二手份额：LP 份额 40–60% / GP 主导交易 40–60%；并购 75–85%，成长 10–15%，创投 5–10%；<br>欧洲 35–45%，北美 35–45%，亚洲 10–20%；预计 100+ 笔交易、覆盖 1,500+ 家公司；聚焦中小型市场 (约 70% 交易 ≤ USD 100M)；不加杠杆；",
+          "tc": "多元二手份額：LP 份額 40–60% / GP 主導交易 40–60%；併購 75–85%，成長 10–15%，創投 5–10%；<br>歐洲 35–45%，北美 35–45%，亞洲 10–20%；預計 100+ 筆交易、涵蓋 1,500+ 家公司；聚焦中小型市場 (約 70% 交易 ≤ USD 100M)；不加槓桿；"
+        },
+        "perfNotes": {
+          "en": [
+            "Net IRR / net TVPI / net DPI (2026/6/30):",
+            "CGS II (2009): 17.9% / 1.8x / 1.8x",
+            "CGS III (2012): 11.8% / 1.6x / 1.4x",
+            "CGS IV (2017): 15.8% / 1.7x / 1.2x",
+            "CGS V (2021): 14.2% / 1.5x / 0.5x",
+            "CGS VI (2024): 33.5% / 1.3x / 0.0x (early)",
+            "Realized secondary transactions 1998–2008: 19.2%"
+          ],
+          "sc": [
+            "净 IRR / 净 TVPI / 净 DPI (2026/6/30)：",
+            "CGS II (2009)：17.9% / 1.8x / 1.8x",
+            "CGS III (2012)：11.8% / 1.6x / 1.4x",
+            "CGS IV (2017)：15.8% / 1.7x / 1.2x",
+            "CGS V (2021)：14.2% / 1.5x / 0.5x",
+            "CGS VI (2024)：33.5% / 1.3x / 0.0x (早期)",
+            "1998–2008 已实现二手交易：19.2%"
+          ],
+          "tc": [
+            "淨 IRR / 淨 TVPI / 淨 DPI (2026/6/30)：",
+            "CGS II (2009)：17.9% / 1.8x / 1.8x",
+            "CGS III (2012)：11.8% / 1.6x / 1.4x",
+            "CGS IV (2017)：15.8% / 1.7x / 1.2x",
+            "CGS V (2021)：14.2% / 1.5x / 0.5x",
+            "CGS VI (2024)：33.5% / 1.3x / 0.0x (早期)",
+            "1998–2008 已實現二手交易：19.2%"
+          ]
+        },
+        "target": {
+          "en": "Not stated",
+          "sc": "未注明",
+          "tc": "未註明"
+        },
+        "ddLabel": {
+          "en": "Loss Rate",
+          "sc": "损失率",
+          "tc": "損失率"
+        },
+        "ddRaw": {
+          "en": "Dollar loss rate below 1% across 500+ secondary transactions since 1998",
+          "sc": "1998 年以来 500+ 笔二手交易的金额损失率低于 1%",
+          "tc": "1998 年以來 500+ 筆二手交易的金額損失率低於 1%"
+        },
+        "liq": {
+          "en": "Closed-end: 10-year term + 3×1-year extensions",
+          "sc": "封闭式：期限 10 年 + 3×1 年延展",
+          "tc": "封閉式：存續期 10 年 + 3×1 年延長"
+        },
+        "liqFull": {
+          "en": "Closed-end: 10-year term + 3 possible 1-year extensions; 5-year commitment period from the first capital call;<br>Performance fee 12.5% after return of capital and an 8% p.a. hurdle, 100% catch-up",
+          "sc": "封闭式：期限 10 年 + 最多 3 次 1 年延展；自首次缴款起承诺期 5 年；<br>业绩报酬 12.5%，在返还本金及 8% 年化门槛之后，100% catch-up",
+          "tc": "封閉式：存續期 10 年 + 最多 3 次 1 年延長；自首次繳款起承諾期 5 年；<br>業績報酬 12.5%，在返還本金及 8% 年化門檻之後，100% catch-up"
+        },
+        "classes": {
+          "en": {
+            "head": [
+              "Management Fee",
+              "USD 5–50M",
+              "Above USD 50M"
+            ],
+            "rows": [
+              [
+                "Year 1 (on commitments)",
+                "0.75%",
+                "0.60%"
+              ],
+              [
+                "Year 2 (on commitments)",
+                "1.00%",
+                "0.80%"
+              ],
+              [
+                "Years 3–7 (on commitments)",
+                "1.25%",
+                "1.00%"
+              ],
+              [
+                "Years 8+ (on NAV)",
+                "1.25%",
+                "1.00%"
+              ]
+            ]
+          },
+          "sc": {
+            "head": [
+              "管理费",
+              "USD 5–50M",
+              "USD 50M 以上"
+            ],
+            "rows": [
+              [
+                "第 1 年 (按认购额)",
+                "0.75%",
+                "0.60%"
+              ],
+              [
+                "第 2 年 (按认购额)",
+                "1.00%",
+                "0.80%"
+              ],
+              [
+                "第 3–7 年 (按认购额)",
+                "1.25%",
+                "1.00%"
+              ],
+              [
+                "第 8 年起 (按 NAV)",
+                "1.25%",
+                "1.00%"
+              ]
+            ]
+          },
+          "tc": {
+            "head": [
+              "管理費",
+              "USD 5–50M",
+              "USD 50M 以上"
+            ],
+            "rows": [
+              [
+                "第 1 年 (按認購額)",
+                "0.75%",
+                "0.60%"
+              ],
+              [
+                "第 2 年 (按認購額)",
+                "1.00%",
+                "0.80%"
+              ],
+              [
+                "第 3–7 年 (按認購額)",
+                "1.25%",
+                "1.00%"
+              ],
+              [
+                "第 8 年起 (按 NAV)",
+                "1.25%",
+                "1.00%"
+              ]
+            ]
+          }
+        },
+        "classesKeepText": true,
+        "note": {
+          "en": "Source: LGT CGS VII deck (Q3 2026): strategy p11, track record by fund p12 (as of 2026/6/30), terms and fee schedule p29. CGS VII is a new fund; the figures are earlier CGS funds, share class A.",
+          "sc": "来源: LGT CGS VII deck (2026 Q3)——策略 p11，各基金业绩 p12 (截至 2026/6/30)，条款及费率 p29。CGS VII 为新发基金；以上为此前 CGS 基金 (A 类份额) 数据。",
+          "tc": "來源: LGT CGS VII deck (2026 Q3)——策略 p11，各基金績效 p12 (截至 2026/6/30)，條款及費率 p29。CGS VII 為新發基金；以上為此前 CGS 基金 (A 類份額) 數據。"
+        },
+        "redact": [
+          "LGT",
+          "Crown",
+          "CGS"
+        ],
+        "vintages": [
+          {
+            "n": "CGS II",
+            "y": "2009",
+            "irr": 17.9,
+            "x": 1.8,
+            "dpi": 1.8
+          },
+          {
+            "n": "CGS III",
+            "y": "2012",
+            "irr": 11.8,
+            "x": 1.6,
+            "dpi": 1.4
+          },
+          {
+            "n": "CGS IV",
+            "y": "2017",
+            "irr": 15.8,
+            "x": 1.7,
+            "dpi": 1.2
+          },
+          {
+            "n": "CGS V",
+            "y": "2021",
+            "irr": 14.2,
+            "x": 1.5,
+            "dpi": 0.5,
+            "live": true
+          },
+          {
+            "n": "CGS VI",
+            "y": "2024",
+            "irr": 33.5,
+            "x": 1.3,
+            "dpi": 0,
+            "live": true
+          }
+        ]
+      },
+      {
+        "id": "custom-1795800000000-6",
+        "custom": true,
+        "vehicle": "private",
+        "hist": [],
+        "perf": [],
+        "redactAuto": false,
+        "translated": true,
+        "name": "Goldman Sachs Industry Ventures Secondary XI",
+        "mgr": {
+          "en": "Goldman Sachs"
+        },
+        "tag": {
+          "en": "Venture Secondaries · Direct / LP / GP-Led · 10-Year Drawdown",
+          "sc": "创投二手份额 · 直接 / LP / GP 主导 · 10 年期 Drawdown",
+          "tc": "創投二手份額 · 直接 / LP / GP 主導 · 10 年期 Drawdown"
+        },
+        "inception": null,
+        "isNew": true,
+        "inceptionText": {
+          "en": "New fund;<br>Industry Ventures secondaries since 2002",
+          "sc": "新发基金；<br>Industry Ventures 二手份额 2002 年起",
+          "tc": "新發基金；<br>Industry Ventures 二手份額 2002 年起"
+        },
+        "aum": 2.5,
+        "aumText": {
+          "en": "$2.5bn target",
+          "sc": "目标 $2.5bn",
+          "tc": "目標 $2.5bn"
+        },
+        "strategy": {
+          "en": "Venture secondaries split 1/3 direct, 1/3 LP and 1/3 GP-led: scaled late-stage VC and growth companies ($20–500M+ revenue, 30–40%+ growth) bought at 10–50% discounts;<br>80%+ US; $20–200M deal size;",
+          "sc": "创投二手份额，直接 / LP / GP 主导各占 1/3：以 10–50% 折价买入已具规模的后期 VC 及成长型公司 (收入 $20–500M+，增速 30–40%+)；<br>80%+ 在美国；单笔 $20–200M；",
+          "tc": "創投二手份額，直接 / LP / GP 主導各佔 1/3：以 10–50% 折價買入已具規模的後期 VC 及成長型公司 (收入 $20–500M+，增速 30–40%+)；<br>80%+ 在美國；單筆 $20–200M；"
+        },
+        "perfNotes": {
+          "en": [
+            "Fund targets 15%+ net",
+            "Net IRR / net multiple (2026/3/31): Secondary V (2008) 29.3% / 2.9x; VI (2011) 7.9% / 1.4x; V-A (2011) 12.7% / 1.7x",
+            "Secondary VII (2013) 15.7% / 1.9x (DPI 179%); VIII (2017) 20.7% / 1.9x",
+            "Secondary IX (2021) 9.9% / 1.4x; X (2024) 58.8% / 1.7x (early)",
+            "All secondary funds: net IRR 17.5% / 1.8x, DPI 92%; the funds use a credit line"
+          ],
+          "sc": [
+            "基金目标净回报 15%+",
+            "净 IRR / 净倍数 (2026/3/31)：Secondary V (2008) 29.3% / 2.9x；VI (2011) 7.9% / 1.4x；V-A (2011) 12.7% / 1.7x",
+            "Secondary VII (2013) 15.7% / 1.9x (DPI 179%)；VIII (2017) 20.7% / 1.9x",
+            "Secondary IX (2021) 9.9% / 1.4x；X (2024) 58.8% / 1.7x (早期)",
+            "全部二手基金：净 IRR 17.5% / 1.8x，DPI 92%；基金使用信贷额度"
+          ],
+          "tc": [
+            "基金目標淨回報 15%+",
+            "淨 IRR / 淨倍數 (2026/3/31)：Secondary V (2008) 29.3% / 2.9x；VI (2011) 7.9% / 1.4x；V-A (2011) 12.7% / 1.7x",
+            "Secondary VII (2013) 15.7% / 1.9x (DPI 179%)；VIII (2017) 20.7% / 1.9x",
+            "Secondary IX (2021) 9.9% / 1.4x；X (2024) 58.8% / 1.7x (早期)",
+            "全部二手基金：淨 IRR 17.5% / 1.8x，DPI 92%；基金使用信貸額度"
+          ]
+        },
+        "target": {
+          "en": "15%+ net",
+          "sc": "净 15%+",
+          "tc": "淨 15%+"
+        },
+        "ddLabel": {
+          "en": "Drawdown",
+          "sc": "回撤",
+          "tc": "回撤"
+        },
+        "ddRaw": "",
+        "liq": {
+          "en": "Closed-end: 10-year term + 2×1-year extensions",
+          "sc": "封闭式：期限 10 年 + 2×1 年延展",
+          "tc": "封閉式：存續期 10 年 + 2×1 年延長"
+        },
+        "liqFull": {
+          "en": "Closed-end: 10 years from initial close + 2×1-year extensions with advisory committee consent; 5-year investment period;<br>Management fee 1.5% of commitments during the investment period, then 1.5% of remaining invested capital; carry at the investor's choice: 15% with no priority return, or 17.5% with a 6% priority return; GP commitment 2% up to $50M",
+          "sc": "封闭式：自首次关账起 10 年 + 经顾问委员会同意 2×1 年延展；投资期 5 年；<br>管理费：投资期内按承诺额 1.5%，其后按剩余已投资本 1.5%；业绩报酬由投资者选择：15% 无优先回报，或 17.5% 附 6% 优先回报；GP 出资 2%，上限 $50M",
+          "tc": "封閉式：自首次關帳起 10 年 + 經顧問委員會同意 2×1 年延長；投資期 5 年；<br>管理費：投資期內按承諾額 1.5%，其後按剩餘已投資本 1.5%；業績報酬由投資者選擇：15% 無優先回報，或 17.5% 附 6% 優先回報；GP 出資 2%，上限 $50M"
+        },
+        "note": {
+          "en": "Source: Industry Ventures Secondary XI deck (Aug 2026): proposed terms p20, secondary funds track record p22 (as of 2026/3/31), Partnership Holdings funds p23. Secondary XI is a new fund; the figures are earlier secondary funds.",
+          "sc": "来源: Industry Ventures Secondary XI deck (2026 年 8 月)——拟议条款 p20，二手基金业绩 p22 (截至 2026/3/31)，Partnership Holdings 基金 p23。Secondary XI 为新发基金；以上为此前二手基金数据。",
+          "tc": "來源: Industry Ventures Secondary XI deck (2026 年 8 月)——擬議條款 p20，二手基金績效 p22 (截至 2026/3/31)，Partnership Holdings 基金 p23。Secondary XI 為新發基金；以上為此前二手基金數據。"
+        },
+        "redact": [
+          "Goldman Sachs",
+          "Industry Ventures"
+        ],
+        "vintages": [
+          {
+            "n": "Secondary V",
+            "y": "2008",
+            "irr": 29.3,
+            "x": 2.9,
+            "dpi": 2.88
+          },
+          {
+            "n": "Secondary VI",
+            "y": "2011",
+            "irr": 7.9,
+            "x": 1.4,
+            "dpi": 1.36
+          },
+          {
+            "n": "Secondary V-A",
+            "y": "2011",
+            "irr": 12.7,
+            "x": 1.7,
+            "dpi": 1.69
+          },
+          {
+            "n": "Secondary VII",
+            "y": "2013",
+            "irr": 15.7,
+            "x": 1.9,
+            "dpi": 1.79
+          },
+          {
+            "n": "Secondary VIII",
+            "y": "2017",
+            "irr": 20.7,
+            "x": 1.9,
+            "dpi": 1.39
+          },
+          {
+            "n": "Secondary IX",
+            "y": "2021",
+            "irr": 9.9,
+            "x": 1.4,
+            "dpi": 0.23,
+            "live": true
+          },
+          {
+            "n": "Secondary X",
+            "y": "2024",
+            "irr": 58.8,
+            "x": 1.7,
+            "dpi": 0,
+            "live": true
+          }
+        ]
+      }
+    ],
+    "s-1795800000003": [
+      {
+        "id": "custom-1795800000000-7",
+        "custom": true,
+        "vehicle": "private",
+        "hist": [],
+        "perf": [],
+        "redactAuto": false,
+        "translated": true,
+        "name": "KKR Diversified Core Infrastructure Fund (DCIF)",
+        "mgr": {
+          "en": "KKR"
+        },
+        "tag": {
+          "en": "Core Infrastructure · Open-Ended",
+          "sc": "核心基础设施 · 开放式",
+          "tc": "核心基礎設施 · 開放式"
+        },
+        "inception": "2021-04",
+        "isNew": false,
+        "inceptionText": {
+          "en": "2021/4 (first full quarter of investors);<br>open-ended",
+          "sc": "2021/4 (投资者首个完整季度)；<br>开放式",
+          "tc": "2021/4 (投資者首個完整季度)；<br>開放式"
+        },
+        "aum": 14.2,
+        "aumText": {
+          "en": "$14.2bn",
+          "sc": "$14.2bn",
+          "tc": "$14.2bn"
+        },
+        "strategy": {
+          "en": "Core infrastructure with contracted or regulated revenue (~95% contracted), principally in OECD North America and Western Europe;<br>Focus on cash yield; quarterly distributions, reinvested or paid in cash;",
+          "sc": "核心基础设施，收入为合约或受监管 (约 95% 为合约收入)，主要位于 OECD 北美及西欧；<br>注重现金收益；按季分派，可再投资或领取现金；",
+          "tc": "核心基礎設施，收入為合約或受監管 (約 95% 為合約收入)，主要位於 OECD 北美及西歐；<br>注重現金收益；按季分派，可再投資或領取現金；"
+        },
+        "perfNotes": {
+          "en": [
+            "Net total return since inception 9.3% a year (gross 10.4%), 2021/4 to 2025/12",
+            "1 year (2025) 7.3% net; 3 years 7.5% a year net",
+            "Distribution yield 4.6% (1 year and since inception)",
+            "Target 8–10% gross / 7–9% net"
+          ],
+          "sc": [
+            "成立以来年化净总回报 9.3% (毛 10.4%)，2021/4 至 2025/12",
+            "近 1 年 (2025) 净 7.3%；近 3 年年化净 7.5%",
+            "分派收益率 4.6% (近 1 年及成立以来)",
+            "目标毛回报 8–10% / 净回报 7–9%"
+          ],
+          "tc": [
+            "成立以來年化淨總回報 9.3% (毛 10.4%)，2021/4 至 2025/12",
+            "近 1 年 (2025) 淨 7.3%；近 3 年年化淨 7.5%",
+            "分派收益率 4.6% (近 1 年及成立以來)",
+            "目標毛回報 8–10% / 淨回報 7–9%"
+          ]
+        },
+        "target": {
+          "en": "7–9% net",
+          "sc": "净 7–9%",
+          "tc": "淨 7–9%"
+        },
+        "ddLabel": {
+          "en": "Distribution Yield",
+          "sc": "分派收益率",
+          "tc": "分派收益率"
+        },
+        "ddRaw": {
+          "en": "4.6% over 2025; ~95% contracted revenue",
+          "sc": "2025 年 4.6%；约 95% 为合约收入",
+          "tc": "2025 年 4.6%；約 95% 為合約收入"
+        },
+        "liq": {
+          "en": "Quarterly, 3-year soft lock-up",
+          "sc": "每季，3 年软锁定",
+          "tc": "每季，3 年軟鎖定"
+        },
+        "liqFull": {
+          "en": "Open-ended; quarterly subscriptions;<br>Quarterly redemptions after the lock-up, based on available liquidity; 3-year soft lock-up with a 5% early redemption fee paid to the fund;<br>Incentive 5% of gross cash yield above a 4% hurdle",
+          "sc": "开放式；按季认购；<br>锁定期后按季赎回，视可用流动性而定；3 年软锁定，提前赎回收取 5% 费用并归入基金；<br>业绩报酬为毛现金收益的 5%，门槛 4%",
+          "tc": "開放式；按季認購；<br>鎖定期後按季贖回，視可用流動性而定；3 年軟鎖定，提前贖回收取 5% 費用並歸入基金；<br>業績報酬為毛現金收益的 5%，門檻 4%"
+        },
+        "classes": {
+          "en": {
+            "head": [
+              "Subscription",
+              "Management Fee (on NAV)"
+            ],
+            "rows": [
+              [
+                "Under $50M",
+                "0.85%"
+              ],
+              [
+                "$50M to $200M",
+                "0.80%"
+              ]
+            ]
+          },
+          "sc": {
+            "head": [
+              "认购金额",
+              "管理费 (按 NAV)"
+            ],
+            "rows": [
+              [
+                "$50M 以下",
+                "0.85%"
+              ],
+              [
+                "$50M 至 $200M",
+                "0.80%"
+              ]
+            ]
+          },
+          "tc": {
+            "head": [
+              "認購金額",
+              "管理費 (按 NAV)"
+            ],
+            "rows": [
+              [
+                "$50M 以下",
+                "0.85%"
+              ],
+              [
+                "$50M 至 $200M",
+                "0.80%"
+              ]
+            ]
+          }
+        },
+        "classesKeepText": true,
+        "note": {
+          "en": "Source: KKR DCIF deck (Apr 2026): infrastructure platform p10, strategy performance p21 (as of 2025/12/31; returns counted from 2021/4/1), key terms p35. Fee tiers from $200M up are left out.",
+          "sc": "来源: KKR DCIF deck (2026 年 4 月)——基础设施平台 p10，策略业绩 p21 (截至 2025/12/31；回报自 2021/4/1 起计)，主要条款 p35。$200M 及以上的费率档未列出。",
+          "tc": "來源: KKR DCIF deck (2026 年 4 月)——基礎設施平台 p10，策略績效 p21 (截至 2025/12/31；回報自 2021/4/1 起計)，主要條款 p35。$200M 及以上的費率檔未列出。"
+        },
+        "redact": [
+          "KKR",
+          "DCIF"
+        ]
+      },
+      {
+        "id": "custom-1795800000000-8",
+        "custom": true,
+        "vehicle": "private",
+        "hist": [],
+        "perf": [],
+        "redactAuto": false,
+        "translated": true,
+        "name": "Blackstone Infrastructure Partners (BIP)",
+        "mgr": {
+          "en": "Blackstone"
+        },
+        "tag": {
+          "en": "Core+ Infrastructure · Open-Ended",
+          "sc": "核心+ 基础设施 · 开放式",
+          "tc": "核心+ 基礎設施 · 開放式"
+        },
+        "inception": "2019-03",
+        "isNew": false,
+        "inceptionText": {
+          "en": "2019/3 (first investments);<br>open-ended perpetual",
+          "sc": "2019/3 (首笔投资)；<br>开放式永续",
+          "tc": "2019/3 (首筆投資)；<br>開放式永續"
+        },
+        "aum": null,
+        "aumText": {
+          "en": "Not stated for BIP alone",
+          "sc": "未单独披露",
+          "tc": "未單獨披露"
+        },
+        "strategy": {
+          "en": "Core+ and core infrastructure equity, principally North America;<br>Themes: digital infrastructure 41% of FMV, energy transition 35%, transportation 23%, waste 1%; Blackstone Infrastructure manages $84bn in total;",
+          "sc": "核心+ 及核心基础设施股权，主要位于北美；<br>主题：数字基础设施占公允价值 41%，能源转型 35%，交通 23%，废弃物处理 1%；Blackstone 基础设施平台总管理规模 $84bn；",
+          "tc": "核心+ 及核心基礎設施股權，主要位於北美；<br>主題：數位基礎設施佔公允價值 41%，能源轉型 35%，交通 23%，廢棄物處理 1%；Blackstone 基礎設施平台總管理規模 $84bn；"
+        },
+        "perfNotes": {
+          "en": [
+            "Net IRR since inception 19% (gross 24%); last 12 months 21% net (gross 28%), to 2026/3/31",
+            "Net return by year to March: 2021/4–2022/3 34%; 2022/4–2023/3 5%; 2023/4–2024/3 17%",
+            "2024/4–2025/3 25%; 2025/4–2026/3 21%"
+          ],
+          "sc": [
+            "成立以来净 IRR 19% (毛 24%)；近 12 个月净 21% (毛 28%)，截至 2026/3/31",
+            "按年度 (4 月至次年 3 月) 净回报：2021/4–2022/3 34%；2022/4–2023/3 5%；2023/4–2024/3 17%",
+            "2024/4–2025/3 25%；2025/4–2026/3 21%"
+          ],
+          "tc": [
+            "成立以來淨 IRR 19% (毛 24%)；近 12 個月淨 21% (毛 28%)，截至 2026/3/31",
+            "按年度 (4 月至次年 3 月) 淨回報：2021/4–2022/3 34%；2022/4–2023/3 5%；2023/4–2024/3 17%",
+            "2024/4–2025/3 25%；2025/4–2026/3 21%"
+          ]
+        },
+        "target": {
+          "en": "15%+",
+          "sc": "15%+",
+          "tc": "15%+"
+        },
+        "ddLabel": {
+          "en": "Weakest Year",
+          "sc": "最弱年度",
+          "tc": "最弱年度"
+        },
+        "ddRaw": {
+          "en": "+5% net (2022/4 to 2023/3); no negative year shown",
+          "sc": "净 +5% (2022/4 至 2023/3)；未见负回报年度",
+          "tc": "淨 +5% (2022/4 至 2023/3)；未見負回報年度"
+        },
+        "liq": {
+          "en": "Quarterly, 3-year lock-up",
+          "sc": "每季，3 年锁定",
+          "tc": "每季，3 年鎖定"
+        },
+        "liqFull": {
+          "en": "Open-ended perpetual fund; units priced at NAV;<br>Lock-up to the third anniversary of buying units, then quarterly redemptions at NAV, subject to available liquidity at the GP's discretion;<br>Management fee on NAV 1.00% for commitments under $300M; incentive 12.5% over a 6% hurdle, 80/20 catch-up, crystallized every 3 years",
+          "sc": "开放式永续基金；份额按 NAV 定价；<br>自买入份额起锁定 3 年，之后按季以 NAV 赎回，视可用流动性由 GP 酌情决定；<br>管理费按 NAV，承诺 $300M 以下为 1.00%；业绩报酬 12.5%，门槛 6%，80/20 catch-up，每 3 年结算一次",
+          "tc": "開放式永續基金；份額按 NAV 定價；<br>自買入份額起鎖定 3 年，之後按季以 NAV 贖回，視可用流動性由 GP 酌情決定；<br>管理費按 NAV，承諾 $300M 以下為 1.00%；業績報酬 12.5%，門檻 6%，80/20 catch-up，每 3 年結算一次"
+        },
+        "note": {
+          "en": "Source: Blackstone BIP platform deck (Jun 2026): overview p4, key terms p43, performance summary p47 (as of 2026/3/31). The target is the pipeline tracker's figure. Fee rates for commitments from $300M up are left out.",
+          "sc": "来源: Blackstone BIP 平台 deck (2026 年 6 月)——概览 p4，主要条款 p43，业绩摘要 p47 (截至 2026/3/31)。目标回报取自 pipeline tracker。$300M 及以上承诺额的费率未列出。",
+          "tc": "來源: Blackstone BIP 平台 deck (2026 年 6 月)——概覽 p4，主要條款 p43，績效摘要 p47 (截至 2026/3/31)。目標回報取自 pipeline tracker。$300M 及以上承諾額的費率未列出。"
+        },
+        "redact": [
+          "Blackstone",
+          "BIP"
+        ]
+      }
+    ],
+    "s-1795800000004": [
+      {
+        "id": "custom-1795800000000-9",
+        "custom": true,
+        "vehicle": "private",
+        "hist": [],
+        "perf": [],
+        "redactAuto": false,
+        "translated": true,
+        "name": "Barings Real Estate Debt Income Fund (REDIF)",
+        "mgr": {
+          "en": "Barings"
+        },
+        "tag": {
+          "en": "Commercial Real Estate Debt · Open-End",
+          "sc": "商业地产债权 · 开放式",
+          "tc": "商業地產債權 · 開放式"
+        },
+        "inception": "2021-01",
+        "isNew": false,
+        "inceptionText": {
+          "en": "2021/1/8 (5 years);<br>open-end",
+          "sc": "2021/1/8 (5年)；<br>开放式",
+          "tc": "2021/1/8 (5年)；<br>開放式"
+        },
+        "aum": 1.5,
+        "aumText": {
+          "en": "$1.5bn commitments",
+          "sc": "承诺资本 $1.5bn",
+          "tc": "承諾資本 $1.5bn"
+        },
+        "strategy": {
+          "en": "Floating-rate senior and subordinate commercial mortgages (3–5 year terms) on institutional-quality property in top-tier US markets; Core+ / value-add with a tactical opportunistic sleeve;<br>88% core+ at origination, 61% average LTV; leverage target 2:1 (limit 3:1); $1.6bn across 17 loans closed in 2025;",
+          "sc": "浮动利率优先及次级商业地产抵押贷款 (期限 3–5 年)，标的为美国一线市场的机构级物业；Core+ / 增值型，另设机会型配置；<br>发放时 88% 为 core+，平均 LTV 61%；目标杠杆 2:1 (上限 3:1)；2025 年完成 17 笔、共 $1.6bn 贷款；",
+          "tc": "浮動利率優先及次級商業地產抵押貸款 (期限 3–5 年)，標的為美國一線市場的機構級物業；Core+ / 增值型，另設機會型配置；<br>發放時 88% 為 core+，平均 LTV 61%；目標槓桿 2:1 (上限 3:1)；2025 年完成 17 筆、共 $1.6bn 貸款；"
+        },
+        "perfNotes": {
+          "en": [
+            "Net return since inception 12.7% a year (time-weighted, 2021/1 to 2025/12)",
+            "Dividend yield 9.5% (rolling 1 year)",
+            "Target net 7–9% through the cycle / 10–12% in the current market",
+            "The deck gives no calendar-year returns"
+          ],
+          "sc": [
+            "成立以来年化净回报 12.7% (时间加权，2021/1 至 2025/12)",
+            "股息收益率 9.5% (滚动 1 年)",
+            "目标净回报：全周期 7–9% / 当前市场 10–12%",
+            "Deck 未提供年度回报"
+          ],
+          "tc": [
+            "成立以來年化淨回報 12.7% (時間加權，2021/1 至 2025/12)",
+            "股息收益率 9.5% (滾動 1 年)",
+            "目標淨回報：全週期 7–9% / 當前市場 10–12%",
+            "Deck 未提供年度回報"
+          ]
+        },
+        "target": {
+          "en": "7–9% net",
+          "sc": "净 7–9%",
+          "tc": "淨 7–9%"
+        },
+        "ddLabel": {
+          "en": "Average LTV",
+          "sc": "平均 LTV",
+          "tc": "平均 LTV"
+        },
+        "ddRaw": {
+          "en": "61% average LTV; portfolio LTV capped at 75%",
+          "sc": "平均 LTV 61%；组合 LTV 上限 75%",
+          "tc": "平均 LTV 61%；組合 LTV 上限 75%"
+        },
+        "liq": {
+          "en": "Quarterly, 90 days' notice",
+          "sc": "每季，提前90天",
+          "tc": "每季，提前90天"
+        },
+        "liqFull": {
+          "en": "Open-end; quarterly subscriptions;<br>Quarterly redemptions with 90 days' notice, paid as liquidity becomes available; no lock-up;<br>Minimum $5M; quarterly distributions; fee on NAV, weighted across the commitment tiers below",
+          "sc": "开放式；按季认购；<br>按季赎回，提前 90 天通知，视流动性兑付；无锁定期；<br>最低认购 $5M；按季分派；管理费按 NAV，按以下承诺额分档加权计算",
+          "tc": "開放式；按季認購；<br>按季贖回，提前 90 天通知，視流動性兌付；無鎖定期；<br>最低認購 $5M；按季分派；管理費按 NAV，按以下承諾額分檔加權計算"
+        },
+        "classes": {
+          "en": {
+            "head": [
+              "Commitment Tier",
+              "Fee (on NAV)"
+            ],
+            "rows": [
+              [
+                "First $25M",
+                "0.90%"
+              ],
+              [
+                "$25M to $50M",
+                "0.80%"
+              ],
+              [
+                "$50M to $100M",
+                "0.70%"
+              ]
+            ]
+          },
+          "sc": {
+            "head": [
+              "承诺额分档",
+              "管理费 (按 NAV)"
+            ],
+            "rows": [
+              [
+                "首 $25M",
+                "0.90%"
+              ],
+              [
+                "$25M 至 $50M",
+                "0.80%"
+              ],
+              [
+                "$50M 至 $100M",
+                "0.70%"
+              ]
+            ]
+          },
+          "tc": {
+            "head": [
+              "承諾額分檔",
+              "管理費 (按 NAV)"
+            ],
+            "rows": [
+              [
+                "首 $25M",
+                "0.90%"
+              ],
+              [
+                "$25M 至 $50M",
+                "0.80%"
+              ],
+              [
+                "$50M 至 $100M",
+                "0.70%"
+              ]
+            ]
+          }
+        },
+        "classesKeepText": true,
+        "note": {
+          "en": "Source: Barings REDIF deck (Apr 2026): fund at a glance p4, highlights p20 (as of 2025/12/31), summary term sheet p30. The $100M+ fee tier is left out.",
+          "sc": "来源: Barings REDIF deck (2026 年 4 月)——基金概览 p4，亮点 p20 (截至 2025/12/31)，条款摘要 p30。$100M 以上的费率档未列出。",
+          "tc": "來源: Barings REDIF deck (2026 年 4 月)——基金概覽 p4，亮點 p20 (截至 2025/12/31)，條款摘要 p30。$100M 以上的費率檔未列出。"
+        },
+        "redact": [
+          "Barings",
+          "REDIF"
+        ]
+      },
+      {
+        "id": "custom-1795800000000-10",
+        "custom": true,
+        "vehicle": "private",
+        "hist": [],
+        "perf": [],
+        "redactAuto": false,
+        "translated": true,
+        "name": "TPG Essential Housing Fund IV (EHF IV)",
+        "mgr": {
+          "en": "TPG"
+        },
+        "tag": {
+          "en": "Homebuilder Land Banking · Drawdown",
+          "sc": "住宅开发商土地储备融资 · Drawdown",
+          "tc": "住宅開發商土地儲備融資 · Drawdown"
+        },
+        "inception": "2026-07",
+        "isNew": true,
+        "inceptionText": {
+          "en": "Initial close 2026/7;<br>EHF platform since 2020",
+          "sc": "首次关账 2026/7；<br>EHF 平台 2020 年起",
+          "tc": "首次關帳 2026/7；<br>EHF 平台 2020 年起"
+        },
+        "aum": 3,
+        "aumText": {
+          "en": "$3.0bn+ target",
+          "sc": "目标 $3.0bn+",
+          "tc": "目標 $3.0bn+"
+        },
+        "strategy": {
+          "en": "Off-balance-sheet land banking for homebuilders: the fund buys close-to-production land for the builder, which buys back the lots at cost plus a required yield on a set monthly takedown schedule;<br>~950 projects and $23bn+ of project value since 2020; contractual first look on Lennar deal flow, 15+ homebuilders including D.R. Horton;",
+          "sc": "为住宅开发商提供表外土地储备融资：基金代开发商买入临近开工的土地，开发商按预定月度回购计划以成本加约定收益回购地块；<br>2020 年以来约 950 个项目、项目总值 $23bn+；对 Lennar 交易享合约优先查看权，合作开发商 15+ 家，包括 D.R. Horton；",
+          "tc": "為住宅開發商提供表外土地儲備融資：基金代開發商買入臨近開工的土地，開發商按預定月度回購計劃以成本加約定收益回購地塊；<br>2020 年以來約 950 個項目、項目總值 $23bn+；對 Lennar 交易享合約優先查看權，合作開發商 15+ 家，包括 D.R. Horton；"
+        },
+        "perfNotes": {
+          "en": [
+            "Fund targets net IRR 12–14%",
+            "EHF-1 (2020): fully monetized, final net IRR 12.1%",
+            "EHF-2 (2021): net IRR 12.7%, harvesting, DPI above 1.0x; forecast 12.0–12.5% over the fund's life",
+            "EHF-3 (2024): net IRR 12.0%, ~80% built; forecast 13–15%",
+            "Net IRRs through 2026/3/31"
+          ],
+          "sc": [
+            "基金目标净 IRR 12–14%",
+            "EHF-1 (2020)：已全部变现，最终净 IRR 12.1%",
+            "EHF-2 (2021)：净 IRR 12.7%，退出期，DPI 超过 1.0x；预计全周期 12.0–12.5%",
+            "EHF-3 (2024)：净 IRR 12.0%，组合约 80% 已建成；预计 13–15%",
+            "净 IRR 截至 2026/3/31"
+          ],
+          "tc": [
+            "基金目標淨 IRR 12–14%",
+            "EHF-1 (2020)：已全數變現，最終淨 IRR 12.1%",
+            "EHF-2 (2021)：淨 IRR 12.7%，退出期，DPI 超過 1.0x；預計全週期 12.0–12.5%",
+            "EHF-3 (2024)：淨 IRR 12.0%，組合約 80% 已建成；預計 13–15%",
+            "淨 IRR 截至 2026/3/31"
+          ]
+        },
+        "target": {
+          "en": "12–14% net",
+          "sc": "净 12–14%",
+          "tc": "淨 12–14%"
+        },
+        "ddLabel": {
+          "en": "Loss Rate",
+          "sc": "损失率",
+          "tc": "損失率"
+        },
+        "ddRaw": {
+          "en": "No investment losses on any project across the platform to date",
+          "sc": "平台迄今所有项目均无投资损失",
+          "tc": "平台迄今所有項目均無投資損失"
+        },
+        "liq": {
+          "en": "Closed-end: 30-month investment + 40-month harvest",
+          "sc": "封闭式：投资期 30 个月 + 退出期 40 个月",
+          "tc": "封閉式：投資期 30 個月 + 退出期 40 個月"
+        },
+        "liqFull": {
+          "en": "Closed-end: 30-month investment period with capital recycled (+6 months at GP discretion, +3 months with LP approval), then a 40-month harvest (+1 year GP, +1 year with LP approval);<br>Management fee 0.50% a year on total assets; first-close rate 0.475% for commitments under $150M; carry 15% over a 7.5% preferred return, 80/20 catch-up; minimum $25M",
+          "sc": "封闭式：投资期 30 个月，资本可循环使用 (GP 可延 6 个月，经 LP 同意再延 3 个月)，其后退出期 40 个月 (GP 可延 1 年，经 LP 同意再延 1 年)；<br>管理费每年 0.50% (按总资产)；首次关账承诺 $150M 以下为 0.475%；业绩报酬 15%，门槛回报 7.5%，80/20 catch-up；最低认购 $25M",
+          "tc": "封閉式：投資期 30 個月，資本可循環使用 (GP 可延 6 個月，經 LP 同意再延 3 個月)，其後退出期 40 個月 (GP 可延 1 年，經 LP 同意再延 1 年)；<br>管理費每年 0.50% (按總資產)；首次關帳承諾 $150M 以下為 0.475%；業績報酬 15%，門檻回報 7.5%，80/20 catch-up；最低認購 $25M"
+        },
+        "note": {
+          "en": "Source: TPG EHF IV deck (Jul 2026): platform overview and portfolio updates p6, EHF I–III returns p11 (through 2026/3/31), summary of terms p65. EHF IV is a new fund; the figures are EHF-1 to EHF-3. First-close rates from $150M up are left out.",
+          "sc": "来源: TPG EHF IV deck (2026 年 7 月)——平台概览及组合更新 p6，EHF I–III 回报 p11 (截至 2026/3/31)，条款摘要 p65。EHF IV 为新发基金；以上为 EHF-1 至 EHF-3 数据。$150M 及以上的首次关账费率未列出。",
+          "tc": "來源: TPG EHF IV deck (2026 年 7 月)——平台概覽及組合更新 p6，EHF I–III 回報 p11 (截至 2026/3/31)，條款摘要 p65。EHF IV 為新發基金；以上為 EHF-1 至 EHF-3 數據。$150M 及以上的首次關帳費率未列出。"
+        },
+        "redact": [
+          "TPG",
+          "EHF",
+          "Essential Housing"
+        ],
+        "vintages": [
+          {
+            "n": "EHF-1",
+            "y": "2020",
+            "irr": 12.1
+          },
+          {
+            "n": "EHF-2",
+            "y": "2021",
+            "irr": 12.7
+          },
+          {
+            "n": "EHF-3",
+            "y": "2024",
+            "irr": 12,
+            "live": true
+          }
+        ]
+      },
+      {
+        "id": "custom-1795800000000-11",
+        "custom": true,
+        "vehicle": "private",
+        "hist": [],
+        "perf": [],
+        "redactAuto": false,
+        "translated": true,
+        "name": "Pretium Single-Family Rental Fund IV",
+        "mgr": {
+          "en": "Pretium"
+        },
+        "tag": {
+          "en": "Single-Family Rental Equity · Closed-End",
+          "sc": "单户出租住宅股权 · 封闭式",
+          "tc": "單戶出租住宅股權 · 封閉式"
+        },
+        "inception": "2012-09",
+        "isNew": false,
+        "inceptionText": {
+          "en": "2012/9 (as Progress Residential);<br>re-formed as SFR Fund IV after a recapitalization",
+          "sc": "2012/9 (原 Progress Residential)；<br>重组资本后改为 SFR Fund IV",
+          "tc": "2012/9 (原 Progress Residential)；<br>重組資本後改為 SFR Fund IV"
+        },
+        "aum": null,
+        "aumText": {
+          "en": "Not stated",
+          "sc": "未注明",
+          "tc": "未註明"
+        },
+        "strategy": {
+          "en": "US single-family rental homes held as equity (formerly Progress Residential); after Progress Residential's recapitalization ~60% of investors stayed in and the portfolio became SFR Fund IV with a new 5-year base term;<br>Homes are marked on indexed broker price opinions; no home price gains have been added to reported returns since 2022;",
+          "sc": "以股权方式持有美国单户出租住宅 (原 Progress Residential)；Progress Residential 重组资本后约 60% 投资者留任，组合改为 SFR Fund IV，基础期限重新定为 5 年；<br>房屋按指数化经纪估价计值；自 2022 年起未在回报中计入房价上涨；",
+          "tc": "以股權方式持有美國單戶出租住宅 (原 Progress Residential)；Progress Residential 重組資本後約 60% 投資者留任，組合改為 SFR Fund IV，基礎期限重新定為 5 年；<br>房屋按指數化經紀估價計值；自 2022 年起未在回報中計入房價上漲；"
+        },
+        "perfNotes": {
+          "en": [
+            "Net IRR since 2012/9: 15.7% including DVA (15.6% excluding)",
+            "Multiple on invested capital 3.55x (2.11x realized + 1.44x unrealized); 240.3% of drawn capital distributed",
+            "First half 2025: net IRR −3.8% including DVA / 0.8% excluding",
+            "Blended-fee returns, as of 2025/6/30"
+          ],
+          "sc": [
+            "2012/9 以来净 IRR：含 DVA 15.7% (不含 15.6%)",
+            "投入资本倍数 3.55x (已实现 2.11x + 未实现 1.44x)；已分配实缴资本的 240.3%",
+            "2025 上半年：净 IRR 含 DVA −3.8% / 不含 0.8%",
+            "按混合费率计算，截至 2025/6/30"
+          ],
+          "tc": [
+            "2012/9 以來淨 IRR：含 DVA 15.7% (不含 15.6%)",
+            "投入資本倍數 3.55x (已實現 2.11x + 未實現 1.44x)；已分配實繳資本的 240.3%",
+            "2025 上半年：淨 IRR 含 DVA −3.8% / 不含 0.8%",
+            "按混合費率計算，截至 2025/6/30"
+          ]
+        },
+        "target": {
+          "en": "Not stated",
+          "sc": "未注明",
+          "tc": "未註明"
+        },
+        "ddLabel": {
+          "en": "Drawdown",
+          "sc": "回撤",
+          "tc": "回撤"
+        },
+        "ddRaw": {
+          "en": "First half 2025: −3.8% net including DVA (0.8% excluding)",
+          "sc": "2025 上半年：含 DVA 净 −3.8% (不含 0.8%)",
+          "tc": "2025 上半年：含 DVA 淨 −3.8% (不含 0.8%)"
+        },
+        "liq": {
+          "en": "Closed-end: 5-year base term",
+          "sc": "封闭式：基础期限 5 年",
+          "tc": "封閉式：基礎期限 5 年"
+        },
+        "liqFull": {
+          "en": "Closed-end; new 5-year base term from the recapitalization;<br>Fees and terms are not in the fund review (investors' blended fees range 0–1.85% management and 0–20% incentive over an 8% hurdle)",
+          "sc": "封闭式；自重组资本起基础期限重新定为 5 年；<br>基金报告未列出费用及条款 (投资者混合费率：管理费 0–1.85%，业绩报酬 0–20%，门槛 8%)",
+          "tc": "封閉式；自重組資本起基礎期限重新定為 5 年；<br>基金報告未列出費用及條款 (投資者混合費率：管理費 0–1.85%，業績報酬 0–20%，門檻 8%)"
+        },
+        "note": {
+          "en": "Source: Pretium SFR Fund IV Q3 2025 fund review: fund valuation performance p6 (as of 2025/6/30), peer comparison p7. Only a quarterly fund review is on file, not a marketing deck.",
+          "sc": "来源: Pretium SFR Fund IV 2025 Q3 基金报告——基金估值表现 p6 (截至 2025/6/30)，同业比较 p7。仅有季度基金报告，无营销 deck。",
+          "tc": "來源: Pretium SFR Fund IV 2025 Q3 基金報告——基金估值表現 p6 (截至 2025/6/30)，同業比較 p7。僅有季度基金報告，無行銷 deck。"
+        },
+        "redact": [
+          "Pretium",
+          "Progress Residential"
+        ]
+      }
+    ],
+    "s-1795800000005": [
+      {
+        "id": "custom-1795800000000-12",
+        "custom": true,
+        "vehicle": "private",
+        "hist": [],
+        "perf": [],
+        "redactAuto": false,
+        "translated": true,
+        "name": "HPS ElmTree Net Lease Fund VI",
+        "mgr": {
+          "en": "HPS"
+        },
+        "tag": {
+          "en": "Industrial Net Lease · Closed-End",
+          "sc": "工业净租赁 · 封闭式",
+          "tc": "工業淨租賃 · 封閉式"
+        },
+        "inception": null,
+        "isNew": true,
+        "inceptionText": {
+          "en": "New fund;<br>ElmTree funds since 2011",
+          "sc": "新发基金；<br>ElmTree 系列 2011 年起",
+          "tc": "新發基金；<br>ElmTree 系列 2011 年起"
+        },
+        "aum": 1.25,
+        "aumText": {
+          "en": "$1.25bn target",
+          "sc": "目标 $1.25bn",
+          "tc": "目標 $1.25bn"
+        },
+        "strategy": {
+          "en": "~35–45 Class A industrial properties, mostly new or recently built build-to-suits, leased to mission-critical, primarily investment-grade single tenants;<br>Mainly NNN leases of ~10–20 years with 2–3% rent growth; ~65% asset-level leverage once stabilized;",
+          "sc": "约 35–45 处 A 级工业物业，以新建或近年落成的定制物业为主，租予关键业务、以投资级为主的单一租户；<br>主要为 NNN 租约，期限约 10–20 年，租金年增 2–3%；稳定后资产层面杠杆约 65%；",
+          "tc": "約 35–45 處 A 級工業物業，以新建或近年落成的訂製物業為主，租予關鍵業務、以投資級為主的單一租戶；<br>主要為 NNN 租約，期限約 10–20 年，租金年增 2–3%；穩定後資產層面槓桿約 65%；"
+        },
+        "perfNotes": {
+          "en": [
+            "Fund targets ~13–15% net IRR",
+            "Net IRR / net equity multiple (2026/3/31): Fund II (2013, realized) 19.4% / 1.54x",
+            "Fund III (2016, realized) 28.2% / 1.55x; Fund IV (2020, realized) 15.6% / 1.23x",
+            "Fund V (2023, investing) 15.0% / 1.19x",
+            "All four were first quartile against Cambridge Associates value-added real estate"
+          ],
+          "sc": [
+            "基金目标净 IRR 约 13–15%",
+            "净 IRR / 净权益倍数 (2026/3/31)：Fund II (2013，已实现) 19.4% / 1.54x",
+            "Fund III (2016，已实现) 28.2% / 1.55x；Fund IV (2020，已实现) 15.6% / 1.23x",
+            "Fund V (2023，投资期) 15.0% / 1.19x",
+            "四只基金在 Cambridge Associates 增值型地产基准中均为前四分之一"
+          ],
+          "tc": [
+            "基金目標淨 IRR 約 13–15%",
+            "淨 IRR / 淨權益倍數 (2026/3/31)：Fund II (2013，已實現) 19.4% / 1.54x",
+            "Fund III (2016，已實現) 28.2% / 1.55x；Fund IV (2020，已實現) 15.6% / 1.23x",
+            "Fund V (2023，投資期) 15.0% / 1.19x",
+            "四隻基金在 Cambridge Associates 增值型地產基準中均為前四分之一"
+          ]
+        },
+        "target": {
+          "en": "~13–15% net",
+          "sc": "净约 13–15%",
+          "tc": "淨約 13–15%"
+        },
+        "ddLabel": {
+          "en": "Drawdown",
+          "sc": "回撤",
+          "tc": "回撤"
+        },
+        "ddRaw": "",
+        "liq": {
+          "en": "Closed-end: 30-month investment + 3-year term",
+          "sc": "封闭式：投资期 30 个月 + 3 年",
+          "tc": "封閉式：投資期 30 個月 + 3 年"
+        },
+        "liqFull": {
+          "en": "Closed-end: 30-month investment period from initial close (+2×6 months), then a 3-year term (+2×1-year extensions);<br>Management fee 1.5% on commitments during the investment period, then on net equity invested; carry 20% over a 7% preferred return; minimum $5M; target leverage 55–65% across the portfolio",
+          "sc": "封闭式：自首次关账起投资期 30 个月 (+2×6 个月)，其后存续 3 年 (+2×1 年延展)；<br>管理费：投资期内按承诺额 1.5%，其后按净投入权益；业绩报酬 20%，门槛回报 7%；最低认购 $5M；组合目标杠杆 55–65%",
+          "tc": "封閉式：自首次關帳起投資期 30 個月 (+2×6 個月)，其後存續 3 年 (+2×1 年延長)；<br>管理費：投資期內按承諾額 1.5%，其後按淨投入權益；業績報酬 20%，門檻回報 7%；最低認購 $5M；組合目標槓桿 55–65%"
+        },
+        "note": {
+          "en": "Source: HPS ElmTree Fund VI deck (Jul 2026): fund launch p15, preliminary key terms p17, prior funds track record p26 (as of 2026/3/31). Fund VI is a new fund; the figures are Funds II–V (Fund I is excluded by the manager as a different strategy).",
+          "sc": "来源: HPS ElmTree Fund VI deck (2026 年 7 月)——基金发行 p15，初步主要条款 p17，前序基金业绩 p26 (截至 2026/3/31)。Fund VI 为新发基金；以上为 Fund II–V 数据 (Fund I 因策略不同未纳入)。",
+          "tc": "來源: HPS ElmTree Fund VI deck (2026 年 7 月)——基金發行 p15，初步主要條款 p17，前序基金績效 p26 (截至 2026/3/31)。Fund VI 為新發基金；以上為 Fund II–V 數據 (Fund I 因策略不同未納入)。"
+        },
+        "redact": [
+          "HPS",
+          "ElmTree"
+        ],
+        "vintages": [
+          {
+            "n": "ElmTree Fund II",
+            "y": "2013",
+            "irr": 19.4,
+            "x": 1.54
+          },
+          {
+            "n": "ElmTree Fund III",
+            "y": "2016",
+            "irr": 28.2,
+            "x": 1.55
+          },
+          {
+            "n": "ElmTree Fund IV",
+            "y": "2020",
+            "irr": 15.6,
+            "x": 1.23
+          },
+          {
+            "n": "ElmTree Fund V",
+            "y": "2023",
+            "irr": 15,
+            "x": 1.19,
+            "live": true
+          }
+        ]
       }
     ]
   },
@@ -3115,7 +5340,9 @@
       "custom-1795591212539-1",
       "custom-1795591212538-0",
       "custom-1795591212540-2",
-      "custom-1795591212541-3"
+      "custom-1795591212541-3",
+      "custom-1795900000000-1",
+      "custom-1795900000000-2"
     ],
     "liquid": [
       "b-liquid-0",
@@ -3126,5 +5353,9 @@
   "removed": [],
   "names": {},
   "stats": null,
-  "featured": []
+  "featured": [
+    "custom-1795900000000-0",
+    "custom-1795900000000-1",
+    "custom-1795900000000-2"
+  ]
 }

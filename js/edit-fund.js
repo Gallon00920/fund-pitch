@@ -24,6 +24,19 @@ function parseReturnLines(text) {
   return rows.sort((a, b) => a[0] - b[0] || (a[2] === "ytd") - (b[2] === "ytd"));
 }
 
+/* earlier funds by vintage as editable lines:   Kreos IV, 2012: 11.1 / 1.32x / DPI 1.23x   |   Kreos VII, 2022: 17.0 / 1.31x investing */
+const vintLine = v => `${plain(v.n)}, ${v.y}: ${v.irr}${v.x != null ? ` / ${v.x}x` : ""}${v.dpi != null ? ` / DPI ${v.dpi}x` : ""}${v.live ? " investing" : ""}`;
+/** Returns { rows } sorted by vintage, or { bad: line number }. */
+function parseVintLines(text) {
+  const rows = [], all = lines(text);
+  for (let i = 0; i < all.length; i++) {
+    const m = all[i].match(/^(.+?)\s*[,，]\s*(\d{4})\s*[:：]\s*([+\-−]?\d+(?:\.\d+)?)\s*%?(?:\s*\/\s*(\d+(?:\.\d+)?)\s*x)?(?:\s*\/\s*DPI\s*(\d+(?:\.\d+)?)\s*x?)?\s*(investing|投资中|投資中)?$/i);
+    if (!m) return { bad: i + 1 };
+    rows.push({ n: esc(m[1]), y: m[2], irr: Number(m[3].replace("−", "-")), ...(m[4] ? { x: Number(m[4]) } : {}), ...(m[5] ? { dpi: Number(m[5]) } : {}), ...(m[6] ? { live: true } : {}) });
+  }
+  return { rows: rows.sort((a, b) => a.y - b.y) };
+}
+
 function showEditModal(show) {
   setModal(editModal, show);
   document.body.classList.toggle("modal-open", show);
@@ -54,6 +67,7 @@ function openEdit(id) {
   ef("efLiqFull").value = f.liqFull ? plain(L(f.liqFull)) : "";
   ef("efReturns").value = [...(f.hist || []), ...f.perf].map(returnLine).join("\n");
   ef("efNotes").value = notesOf(f).map(plain).join("\n");
+  ef("efVint").value = (f.vintages || []).map(vintLine).join("\n");
   ef("efDd").value = ddShown;
   ef("efNote").value = f.note ? plain(L(f.note)) : "";
   ef("efHide").defaultValue = ef("efHide").value = (f.redact || []).map(w => plain(w.replace(/\\(.)/g, "$1"))).join(", ");
@@ -117,6 +131,8 @@ editForm.addEventListener("submit", e => {
   if (!val("efName") || !val("efTag")) return fail("efErrRequired");
   const all = parseReturnLines(ef("efReturns").value);
   if (!all) return fail("efErrReturns");
+  const vint = parseVintLines(ef("efVint").value);
+  if (vint.bad != null) return fail("efErrVint", vint.bad);
   const aum = val("efAum") === "" ? null : Number(val("efAum"));
   if (aum !== null && !(aum > 0)) return fail("errAum");
 
@@ -158,6 +174,7 @@ editForm.addEventListener("submit", e => {
   f.hist = all.filter(p => !f.perf.includes(p));
   const noteLines = lines(ef("efNotes").value).map(esc);
   if (perLang("perfNotes")) f.perfNotes[lang] = noteLines; else f.perfNotes = noteLines;
+  if (vint.rows.length) f.vintages = vint.rows; else delete f.vintages;
   const dd = ef("efDd").value.trim();
   if (dd !== editing.ddShown.trim()) {                       // only touched when the admin changed it
     if (perLang("ddRaw")) f.ddRaw[lang] = escLines(lines(dd));
