@@ -482,10 +482,10 @@ Object.assign(UI.tc,{focusTab:"重點推薦",focusAdd:"加入重點推薦",focus
 /* My Focus List is each visitor's own; the admin star marks the team's top picks */
 Object.assign(UI.en,{focusTab:"My Focus List",descFocus:"Funds you have saved. Your list is kept in this browser only.",
   save:"Focus List",saved:"In Focus List",saveAdd:"Add to My Focus List",saveRemove:"Remove from My Focus List",
-  pickAdd:"Mark as top pick",pickRemove:"Clear top pick",pickLabel:"Top pick",pickNote:"Top pick: a fund our team rates most highly."});
+  pickAdd:"Mark as recommended",pickRemove:"Clear recommendation",pickLabel:"Recommended",pickNote:"Recommended: a fund our team rates most highly."});
 Object.assign(UI.sc,{focusTab:"我的关注",descFocus:"您已收藏的基金。此列表仅保存在本浏览器中。",
   save:"加入关注",saved:"已关注",saveAdd:"加入我的关注",saveRemove:"移出我的关注",
-  pickAdd:"标记为重点推荐",pickRemove:"取消重点推荐",pickLabel:"重点推荐",pickNote:"重点推荐：我们团队最看好的基金。"});
+  pickAdd:"标记为推荐",pickRemove:"取消推荐",pickLabel:"推荐",pickNote:"推荐：我们团队最看好的基金。"});
 Object.assign(UI.tc,{focusTab:"我的關注",descFocus:"您已收藏的基金。此列表僅保存在本瀏覽器中。",
   save:"加入關注",saved:"已關注",saveAdd:"加入我的關注",saveRemove:"移出我的關注",
-  pickAdd:"標記為重點推薦",pickRemove:"取消重點推薦",pickLabel:"重點推薦",pickNote:"重點推薦：我們團隊最看好的基金。"});
+  pickAdd:"標記為推薦",pickRemove:"取消推薦",pickLabel:"推薦",pickNote:"推薦：我們團隊最看好的基金。"});

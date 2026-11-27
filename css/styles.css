@@ -476,7 +476,10 @@ html:not([lang="en"]) .tab-menu .sub{letter-spacing:2px}
 
 /* ---- top picks (gold star, top-left of the card) and My Focus List (bookmark in the card foot) ---- */
 .pick{fill:var(--gold);flex:none}
-.pick-wrap{position:absolute;top:8px;left:28px;z-index:2;line-height:0}
+.pick-wrap{position:absolute;top:9px;left:28px;z-index:2;display:inline-flex;align-items:center;gap:7px;line-height:1}
+.pick-wrap .pick{width:14px;height:14px}
+.pick-wrap em{font-style:normal;font-size:9.5px;font-weight:600;letter-spacing:2.2px;text-transform:uppercase;color:var(--gold);padding-left:8px;border-left:1px solid rgba(218,181,110,.45)}
+html:not([lang="en"]) .pick-wrap em{letter-spacing:3px}
 .tab-desc{display:flex;flex-wrap:wrap;gap:6px 22px;align-items:center}
 .pick-note{display:inline-flex;align-items:center;gap:7px;color:var(--navy);font-weight:500}
 .pick-note .pick{width:15px;height:15px}
